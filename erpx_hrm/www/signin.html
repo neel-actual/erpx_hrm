@@ -1,0 +1,59 @@
+{% extends "www/master.html" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col s12">
+            <div class="container">
+                <div id="login-page" class="row">
+                    <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
+                        <form class="login-form">
+                            <div class="row">
+                                <div class="center input-field col s12">
+                                    <img src="/images/logo.svg"/>
+                                    <h5 class="ml-4">Hi there! Welcome to Beep!</h5>
+                                </div>
+                            </div>
+                            <div class="row margin">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix pt-2">person_outline</i>
+                                    <input id="username" type="text">
+                                    <label for="username" class="center-align">Username / Email</label>
+                                </div>
+                            </div>
+                            <div class="row margin">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix pt-2">lock_outline</i>
+                                    <input id="password" type="password">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect border-round gradient-45deg-blue-indigo col s12" type="submit">
+                                        Sign in
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6 m6 l6">
+                                    <p class="margin medium-small"><a href="user-register.html">Create new account</a></p>
+                                </div>
+                                <div class="input-field col s6 m6 l6">
+                                    <p class="margin right-align medium-small"><a href="user-forgot-password.html">Forgot
+                                        password ?</a></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="js/signin.js" defer></script>
+{% endblock %}
+

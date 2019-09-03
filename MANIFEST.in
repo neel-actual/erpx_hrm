@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include erpx_hrm *.css
+recursive-include erpx_hrm *.csv
+recursive-include erpx_hrm *.html
+recursive-include erpx_hrm *.ico
+recursive-include erpx_hrm *.js
+recursive-include erpx_hrm *.json
+recursive-include erpx_hrm *.md
+recursive-include erpx_hrm *.png
+recursive-include erpx_hrm *.py
+recursive-include erpx_hrm *.svg
+recursive-include erpx_hrm *.txt
+recursive-exclude erpx_hrm *.pyc

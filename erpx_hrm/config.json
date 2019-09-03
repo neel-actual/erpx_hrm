@@ -1,0 +1,18 @@
+{
+  "destination": {
+    "css"    : "www/css"
+  },
+  "source": {
+    "sass"         : "sass"
+  },
+  "autoprefixerBrowsers": [
+    "Android 2.3",
+    "Android >= 4",
+    "Chrome >= 25",
+    "Firefox >= 15",
+    "Explorer >= 9",
+    "iOS >= 6",
+    "Opera >= 12",
+    "Safari >= 6"
+  ]
+}

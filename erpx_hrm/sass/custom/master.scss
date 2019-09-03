@@ -1,0 +1,18 @@
+#appicon {
+  line-height: 64px;
+  width: 70px;
+  margin-left: 10px;
+}
+
+.nav-menu {
+  display: none;
+  position: relative;
+  float: left;
+  margin: 0 20px 0 10px;
+}
+
+@media only screen and (max-width: 992px) {
+  .nav-menu {
+    display: inline-block;
+  }
+}

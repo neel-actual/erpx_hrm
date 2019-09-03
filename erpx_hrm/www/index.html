@@ -1,0 +1,16 @@
+{% extends "www/master.html" %}
+
+{% block title %}Bayo{% endblock %}
+
+{% block nav %}
+    {% if user == 'Guest' %}
+        <li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+    {% endif %}
+    {% if user != 'Guest' %}
+        <li class=""><a href="/signin" aria-current="page">Sign out</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}

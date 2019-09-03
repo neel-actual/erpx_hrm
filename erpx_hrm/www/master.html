@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">-->
+    <!--<meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">-->
+    <!--<meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">-->
+    <!--<meta name="author" content="ThemeSelect">-->
+    <!--<link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">-->
+    <!--<link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    {% block styles %}{% endblock %}
+    <script>
+		window.frappe = {};
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		};
+		window.dev_server = 1;
+		window.socketio_port = 9000;
+    </script>
+</head>
+<body>
+<header class="no-padding">
+    <div class="navbar-fixed">
+        <nav class="navfeature">
+            <div class="container nav-wrapper">
+                <a href="/" class="waves-effect waves-light">
+                    <span class="hide-on-small-only"><img
+                            src="/images/logo.svg"
+                            width="30" id="appicon"
+                            style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
+                </a>
+
+
+                <ul id="nav-mobile" class="hide-on-med-and-down right">
+                    {% block nav %}{% endblock %}
+
+                </ul>
+                <a href="#" data-target="slide-out" class="nav-menu"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </div>
+    <div class="side-nav">
+        <ul id="slide-out" class="side-nav" style="transform: translateX(-100%);">
+        </ul>
+    </div>
+</header>
+{% block body %}{% endblock %}
+
+
+
+<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+<script type="text/javascript" src="/assets/js/erpnext-web.min.js"></script>
+<script src="js/vendors.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/index.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
