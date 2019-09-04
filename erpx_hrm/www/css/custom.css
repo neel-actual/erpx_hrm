@@ -25,7 +25,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
   .nav-menu {
     display: inline-block; } }
 
-#login-page {
+.form-section {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -44,5 +44,5 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
   height: -webkit-calc(100vh - 80px);
   height: -moz-calc(100vh - 80px);
   height: calc(100vh - 80px); }
-  #login-page .card-panel.border-radius-6.login-card {
+  .form-section .card-panel.border-radius-6.login-card {
     margin-left: 0 !important; }
