@@ -26,10 +26,11 @@
     </script>
 </head>
 <body>
-<header class="no-padding">
-    <div class="navbar-fixed">
-        <nav class="navfeature">
+<header class="no-padding page-topbar">
+    <div class="navbar navbar-fixed">
+        <nav class="navbar-main navfeature">
             <div class="container nav-wrapper">
+
                 <a href="/" class="waves-effect waves-light">
                     <span class="hide-on-small-only"><img
                             src="/images/logo.svg"
@@ -38,7 +39,7 @@
                 </a>
 
 
-                <ul id="nav-mobile" class="hide-on-med-and-down right">
+                <ul id="nav-mobile" class="navbar-list hide-on-med-and-down right">
                     {% block nav %}{% endblock %}
 
                 </ul>
