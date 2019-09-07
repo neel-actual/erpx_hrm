@@ -91,6 +91,10 @@ $(function () {
             $(".sidenav-main").removeClass("nav-lock");
             $(".navbar .nav-collapsible").removeClass("sideNav-lock");
         }
+
+        if (localStorage) {
+
+        }
     });
 
     // Expand navigation on mouseenter event
@@ -369,7 +373,6 @@ $(function () {
     }
 
     resizetable();
-
 
 });
 

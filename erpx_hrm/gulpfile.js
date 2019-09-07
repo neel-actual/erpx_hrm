@@ -13,24 +13,13 @@ gutil.log('Starting Gulp!!');
 gulp.task('default', function () {
 	return gulp.watch([
 		config.source.sass + '/**/*.scss'
-	], gulp.parallel('sass-main', 'sass-custom'));
+	], gulp.parallel('sass'));
 });
 
-gulp.task('sass-main', function () {
+gulp.task('sass', function () {
 	return gulp.src([
 			'materialize.scss',
 			'style.scss',
-		], { cwd: config.source.sass})
-		.pipe(sass().on('error', sass.logError))
-		.pipe(autoprefixer({
-            browsers: config.autoprefixerBrowsers,
-            cascade: false
-        }))
-		.pipe(gulp.dest(config.destination.css));
-});
-
-gulp.task('sass-custom', function () {
-	return gulp.src([
 			'custom/*.scss'
 		], { cwd: config.source.sass})
 		.pipe(sass().on('error', sass.logError))
@@ -38,6 +27,5 @@ gulp.task('sass-custom', function () {
             browsers: config.autoprefixerBrowsers,
             cascade: false
         }))
-		.pipe(concat('custom.css'))
 		.pipe(gulp.dest(config.destination.css));
 });

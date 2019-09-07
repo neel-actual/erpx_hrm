@@ -10,17 +10,16 @@
     <!--<link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">-->
     <!--<link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/vendor.css" rel="stylesheet">
     <link href="css/materialize.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/master.css" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
     {% block styles %}{% endblock %}
     <script>
 		window.frappe = {};
 		frappe.ready_events = [];
-		frappe.ready = function(fn) {
-			frappe.ready_events.push(fn);
-		};
+		frappe.ready = function(fn) { frappe.ready_events.push(fn); };
 		window.dev_server = 1;
 		window.socketio_port = 9000;
     </script>
@@ -63,6 +62,13 @@
 <script src="js/vendors.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/index.js"></script>
+<script src="js/scripts/advance-ui-scrollspy.js"></script>
 {% block scripts %}{% endblock %}
+<div class="sidenav-overlay" style="display: none;"></div>
+<div class="drag-target"></div>
+<div class="sidenav-overlay"></div>
+<div class="drag-target right-aligned"></div>
+<div class="sidenav-overlay"></div>
+<div class="sidenav-overlay"></div>
 </body>
 </html>

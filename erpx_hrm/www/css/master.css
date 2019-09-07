@@ -1,0 +1,26 @@
+#appicon {
+  line-height: 64px;
+  width: 70px;
+  margin-left: 10px; }
+
+.nav-menu {
+  display: none;
+  position: relative;
+  float: left;
+  margin: 0 20px 0 10px; }
+
+.nav-collapsed .brand-sidebar .logo-wrapper a.brand-logo img {
+  height: 15px; }
+
+.nav-drop-icon {
+  list-style: none;
+  display: inline-block !important;
+  vertical-align: middle;
+  margin-left: 10px; }
+
+.sidenav li .collapsible-body ul li a span {
+  margin-left: 44px; }
+
+@media only screen and (max-width: 992px) {
+  .nav-menu {
+    display: inline-block; } }

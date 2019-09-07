@@ -1,0 +1,17 @@
+<li><a class="left" href="/hr" aria-current="page">HR Hub</a></li>
+<li>
+    <a class="dropdown-trigger waves-effect waves-block waves-light" data-target="profile-dropdown">
+        {{user}}<i class="material-icons nav-drop-icon">arrow_drop_down</i>
+    </a>
+</li>
+<ul class="dropdown-content" id="profile-dropdown" tabindex="0" style="min-width: 200px;">
+  <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons">person_outline</i>{{ user }}</a></li>
+  <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons">chat_bubble_outline</i> Chat</a></li>
+  <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons">help_outline</i> Help</a></li>
+  <li class="divider" tabindex="0"></li>
+  <li tabindex="0" class="">
+      <a class="grey-text text-darken-1" href="#" onclick="logout()">
+       <i class="material-icons">exit_to_app</i> Sign out
+      </a>
+  </li>
+</ul>
