@@ -20,7 +20,8 @@ gulp.task('sass', function () {
 	return gulp.src([
 			'materialize.scss',
 			'style.scss',
-			'custom/*.scss'
+			'custom/*.scss',
+			'layout/*.scss'
 		], { cwd: config.source.sass})
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer({

@@ -4462,13 +4462,13 @@ li.home:before {
     vertical-align: middle;
     color: #fff;
     font-size: 1.2rem;
-    background: #fafafa;
+    background: white;
     display: table-cell; }
   .avatar-status img {
     width: 100%;
     max-width: 100%;
     height: auto;
-    background: #e6e6e6;
+    background: white;
     border: 0 none;
     border-radius: 1000px; }
 
@@ -4546,7 +4546,7 @@ li.home:before {
     width: 7px; }
 
 .collection .collection-item.avatar:not(.circle-clipper) > .circle {
-  background: #e6e6e6; }
+  background: white; }
 
 /*----------------------------------------
 	Dropdown

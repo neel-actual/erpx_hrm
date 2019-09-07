@@ -51,7 +51,7 @@ $avatar-away-color:      color("amber", "accent-3") !default;
     vertical-align: middle;  
     color: $white;
     font-size: 1.2rem;  
-    background: color("grey", "lighten-5");
+    background: white;
     display: table-cell;
   }
 
@@ -59,7 +59,7 @@ $avatar-away-color:      color("amber", "accent-3") !default;
     width: 100%;
     max-width: 100%;
     height: auto;
-    background: #e6e6e6;
+    background: white;
     border: 0 none;
     border-radius: 1000px;
   }
@@ -176,5 +176,5 @@ $avatar-away-color:      color("amber", "accent-3") !default;
   }
 }
 .collection .collection-item.avatar:not(.circle-clipper) > .circle{
-   background: #e6e6e6;
+   background: white;
 }

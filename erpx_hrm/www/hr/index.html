@@ -1,6 +1,6 @@
 {% extends "www/master.html" %}
 
-{% block title %}Beep{% endblock %}
+{% block title %}HR Hub{% endblock %}
 {% block styles %}
 <link href="css/hr.css" rel="stylesheet">
 {% endblock %}
@@ -14,7 +14,11 @@
 {% endif %}
 {% endblock %}
 
-{% block body %}
+{% block sidenav %}
 <!--sidenav-->
 {% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+    <div id="main"></div>
 {% endblock %}
