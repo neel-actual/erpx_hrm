@@ -2,6 +2,10 @@
 
 {% block title %}Beep{% endblock %}
 
+{% block styles %}
+<link href="css/index.css" rel="stylesheet">
+{% endblock %}
+
 {% block nav %}
     {% if user == 'Guest' %}
         <li class=""><a href="/signin" aria-current="page">Sign in</a></li>
@@ -11,6 +15,21 @@
     {% endif %}
 {% endblock %}
 
-{% block body %}
+{% block main %}
 
+{% endblock %}
+
+{% block footer %}
+<footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer">
+    <div class="footer-copyright">
+        <div class="container"><span>© 2019          <a
+                href="/" target="_blank">Powered by Bayo</a> All rights reserved.</span><span
+                class="right hide-on-small-only">Design and Developed by <a
+                href="http://www.erpx.com.my">ERPX</a></span>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
 {% endblock %}
