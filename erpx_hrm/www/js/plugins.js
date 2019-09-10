@@ -65,7 +65,8 @@ $(function () {
     }, 300);
 
     // Collapsible navigation menu
-    $(".nav-collapsible .navbar-toggler").click(function () {
+    $(".nav-collapsible .navbar-toggler").click(function (e) {
+
         // Toggle navigation expan and collapse on radio click
         if ($(".sidenav-main").hasClass("nav-expanded") && !$(".sidenav-main").hasClass("nav-lock")) {
             $(".sidenav-main").toggleClass("nav-expanded");
@@ -90,10 +91,6 @@ $(function () {
                 .text("radio_button_unchecked");
             $(".sidenav-main").removeClass("nav-lock");
             $(".navbar .nav-collapsible").removeClass("sideNav-lock");
-        }
-
-        if (localStorage) {
-
         }
     });
 
@@ -370,6 +367,13 @@ $(function () {
         $("#nav-mobile").css({
             overflow: "auto"
         });
+    }
+
+    //hide sidenav on smaller screen
+    if ($(window).width() <= 992) {
+        var $main_sidenav = $('.sidenav-main .sidenav');
+
+        $main_sidenav.css('transform', 'translateX(-' + $main_sidenav.width() + 'px)');
     }
 });
 

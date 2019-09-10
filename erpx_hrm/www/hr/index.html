@@ -20,5 +20,36 @@
 {% endblock %}
 
 {% block main %}
-    <div id="main"></div>
+<div id="main">
+    <div class="row">
+        <div class="content-wrapper-before gradient-45deg-indigo-blue"></div>
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6 l4">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">Notifications</h4>
+                                <p class="medium-small">You're up to date</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">Upcoming Events</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
 {% endblock %}

@@ -4,21 +4,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <!--    <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">-->
     <!--    <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">-->
     <!--    <meta name="author" content="ThemeSelect">-->
 
     <title>{% block title %}{% endblock %}</title>
-    <link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">
+<!--    <link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">-->
+<!--    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="css/vendor.css">
-    <link rel="stylesheet" type="text/css" href="css/materialize.css">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/animate.css">
-    <link rel="stylesheet" type="text/css" href="css/master.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/master.css">
     {% block styles %}{% endblock %}
     <script>
         window.frappe = {};
@@ -28,6 +28,7 @@
         };
         window.dev_server = 1;
         window.socketio_port = 9000;
+        frappe.csrf_token = "{{ csrf_token }}";
     </script>
 </head>
 <!-- END: Head-->
@@ -91,16 +92,17 @@
 <!--END FRAPPE JS-->
 
 <!-- BEGIN VENDOR JS-->
-<script src="js/vendors.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/vendors.min.js" type="text/javascript"></script>
 <!-- BEGIN VENDOR JS-->
 
 <!-- BEGIN THEME  JS-->
-<script src="js/plugins.js" type="text/javascript"></script>
+<script src="/app-assets/js/plugins.js" type="text/javascript"></script>
 <!-- END THEME  JS-->
 <!-- BEGIN PAGE LEVEL JS-->
-<script src="js/scripts/advance-ui-scrollspy.js"></script>
-{% block scripts %}{% endblock %}
-<script src="js/index.js" defer></script>
+<script src="/app-assets/js/scripts/advance-ui-scrollspy.js"></script>
+{% block scripts %}
+{% endblock %}
+<script src="/js/index.js" defer></script>
 <!-- END PAGE LEVEL JS-->
 
 <div class="sidenav-overlay"></div>

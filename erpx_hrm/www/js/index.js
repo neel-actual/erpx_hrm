@@ -1,16 +1,40 @@
 $(document).ready(function () {
-    var $navs = $('#nav-mobile').children().clone();
+	var FRAPPE_CLIENT = 'frappe.client';
 
-    $('#slide-out').append($navs);
+	$('.modal').modal();
 
+	window.utils = (function () {
 
-    window.logout = function() {
-		return frappe.call({
-			method:'logout',
-			callback: function(r) {
-				if(r.exc) { return; }
-				window.location.href = '/';
+		return {
+			//frappe logout
+			logout: function () {
+				return frappe.call({
+					method:'logout',
+					callback: function(r) {
+						if(r.exc) { return; }
+						window.location.href = '/';
+					}
+				});
+			},
+			list: function (opts) {
+				return new Promise(function (resolve, reject) {
+					try {
+						frappe.call({
+							method: FRAPPE_CLIENT + '.get_list',
+							args: {
+								doctype: opts.doctype,
+								fields: opts.fields,
+								filters: opts.filters,
+								order_by: opts.order_by,
+								limit_start: opts.limit_start,
+								limit_page_length: opts.limit_page_length,
+								parent: opts.parent
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
 			}
-		});
-	}
+		}
+	}());
 });
