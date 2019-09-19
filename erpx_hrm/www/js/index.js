@@ -1,9 +1,11 @@
 $(document).ready(function () {
 	var FRAPPE_CLIENT = 'frappe.client';
 
+	//initialize modal
 	$('.modal').modal();
 
-	window.utils = (function () {
+
+	window.hrm = (function () {
 
 		return {
 			//frappe logout
