@@ -32,6 +32,16 @@
   }
 }
 
+.modal-content {
+  padding-bottom: 100px !important;
+}
+
+#toast-container {
+  top: auto !important;
+  right: 3% !important;
+  bottom: 3%;
+}
+
 @media only screen and (max-width: 992px) {
   .nav-menu {
     display: inline-block;

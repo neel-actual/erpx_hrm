@@ -31,7 +31,7 @@
         <div class="content-wrapper-before gradient-45deg-indigo-blue"></div>
         <div class="col-12">
             <div class="container">
-                <div class="row">
+                <div class="row section-data-tables">
                     <div class="col s12">
                         <div class="card">
                             <div class="card-content">
@@ -41,12 +41,12 @@
                                 </h4>
                                 <div class="row">
                                     <div class="col s12">
-                                        <table id="user-table" class="display">
+                                        <table id="user-table" class="dataTable display">
                                             <thead>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Department</th>
-                                                <th>Office</th>
+                                                <th>Branch</th>
                                                 <th>Email</th>
                                                 <th>Mobile</th>
                                                 <th>Status</th>
@@ -65,30 +65,15 @@
         </div>
     </div>
 </div>
-<div id="create-news.modal" class="modal modal-fixed-footer">
+<div id="update-user.modal" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <h5>Add News</h5>
+        <h5></h5>
         <form class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input type="text" id="news-subject">
-                    <label for="news-subject" class="">Subject</label>
-                </div>
-                <div class="input-field col s12">
-                    <select>
-                        <option value="" disabled selected>None selected</option>
-                    </select>
-                    <label>Send email to</label>
-                </div>
-                <div class="input-field col s12">
-                    <textarea id="news-editor">Message</textarea>
-                </div>
-            </div>
         </form>
     </div>
     <div class="modal-footer">
-        <a href="#" class="right waves-effect waves-light btn">Add</a>
-        <a href="#" class="right blue-text btn-flat" onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
+        <a href="#" class="accept-btn right waves-effect waves-light btn">Update</a>
+        <a href="#" class="cancel-btn right blue-text btn-flat" onclick="$(this).closest('.modal').modal('close')">Cancel</a>
     </div>
 </div>
 {% endblock %}

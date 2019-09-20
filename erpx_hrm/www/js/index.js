@@ -1,9 +1,8 @@
 $(document).ready(function () {
 	var FRAPPE_CLIENT = 'frappe.client';
 
-	//initialize modal
+	//initialize materialize
 	$('.modal').modal();
-
 
 	window.hrm = (function () {
 
@@ -35,6 +34,50 @@ $(document).ready(function () {
 							callback: resolve
 						});
 					} catch (e) { reject(e); }
+				});
+			},
+			get: function (opts) {
+				return new Promise(function (resolve, reject) {
+					try {
+						frappe.call({
+							method: FRAPPE_CLIENT + '.get',
+							args: {
+								doctype: opts.doctype,
+								name: opts.name,
+								filters: opts.filters,
+								parent: opts.parent
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+			upsert: function (doctype, data) {
+				return this.get({
+					doctype: doctype,
+					name: data.name,
+				}).then(function (res) {
+					var old_data;
+
+					if (res && res.message) {
+						old_data = res.message;
+						Object.keys(data).forEach(function (key) { old_data[key] = data[key]; });
+
+						return new Promise(function (resolve, reject) {
+							try {
+								frappe.call({
+									method: FRAPPE_CLIENT + '.save',
+									args: {
+										doc: old_data,
+									},
+									callback: resolve
+								});
+							} catch (e) { reject(e); }
+						});
+					}
+					else {
+						//TODO: need to insert
+					}
 				});
 			}
 		}
