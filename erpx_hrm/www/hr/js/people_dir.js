@@ -112,11 +112,18 @@ $(function () {
             $update_modal.modal('close');
 
             //update frappe
-            hrm.upsert('Employee', emp).then(function () {
+            hrm.update('Employee', emp).then(function () {
 
-                //TODO: update table
+                //update table
                 emps[index] = emp;
-                // user_table.data(emps).draw();
+                user_table.row(index).data([
+                    [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' '),
+                    emp.department || '',
+                    emp.branch || '',
+                    emp.company_email || '',
+                    emp.cell_number || '',
+                    emp.status || ''
+                ]).draw();
 
                 //notify
                 M.toast({

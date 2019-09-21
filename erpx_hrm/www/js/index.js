@@ -52,32 +52,24 @@ $(document).ready(function () {
 					} catch (e) { reject(e); }
 				});
 			},
-			upsert: function (doctype, data) {
-				return this.get({
-					doctype: doctype,
-					name: data.name,
-				}).then(function (res) {
-					var old_data;
+			update: function (doctype, data) {
+				var name,
+					clone = Object.assign({}, data);
 
-					if (res && res.message) {
-						old_data = res.message;
-						Object.keys(data).forEach(function (key) { old_data[key] = data[key]; });
-
-						return new Promise(function (resolve, reject) {
-							try {
-								frappe.call({
-									method: FRAPPE_CLIENT + '.save',
-									args: {
-										doc: old_data,
-									},
-									callback: resolve
-								});
-							} catch (e) { reject(e); }
+				return new Promise(function (resolve, reject) {
+					try {
+						name = clone.name;
+						delete clone.name; //do not update name
+						frappe.call({
+							method: FRAPPE_CLIENT + '.set_value',
+							args: {
+								doctype: doctype,
+								name: name,
+								fieldname: clone
+							},
+							callback: resolve
 						});
-					}
-					else {
-						//TODO: need to insert
-					}
+					} catch (e) { reject(e); }
 				});
 			}
 		}
