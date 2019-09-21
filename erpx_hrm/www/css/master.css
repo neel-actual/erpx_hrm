@@ -29,6 +29,19 @@
   right: 3% !important;
   bottom: 3%; }
 
+table.dataTable tbody tr[role] {
+  cursor: pointer; }
+
+#main .section-data-tables.table-filter .dataTables_wrapper .dataTables_length, #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_filter {
+  display: block; }
+  #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_length label input, #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_filter label input {
+    width: auto;
+    height: auto; }
+  #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_length label select, #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_filter label select {
+    display: inline-block;
+    width: auto;
+    height: auto; }
+
 @media only screen and (max-width: 992px) {
   .nav-menu {
     display: inline-block; } }

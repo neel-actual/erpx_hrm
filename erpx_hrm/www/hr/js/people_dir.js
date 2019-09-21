@@ -51,13 +51,15 @@ $(function () {
         var emp;
 
 
-        console.log(dt);
+        console.log(e);
         //if no employees data, return
         if (emps === undefined) { return; }
 
         emp = emps[index];
         dt.deselect();
         $update_modal.modal('open').find('.modal-content > h5').text(emp.name);
+        //clear previous
+        $update_modal.find('form').empty();
 
         Object.keys(FIELDS).forEach(function (key) {
             var label = FIELDS[key],
