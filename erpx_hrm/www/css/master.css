@@ -1948,6 +1948,11 @@
 .sidenav li .collapsible-body ul li a span {
   margin-left: 44px; }
 
+.nav-links-small {
+  display: none; }
+  .nav-links-small a.active {
+    color: #fff !important; }
+
 .modal-content {
   padding-bottom: 100px !important; }
 
@@ -1960,11 +1965,18 @@ table.dataTable tbody tr[role] {
   cursor: pointer; }
 
 .sidenav li a.active {
-  background: #2196F3; }
+  background: #2196F3;
+  -webkit-box-shadow: 3px 3px 20px 0 rgba(33, 150, 243, 0.4);
+  box-shadow: 3px 3px 20px 0 rgba(33, 150, 243, 0.4); }
 
 .navbar .navbar-light ul a.active {
   background: #2196F3;
   color: #fff; }
+
+#card-stats .card-stats-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
 
 #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_length, #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_filter {
   display: block; }
@@ -1979,3 +1991,12 @@ table.dataTable tbody tr[role] {
 @media only screen and (max-width: 992px) {
   .nav-menu {
     display: inline-block; } }
+
+@media only screen and (max-width: 601px) {
+  #nav-avatar .avatar div, #nav-avatar .avatar .avatar-frame {
+    margin-top: 4px;
+    margin-bottom: 4px; }
+  .nav-links {
+    display: none; }
+  .nav-links-small {
+    display: initial; } }
