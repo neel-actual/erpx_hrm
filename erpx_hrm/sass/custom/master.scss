@@ -28,14 +28,27 @@
 
 #nav-avatar {
   .avatar {
+    //if no image
     div {
-      margin-top: 11px;
-      margin-bottom: 11px;
-      width: 42px;
-      height: 42px;
-      line-height: 42px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
       text-align: center;
       background: color('grey', 'base') !important;
+      border-radius: 50%;
+    }
+
+    //for image
+    .avatar-frame {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      display: block;
+      background-size: 48px;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
       border-radius: 50%;
     }
   }
