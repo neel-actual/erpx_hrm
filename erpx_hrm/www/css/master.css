@@ -1909,6 +1909,9 @@
   width: 70px;
   margin-left: 10px; }
 
+.app-logo {
+  display: none; }
+
 .nav-menu {
   display: none;
   position: relative;

@@ -1,2 +1,5 @@
 .page-footer.main-footer {
   padding-left: 0 !important; }
+
+.app-logo {
+  display: inline-block !important; }

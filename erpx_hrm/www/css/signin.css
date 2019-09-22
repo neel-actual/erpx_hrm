@@ -19,3 +19,6 @@
   height: calc(100vh - 80px); }
   .form-section .card-panel.border-radius-6.login-card {
     margin-left: 0 !important; }
+
+.app-logo {
+  display: inline-block !important; }
