@@ -23,7 +23,6 @@ $(function () {
         emps,
         $update_modal = $('#update-user\\.modal');
 
-    $('#people-submodule').addClass('active open').find('> div').show();
 
     //list down employees
     hrm.list({

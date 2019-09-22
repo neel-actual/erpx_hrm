@@ -1,3 +1,5 @@
+@import "../theme-components/_color";
+
 #appicon {
   line-height: 64px;
   width: 70px;
@@ -44,6 +46,15 @@
 
 table.dataTable tbody tr[role] {
   cursor: pointer;
+}
+
+.sidenav li a.active {
+  background: color('blue', 'base');
+}
+
+.navbar .navbar-light ul a.active {
+  background: color('blue', 'base');
+  color: #fff;
 }
 
 #main .section-data-tables.table-filter {

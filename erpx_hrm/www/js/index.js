@@ -1,8 +1,24 @@
 $(document).ready(function () {
-	var FRAPPE_CLIENT = 'frappe.client';
+	var FRAPPE_CLIENT = 'frappe.client',
+		CURRENT_URL = location.href
+			.replace('http://', '')
+			.replace('https://', '')
+			.replace(location.host, '')
+			.replace(/#$/, '')
+			.split('?')[0];
 
 	//initialize materialize
 	$('.modal').modal();
+
+	console.log(CURRENT_URL);
+	//highlight module
+	$('.navbar ul a[href="/' + CURRENT_URL.split('/')[1] + '"]').addClass('active');
+
+	//highlight submodule
+	$('.sidenav li a[href="'+ CURRENT_URL + '"]').addClass('active');
+
+	    //expand submodule
+    $('.sidenav li a[href="'+ CURRENT_URL + '"]').closest('ul').closest('li').addClass('active open').find('> div').show();
 
 	window.hrm = (function () {
 
