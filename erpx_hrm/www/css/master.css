@@ -1924,6 +1924,16 @@
   vertical-align: middle;
   margin-left: 10px; }
 
+#nav-avatar .avatar div {
+  margin-top: 11px;
+  margin-bottom: 11px;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  background: #9e9e9e !important;
+  border-radius: 50%; }
+
 .sidenav li .collapsible-body ul li a span {
   margin-left: 44px; }
 

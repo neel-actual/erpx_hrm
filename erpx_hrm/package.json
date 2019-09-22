@@ -24,6 +24,7 @@
     "gutil": "^1.6.4"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "node-sass": "^4.12.0"

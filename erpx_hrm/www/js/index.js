@@ -14,11 +14,13 @@ $(document).ready(function () {
 	//highlight module
 	$('.navbar ul a[href="/' + CURRENT_URL.split('/')[1] + '"]').addClass('active');
 
-	//highlight submodule
-	$('.sidenav li a[href="'+ CURRENT_URL + '"]').addClass('active');
+	//highlight & expand submodule
+	$('.sidenav li a[href="'+ CURRENT_URL + '"]')
+		.addClass('active')
+		.closest('ul').closest('li').addClass('active open').find('> div').show();
 
-	    //expand submodule
-    $('.sidenav li a[href="'+ CURRENT_URL + '"]').closest('ul').closest('li').addClass('active open').find('> div').show();
+	$('#nav-avatar').html(frappe.avatar());
+
 
 	window.hrm = (function () {
 

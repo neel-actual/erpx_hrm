@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
 	concat = require('gulp-concat'),
     sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer');
+    autoprefixer = require('gulp-autoprefixer'),
+	_bs = require('browser-sync').create();
 
 gutil.log('Starting Gulp!!');
 
@@ -29,4 +30,17 @@ gulp.task('sass', function () {
             cascade: false
         }))
 		.pipe(gulp.dest(config.destination.css));
+});
+
+gulp.task('BSync', function () {
+	_bs.init({
+		proxy: 'localhost:8000'
+	});
+
+	gulp.watch([
+		'www/**/*.css',
+		'www/**/*.html',
+		'www/**/*.py',
+		'www/**/*.js'
+	]).on('change', _bs.reload);
 });
