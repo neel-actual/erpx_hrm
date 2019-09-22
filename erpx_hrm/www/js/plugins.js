@@ -92,7 +92,16 @@ $(function () {
             $(".sidenav-main").removeClass("nav-lock");
             $(".navbar .nav-collapsible").removeClass("sideNav-lock");
         }
+
+        if ($('.sidenav-main').hasClass('nav-lock')) {
+            localStorage.removeItem('nav-lock');
+        }
+        else { localStorage.setItem('nav-lock', 0); }
     });
+
+    if (localStorage.getItem('nav-lock')) {
+        $('.sidenav-main .navbar-toggler').click();
+    }
 
     // Expand navigation on mouseenter event
     $(".sidenav-main.nav-collapsible, .navbar .brand-sidebar").mouseenter(function () {

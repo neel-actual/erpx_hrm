@@ -19,8 +19,8 @@ $(document).ready(function () {
 		.addClass('active')
 		.closest('ul').closest('li').addClass('active open').find('> div').show();
 
+	//set avatar
 	$('#nav-avatar').html(frappe.avatar());
-
 
 	window.hrm = (function () {
 
