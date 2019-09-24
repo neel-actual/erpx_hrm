@@ -2008,11 +2008,12 @@ table.dataTable tbody tr[role] {
     position: absolute;
     top: 70px;
     margin-left: 20px;
-    font-size: 24px;
+    font-size: 20px;
     width: 30%; }
   .main-banner .banner-subtitle {
+    font-size: 18px;
     position: absolute;
-    top: 140px;
+    top: 190px;
     margin-left: 20px;
     width: 30%; }
 
