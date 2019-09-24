@@ -21,7 +21,8 @@
 {% block main %}
 <div id="main">
     <div class="row">
-        <div class="animate fadeUp hr-banner">
+        <div class="animate fadeUp main-banner">
+            <img src="/images/hr-banner.svg" />
             {% if user_doc.full_name == 'None' %}
                 <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
             {% else %}
