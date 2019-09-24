@@ -40,7 +40,6 @@ gulp.task('BSync', function () {
 	gulp.watch([
 		'www/**/*.css',
 		'www/**/*.html',
-		'www/**/*.py',
 		'www/**/*.js'
 	]).on('change', _bs.reload);
 });

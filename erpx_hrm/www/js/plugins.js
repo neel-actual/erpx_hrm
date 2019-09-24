@@ -101,6 +101,7 @@ $(function () {
 
     if (localStorage.getItem('nav-lock')) {
         $('.sidenav-main .navbar-toggler').click();
+        $('.sidenav-main').removeClass('nav-expanded').addClass('nav-collapsed');
     }
 
     // Expand navigation on mouseenter event
