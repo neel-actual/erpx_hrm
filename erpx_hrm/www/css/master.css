@@ -2017,6 +2017,16 @@ table.dataTable tbody tr[role] {
     margin-left: 20px;
     width: 30%; }
 
+.material-icons-outlined {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ec008c), to(#00aeef));
+  background: -webkit-linear-gradient(top, #ec008c 0%, #00aeef 100%);
+  background: -moz-linear-gradient(top, #ec008c 0%, #00aeef 100%);
+  background: -o-linear-gradient(top, #ec008c 0%, #00aeef 100%);
+  background: linear-gradient(to bottom, #ec008c 0%, #00aeef 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; }
+
 @media only screen and (max-width: 992px) {
   .nav-menu {
     display: inline-block; } }

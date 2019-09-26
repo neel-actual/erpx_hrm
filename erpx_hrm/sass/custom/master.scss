@@ -153,6 +153,12 @@ table.dataTable tbody tr[role] {
   }
 }
 
+.material-icons-outlined {
+  background: linear-gradient(to bottom, #ec008c 0%, #00aeef 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 @media only screen and (max-width: 992px) {
   .nav-menu {
