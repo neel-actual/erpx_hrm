@@ -5,7 +5,7 @@
 .sidenav-main {
    position: fixed;
    top: 0;
-   z-index: 999;
+   z-index: 1;
    height: 100%;
    width: $sidenav-width;
    transition: 0.3s ease all;
@@ -118,6 +118,7 @@
    backface-visibility: hidden;
    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.2);
    transition: auto !important;
+   padding-top: 40px;
    &.native-scroll {
       overflow-y: scroll !important;
    }
@@ -411,7 +412,7 @@
    .sidenav {
       li {
          > a.active {
-            border-radius: $radius;
+            border-radius: 0px;
             color: $sidenav-active-text-color;
             > i {
                color: $sidenav-active-text-color;
@@ -427,14 +428,14 @@
          }
          &:not(.active) > a {
             &:hover {
-               margin-right: 16px;
+               margin-right: 0;
                border-radius: $radius;
             }
          }
          > a,
          a.collapsible-header {
-            padding: 0 0px 0px 16px !important;
-            margin-right: 16px;
+            padding: 0 0px 0px 35px !important;
+            margin-right: 0px;
             transition: none;
          }
       }

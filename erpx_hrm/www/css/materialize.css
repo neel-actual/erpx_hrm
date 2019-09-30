@@ -562,6 +562,12 @@
 .blue-text.text-accent-4 {
   color: #2962FF !important; }
 
+.blue.active {
+  background-color: #2194f3 !important; }
+
+.blue-text.text-active {
+  color: #2194f3 !important; }
+
 .light-blue {
   background-color: #03a9f4 !important; }
 
