@@ -1,0 +1,79 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+    <div class="row">
+        <div class="animate fadeUp main-banner">
+            <img src="/images/hr-banner.png" />
+            <h5 class="pink-text banner-title3">HR Hub > Home</h5>
+            {% if user_doc.full_name == 'None' %}
+                <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
+            {% else %}
+                <h5 class="pink-text banner-title">Hey {{ user }}</h5>
+            {% endif %}
+            {% if emp_doc|length != 0 %}
+                <h5 class="banner-subtitle">Here's your update on {{ emp_doc[0].company }} today.</h5>
+            {% endif %}
+            <h5 class="pink-text banner-title2">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
+        </div>
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6 l4">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">Notifications</h4>
+                                <p class="medium-small">You're up to date</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">Upcoming Events</h4>
+                            </div>
+                        </div>
+                    </div>
+                    {% if emp_doc|length != 0 %}
+                        <div class="col s12 m6 l4">
+                            <div class="card animate fadeLeft">
+                                <div class="card-content">
+                                    <h4 class="card-title">My Company</h4>
+                                    <p>{{ emp_doc[0].company }}</p>
+                                    <span>Joined since {{ emp_doc[0].date_of_joining }}</span>
+                                    <h4 class="card-title">Office</h4>
+                                    <p>{{ emp_doc[0].branch }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

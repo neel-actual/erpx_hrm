@@ -22,7 +22,8 @@
 <div id="main">
     <div class="row">
         <div class="animate fadeUp main-banner">
-            <img src="/images/hr-banner.svg" />
+            <img src="/images/hr-banner.png" />
+            <h5 class="pink-text banner-title3">HR Hub > Home</h5>
             {% if user_doc.full_name == 'None' %}
                 <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
             {% else %}
@@ -31,8 +32,9 @@
             {% if emp_doc|length != 0 %}
                 <h5 class="banner-subtitle">Here's your update on {{ emp_doc[0].company }} today.</h5>
             {% endif %}
+            <h5 class="pink-text banner-title2">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
         </div>
-        <div class="col-12">
+        <div class="col-12 hr-content">
             <div class="container">
                 <div class="row">
                     <div class="col s12 m6 l4">
@@ -47,8 +49,81 @@
                         <div class="card animate fadeLeft">
                             <div class="card-content">
                                 <h4 class="card-title">Upcoming Events</h4>
+                                <div class="col s12 m12 lg12 upcoming-content" style="padding: 0px;">
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <a class="waves-effect waves-cyan" href="#">
+                                <i class="material-icons-outlined">cake</i>
+                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                <p style="display: inline-block;bottom: 20px;top: -5px;position: relative;margin: 0px 10px;color: black;">BIRTHDAY</p>
+                                </a>
+                                </div>
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <div class="col s4 m4 lg4" style="padding-left: 0px;">
+                                <img src="/images/profile_placeholder.png" style="width: 50px;"/>
+                                </div>
+                                <div class="col s8 m8 lg8" style="padding-left: 0px;">
+                                <p class="medium-small" style="color: black;">Datin Minlamin</p>
+                                <p class="medium-small" style="font-size: 11px!important;font-style: italic;">4th August 2019, Sunday</p>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col s12 m12 lg12 upcoming-content" style="padding: 0px;">
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <a class="waves-effect waves-cyan" href="#">
+                                <i class="material-icons-outlined">work</i>
+                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                <p style="display: inline-block;bottom: 20px;top: -5px;position: relative;margin: 0px 10px;color: black;">LEAVE</p>
+                                </a>
+                                </div>
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <p class="medium-small">No leaves this week.</p>
+                                </div>
+                                </div>
+                                <div class="col s12 m12 lg12 upcoming-contents" style="padding: 0px;">
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <a class="waves-effect waves-cyan" href="#">
+                                <i class="material-icons-outlined">person</i>
+                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                <p style="display: inline-block;bottom: 20px;top: -5px;position: relative;margin: 0px 10px;color: black;">NEW ARRIVAL</p>
+                                </a>
+                                </div>
+                                <div class="col s6 m6 lg6" style="padding-left: 0px;">
+                                <p class="medium-small">No arrival this week.</p>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">My Company</h4>
+                                <br>
+                                <p style="color: black;">BAYO PAY M SDN BHD</p>
+                                <p style="color: #969696;">Joined since 1 Jul 2013</p>
+                                <br>
+                                <p style="color: black;">OFFICE</p>
+                                <p style="color: black;display: inline-block;">MAIN BRANCH</p>
+                                <p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;">HQ</p>
+                                <p style="color: #969696;font-size: 13px;">72-3 JALAN PJU 5/22 ENCORP STRAND, PUSAT PERDAGANGAN KOTA DAMANSARA, 47810 KOTA DAMANSARA PJU 5, PETALING JAYA SELANGOR</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="col s12 m8 lg8">
+                        <div class="card animate fadeLeft">
+                            <div class="card-content">
+                                <h4 class="card-title">My Beep</h4>
+                                <p class="medium-small">No details Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m4 lg4 floatingicon">
+                        <img src="/images/chat_icon.png" style="width: 60px;float: right;"/>
+                        </div>
+                    </div>
+                    <p> </p>
+                    <div class="col s12 m12 lg12 footer">
+                    <p style="text-align: center;">© 2019 Bayo Employment Engagement Platform | Powered by Bayo | All rights reserved.</p> 
                     </div>
                     {% if emp_doc|length != 0 %}
                         <div class="col s12 m6 l4">
@@ -67,7 +142,6 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
