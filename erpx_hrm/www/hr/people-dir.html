@@ -24,23 +24,41 @@
 {% include "www/hr/sidenav.html" %}
 {% endblock %}
 
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
 {% block main %}
 <div id="main">
     <div class="row">
-        <div class="content-wrapper-before blue"></div>
+        <div class="content-wrapper-before"></div>
         <div class="col-12">
             <div class="container">
                 <div class="row section-data-tables table-filter">
                     <div class="col s12">
+    <div class="nav-wrapper black-text banner-title3">
+      <div class="breadcrumb" style="display: inline;">
+        <a class="breadcrumb">HR Hub</a>
+          <a class="breadcrumb">People</a>
+        <a href="/hr/people-dir" class="breadcrumb active">Dictionary</a>
+      </div>
+    <div class="optionbutton" style="display: inline;float: right;">
+<a class="waves-effect waves-light btn-small"><i class="material-icons">format_list_bulleted</i></a>
+<a class="waves-effect waves-light btn-small" style="background-color: white;"><i class="material-icons" style="color: grey;">view_module</i></a>
+    </div>
+    </div>
+<div class="content">
                         <div class="card">
                             <div class="card-content">
-                                <h4 class="card-title">Directory
-                                    <a href=""
+                                <i class="material-icons-outlined" style="display: inline;">person</i>
+                                <h4 class="card-title directorytitle" style="display: inline;">Directory</h4>
+                                <a href=""
                                        class="modal-trigger waves-effect waves-light right">Manage Employees</a>
-                                </h4>
                                 <div class="row">
                                     <div class="col s12">
                                         <table id="user-table" class="dataTable display">
+                                            <tbody>
                                             <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -51,19 +69,12 @@
                                                 <th>Status</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div id="update-user.modal" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h5></h5>
@@ -74,6 +85,7 @@
         <a href="#" class="accept-btn right waves-effect waves-light btn">Update</a>
         <a href="#" class="cancel-btn right blue-text btn-flat" onclick="$(this).closest('.modal').modal('close')">Cancel</a>
     </div>
+</div>
 </div>
 {% endblock %}
 

@@ -8,7 +8,7 @@
 
 {% block nav %}
     {% if user == 'Guest' %}
-        <li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+        <li class="signinbutton"><a href="/signin" aria-current="page" style="background: #00aeef !important;color: white;border-radius: 100px !important;height: 40px;top: 10px;position: relative;line-height: 40px;right: 15px;">Sign in</a></li>
     {% endif %}
     {% if user != 'Guest' %}
 	    {% include "www/nav.html" %}
@@ -21,8 +21,8 @@
 {% block footer %}
 <footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer">
     <div class="footer-copyright">
-        <div class="container"><span>© 2019          <a
-                href="/" target="_blank">Powered by Bayo</a> All rights reserved.</span><span
+        <div class="container"><span style="padding: 0px 10px; border-right: 1px solid #676767;">© 2019 Bayo Employment Engagement Platform.</span><span style="padding: 0px 10px; border-right: 1px solid #676767;"><a
+                href="/" target="_blank">Powered by Bayo</a></span><span style="padding: 0px 10px;">All rights reserved.</span><span
                 class="right hide-on-small-only">Design and Developed by <a
                 href="http://www.erpx.com.my">ERPX</a></span>
         </div>

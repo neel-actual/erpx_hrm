@@ -24,26 +24,38 @@
 {% include "www/hr/sidenav.html" %}
 {% endblock %}
 
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
 {% block main %}
 <div id="main">
     <div class="row">
-        <div class="content-wrapper-before blue"></div>
+        <div class="content-wrapper-before"></div>
         <div class="col-12">
             <div class="container">
-                <div class="row section-data-tables">
+                <div class="row section-data-tables" style="margin: 50px;">
                     <div class="col s12">
+    <div class="nav-wrapper black-text banner-title3">
+      <div class="breadcrumb">
+        <a class="breadcrumb">HR Hub</a>
+        <a href="/hr/news" class="breadcrumb active">News</a>
+      </div>
+    </div>
+<div class="content">
                         <div class="card">
                             <div class="card-content">
-                                <h4 class="card-title">News
-                                    <a href="#create-news.modal"
+                                <i class="material-icons-outlined" style="display: inline;">announcement</i>
+                                <h4 class="card-title newstitle" style="display: inline;">News</h4>
+                                <a href="#create-news.modal"
                                        class="modal-trigger waves-effect waves-light btn right">Create
                                         News</a>
-                                </h4>
                                 <div class="row">
                                     <div class="col s12">
-                                        <table id="page-length-option" class="display dataTable">
+                                        <table id="page-length-option" class="display dataTable" style="width: 100%;padding: 20px 0px;">
                                             <thead>
-                                            <tr>
+                                            <tr style="background-color: #eff1f9;">
                                                 <th>Subject</th>
                                                 <th>Creator</th>
                                                 <th>Date</th>
@@ -56,26 +68,21 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div id="create-news.modal" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h5>Add News</h5>
         <form class="col s12">
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12" style="margin-bottom: 0px;">
+                    <p>Subject</p>
                     <input type="text" id="news-subject">
-                    <label for="news-subject" class="">Subject</label>
+                    <!--<label for="news-subject" class="" style="left: 30px;">Subject</label>-->
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12" style="margin-top: 0px;">
+                    <p>Send email to</p>
                     <select>
                         <option value="" disabled selected>None selected</option>
                     </select>
-                    <label>Send email to</label>
                 </div>
                 <div class="input-field col s12">
                     <textarea id="news-editor">Message</textarea>
@@ -87,6 +94,7 @@
         <a href="#" class="right waves-effect waves-light btn">Add</a>
         <a href="#" class="right blue-text btn-flat" onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
     </div>
+</div>
 </div>
 {% endblock %}
 

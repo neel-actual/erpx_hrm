@@ -26,20 +26,33 @@
 {% include "www/hr/sidenav.html" %}
 {% endblock %}
 
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
 {% block main %}
 
 <div id="main">
     <div class="row">
-        <div class="content-wrapper-before blue"></div>
-        <div class="col s12">
-            <div class="container">
-                <div class="col xl6 l6 m6 s12">
+    <div class="container">
+        <div class="section-data-tables nav-wrapper black-text banner-title3 leave-request">
+    <div class="col s12">
+      <div class="breadcrumb">
+        <a class="breadcrumb">HR Hub</a>
+        <a class="breadcrumb">Leave</a>
+        <a href="/hr/leave-request" class="breadcrumb active">Request</a>
+      </div>
+    </div>
+    <div class="content">
+                <div class="col xl6 l6 m6 s12 balancesummary">
                     <div id="card-stats" class="card">
                         <div class="card-content">
-                            <div class="card-title">Balance Summary</div>
-                            <p>Balance left</p>
+                            <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+                            <div class="card-title" style="text-align: left;margin-left: 35px;">Balance Summary</div>
+                            <!--<p>Balance left</p>-->
                             <div class="row">
-                                <!--                                individual-card-->
+                                <!--individual-card-->
                                 <div class="col s12 m6 l6 xl3">
                                     <div class="card blue">
                                         <div class="card-content center">
@@ -85,21 +98,127 @@
                     </div>
                 </div>
 
-                <div class="col xl6 l6 m6 s12">
+                <div class="col xl6 l6 m6 s12 requestleave">
                     <div class="card">
                         <div class="card-content">
-                            <div class="card-title">Request Leave</div>
+                            <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+                            <div class="card-title" style="text-align: left;margin-left: 35px;">Request Leave</div>
                             <form>
-
+                            <div class="row margin infodetails">
+                            <div class="input-field col s12">
+                                <p style="margin-bottom: 10px;">Leave type</p>
+                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <option value="" disabled selected>Select Type</option>
+                                <option value="information technology">Accident</option>
+                                <option value="engineering">Sick</option>
+                                <option value="telecommunication">Vacation</option>
+                                </select>
+                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <p style="margin-bottom: 10px;">Start Time</p>
+                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                                <input id="start" type="text">
+                                <!--<label for="signup-name" class="center-align">Company Name</label>-->
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <p style="margin-bottom: 10px;">End Time</p>
+                                <!--<i class="material-icons-outlined prefix pt-2">email</i>-->
+                                <input id="end" type="text">
+                                <!--<label for="signup-email" class="center-align">Email</label>-->
+                            </div>
+                            <div class="input-field col s12">
+                                <p style="margin-bottom: 10px;">Reason</p>
+                                <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
+                                <textarea id="reason" type="text"></textarea>
+                                <!--<label for="signup-password">Password</label>-->
+                            </div>
+                            <div class="input-field col s12">
+                                <p style="margin-bottom: 10px;">Approver</p>
+                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <option value="" disabled selected>Select first approver</option>
+                                <option value="information technology">Information Technology</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="telecommunication">Telecommunication</option>
+                                <option value="electronic">Electronic</option>
+                                </select>
+                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <option value="" disabled selected>Select second approver</option>
+                                <option value="information technology">Information Technology</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="telecommunication">Telecommunication</option>
+                                <option value="electronic">Electronic</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12">
+                                <p style="margin-bottom: 10px;">Send notification</p>
+                                <textarea id="reason" type="text"></textarea>
+                                <p style="margin-bottom: 10px;color: grey;">We send email notifications to people you’ve added once your
+request is approved.</p>
+                            </div>
+                                <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right">Request</a>
+                            </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col m6 s12"></div>
+            
+            <div class="col xl6 l6 m6 s12 calendar">              
+                <div id="card-stats" class="card">
+                        <div class="card-content">
+                            <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+                            <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
+                             <div class="row">
+    <div class="col s12 leavetabs" style="margin-bottom: 20px;">
+      <ul class="tabs">
+        <li class="tab col s3"><a class="active" href="#">All leaves</a></li>
+        <li class="tab col s6"><a href="#">Department's leaves</a></li>
+        <li class="tab col s3"><a href="#">My leaves</a></li>
+      </ul>
     </div>
-</div>
+<div id="basic-calendar" class="fc fc-unthemed fc-ltr">
+    </div></div></div></div></div>
+            <div class="col xl6 l6 m6 s12 requesthistory"> 
+            <div id="card-stats" class="card">
+            <div class="card-content"> 
+            <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+            <div class="card-title" style="text-align: left;margin-left: 35px;">Request History</div>
+            <p style="position: absolute;top: 30px;right: 20px;color: #00aeef;">Clear filters</p>
+            <form>
+            <div class="input-field col s12 m4">
+                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Type</p>
+                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <option value="" disabled selected>All Type</option>
+                                <option value="information technology">Accident</option>
+                                <option value="engineering">Sick</option>
+                                <option value="telecommunication">Vacation</option>
+                                </select>
+            </div>
+            <div class="input-field col s12 m4">
+                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Start Time</p>
+                                <input id="start" type="text">
+            </div>
+            <div class="input-field col s12 m4">
+                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">End Time</p>
+                                <input id="end" type="text">
+            </div> 
+            </form>
+            <table id="page-length-option" class="display dataTable" style="width: 100%;padding: 20px 0px;">
+                                            <thead>
+                                            <tr style="background-color: #eff1f9;">
+                                                <th>Type</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+            </div>
+            </div>
+            </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

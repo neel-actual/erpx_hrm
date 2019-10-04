@@ -4,6 +4,13 @@
     <li><a class="left" href="/payroll" aria-current="page">Payroll</a></li>
     <li><a class="left" href="/benefits" aria-current="page">Benefits</a></li>
 </span>
+<span class="nav-plan">
+                <i class="large material-icons searchicon">search</i>
+                <i class="large material-icons scheduleicon">schedule</i>
+                <p class="daysleft">30 days left</p>
+                <a class="selectaplan" href="#" target="_blank" rel="noopener noreferrer"><p>Select A Plan</p></a>
+                <!--<p class="line"> </p>-->
+</span>
 <li><a id="nav-avatar" class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);"
        data-target="profile-dropdown"><span class="avatar-status"><img
         src="/images/avatar.svg" alt="avatar"><i></i></span></a>
@@ -15,14 +22,14 @@
             <li tabindex="0"><a href="/benefits" class="grey-text text-darken-1" aria-current="page">Benefits</a></li>
         </span>
         <li class="divider" tabindex="0"></li>
-        <li tabindex="0"><a href="/desk" class="grey-text text-darken-1"><i class="material-icons-outlined">free_breakfast</i>Switch to desk</a>
+        <li tabindex="0"><a href="/desk" class="grey-text text-darken-1" style="line-height: 50px;"><i class="material-icons-outlined">free_breakfast</i>Switch to desk</a>
         </li>
 <!--        <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons-outlined">chat_bubble_outline</i> Chat</a>-->
 <!--        </li>-->
 <!--        <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons-outlined">help_outline</i> Help</a></li>-->
         <li class="divider" tabindex="0"></li>
         <li tabindex="0" class="">
-            <a class="grey-text text-darken-1" href="#" onclick="hrm.logout()">
+            <a class="grey-text text-darken-1" href="#" onclick="hrm.logout()" style="line-height: 50px;">
                 <i class="material-icons-outlined">exit_to_app</i> Sign out
             </a>
         </li>
