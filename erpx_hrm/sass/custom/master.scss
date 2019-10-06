@@ -11,6 +11,16 @@
   border-radius: 26px;
 }
 
+.btn-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+}
+
 .nav-menu {
   display: none;
   position: relative;
@@ -110,6 +120,22 @@ table.dataTable tbody tr[role] {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.profile-card {
+  .card-image {
+    .card-title {
+      color: #fff;
+      text-shadow: 0.075em 0.08em 0.1em rgba(0, 0, 0, .7);
+      padding: 0 1rem;
+      h6 {
+        font-size: 1rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
 }
 
 #main .section-data-tables.table-filter {
@@ -972,4 +998,19 @@ input[type=password]:not(.browser-default) {
     border: 1px solid #c1c1c1 !important;
     border-radius: 5px !important;
     padding-left: 10px!important;
+}
+
+.toggle-options {
+  a {
+    background-color: #fff;
+    i {
+      color: color('grey', 'base');
+    }
+    &.active, &:hover {
+      background-color: color('blue', 'base');
+      i {
+        color: #fff;
+      }
+    }
+  }
 }

@@ -28,126 +28,126 @@
     <div class="row">
         <div class="animate fadeUp main-banner">
             <img src="/images/hr-banner.png" style="width: 100%;"/>
-    <div class="nav-wrapper black-text banner-title3">
-      <div class="breadcrumb">
-        <a class="breadcrumb">HR Hub</a>
-        <a href="/hr" class="breadcrumb active">Home</a>
-      </div>
-    </div>
+            <div class="nav-wrapper black-text banner-title3">
+                <div class="breadcrumb">
+                    <a class="breadcrumb">HR Hub</a>
+                    <a href="/hr" class="breadcrumb active">Home</a>
+                </div>
+            </div>
             <!--<h5>HR Hub<span style="color: #00aeef;"> > Home</span></h5>-->
             {% if user_doc.full_name == 'None' %}
-                <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
+            <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
             {% else %}
-                <h5 class="pink-text banner-title">Hey {{ user }}</h5>
+            <h5 class="pink-text banner-title">Hey {{ user }}</h5>
             {% endif %}
             {% if emp_doc|length != 0 %}
-                <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ emp_doc[0].company }}  today.</h5>
+            <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ emp_doc[0].company }} today.</h5>
             {% else %}
-                <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
+            <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
             {% endif %}
-        <div class="content">
-        <div class="col-12 hr-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col s12 m12 l6 xl4">
-                        <div class="card animate fadeLeft">
-                            <div class="card-content">
-                                <h4 class="card-title">Notifications</h4>
-                                <p class="medium-small">You're up to date</p>
+            <div class="content">
+                <div class="col-12 hr-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12 m12 l6 xl4">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Notifications</h4>
+                                        <p class="medium-small">You're up to date</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m12 l6 xl4">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Upcoming Events</h4>
+                                        <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
+                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <a class="waves-effect waves-cyan" href="#">
+                                                    <div class="col s3 m3 l3" style="padding-left: 0px;">
+                                                        <i class="material-icons-outlined">cake</i>
+                                                    </div>
+                                                    <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                                    <div class="col s9 m9 lg9" style="padding-left: 0px;">
+                                                        <p style="color: black; padding-top: 5px;">BIRTHDAY</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col s6 m6 l6" style="padding: 0px;">
+                                                <div class="col s4 m2 l12 xl4" style="padding: 0px;">
+                                                    <img src="/images/profile_placeholder.png" style="width: 45px;"/>
+                                                </div>
+                                                <div class="col s8 m10 l12 xl8" style="padding-left: 0px;">
+                                                    <p class="medium-small" style="color: black;">Datin Minlamin</p>
+                                                    <p class="medium-small"
+                                                       style="font-size: 11px!important;font-style: italic;">4th August
+                                                        2019, Sunday</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
+                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <a class="waves-effect waves-cyan" href="#">
+                                                    <div class="col s3 m3 l3" style="padding-left: 0px;">
+                                                        <i class="material-icons-outlined">work</i>
+                                                    </div>
+                                                    <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                                    <div class="col s9 m9 l9" style="padding-left: 6px;">
+                                                        <p style="color: black;">LEAVE</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <p class="medium-small">No leaves this week.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 m12 l12 upcoming-contents" style="padding: 0px;">
+                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <a class="waves-effect waves-cyan" href="#">
+                                                    <div class="col s3 m3 l3" style="padding-left: 0px;">
+                                                        <i class="material-icons-outlined">person</i>
+                                                    </div>
+                                                    <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                                    <div class="col s9 m9 l9" style="padding: 0px;">
+                                                        <p style="color: black;">NEW ARRIVAL</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <p class="medium-small">No arrival this week.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m12 l6 xl4">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content">
+                                        <h4 class="card-title">My Company</h4>
+                                        <br>
+                                        <p style="color: black;">BAYO PAY M SDN BHD</p>
+                                        <p style="color: #969696;">Joined since 1 Jul 2013</p>
+                                        <br>
+                                        <p style="color: black;">OFFICE</p>
+                                        <p style="color: black;display: inline-block;">MAIN BRANCH</p>
+                                        <p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;">
+                                            HQ</p>
+                                        <p style="color: #969696;font-size: 13px;">72-3 JALAN PJU 5/22 ENCORP STRAND,
+                                            PUSAT PERDAGANGAN KOTA DAMANSARA, 47810 KOTA DAMANSARA PJU 5, PETALING JAYA
+                                            SELANGOR</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m8 lg8">
+                                <div class="card animate fadeLeft">
+                                    <div class="card-content">
+                                        <h4 class="card-title">My Beep</h4>
+                                        <p class="medium-small">No details Available</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col s12 m12 l6 xl4">
-                        <div class="card animate fadeLeft">
-                            <div class="card-content">
-                                <h4 class="card-title">Upcoming Events</h4>
-                                <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
-                                <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                <a class="waves-effect waves-cyan" href="#">
-                                <div class="col s3 m3 l3" style="padding-left: 0px;">
-                                <i class="material-icons-outlined">cake</i>
-                                </div>
-                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
-                                <div class="col s9 m9 lg9" style="padding-left: 0px;">
-                                <p style="color: black; padding-top: 5px;">BIRTHDAY</p>
-                                </div>
-                                </a>
-                                </div>
-                                <div class="col s6 m6 l6" style="padding: 0px;">
-                                <div class="col s4 m2 l12 xl4" style="padding: 0px;">
-                                <img src="/images/profile_placeholder.png" style="width: 45px;"/>
-                                </div>
-                                <div class="col s8 m10 l12 xl8" style="padding-left: 0px;">
-                                <p class="medium-small" style="color: black;">Datin Minlamin</p>
-                                <p class="medium-small" style="font-size: 11px!important;font-style: italic;">4th August 2019, Sunday</p>
-                                </div>
-                                </div>
-                                </div>
-                                <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
-                                <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                <a class="waves-effect waves-cyan" href="#">
-                                <div class="col s3 m3 l3" style="padding-left: 0px;">
-                                <i class="material-icons-outlined">work</i>
-                                </div>
-                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
-                                <div class="col s9 m9 l9" style="padding-left: 6px;">
-                                <p style="color: black;">LEAVE</p>
-                                </div>
-                                </a>
-                                </div>
-                                <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                <p class="medium-small">No leaves this week.</p>
-                                </div>
-                                </div>
-                                <div class="col s12 m12 l12 upcoming-contents" style="padding: 0px;">
-                                <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                <a class="waves-effect waves-cyan" href="#">
-                                <div class="col s3 m3 l3" style="padding-left: 0px;">
-                                <i class="material-icons-outlined">person</i>
-                                </div>
-                                <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
-                                <div class="col s9 m9 l9" style="padding: 0px;">
-                                <p style="color: black;">NEW ARRIVAL</p>
-                                </div>
-                                </a>
-                                </div>
-                                <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                <p class="medium-small">No arrival this week.</p>
-                                </div>
-                                </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m12 l6 xl4">
-                        <div class="card animate fadeLeft">
-                            <div class="card-content">
-                                <h4 class="card-title">My Company</h4>
-                                <br>
-                                <p style="color: black;">BAYO PAY M SDN BHD</p>
-                                <p style="color: #969696;">Joined since 1 Jul 2013</p>
-                                <br>
-                                <p style="color: black;">OFFICE</p>
-                                <p style="color: black;display: inline-block;">MAIN BRANCH</p>
-                                <p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;">HQ</p>
-                                <p style="color: #969696;font-size: 13px;">72-3 JALAN PJU 5/22 ENCORP STRAND, PUSAT PERDAGANGAN KOTA DAMANSARA, 47810 KOTA DAMANSARA PJU 5, PETALING JAYA SELANGOR</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m8 lg8">
-                        <div class="card animate fadeLeft">
-                            <div class="card-content">
-                                <h4 class="card-title">My Beep</h4>
-                                <p class="medium-small">No details Available</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4 lg4 floatingicon">
-                        <a class="btn-floating btn-large waves-effect waves-light blue" style="float: right;"><i class="material-icons">message</i></a>
-                        <!--<img src="/images/chat_icon.png" style="width: 60px;float: right;"/>-->
-                        </div>
-                    </div>
-                    <p> </p>
-                    {% if emp_doc|length != 0 %}
+                        {% if emp_doc|length != 0 %}
                         <div class="col s12 m6 l4">
                             <div class="card animate fadeLeft">
                                 <div class="card-content">
@@ -159,12 +159,14 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
+<a class="btn-floating btn-fab btn-large waves-effect waves-light blue"><i class="material-icons">message</i></a>
 {% endblock %}
 
 {% block scripts %}

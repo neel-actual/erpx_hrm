@@ -21,25 +21,43 @@ $(function () {
             select: 'single'
         }),
         emps,
-        $update_modal = $('#update-user\\.modal');
+        $update_modal = $('#update-user\\.modal'),
+        $profile_card_main = $('.profile-card-main'),
+        $profile_cards = $('.cards-section'),
+        $view_buttons = $('.toggle-options'),
+        $table_view = $('.list-section'),
+        $cards_view = $('.cards-section');
 
 
     //list down employees
     hrm.list({
         doctype: 'Employee',
-        fields: ['name'].concat(Object.keys(FIELDS))
+        fields: ['name'].concat(Object.keys(FIELDS)).concat(['designation'])
     }).then(function(res){
         if (res && res.message) {
             emps = res.message || [];
             emps.forEach(function (emp) {
+                var $card,
+                    name = [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' ');
+
+                //populate table
                 user_table.row.add([
-                    [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' '),
+                    name,
                     emp.department || '',
                     emp.branch || '',
                     emp.company_email || '',
                     emp.cell_number || '',
                     emp.status || ''
                 ]);
+
+                //populate cards
+                $card = $profile_card_main.clone().removeClass('hide profile-card-main');
+                $card.find('.card-title h6').text(name);
+                $card.find('.card-title p').text(emp.designation);
+                $card.find('.card-content div').eq(0).find('span').text(emp.department);
+                $card.find('.card-content div').eq(1).find('span').text(emp.branch);
+                $card.find('.card-content div').eq(2).find('span').text(emp.cell_number);
+                $profile_cards.append($card);
             });
             user_table.draw();
         }
@@ -132,5 +150,12 @@ $(function () {
                 })
             });
         });
+    });
+
+    //toggle views
+    $view_buttons.find('a').click(function () {
+        $view_buttons.find('a').toggleClass('active');
+        $table_view.toggle();
+        $cards_view.toggle();
     });
 });
