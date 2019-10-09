@@ -7,8 +7,14 @@
 {% endblock %}
 
 {% block nav %}
+<span class="landing-page-nav-links">
+    <li><a class="left" href="/hr" aria-current="page">Home</a></li>
+    <li><a class="left" href="/claims" aria-current="page">About beep</a></li>
+    <li><a class="left" href="/payroll" aria-current="page">FAQ</a></li>
+    <li><a class="left" href="/benefits" aria-current="page">Contact Us</a></li>
+</span>
     {% if user == 'Guest' %}
-        <li class="signinbutton"><a href="/signin" aria-current="page" style="background: #00aeef !important;color: white;border-radius: 100px !important;height: 40px;top: 10px;position: relative;line-height: 40px;right: 15px;">Sign in</a></li>
+        <li class="signinbutton"><a href="/signin" aria-current="page" style="background: #00aeef !important;color: white;border-radius: 100px !important;height: 40px;top: 10px;position: relative;line-height: 40px;right: 15px;">Log in</a></li>
     {% endif %}
     {% if user != 'Guest' %}
 	    {% include "www/nav.html" %}
@@ -16,18 +22,43 @@
 {% endblock %}
 
 {% block main %}
+            <div class="main-banner-image" style="display: grid;">
+            <img class="main-banner-image-desktop" src="/images/landing_page.svg" style="width: 100%;"/>
+            <img class="main-banner-image-mobile" src="/images/landing-page-mobile.jpg" style="width: 100%; display: none;"/>
+                    <div class="col s12 m8 l6 xl4 footer-privacy">
+        <div class="container">
+            <span class="privacy" style="padding: 0px 50px;"><a
+                href="/" target="_blank" style="color: #7b7b7b;">Privacy</a></span><span class="terms" style="padding: 0px 50px;"><a
+                href="/" target="_blank" style="color: #7b7b7b;">Terms</a></span><span class="versionnumber" style="padding: 0px 50px;">Version 1.0</span>
+        </div>
+    </div>
+            </div>
+<div class="homedesc">
+<div class="content">
+<div class="container">
+<h5 class="pink-text banner-title">Welcome to beep, <br/>the all-in-one HR platform.</h5>
+<h5 class="black-text banner-title4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, <br/>sed diam nonummy nibh euismod tincidunt ut laoreet dolore<br/>magna aliquam erat volutpat. Ut wisi enim ad minim veniam, <br/>quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut <br/>aliquip ex ea commodo consequat. </h5>
+<p> </p>
+<p> </p>
+<p> </p>
+<div class="waves-effect waves-light btn btn-small">Get Started</div>
+</div>
+</div>
+</div>
 {% endblock %}
 
 {% block footer %}
-<footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer">
-    <div class="footer-copyright">
-        <div class="container"><span style="padding: 0px 10px; border-right: 1px solid #676767;">© 2019 Bayo Employment Engagement Platform.</span><span style="padding: 0px 10px; border-right: 1px solid #676767;"><a
-                href="/" target="_blank">Powered by Bayo</a></span><span style="padding: 0px 10px;">All rights reserved.</span><span
+<!--footer-->
+{% include "www/footer.html" %}
+<!--<footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer">-->
+<!--    <div class="footer-copyright">-->
+<!--        <div class="container"><span style="padding: 0px 10px; border-right: 1px solid #676767;">© 2019 Bayo Employment Engagement Platform.</span><span style="padding: 0px 10px; border-right: 1px solid #676767;"><a
+                href="/" target="_blank">Powered by Bayo</a></span><span style="padding: 0px 10px;">All rights reserved.</span><!--<span
                 class="right hide-on-small-only">Design and Developed by <a
-                href="http://www.erpx.com.my">ERPX</a></span>
-        </div>
-    </div>
-</footer>
+                href="http://www.erpx.com.my">ERPX</a></span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
 {% endblock %}
 
 {% block scripts %}

@@ -1,0 +1,103 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+      href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+    <div class="row">
+        <div class="content-wrapper-before"></div>
+        <div class="col-12">
+            <div class="container">
+                <div class="row section-data-tables" style="margin: 50px;">
+                    <div class="col s12">
+                        <div class="nav-wrapper black-text banner-title3">
+                            <div class="breadcrumb">
+                                <a class="breadcrumb">HR Hub</a>
+                                <a class="breadcrumb">People</a>
+                                <a href="/hr/news" class="breadcrumb active">Org Chart</a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="card">
+                                <div class="card-content">
+                                    <i class="material-icons-outlined" style="display: inline;">person</i>
+                                    <h4 class="card-title newstitle" style="display: inline;">Org Chart</h4>
+                                    <a href="#" class="manage-employees modal-trigger waves-effect waves-light right">Manage Employees</a>
+                                    <a href="#" class="modal-trigger waves-effect waves-light btn left" style="position: absolute;top: 70px;left: 30px;">Collapse All</a>
+                                    <div class="row">
+    <ul  class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
+        id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
+        style="transform: translateX(0px);">   
+    <li id="org-chart-management"  class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0"><i
+                class="material-icons-outlined">flight_takeoff</i><span class="menu-title"
+                                                               data-i18n="">Leave</span></a>
+            <div class="collapsible-body">
+                <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                    <li class=""><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
+                    </li>
+                    <li><a class="collapsible-body" href="/hr/leave-approval" data-i18n=""><span>Approval</span></a>
+                    </li>
+                    <li><a class="collapsible-body" href="/hr/leave-balance" data-i18n=""><span>Balance</span></a>
+                    </li>
+                    <li><a class="collapsible-body" href="/hr/leave-settings" data-i18n=""><span>Leave Settings</span></a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+        type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+        type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+        type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script defer src="/hr/js/news.js" type="text/javascript"></script>
+{% endblock %}

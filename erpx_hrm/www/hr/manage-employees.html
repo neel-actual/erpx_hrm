@@ -1,0 +1,190 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+    <div class="row">
+        <div class="content-wrapper-before"></div>
+        <div class="col-12">
+            <div class="container">
+                <div class="row section-data-tables">
+                    <div class="col s12">
+                        <div class="nav-wrapper black-text banner-title3">
+                            <div class="breadcrumb" style="display: inline;">
+                                <a class="breadcrumb">HR Hub</a>
+                                <a class="breadcrumb">People</a>
+                                <a href="/hr/people-dir" class="breadcrumb active">Dictionary</a>
+                            </div>
+
+                        </div>
+                        <div class="content table-section">
+                            <div class="list-section">
+                                <div class="card">
+                                    <div class="card-content">
+                                       <div class="row">
+                                        <i class="material-icons-outlined" style="display: inline;">person</i>
+                                        <h4 class="card-title directorytitle" style="display: inline;">Manage Employees</h4>
+                                        <a href=""
+                                        class="modal-trigger waves-effect waves-light right">Clear All</a>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="toggle-options" style="display: inline;">
+                                            <div class="bulkupload" style="display: inline-block;padding-left: 10px;padding-right: 15px;"><p><a href="/">Bulk Upload</a></p></div>
+                                            <div class="waves-effect waves-light btn btn-small active">Add Employee</div>
+                                        </div>
+                                        <div style="width: 250px;float: right;position: absolute;right: 20px;top: 60px;" class="input-field col s12 m3">     
+                  <i style="position: absolute;padding-top: 12px;right: 10px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+                  </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div class="input-field col s2 m2">
+                                                <div>Job Title</div>
+                                                <div>
+                                                    <select>
+                                                        <option>All Job Title</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="input-field col s2 m2">
+                                                <div>Department</div>
+                                                <div>
+                                                    <select>
+                                                        <option>All Department</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="input-field col s2 m2">
+                                                <div>Role</div>
+                                                <div>
+                                                    <select>
+                                                        <option>All Role</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="input-field col s2 m2">
+                                                <div>Office</div>
+                                                <div>
+                                                    <select>
+                                                        <option>All Office</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="input-field col s2 m2">
+                                                <div>Status</div>
+                                                <div>
+                                                    <select>
+                                                        <option>All Status</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="input-field col s2 m2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <table id="user-table" class="dataTable display">
+                                                <tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Job Title</th>
+                                                            <th>Department</th>
+                                                            <th>Reports To</th>
+                                                            <th>Role</th>
+                                                            <th>Office</th>
+                                                            <th>Status</th>
+                                                            <th> </th>
+                                                        </tr>
+                                                    </thead>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cards-section row" style="display: none;">
+                            <div id="user-table" class="col xl3 l4 m6 s12 profile-card-main hide">
+                                <div class="card profile-card">
+                                    <div class="card-image">
+                                        <img src="/images/card-avatar.svg"/>
+                                        <span class="card-title">
+                                            <h6 class="white-text">Leanne Ko</h6>
+                                            <p>Marketing manager</p>
+                                        </span>
+                                    </div>
+                                    <div class="card-content">
+                                        <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
+                                        <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
+                                        <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href="#" class="blue-text">Send Email</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="update-user.modal" class="modal modal-fixed-footer">
+                            <div class="modal-content">
+                                <h5></h5>
+                                <form class="col s12">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="accept-btn right waves-effect waves-light btn">Update</a>
+                                <a href="#" class="cancel-btn right blue-text btn-flat"
+                                onclick="$(this).closest('.modal').modal('close')">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/people_dir.js" type="text/javascript"></script>
+{% endblock %}
+

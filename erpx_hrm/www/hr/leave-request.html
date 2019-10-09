@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="content">
-                <div class="col xl6 l6 m6 s12 balancesummary">
+                <div class="col xl6 l6 m6 s12 balancesummary leave-request">
                     <div id="card-stats" class="card">
                         <div class="card-content">
                             <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
@@ -53,45 +53,49 @@
                             <!--<p>Balance left</p>-->
                             <div class="row">
                                 <!--individual-card-->
-                                <div class="col s12 m6 l6 xl3">
-                                    <div class="card blue">
+                                <div class="col s6 m6 l6 xl3">
+                                    <div class="circle blue">
                                         <div class="card-content center">
                                             <h4 class="card-stats-number white-text">0</h4>
                                             <p class="card-stats-title white-text">
-                                                <span>Annual</span>
+                                                <span>available</span>
                                             </p>
                                         </div>
                                     </div>
+                                    <p style="margin-top: 10px;text-align: center;">Annual</p>
                                 </div>
-                                <div class="col s12 m6 l6 xl3">
-                                    <div class="card purple">
+                                <div class="col s6 m6 l6 xl3">
+                                    <div class="circle purple">
                                         <div class="card-content center">
                                             <h4 class="card-stats-number white-text">0</h4>
                                             <p class="card-stats-title white-text">
-                                                <span>Sick</span>
+                                                <span>available</span>
                                             </p>
                                         </div>
                                     </div>
+                                    <p style="margin-top: 10px;text-align: center;">Sick</p>
                                 </div>
-                                <div class="col s12 m6 l6 xl3">
-                                    <div class="card pink">
+                                <div class="col s6 m6 l6 xl3">
+                                    <div class="circle pink">
                                         <div class="card-content center">
                                             <h4 class="card-stats-number white-text">0</h4>
                                             <p class="card-stats-title white-text">
-                                                <span>Hospitalization</span>
+                                                <span>available</span>
                                             </p>
                                         </div>
                                     </div>
+                                    <p style="margin-top: 10px;text-align: center;">Hospitalisation</p>
                                 </div>
-                                <div class="col s12 m6 l6 xl3">
-                                    <div class="card red">
+                                <div class="col s6 m6 l6 xl3">
+                                    <div class="circle red">
                                         <div class="card-content center">
                                             <h4 class="card-stats-number white-text">0</h4>
                                             <p class="card-stats-title white-text">
-                                                <span>Paternity</span>
+                                                <span>available</span>
                                             </p>
                                         </div>
                                     </div>
+                                    <p style="margin-top: 10px;text-align: center;">Paternity</p>
                                 </div>
                             </div>
                         </div>
@@ -120,12 +124,18 @@
                                 <p style="margin-bottom: 10px;">Start Time</p>
                                 <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
                                 <input id="start" type="text">
+                                <div class="chip">All day<i class="close material-icons">close</i></div>
+                                <div class="chip">am<i class="close material-icons">close</i></div>
+                                <div class="chip">pm<i class="close material-icons">close</i></div>
                                 <!--<label for="signup-name" class="center-align">Company Name</label>-->
                             </div>
                             <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">End Time</p>
                                 <!--<i class="material-icons-outlined prefix pt-2">email</i>-->
                                 <input id="end" type="text">
+                                <div class="chip">All day<i class="close material-icons">close</i></div>
+                                <div class="chip">am<i class="close material-icons">close</i></div>
+                                <div class="chip">pm<i class="close material-icons">close</i></div>
                                 <!--<label for="signup-email" class="center-align">Email</label>-->
                             </div>
                             <div class="input-field col s12">
@@ -152,7 +162,8 @@
                                 </select>
                             </div>
                             <div class="input-field col s12">
-                                <p style="margin-bottom: 10px;">Send notification</p>
+                                <p style="margin-bottom: 10px;display: inline-block;">Send notification</p>
+                                <p style="margin-bottom: 10px;display: inline-block;float: right;color: #00aeef;">Add People</p>
                                 <textarea id="reason" type="text"></textarea>
                                 <p style="margin-bottom: 10px;color: grey;">We send email notifications to people you’ve added once your
 request is approved.</p>
@@ -172,9 +183,9 @@ request is approved.</p>
                              <div class="row">
     <div class="col s12 leavetabs" style="margin-bottom: 20px;">
       <ul class="tabs">
-        <li class="tab col s3"><a class="active" href="#">All leaves</a></li>
-        <li class="tab col s6"><a href="#">Department's leaves</a></li>
-        <li class="tab col s3"><a href="#">My leaves</a></li>
+        <li class="tab col s3 m3"><a class="active" href="#">All leaves</a></li>
+        <li class="tab col s6 m6"><a href="#">Department's leaves</a></li>
+        <li class="tab col s3 m3"><a href="#">My leaves</a></li>
       </ul>
     </div>
 <div id="basic-calendar" class="fc fc-unthemed fc-ltr">
@@ -204,15 +215,21 @@ request is approved.</p>
                                 <input id="end" type="text">
             </div> 
             </form>
-            <table id="page-length-option" class="display dataTable" style="width: 100%;padding: 20px 0px;">
+            <table id="page-length-option-request" class="display dataTable" style="width: 100%;padding: 20px 0px;">
                                             <thead>
                                             <tr style="background-color: #eff1f9;">
                                                 <th>Type</th>
                                                 <th>Date</th>
+                                                <th> </th>
                                                 <th>Status</th>
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                <tr>
+                    <td>Paternity</td>
+                    <td>22 Aug 2019 - 26 August 2019</td>
+                    <td>3 days</td>
+                    <td><p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;">Approved</p></td>
                                             </tbody>
                                         </table>
             </div>

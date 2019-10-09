@@ -35,13 +35,14 @@
         <div class="content-wrapper-before"></div>
         <div class="col-12">
             <div class="container">
-                <div class="row section-data-tables table-filter">
+                <div class="row section-data-tables">
                     <div class="col s12">
+                        <!--table-filter-->
                         <div class="nav-wrapper black-text banner-title3">
                             <div class="breadcrumb" style="display: inline;">
                                 <a class="breadcrumb">HR Hub</a>
                                 <a class="breadcrumb">People</a>
-                                <a href="/hr/people-dir" class="breadcrumb active">Dictionary</a>
+                                <a href="/hr/people-dir" class="breadcrumb active">Directory</a>
                             </div>
                             <div class="toggle-options" style="display: inline;float: right;">
                                 <a class="waves-effect waves-light btn btn-small active"><i class="material-icons">format_list_bulleted</i></a>
@@ -54,10 +55,12 @@
                                     <div class="card-content">
                                         <i class="material-icons-outlined" style="display: inline;">person</i>
                                         <h4 class="card-title directorytitle" style="display: inline;">Directory</h4>
-                                        <a href=""
+                                        <a href="/hr/manage-employees"
                                            class="modal-trigger waves-effect waves-light right">Manage Employees</a>
                                         <div class="row">
                                             <div class="col s12">
+                                            <a href="#create-filter.modal" class="modal-trigger waves-effect waves-light btn btn-small" style="margin: 10px 0px;">Filter Option</a>
+                                            <div id="page-length-option_filter" class="dataTables_filter" style="left: 160px;top: 65px;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div>
                                                 <table id="user-table" class="dataTable display">
                                                     <tbody>
                                                     <thead>
@@ -75,10 +78,52 @@
                                             </div>
                                         </div>
                                     </div>
+                            <div id="create-filter.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+                                <div class="modal-content">
+                                    <h5 style="background-color: #dcdcdc;width: 50%;border-radius: 0px 30px 30px 0px;padding: 10px;">Filter Options</h5>
+                                    <a href="/" class="modal-trigger waves-effect waves-light right" style="position: absolute;right: 20px;top: 50px;">Clear Filter</a>
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12" style="margin-top: 0px;">
+                                                <p>Filter by Status</p>
+                                                <select>
+                                                    <option value="" disabled selected>All Status</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-field col s12" style="margin-top: 0px;">
+                                                <p>Filter by Department</p>
+                                                <select>
+                                                    <option value="" disabled selected>All department</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-field col s12" style="margin-top: 0px;">
+                                                <p>Filter by Job Title</p>
+                                                <select>
+                                                    <option value="" disabled selected>All job title</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-field col s12" style="margin-top: 0px;">
+                                                <p>Filter by Office</p>
+                                                <select>
+                                                    <option value="" disabled selected>All office</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="right waves-effect waves-light btn">Add</a>
+                                    <a href="#" class="right blue-text btn-flat"
+                                       onclick="$('#create-filter\\.modal').modal('close')">Cancel</a>
                                 </div>
                             </div>
+                            </div>
+                            </div>
                             <div class="cards-section row" style="display: none;">
-                                <div class="col xl3 l4 m6 s12 profile-card-main hide">
+                            <div class="card-content dictionary-card">
+                                        <div class="waves-effect waves-light btn btn-small" style="margin: 10px 0px;display: inline-block;">Filter Option</div>
+                                            <div id="page-length-option_filter" class="dataTables_filter" style="left: 460px;top: 155px;position: absolute;background-color: white;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div></div>
+                                <div id="user-table" class="col xl3 l4 m6 s12 profile-card-main hide">
                                     <div class="card profile-card">
                                         <div class="card-image">
                                             <img src="/images/card-avatar.svg"/>
@@ -88,9 +133,9 @@
                                             </span>
                                         </div>
                                         <div class="card-content">
-                                            <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
-                                            <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
-                                            <div><i class="material-icons tiny vertical-align-middle">send</i><span style="margin-left: 10px;"></span></div>
+                                            <div class="dictionary-info1" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/position_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;"></span></div>
+                                            <div class="dictionary-info2" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/location_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;"></span></div>
+                                            <div class="dictionary-info3" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/phone_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;">+60 13 4567 8901</span></div>
                                         </div>
                                         <div class="card-action">
                                             <a href="#" class="blue-text">Send Email</a>

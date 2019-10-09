@@ -1,0 +1,158 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+<div id="main">
+  <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">HR Hub</a>
+            <a href="/hr/payslip" class="breadcrumb active">Payslip</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card">
+            <div class="card-content">
+              <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+              <h4 class="card-title directorytitle" style="text-align: left;">Employee Payslip</h4>
+
+             
+              <br><br>
+
+
+
+
+              <div class="row">
+                <div style="height: 40px;"></div>
+                <div class="row margin infodetails">
+                  <div class="input-name-payslip">
+                   <div style="margin-left: 20px;" class="input-name-payslip input-field col s12 m3">
+                     <p style="margin-bottom: 10px; text-align: left;">Name</p>
+                    <select style="width: -webkit-fill-available;">
+                      <option value="" disabled selected>All Name</option>
+                      <option value="information technology">Accident</option>
+                      <option value="engineering">Sick</option>
+                      <option value="telecommunication">Vacation</option>
+                    </select>
+                  </div>
+                 <div style= "margin-left: 20px;" class="input-field col s12 m3">
+                     <p style="margin-bottom: 10px; text-align: left;">Type</p>
+                    <select style="width: -webkit-fill-available;">
+                      <option value="" disabled selected>All Type</option>
+                      <option value="information technology">Accident</option>
+                      <option value="engineering">Sick</option>
+                      <option value="telecommunication">Vacation</option>
+                    </select>
+                  </div>
+                </div>
+
+                   <a href="#" class="btn-download-payslip modal-trigger waves-effect waves-light right">Download</a>
+                </div>
+<br>
+<hr style="border:1px lightgrey solid;">
+
+       <div style="height: 40px;"></div>   
+           <br> 
+     </div>
+            </div>
+          </div>
+        </div>
+    
+
+
+
+       
+        
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+</div>
+</div>
+
+{% block scripts %}
+<script type="text/javascript">
+  function checked()
+  {
+    if(document.getElementById('check1').checked==false)
+    {
+      document.getElementById('check2').checked = false;
+    }
+  }
+  function checked1()
+  {
+   if(document.getElementById('check2').checked==true)
+   {
+    document.getElementById('check1').checked = false;
+  }
+}
+
+function checked2()
+{
+  if(document.getElementById('check3').checked==false)
+  {
+    document.getElementById('check4').checked = false;
+  }
+}
+function checked3()
+{
+ if(document.getElementById('check4').checked==true)
+ {
+
+  document.getElementById('check3').checked = false;
+}
+}
+
+</script>
+
+
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+{% endblock %}
