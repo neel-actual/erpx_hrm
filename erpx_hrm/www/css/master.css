@@ -1981,6 +1981,19 @@
     background-clip: text;
     -webkit-text-fill-color: transparent; }
 
+.sidenav li a .sidenav-icon {
+  width: 26px;
+  vertical-align: middle;
+  margin-right: 10px; }
+  .sidenav li a .sidenav-icon:nth-of-type(2) {
+    display: none; }
+
+.sidenav li a.active .sidenav-icon:nth-of-type(1) {
+  display: none; }
+
+.sidenav li a.active .sidenav-icon:nth-of-type(2) {
+  display: initial; }
+
 .nav-links-small {
   display: none; }
   .nav-links-small a.active {

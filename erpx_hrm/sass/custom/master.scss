@@ -90,6 +90,29 @@
   }
 }
 
+.sidenav {
+  li a {
+    .sidenav-icon {
+      width: 26px;
+      vertical-align: middle;
+      margin-right: 10px;
+      &:nth-of-type(2) {
+        display: none;
+      }
+    }
+    &.active {
+      .sidenav-icon {
+        &:nth-of-type(1) {
+          display: none;
+        }
+        &:nth-of-type(2) {
+          display: initial;
+        }
+      }
+    }
+  }
+}
+
 .nav-links-small {
   display: none;
 
