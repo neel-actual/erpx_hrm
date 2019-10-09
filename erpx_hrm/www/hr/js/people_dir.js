@@ -52,7 +52,9 @@ $(function () {
 
                 //populate cards
                 $card = $profile_card_main.clone().removeClass('hide profile-card-main');
-                $card.find('.card-image img').attr('src', emp.image);
+                if (emp.image) {
+                    $card.find('.card-image img').attr('src', emp.image);
+                }
                 $card.find('.card-title h6').text(name);
                 $card.find('.card-title p').text(emp.designation);
                 $card.find('.card-content div').eq(0).find('span').text(emp.department);
