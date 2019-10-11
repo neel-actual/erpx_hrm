@@ -2164,9 +2164,37 @@ textarea {
 .requesthistory {
   margin-left: 1px !important; }
 
+@media only screen and (min-width: 1800px) {
+  #user-table {
+    min-height: 460px; } }
+
 @media only screen and (max-width: 1800px) {
   #user-table {
     min-height: 450px; } }
+
+@media only screen and (min-width: 1700px) {
+  #user-table .card .card-image {
+    max-height: 200px;
+    position: relative;
+    overflow: hidden; } }
+
+@media only screen and (min-width: 1500px) {
+  #user-table .card .card-image {
+    max-height: 170px;
+    position: relative;
+    overflow: hidden; } }
+
+@media only screen and (max-width: 1500px) {
+  #user-table .card .card-image {
+    max-height: 140px;
+    position: relative;
+    overflow: hidden; }
+  .profile-card .card-image .card-title h6 {
+    font-size: 0.8rem; }
+  .profile-card .card-image .card-title p {
+    font-size: 0.8rem; }
+  .card-action > a {
+    font-size: 12px; } }
 
 @media only screen and (max-width: 1280px) {
   .main-banner-img {
@@ -2184,7 +2212,9 @@ textarea {
   .balancesummary {
     max-height: 370px; }
   .requestleave {
-    max-height: 370px; } }
+    max-height: 370px; }
+  #page-length-option_filter {
+    margin-right: 30px; } }
 
 @media only screen and (max-width: 1025px) {
   .main-banner-img {
@@ -2942,7 +2972,7 @@ th {
     color: white;
     margin: 0px;
     margin-top: -10px;
-    line-height: 0px; } }
+    font-size: 12px; } }
 
 .btn-add-policy {
   background-color: #00aeef;
@@ -3079,10 +3109,7 @@ th {
 
 @media only screen and (max-width: 400px) {
   .title-ent-settings {
-    margin-top: 20px; } }
-
-.input-ent-settings {
-  width: 40%; }
+    margin-top: 35px; } }
 
 @media only screen and (max-width: 400px) {
   .input-ent-settings {
@@ -3110,3 +3137,68 @@ th {
   display: -ms-inline-flexbox;
   display: inline-flex;
   padding-left: 80px; }
+
+.sidenav li a .sidenav-icon {
+  width: 21px;
+  vertical-align: middle;
+  margin-right: 10px; }
+
+.p-approved {
+  border-radius: 20px;
+  text-align: center;
+  width: 60%;
+  background-color: green;
+  color: white; }
+
+@media only screen and (max-width: 400px) {
+  .p-approved {
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    background-color: green;
+    color: white;
+    font-size: small; } }
+
+.p-declined {
+  border-radius: 20px;
+  text-align: center;
+  width: 60%;
+  background-color: red;
+  color: white; }
+
+@media only screen and (max-width: 400px) {
+  .p-declined {
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    background-color: red;
+    color: white;
+    font-size: small; } }
+
+.p-pending {
+  border-radius: 20px;
+  text-align: center;
+  width: 80%;
+  background-color: #b2a30f;
+  color: white; }
+
+@media only screen and (max-width: 400px) {
+  .p-pending {
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    background-color: #b2a30f;
+    color: white;
+    font-size: 13px;
+    padding-right: 5px;
+    padding-left: 5px; } }
+
+.org-chart-dropdownlist .collapsible .collapsible-header:before {
+  font-family: "Material Icons";
+  content: "keyboard_arrow_down";
+  color: #afafaf;
+  font-size: 18px;
+  position: relative;
+  transition: transform 0.3s ease-in-out, opacity 0.25s ease-in-out 0.1s, -webkit-transform 0.3s ease-in-out;
+  padding-top: 7px;
+  left: -20px; }

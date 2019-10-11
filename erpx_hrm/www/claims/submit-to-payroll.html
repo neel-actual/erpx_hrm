@@ -1,0 +1,76 @@
+{% extends "www/master.html" %}
+
+{% block title %}Claims{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/claims/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+ <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">Claims</a>
+            <a class="breadcrumb">Reimbursement</a>
+            <a href="/claims/submit-to-payroll" class="breadcrumb active">Submit to Payroll</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card">
+            <div class="card-content">
+              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+              <h4 class="card-title directorytitle" style="text-align: left;">Submit to Payroll</h4>
+               <a href="/claims/new-submission" class="btn-appr-claims modal-trigger waves-effect waves-light right">
+              New Submission</a>
+
+              <br><br>
+              <div class="row">
+                <div style="height: 40px;"></div>
+
+                <table style="font-size: 14px;">
+                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                    <th style=" border-right:none!important;">Title</th>
+                    <th style=" border-right:none!important;">Period</th>
+                    <th style=" border-right:none!important;">Amount</th>
+                    <th style=" border-right:none!important;">Requester</th>
+                    <th style=" border-right:none!important;">Cutoff Date</th>
+                    <th style=" border-right:none!important;">Status</th>
+                  </tr>
+<tr>
+  <td colspan="6" style="text-align: center;">No claims report to submit to payroll</td>
+</tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div style="height: 40px;"></div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "www/master.html" %}
+
+{% block title %}Claims{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/claims/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+ <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">Claims</a>
+              <a class="breadcrumb">Settings</a>
+            <a href="/claims/set-general.html" class="breadcrumb active">General</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card">
+            <div class="card-content">
+              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+              <h4 class="card-title directorytitle" style="text-align: left;">General</h4>
+
+              <br><br>
+            
+            <h4 class="card-title" style="text-align: left;">Cutoff Date</h4> 
+<span style="float: left; font-size: 14px; color: darkgrey">You can set your company's claim cutoff date. Claims approved 
+before or on the cutoff date are usually reimbursed in the same month or in the following month.</span>
+
+              <div class="row">
+                <div style="height: 40px;"></div>
+                <div class="row margin infodetails">
+                 
+             
+                  <a href="#" style="padding-top: 15px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Clear Filter</a>
+               
+                </div>
+         
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div style="height: 40px;"></div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

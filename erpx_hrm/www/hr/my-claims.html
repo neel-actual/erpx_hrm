@@ -40,24 +40,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
         <!--<div class="content-wrapper-before"></div>-->
         <div class="col s12">
           <div class="breadcrumb">
-            <a class="breadcrumb">HR Hub</a>
             <a class="breadcrumb">Claims</a>
-            <a href="/hr/my-claims" class="breadcrumb active">My Claims</a>
+            <a href="/hr/my-claims" class="breadcrumb active">All Claims</a>
           </div>
         </div>
         <div class="col xl20 l20 m18 s12">
           <div id="card-stats" class="card">
             <div class="card-content">
-              <i class="material-icons-outlined" style="display: inline;float: left;">flight_takeoff</i>
+              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
               <h4 class="card-title directorytitle" style="text-align: left;">My Claims</h4>
-
-              <a href="#" class="btn-myclaims modal-trigger waves-effect waves-light right">
-              Create Report</a>
               <br><br>
-
-
-
-
               <div class="row">
                 <div style="height: 40px;"></div>
                 <div class="row margin infodetails">
@@ -91,7 +83,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td>26 Jul 2019 - 26 Jul 2019</td>
                     <td>MYR 200</td>
                     <td>26 Jul 2019</td>
-                    <td><p style="border-radius: 20px;text-align: center;width: 60%; background-color:green; color: white;">Approved</p></td>
+                    <td><p class="p-approved">Approved</p></td>
 
 
                   </tr>
@@ -100,7 +92,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td>26 Jul 2019 - 26 Jul 2019</td>
                     <td>MYR 200</td>
                     <td>26 Jul 2019</td>
-                    <td><p style="border-radius: 20px;text-align: center;width: 60%; background-color:red; color: white;">Declined</p></td>
+                    <td><p class="p-declined">Declined</p></td>
 
 
                   </tr>
@@ -109,7 +101,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td>26 Jul 2019 - 26 Jul 2019</td>
                     <td>MYR 200</td>
                     <td>26 Jul 2019</td>
-                    <td><p style="border-radius: 20px;text-align: center;width: 70%; background-color:#b2a30f; color: white;">Pending Approval</p></td>
+                    <td><p class="p-pending">Pending Approval</p></td>
 
 
                   </tr>
@@ -131,45 +123,9 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
     </div>
   </div>
 </div>
-</div>
 {% endblock %}
-</div>
-</div>
 
 {% block scripts %}
-<script type="text/javascript">
-  function checked()
-  {
-    if(document.getElementById('check1').checked==false)
-    {
-      document.getElementById('check2').checked = false;
-    }
-  }
-  function checked1()
-  {
-   if(document.getElementById('check2').checked==true)
-   {
-    document.getElementById('check1').checked = false;
-  }
-}
-
-function checked2()
-{
-  if(document.getElementById('check3').checked==false)
-  {
-    document.getElementById('check4').checked = false;
-  }
-}
-function checked3()
-{
- if(document.getElementById('check4').checked==true)
- {
-
-  document.getElementById('check3').checked = false;
-}
-}
-
-</script>
 
 
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>

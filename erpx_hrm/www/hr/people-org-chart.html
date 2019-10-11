@@ -4,7 +4,7 @@
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css"
-      href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
@@ -47,42 +47,196 @@
                         <div class="content">
                             <div class="card">
                                 <div class="card-content">
-                                    <i class="material-icons-outlined" style="display: inline;">person</i>
-                                    <h4 class="card-title newstitle" style="display: inline;">Org Chart</h4>
-                                    <a href="#" class="manage-employees modal-trigger waves-effect waves-light right">Manage Employees</a>
-                                    <a href="#" class="modal-trigger waves-effect waves-light btn left" style="position: absolute;top: 70px;left: 30px;">Collapse All</a>
-                                    <div class="row">
-    <ul  class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
-        id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
-        style="transform: translateX(0px);">   
-    <li id="org-chart-management"  class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0"><i
-                class="material-icons-outlined">flight_takeoff</i><span class="menu-title"
-                                                               data-i18n="">Leave</span></a>
-            <div class="collapsible-body">
-                <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li class=""><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
-                    </li>
-                    <li><a class="collapsible-body" href="/hr/leave-approval" data-i18n=""><span>Approval</span></a>
-                    </li>
-                    <li><a class="collapsible-body" href="/hr/leave-balance" data-i18n=""><span>Balance</span></a>
-                    </li>
-                    <li><a class="collapsible-body" href="/hr/leave-settings" data-i18n=""><span>Leave Settings</span></a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul> 
-                                        </div>
-                                    </div>
+                                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/people.png">
+                                 <h4 class="card-title newstitle" style="display: inline;">Org Chart</h4>
+                                 <a href="#" class="manage-employees modal-trigger waves-effect waves-light right">Manage Employees</a>
+                                 <div>
+                                <a class="modal-trigger waves-effect waves-light btn left" onClick="collapseAll();" style="position: absolute; ;top: 70px;left: 30px;">Collapse All</a>
                                 </div>
-                            </div>
+<div class="org-chart-dropdownlist" style="margin-top: 120px;position: relative;">                  
+  <ul class="collapsible" data-collapsible="accordion" style="border:none;box-shadow: none;">
+    <li style="margin-bottom: 15px;">
+      <div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+      <div class="collapsible-body" style="border-bottom: none;">
+    			<div class="row">
+				<div class="col s12 m12">
+        <ul class="collapsible" data-collapsible="accordion" style="border: none;box-shadow: none;">
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;margin-top: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+        </ul>
+    				</div>
+			</div>
+      </div>
+    </li>
+    <li style="margin-bottom: 15px;">
+      <div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Finance</span></div>
+    <div class="collapsible-body" style="border-bottom: none;">
+        <ul class="collapsible" data-collapsible="accordion" style="border: none;box-shadow: none;">
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;margin-top: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li style="margin-bottom: 15px;"> 
+      <div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Marketing</span></div>
+    <div class="collapsible-body" style="border-bottom: none;">
+        <ul class="collapsible" data-collapsible="accordion" style="border: none;box-shadow: none;">
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;margin-top: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+                                    
+                                    
+                                    
+<!--<div class="org-chart-dropdownlist" style="margin-top: 120px;position: relative;">                                    
+<ul class="collapsible" data-collapsible="accordion" style="border:none;box-shadow: none;">
+	<li style="margin-bottom: 15px;">
+		<div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+		<div class="collapsible-body" style="display: block;border-bottom: none;">
+			<div class="row">
+				<div class="col s12 m12">
+					<ul class="collapsible" data-collapsible="accordion" style="border: none;box-shadow: none;">
+                                  <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+          <li>
+      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;margin-top: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
+          </li>
+						<li>
+							<div class="collapsible-header">
+								<i class="material-icons">place</i>Nested Second</div>
+							<div class="collapsible-body">
+								<p>Lorem ipsum dolor sit amet.</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">
+								<i class="material-icons">whatshot</i>Nested Third</div>
+							<div class="collapsible-body">
+								<p>Lorem ipsum dolor sit amet.</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="material-icons">place</i>Second</div>
+		<div class="collapsible-body">
+			<div class="container">
+				<ul class="collapsible" data-collapsible="accordion">
+					<li>
+						<div class="collapsible-header">
+							<i class="material-icons">filter_drama</i>Nested First</div>
+						<div class="collapsible-body">
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header">
+							<i class="material-icons">place</i>Nested Second</div>
+						<div class="collapsible-body">
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header">
+							<i class="material-icons">whatshot</i>Nested Third</div>
+						<div class="collapsible-body">
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="material-icons">whatshot</i>Third</div>
+		<div class="collapsible-body">
+			<div class="container">
+				<div class="row">
+					<div class="col s12 m12">
+						<ul class="collapsible" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">filter_drama</i>Nested First</div>
+								<div class="collapsible-body">
+									<p>Lorem ipsum dolor sit amet.</p>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">place</i>Nested Second</div>
+								<div class="collapsible-body">
+									<p>Lorem ipsum dolor sit amet.</p>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">whatshot</i>Nested Third</div>
+								<div class="collapsible-body">
+									<p>Lorem ipsum dolor sit amet.</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+</div>-->
+                              <!--  <table style=" font-size: 14px;">
+                                   <tr border="0" style="border-right:none!important;font-size: 16px; position: relative;background-color: #f9f9f9; width: 100%!important;" >
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>Aznul Abdullah</td>
+                                    <td>Paternity</td>
+                                    <td>22 Aug 2019 - 26 Aug 2019 <br>
+                                    3 days</td>
+                                    <td>Approved</td>
+                                    <td><a href="#">Edit</a></td>
+                                </tr>
 
+
+                            </table> -->
+                            <!--  <a href="#" class="modal-trigger waves-effect waves-light btn left" style="position: absolute;top: 70px;left: 30px;">Collapse All</a> -->
+                            <div class="row">
+
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
 
 {% endblock %}
 
@@ -91,11 +245,11 @@
     frappe.csrf_token = "{{ csrf_token }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>

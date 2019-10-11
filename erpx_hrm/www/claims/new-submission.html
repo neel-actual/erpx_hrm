@@ -1,0 +1,66 @@
+{% extends "www/master.html" %}
+
+{% block title %}Claims{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/claims/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+ <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+             <a class="breadcrumb">Claims</a>
+            <a class="breadcrumb">Reimbursement</a>
+            <a href="/claims/submit-to-payroll.html" class="breadcrumb active">Submit to Payroll</a>
+             <a class="breadcrumb active">New Submission</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card">
+            <div class="card-content">
+              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+              <h4 class="card-title directorytitle" style="text-align: left;">Submissions</h4>
+              <div class="row">
+                <div style="height: 40px;"></div>
+                <div class="row margin infodetails">
+                 
+
+   
+            
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div style="height: 40px;"></div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

@@ -11,7 +11,7 @@
         <li class="bold"><a class="waves-effect waves-cyan" href="/claims"><i
             class="material-icons-outlined">description</i><span class="menu-title" data-i18n="">All Claims</span></a>
         <li class="bold"><a class="waves-effect waves-cyan" href="/claims/reports"><i
-            class="material-icons-outlined">book</i><span class="menu-title" data-i18n="">Reports</span></a>
+            class="material-icons-outlined">book</i><span class="menu-title" data-i18n="" onclick="window.location.href='/claims/reports.html'">Reports</span></a>
         <li id="reimbursement-submodule" class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#"
                                                   tabindex="0"><i
                 class="material-icons-outlined">receipt</i><span class="menu-title"
@@ -19,10 +19,12 @@
             </a>
             <div class="collapsible-body">
                 <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li class=""><a class="collapsible-body" href="/hr/people-dir"
-                                    data-i18n=""><span>Submit to Payroll</span></a>
+                    <li class="">
+                        <a class="collapsible-body" href="/claims/submit-to-payroll.html"
+                                    data-i18n="">
+                                    <span>Submit to Payroll</span></a>
                     </li>
-                    <li><a class="collapsible-body" href="" data-i18n=""><span>Submission History</span></a>
+                    <li><a class="collapsible-body" href="/claims/submission-his.html" data-i18n=""><span>Submission History</span></a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +34,7 @@
                                                                       data-i18n="">Settings</span></a>
             <div class="collapsible-body">
                 <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li class=""><a class="collapsible-body" href="" data-i18n=""><span>General</span></a>
+                    <li class=""><a class="collapsible-body" href="/claims/set-general.html" data-i18n=""><span>General</span></a>
                     </li>
                     <li><a class="collapsible-body" href="" data-i18n=""><span>Claim Types</span></a>
                     </li>
