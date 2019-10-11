@@ -32,7 +32,8 @@ $(function () {
     //list down employees
     hrm.list({
         doctype: 'Employee',
-        fields: ['name'].concat(Object.keys(FIELDS)).concat(['designation', 'image'])
+        fields: ['name'].concat(Object.keys(FIELDS)).concat(['designation', 'image']),
+        limit_page_length: 100000
     }).then(function(res){
         if (res && res.message) {
             emps = res.message || [];
