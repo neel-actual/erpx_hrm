@@ -1,0 +1,215 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+ <div class="row">
+  <div class="container">
+    <div class="nav-wrapper black-text banner-title3">
+        <div class="breadcrumb">
+            <a class="breadcrumb">Payroll</a>
+            <a class="breadcrumb">Reports</a>
+            <a href="/payroll/total-reports.html" class="breadcrumb active">Total Reports</a>
+        </div>
+    </div>
+    <div class="col xl20 l20 m18 s12">
+      <div id="card-stats" class="card">
+        <div class="card-content">
+          <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/reports.png">
+          <h4 class="card-title directorytitle" style="text-align: left;">Total Reports</h4>
+
+          <a href="#" style="margin-right: 50px;" class=" modal-trigger waves-effect waves-light right">
+          Clear All</a>
+          <br><br>
+
+
+          <div class="row">
+            <div class="row margin infodetails">
+
+              <div class="option-date-appr input-field col s12 m3">
+                <p style="text-align: left;margin-bottom: 10px; ">Data Range</p>
+                <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
+                </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Submitted Date" class="textbox-n" type="text" onfocus="(this.type='date')"  >
+            </div>
+
+            <div class="input-field col s12 m3">
+                <p style="text-align: left; margin-bottom: 10px; ">Employees</p>
+                <select style="width: -webkit-fill-available;">
+                  <option value="" disabled selected>All requesters</option>
+                  <option value="information technology">Accident</option>
+                  <option value="engineering">Sick</option>
+                  <option value="telecommunication">Vacation</option>
+              </select>
+          </div>
+
+
+          <div style="margin-top: 47px;width: 250px;" class="input-field col s12 m2">
+
+            <i style="position: absolute; padding-top: 12px; right: 10px;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+        </div>
+
+
+        <a href="#" style="background-color: #00aeef; border-radius: 25px; width: 160px;  text-align: center;  color: white;  line-height: 40px;margin-right: 5px; margin-top: 50px;" class="modal-trigger waves-effect waves-light right">Download Report</a>
+    </div>
+
+    <table style="font-size: 14px;">
+      <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+        <th style="border-right:none!important;">Employees</th>
+        <th style=" border-right:none!important;">Basic Salary</th>
+        <th style=" border-right:none!important;">Additions</th>
+        <th style=" border-right:none!important;">Gross Pay</th>
+        <th style=" border-right:none!important;">Deductions</th>
+        <th style=" border-right:none!important;">Net Pay</th>
+        <th style=" border-right:none!important;"><span style="color: red">Employer</span><br>EPF</th>
+        <th style=" border-right:none!important;"><span style="color: red">Employer</span><br>SOCSO</th>
+    </tr>
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A</p>
+            <span style="float: left;color:#00aeef;">Leanne Ko </span><br>
+           
+            <span  style="float: left;">Marketing Manager</span></td>
+        <td>RM 2, 500.00</td>
+        <td>RM 0.00</td>
+        <td>RM 2, 500.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 254.85</td>
+        <td>RM 392.00</td>
+        <td>RM 48.15</td>
+
+    </tr>
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Hamidi Rashidi</span><br>
+            <span style="float: left;">Office Manager</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 245.15</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 462.00</td>
+        <td>RM 56.85</td>
+
+    </tr>
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Raves Aru</span><br>
+            <span style="float: left;">Head of Finance</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Siti Halina</span><br>
+            <span style="float: left;">UI Designer</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Yo Ling</span><br>
+            <span style="float: left;">Front-end Develope</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Tani Sari</span><br>
+            <span style="float: left;">Marketing Assistant</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Kim Lee</span><br>
+            <span style="float: left;">Lead Manager</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+    <tr style="font-size: 13px;">
+        <td><p style="line-height: 28px; width: 28px; height: 28px; border-radius: 50%; background-color: darkgrey;text-align:center; color: white;">A
+        </p>
+            <span style="float: left;color:#00aeef;">Azizi Nordin</span><br>
+            <span style="float: left;">Marketing Strategist</span></td>
+        <td>RM 3, 000.00</td>
+        <td>RM 0.00</td>
+        <td>RM 3, 000.00</td>
+        <td>RM 415.45</td>
+        <td>RM 2, 584.55</td>
+        <td>RM 181.00</td>
+        <td>RM 21.85</td>
+
+    </tr>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

@@ -12,6 +12,7 @@
     <title>{% block title %}{% endblock %}</title>
 <!--    <link rel="apple-touch-icon" href="../../../app-assets/images/favicon/apple-touch-icon-152x152.png">-->
 <!--    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/favicon/favicon-32x32.png">-->
+{% block styles %}{% endblock %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="/app-assets/vendors/vendors.min.css">
@@ -19,7 +20,8 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" >
     <link rel="stylesheet" type="text/css" href="/css/animate.css">
     <link rel="stylesheet" type="text/css" href="/css/master.css">
-    {% block styles %}{% endblock %}
+    
+    
     <script>
         window.frappe = {};
         frappe.ready_events = [];
@@ -41,7 +43,7 @@
         <nav class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-light">
             <div class="nav-wrapper">
 
-                <a href="/" class="app-logo waves-effect waves-light">
+                <a href="/hr" class="app-logo waves-effect waves-light">
                     <span><img
                             src="/images/logo.svg"
                             width="30" id="appicon"

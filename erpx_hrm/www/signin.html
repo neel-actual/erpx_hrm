@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block main %}
-<div class="row">
+<div class="col s12 row signin-card-body" style="position: relative;overflow: visible;display: block;height: 100%;">
     <div class="col s12">
         <div class="container">
             <section id="loading-page" class="row form-section">
-                <div class="col s10 m8 l6 xl4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
+                <div class="col s10 m8 l6 xl4 z-depth-4 card-panel border-radius-6 login-card">
                     <form class="login-form">
                         <div class="row">
                             <div class="center input-field col s12 signinlogo">
@@ -25,7 +25,7 @@
                 </div>
             </section>
             <section id="login-page" class="row form-section">
-                <div class="col s10 m8 l6 xl5 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8" style="border-radius:20px!important;padding: 30px 10%;">
+                <div class="col s10 m8 l6 xl5 z-depth-4 card-panel border-radius-6 login-card" style="border-radius:20px!important;padding: 30px 10%;">
                     <form class="login-form">
                         <div class="row">
                             <div class="center input-field col s12 signinlogo">
@@ -70,7 +70,7 @@
                 </div>
             </section>
             <section id="signup-page" class="row form-section">
-                <div class="col s11 m8 l6 xl6 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8" style="border-radius:20px!important;padding: 20px;height: 100%;">
+                <div class="col s11 m8 l6 xl6 z-depth-4 card-panel border-radius-6 login-card" style="border-radius:20px!important;padding: 20px;height: 100%;">
                     <form class="login-form">
                         <div class="row">
                             <div class="center input-field col s12 signinlogo">
@@ -398,17 +398,17 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row terms-privacy">
                                 <!--<p class="margin right-align medium-small"><a href="#forgot">Forgot
                                     password ?</a></p>-->
                                 <p class="margin medium-small" style="text-align: center;">By clicking create account, you agree to our <a href="#forgot">Terms & Privacy Policy</a></p>
                         </div>
                     </form>
                 </div>
-                <p class="margin medium-small loginwords" style="position: absolute; bottom: -130px; font-size: 16px;">Already have an account? <a href="#login">Log In</a></p>
+                <p class="margin medium-small loginwords" style="position: absolute; bottom: -60px; font-size: 16px;">Already have an account? <a href="#login">Log In</a></p>
             </section>
             <section id="forgot-page" class="row form-section">
-                <div class="col s10 m8 l6 xl4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8" style="border-radius:20px!important;padding: 20px;">
+                <div class="col s10 m8 l6 xl4 z-depth-4 card-panel border-radius-6 login-card" style="border-radius:20px!important;padding: 20px;">
                     <form class="login-form">
                         <div class="row">
                             <div class="center input-field col s12 signinlogo">
@@ -443,17 +443,17 @@
         </div>
     </div>
 </div>
-    <div class="col s12 m8 l6 xl4 footer-privacy">
+<div class="col s12 m8 l6 xl4 footer-privacy">
         <div class="container">
-            <span class="privacy" style="padding: 0px 50px;"><a
-                href="/" target="_blank" style="color: #7b7b7b;">Privacy</a></span><span class="terms" style="padding: 0px 50px;"><a
-                href="/" target="_blank" style="color: #7b7b7b;">Terms</a></span><span class="versionnumber" style="padding: 0px 50px;">Version 1.0</span>
+            <span class="privacy"><a
+                href="/" target="_blank" style="color: #7b7b7b;">Privacy</a></span><span class="terms"><a
+                href="/" target="_blank" style="color: #7b7b7b;">Terms</a></span><span class="versionnumber">Version 1.0</span>
         </div>
     </div>
 {% endblock %}
 
 {% block footer %}
-<footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer">
+<footer class="page-footer footer footer-static footer-light gradient-shadow navbar-border navbar-shadow main-footer"  style="position: relative;overflow: visible;">
     <div class="col s12 m8 l6 xl4 footer-copyright">
         <div class="container"><span style="padding: 0px 10px; border-right: 1px solid #676767;">© 2019 Bayo Employment Engagement Platform.</span><span style="padding: 0px 10px; border-right: 1px solid #676767;"><a
                 href="/" target="_blank" style="color: #7b7b7b;">Powered by Bayo</a></span><span style="padding: 0px 10px;">All rights reserved.</span><!--<span

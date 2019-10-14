@@ -21,109 +21,108 @@
 {% block main %}
 <div id="main">
  <div class="row">
-    <div class="container">
-      <div class="section-data-tables nav-wrapper black-text banner-title3">
-        <!--<div class="content-wrapper-before"></div>-->
-        <div class="col s12">
-          <div class="breadcrumb">
-            <a class="breadcrumb">Claims</a>
-            <a href="/hr/my-claims" class="breadcrumb active">All Claims</a>
-          </div>
+  <div class="container">
+    <div class="section-data-tables nav-wrapper black-text banner-title3">
+      <!--<div class="content-wrapper-before"></div>-->
+      <div class="col s12">
+        <div class="breadcrumb">
+          <a class="breadcrumb">Claims</a>
+          <a href="/claims/index.html" class="breadcrumb active">All Claims</a>
         </div>
-        <div class="col xl20 l20 m18 s12">
-          <div id="card-stats" class="card">
-            <div class="card-content">
-              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
-              <h4 class="card-title directorytitle" style="text-align: left;">My Claims</h4>
-              <div class="row">
-                <div style="height: 40px;"></div>
-                <div class="row margin infodetails">
-                  <div class="input-field col s12 m2">
-                    <i style="position: absolute; padding-top: 12px; right: 10px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
-                  </div>
-                  <div class="input-field col s12 m2">
-                    <select style="width: -webkit-fill-available;">
-                      <option value="" disabled selected>All requesters</option>
-                      <option value="information technology">Accident</option>
-                      <option value="engineering">Sick</option>
-                      <option value="telecommunication">Vacation</option>
-                    </select>
-                  </div>
-                <div class="option-date-appr input-field col s12 m2">
-                    <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                    </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
-                  </div>
-                <div class="option-date-appr input-field col s12 m2">
-                    <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                    </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n" type="date" onfocus="(this.type='date')">
-                  </div>
+      </div>
+      <div class="col xl20 l20 m18 s12">
+        <div id="card-stats" class="card">
+          <div class="card-content">
+            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
+            <h4 class="card-title directorytitle" style="text-align: left;">My Claims</h4>
+            <div class="row">
+              <div style="height: 40px;"></div>
+              <div class="row margin infodetails">
                 <div class="input-field col s12 m2">
-                    <select style="width: -webkit-fill-available;">
-                      <option value="" disabled selected>All status</option>
-                      <option value="information technology">Accident</option>
-                      <option value="engineering">Sick</option>
-                      <option value="telecommunication">Vacation</option>
-                    </select>
-                  </div>
-              <div class="input-field col s12 m2">
+                  <i style="position: absolute; padding-top: 12px; right: 10px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+                </div>
+                <div class="input-field col s12 m2">
+                  <select style="width: -webkit-fill-available;">
+                    <option value="" disabled selected>All requesters</option>
+                    <option value="information technology">Accident</option>
+                    <option value="engineering">Sick</option>
+                    <option value="telecommunication">Vacation</option>
+                  </select>
+                </div>
+                <div class="option-date-appr input-field col s12 m2">
+                  <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
+                  </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
+                </div>
+                <div class="option-date-appr input-field col s12 m2">
+                  <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
+                  </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n" type="date" onfocus="(this.type='date')">
+                </div>
+                <div class="input-field col s12 m2">
+                  <select style="width: -webkit-fill-available;">
+                    <option value="" disabled selected>All status</option>
+                    <option value="information technology">Accident</option>
+                    <option value="engineering">Sick</option>
+                    <option value="telecommunication">Vacation</option>
+                  </select>
+                </div>
+                <div class="input-field col s12 m2">
                   <a href="#" style="padding-top: 15px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Clear Filter</a>
                 </div>
-                </div>
-                <table style="font-size: 14px;">
-                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
-                    <th style=" border-right:none!important;">Title</th>
-                    <th style=" border-right:none!important;">Period</th>
-                    <th style=" border-right:none!important;">Amount</th>
-                    <th style=" border-right:none!important;">Requester</th>
-                    <th style=" border-right:none!important;">Cutoff Date</th>
-                    <th style=" border-right:none!important;">Status</th>
-                  </tr>
-                  <tr>
-                    <td>20190312 - AA</td>
-                    <td>26 Jul 2019 - 26 Jul 2019</td>
-                    <td>MYR 200</td>
-                    <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
-                    <td>26 Jul 2019</td>
-                    <td><p class="p-approved">Approved</p></td>
-
-
-                  </tr>
-                  <tr>
-                    <td>20190312 - AA</td>
-                    <td>26 Jul 2019 - 26 Jul 2019</td>
-                    <td>MYR 200</td>
-                    <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
-                    <td>26 Jul 2019</td>
-                    <td><p class="p-declined">Declined</p></td>
-
-
-                  </tr>
-                  <tr>
-                    <td>20190312 - AA</td>
-                    <td>26 Jul 2019 - 26 Jul 2019</td>
-                    <td>MYR 200</td>
-                    <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
-                    <td>26 Jul 2019</td>
-                    <td><p class="p-pending">Pending Approval</p></td>
-
-
-                  </tr>
-                </table>
               </div>
+              <table style="font-size: 14px;">
+                <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                  <th style="border-right:none!important;">Title</th>
+                  <th style="border-right:none!important;">Period</th>
+                  <th style="border-right:none!important;">Amount</th>
+                  <th style="border-right:none!important;">Requester</th>
+                  <th style="border-right:none!important;">Cutoff Date</th>
+                  <th style="border-right:none!important;">Status</th>
+                </tr>
+                <tr>
+                  <td><a style="color: black" href="/claims/claim-title1.html">20190312 - AA</a></td>
+                  <td>26 Jul 2019 - 26 Jul 2019</td>
+                  <td>MYR 200</td>
+                  <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
+                  <td>26 Jul 2019</td>
+                  <td><p class="p-approved">Approved</p></td>  
+                </tr>
+
+
+                <tr>
+                  <td><a style="color: black" href="/claims/claim-title1.html">20190312 - AA</a></td>
+                  <td>26 Jul 2019 - 26 Jul 2019</td>
+                  <td>MYR 200</td>
+                  <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
+                  <td>26 Jul 2019</td>
+                  <td><p class="p-declined">Declined</p></td>
+
+
+                </tr>
+                <tr>
+                  <td><a style="color: black" href="/claims/claim-title1.html">20190312 - AA</a></td>
+                  <td>26 Jul 2019 - 26 Jul 2019</td>
+                  <td>MYR 200</td>
+                  <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
+                  <td>26 Jul 2019</td>
+                  <td><p class="p-pending">Pending Approval</p></td>
+
+
+                </tr>
+              </table>
             </div>
           </div>
         </div>
-        <br><br><br><br><br><br><br>
-        <div style="height: 40px;"></div>
-        <br>
       </div>
+    
+      <br>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    frappe.csrf_token = "{{ csrf_token }}";
+  frappe.csrf_token = "{{ csrf_token }}";
 </script>
 {% endblock %}

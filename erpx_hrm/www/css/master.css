@@ -1915,6 +1915,9 @@
   width: 110px;
   margin-left: 40px; }
 
+strong {
+  font-weight: 600 !important; }
+
 .btn {
   background-color: #00aeef;
   border-radius: 26px;
@@ -1924,6 +1927,18 @@
   position: fixed;
   bottom: 24px;
   right: 24px; }
+
+.footer {
+  margin-bottom: 0px !important; }
+
+.privacy {
+  padding: 0px 50px; }
+
+.terms {
+  padding: 0px 50px; }
+
+.versionnumber {
+  padding: 0px 50px; }
 
 .vertical-align-middle {
   vertical-align: middle; }
@@ -2091,7 +2106,7 @@ table.dataTable tbody tr[role] {
 
 .breadcrumb:before {
   content: '\E5CC';
-  color: rgba(0, 0, 0, 0.7);
+  color: black;
   vertical-align: top;
   display: inline;
   font-family: 'Material Icons';
@@ -2100,6 +2115,9 @@ table.dataTable tbody tr[role] {
   font-size: 21px;
   margin: 0px;
   -webkit-font-smoothing: antialiased; }
+
+.breadcrumb-new-sub {
+  color: black !important; }
 
 .navbar-list > li {
   float: right; }
@@ -2319,6 +2337,37 @@ textarea {
     line-height: 1.3; } }
 
 @media only screen and (max-width: 480px) {
+  .leave-calculation {
+    padding: 15px 0px !important; }
+  .annual-cycle {
+    padding: 15px 0px !important; }
+  .company-setting {
+    padding: 15px 0px !important; }
+  #basic-calendar .fc-left {
+    display: contents !important; }
+  #basic-calendar .fc-today-button {
+    right: 20px !important;
+    left: auto !important; }
+  .leavetabs .tabs .tab > a {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 0px 10px;
+    white-space: normal; }
+  .org-chart-dropdownlist ul li .collapsible-body {
+    padding: 15px 10px !important;
+    padding-bottom: 0px !important; }
+  .org-chart-dropdownlist ul li .org-chart-employee {
+    height: 150px !important; }
+  .org-chart-dropdownlist .contact-icons {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    top: 80px;
+    left: 30px; }
   .btn-manage-permissions {
     border-radius: 25px;
     width: 140px;
@@ -2395,9 +2444,8 @@ textarea {
     font-size: 11px;
     color: #0a0a0a; }
   .breadcrumb:before {
-    display: inline;
-    font-size: 14px;
-    margin: 0px; }
+    font-size: 12px !important;
+    margin: 0px !important; }
   .main-banner .banner-title3 {
     position: absolute;
     top: 70px;
@@ -2441,15 +2489,15 @@ textarea {
     width: 180px !important;
     padding-left: 10px; }
   .privacy {
-    padding: 0px 30px !important; }
+    padding: 0px 30px; }
   .terms {
-    padding: 0px 30px !important; }
+    padding: 0px 30px; }
   .versionnumber {
-    padding: 0px 30px !important; }
+    padding: 0px 30px; }
   .signinlogo > h5 {
     font-size: 21px !important; }
   #signup-page {
-    margin: 50px 0px !important; }
+    margin: 70px 0px !important; }
   .createbtn {
     width: 100% !important;
     left: 0% !important; }
@@ -2458,7 +2506,7 @@ textarea {
     overflow-x: hidden;
     max-height: 300px; }
   .loginwords {
-    bottom: -10px !important;
+    bottom: 20px !important;
     font-size: 14px !important; }
   .main-banner-img {
     padding: 0 !important;
@@ -2485,11 +2533,11 @@ textarea {
     border-radius: 25px; }
   .brand-sidebar .logo-wrapper a.brand-logo img {
     height: auto;
-    width: 100px;
+    width: 90px;
     margin-bottom: 20px;
     margin-bottom: 20px; }
   .sidenav-main .brand-sidebar .brand-logo {
-    padding-left: 45px !important; }
+    padding-left: 40px !important; }
   .daysleft {
     display: none !important; }
   .searchicon {
@@ -2531,11 +2579,26 @@ textarea {
     display: inline-table !important; } }
 
 @media only screen and (max-width: 380px) {
+  .card-content .waves-effect {
+    margin-bottom: 10px;
+    height: auto;
+    line-height: 26px;
+    font-size: 12px; }
+  .footer-privacy {
+    display: contents; }
+  .terms-privacy > p {
+    padding: 0px 10px; }
+  .footer-privacy .container {
+    padding-top: 20px;
+    margin-top: 20px; }
+  .page-footer {
+    display: contents; }
+  #appicon {
+    margin-left: 10px; }
   #signup-page > div:first-child {
-    height: 110% !important; }
+    height: 115% !important; }
   .loginwords {
-    bottom: -45px !important;
-    font-size: 14px !important; }
+    bottom: -10px !important; }
   #nav-avatar .avatar div {
     width: 35px !important;
     height: 35px !important;
@@ -2565,7 +2628,40 @@ textarea {
     top: 170px !important;
     margin-left: 25px !important; }
   #main .content {
-    margin-top: 70px; } }
+    margin-top: 40px; }
+  .privacy {
+    padding: 0px 10px !important; }
+  .terms {
+    padding: 0px 10px !important; }
+  .versionnumber {
+    padding: 0px 10px !important; } }
+
+@media only screen and (max-width: 330px) {
+  .landing-page-nav-links li a {
+    padding: 0 5px !important;
+    font-size: 9px !important; }
+  .signinbutton > a {
+    position: relative !important;
+    line-height: 20px !important;
+    right: 15px !important;
+    text-align: center !important;
+    padding: 5px 15px !important;
+    font-size: 0.8rem !important;
+    height: 30px !important;
+    top: 20px !important; }
+  .card-content .waves-effect {
+    margin-bottom: 10px;
+    height: 28px;
+    line-height: 26px;
+    font-size: 12px;
+    position: absolute;
+    top: 110px; }
+  .card-content .waves-effect {
+    left: 40px !important; }
+  .collapsible-header {
+    padding-left: 20px !important; }
+  .org-chart-dropdownlist .collapsible .collapsible-header:before {
+    left: -10px !important; } }
 
 .app-logo {
   float: left; }
@@ -2964,6 +3060,13 @@ th {
   margin-top: -10px; }
 
 @media only screen and (max-width: 400px) {
+  .clr-fil-appr {
+    padding-top: 5px !important;
+    margin-right: 5px !important; }
+  .btn-appr-claims {
+    width: 100px !important;
+    margin: 0px !important;
+    margin-top: 0px !important; }
   .btn-add-custom-policy {
     background-color: #00aeef;
     border-radius: 25px;
@@ -2972,7 +3075,95 @@ th {
     color: white;
     margin: 0px;
     margin-top: -10px;
-    font-size: 12px; } }
+    font-size: 12px; }
+  .btn-add-policy {
+    background-color: #00aeef;
+    border-radius: 25px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    line-height: 40px;
+    margin-right: 58px;
+    margin-top: -10px; }
+  .btn-myclaims {
+    background-color: #00aeef;
+    border-radius: 25px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    line-height: 40px;
+    margin: 0px;
+    margin-top: -10px; }
+  .btn-appr-claims {
+    background-color: #00aeef;
+    border-radius: 25px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    line-height: 40px;
+    margin: 0px;
+    margin-top: -10px; }
+  .btn-bulk-update {
+    background-color: #00aeef;
+    border-radius: 25px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    line-height: 50px;
+    margin: 0px;
+    margin-top: -10px; }
+  .clr-fil-appr {
+    padding-top: 25px;
+    margin: 0px; }
+  .btn-download-payslip {
+    background-color: #00aeef;
+    border-radius: 25px;
+    width: 150px;
+    text-align: center;
+    color: white;
+    line-height: 40px;
+    margin-right: 57px;
+    margin-top: 48px; }
+  .input-field.col label {
+    padding-left: 0px !important; }
+  .login-card {
+    padding: 30px 10px !important; }
+  .forgetpassword {
+    right: 10px; }
+  .input-name-payslip {
+    margin-right: 40px; }
+  .clr-fil-myclaims {
+    padding-top: 25px;
+    margin-right: 0px; }
+  .title-ent-settings {
+    margin-top: 35px; }
+  .input-ent-settings {
+    width: 80% !important; }
+  .switch-settings {
+    margin-top: 20px; }
+  .p-approved {
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    background-color: green;
+    color: white;
+    font-size: small; }
+  .p-declined {
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    background-color: red;
+    color: white;
+    font-size: small; }
+  .p-pending {
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    background-color: #b2a30f;
+    color: white;
+    font-size: 13px;
+    padding-right: 5px;
+    padding-left: 5px; } }
 
 .btn-add-policy {
   background-color: #00aeef;
@@ -2983,17 +3174,6 @@ th {
   line-height: 40px;
   margin: 0px;
   margin-top: -10px; }
-
-@media only screen and (max-width: 400px) {
-  .btn-add-policy {
-    background-color: #00aeef;
-    border-radius: 25px;
-    width: 120px;
-    text-align: center;
-    color: white;
-    line-height: 40px;
-    margin-right: 58px;
-    margin-top: -10px; } }
 
 /*my-claims*/
 .btn-myclaims {
@@ -3006,18 +3186,6 @@ th {
   margin: 0px;
   margin-top: -10px; }
 
-/*approval-claims*/
-@media only screen and (max-width: 400px) {
-  .btn-myclaims {
-    background-color: #00aeef;
-    border-radius: 25px;
-    width: 100px;
-    text-align: center;
-    color: white;
-    line-height: 40px;
-    margin: 0px;
-    margin-top: -10px; } }
-
 .btn-appr-claims {
   background-color: #00aeef;
   border-radius: 25px;
@@ -3027,17 +3195,6 @@ th {
   line-height: 40px;
   margin: 0px;
   margin-top: -10px; }
-
-@media only screen and (max-width: 400px) {
-  .btn-appr-claims {
-    background-color: #00aeef;
-    border-radius: 25px;
-    width: 100px;
-    text-align: center;
-    color: white;
-    line-height: 40px;
-    margin: 0px;
-    margin-top: -10px; } }
 
 /*Bulk Update*/
 .btn-bulk-update {
@@ -3050,28 +3207,12 @@ th {
   margin: 0px;
   margin-top: -10px; }
 
-@media only screen and (max-width: 400px) {
-  .btn-bulk-update {
-    background-color: #00aeef;
-    border-radius: 25px;
-    width: 100px;
-    text-align: center;
-    color: white;
-    line-height: 50px;
-    margin: 0px;
-    margin-top: -10px; } }
-
 .option-date-appr {
   margin-left: 10px; }
 
 .clr-fil-appr {
   padding-top: 25px;
   margin-right: 47px; }
-
-@media only screen and (max-width: 400px) {
-  .clr-fil-appr {
-    padding-top: 25px;
-    margin: 0px; } }
 
 .btn-download-payslip {
   background-color: #00aeef;
@@ -3083,41 +3224,9 @@ th {
   margin: 0px;
   margin-top: 48px; }
 
-@media only screen and (max-width: 400px) {
-  .btn-download-payslip {
-    background-color: #00aeef;
-    border-radius: 25px;
-    width: 150px;
-    text-align: center;
-    color: white;
-    line-height: 40px;
-    margin-right: 57px;
-    margin-top: 48px; } }
-
-@media only screen and (max-width: 400px) {
-  .input-name-payslip {
-    margin-right: 40px; } }
-
 .clr-fil-myclaims {
   padding-top: 25px;
   margin-right: 47px; }
-
-@media only screen and (max-width: 400px) {
-  .clr-fil-myclaims {
-    padding-top: 25px;
-    margin-right: 0px; } }
-
-@media only screen and (max-width: 400px) {
-  .title-ent-settings {
-    margin-top: 35px; } }
-
-@media only screen and (max-width: 400px) {
-  .input-ent-settings {
-    width: 80% !important; } }
-
-@media only screen and (max-width: 400px) {
-  .switch-settings {
-    margin-top: 20px; } }
 
 #basic-calendar .fc-today-button {
   opacity: 1;
@@ -3150,15 +3259,6 @@ th {
   background-color: green;
   color: white; }
 
-@media only screen and (max-width: 400px) {
-  .p-approved {
-    border-radius: 20px;
-    text-align: center;
-    width: 80%;
-    background-color: green;
-    color: white;
-    font-size: small; } }
-
 .p-declined {
   border-radius: 20px;
   text-align: center;
@@ -3166,32 +3266,12 @@ th {
   background-color: red;
   color: white; }
 
-@media only screen and (max-width: 400px) {
-  .p-declined {
-    border-radius: 20px;
-    text-align: center;
-    width: 80%;
-    background-color: red;
-    color: white;
-    font-size: small; } }
-
 .p-pending {
   border-radius: 20px;
   text-align: center;
   width: 80%;
   background-color: #b2a30f;
   color: white; }
-
-@media only screen and (max-width: 400px) {
-  .p-pending {
-    border-radius: 20px;
-    text-align: center;
-    width: 100%;
-    background-color: #b2a30f;
-    color: white;
-    font-size: 13px;
-    padding-right: 5px;
-    padding-left: 5px; } }
 
 .org-chart-dropdownlist .collapsible .collapsible-header:before {
   font-family: "Material Icons";

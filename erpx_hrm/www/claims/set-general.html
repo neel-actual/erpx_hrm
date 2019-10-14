@@ -21,52 +21,122 @@
 {% block main %}
 <div id="main">
  <div class="row">
-    <div class="container">
-      <div class="section-data-tables nav-wrapper black-text banner-title3">
-        <!--<div class="content-wrapper-before"></div>-->
-        <div class="col s12">
-          <div class="breadcrumb">
-            <a class="breadcrumb">Claims</a>
-              <a class="breadcrumb">Settings</a>
-            <a href="/claims/set-general.html" class="breadcrumb active">General</a>
-          </div>
+  <div class="container">
+    <div class="section-data-tables nav-wrapper black-text banner-title3">
+      <!--<div class="content-wrapper-before"></div>-->
+      <div class="col s12">
+        <div class="breadcrumb">
+          <a class="breadcrumb">Claims</a>
+          <a class="breadcrumb">Settings</a>
+          <a href="/claims/set-general.html" class="breadcrumb active">General</a>
         </div>
-        <div class="col xl20 l20 m18 s12">
-          <div id="card-stats" class="card">
-            <div class="card-content">
-              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
-              <h4 class="card-title directorytitle" style="text-align: left;">General</h4>
+      </div>
+      <div class="col xl20 l20 m18 s12">
+        <div id="card-stats" class="card">
+          <div class="card-content">
+            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+            <h4 class="card-title directorytitle" style="text-align: left;">General</h4>
 
-              <br><br>
+            <br><br>
             
             <h4 class="card-title" style="text-align: left;">Cutoff Date</h4> 
-<span style="float: left; font-size: 14px; color: darkgrey">You can set your company's claim cutoff date. Claims approved 
-before or on the cutoff date are usually reimbursed in the same month or in the following month.</span>
+            <span style="margin-top: 15px;float: left; font-size: 14px; color: #6c6868">You can set your company's claim cutoff date. Claims approved 
+            before or on the cutoff date are usually reimbursed in the same month or in the following month.</span>
+<br>
+            <div class="row">
+              <div style="height: 40px;"></div>
+              <div class="row margin infodetails">
+               <div class="input-field col s12 m3">
+                <p style="text-align: left;margin-bottom: 10px;">Cutoff Date</p>
+                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                  <option value="" disabled selected>All Day</option>
+                  <option value="information technology">Accident</option>
+                  <option value="engineering">Sick</option>
+                  <option value="telecommunication">Vacation</option>
+                </select>
 
-              <div class="row">
-                <div style="height: 40px;"></div>
-                <div class="row margin infodetails">
-                 
-             
-                  <a href="#" style="padding-top: 15px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Clear Filter</a>
-               
-                </div>
-         
               </div>
+              <div style="margin-top: 61px; margin-left: -52px; color: #6c6868;" class="input-field col s12 m3">
+                <span >day of calendar month</span>
+              </div>
+
+
+
+              <a href="#" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Edit</a>
+
             </div>
+            <br>
+            <hr>
+            <br>
+            <h4 class="card-title" style="margin-left: 11px;text-align: left;">Cutoff Date</h4> 
+            <span style="margin-left: 11px;float: left; font-size: 14px; color: #6c6868">You can set the currency fro your company to use on Beep Claims.</span>
+
+           <div style="height: 40px;"></div>
+              <div class="row margin infodetails">
+<div class="input-field col s12 m3">
+                <p style="text-align: left;margin-bottom: 10px;">Cutoff Date</p>
+                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                  <option value="" disabled selected>All Day</option>
+                  <option value="information technology">Accident</option>
+                  <option value="engineering">Sick</option>
+                  <option value="telecommunication">Vacation</option>
+                </select>
+
+              </div>
+
+              <div style="margin-top: 61px; margin-left: -68px; color: #6c6868;" class="input-field col s12 m1">
+              <i style="padding-left: 39px;margin-left: 14px;" class="material-icons-outlined">info_outline</i>
+              </div>
+
+              <div style="margin-top: 61px; margin-left: -48px; color: #6c6868;" class="input-field col s12 m5">              
+                <span>Main currency cannot be changed once configured</span>
+              </div>
+
+
+
+              <a href="#" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Edit</a>
+
+              
+            </div>
+  <br>
+            <hr>
+            <br>
+             <h4 class="card-title" style="margin-left: 11px;text-align: left;">Approver Settings</h4> 
+            <span style="margin-left: 11px;float: left; font-size: 14px; color: #6c6868">You can set approver for your Claims. To update an Employee's Reports, go to the Employee's Profile page.To update head of department, go to  Manage People Page.</span>
+
+            <div style="height: 40px;"></div>
+<div class="row margin infodetails">
+ <div style="margin-top: 61px;" class="input-field col s12 m1"> Approver</div>
+<div class="input-field col s12 m5">
+                <p style="text-align: left;margin-bottom: 10px;">First Level Approver</p>
+                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                  <option value="" disabled selected>Head of Department</option>
+                  <option value="information technology">Accident</option>
+                  <option value="engineering">Sick</option>
+                  <option value="telecommunication">Vacation</option>
+                </select>
+
+              </div>
+
+ <a href="#" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Edit</a>
+</div>
+
+
           </div>
         </div>
-        <br><br><br><br><br><br><br>
-        <div style="height: 40px;"></div>
-        <br>
       </div>
     </div>
+    <br><br><br><br><br><br><br>
+    <div style="height: 40px;"></div>
+    <br>
   </div>
+</div>
+</div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    frappe.csrf_token = "{{ csrf_token }}";
+  frappe.csrf_token = "{{ csrf_token }}";
 </script>
 {% endblock %}
