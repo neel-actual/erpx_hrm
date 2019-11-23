@@ -43,9 +43,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 {% endblock %}
 
 {% block main %}
-
 <div id="main">
-
   <div class="container">
     <div class="section-data-tables nav-wrapper black-text banner-title3 screen">
       <div class="content-wrapper-before"></div>
@@ -290,64 +288,12 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
     frappe.csrf_token = "{{ csrf_token }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
-type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
 <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
 <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
-
-
-<script type="text/javascript">
-    $(function(){
-        $('#save_job_add').click(function(){
-            var job_name  = $('#job_title_add').val();
-            $('#job_title_add').val('');
-            $('#modal-add').modal('close');
-            create(job_name);
-        });
-    });
-
-
-    fetch('/api/method/login', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            usr: 'ankit@erpx.com.my',
-            pwd: 'AnkitL0g!nP@ssw0rd'
-        })
-    })
-    .then(r => r.json())
-    .then(r => {
-        console.log(r);
-    })
-
-    function create(data) {
-        fetch('/api/resource/Designation', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                designation_name: data,
-            })
-        })
-        .then(r => r.json())
-        .then(r => {
-            console.log(r);
-            window.location.reload();
-        });
-    }
-
-
-</script>
-
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script defer src="/hr/js/org-settings.js" type="text/javascript"></script>
 {% endblock %}
