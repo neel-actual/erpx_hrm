@@ -10,6 +10,15 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+  @media only screen and (max-width: 480px){
+
+
+   .no-margin-left{
+    margin-left: 0px !important;
+   }
+  }
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -45,31 +54,24 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
           </div>
         </div>
         <div class="col xl20 l20 m18 s12">
-          <div id="card-stats" class="card">
+          <div id="card-stats" class="card" style="overflow: unset!important; border-radius: 10px!important;">
             <div class="card-content">
               <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/payslip.png">
               <h4 class="card-title directorytitle" style="text-align: left;">Employee Payslip</h4>
-
-             
-              <br><br>
-
-
-
-
               <div class="row">
-                <div style="height: 40px;"></div>
-                <div class="row margin infodetails">
+                <div class="row margin infodetails"><br/><br/>
                   <div class="input-name-payslip">
-                   <div style="margin-left: 20px;" class="input-name-payslip input-field col s12 m3">
+                   <div style="margin-left: 20px;" class="input-name-payslip input-field col s12 m3 no-margin-left">
                      <p style="margin-bottom: 10px; text-align: left;">Name</p>
                     <select style="width: -webkit-fill-available;">
                       <option value="" disabled selected>All Name</option>
-                      <option value="information technology">Accident</option>
-                      <option value="engineering">Sick</option>
-                      <option value="telecommunication">Vacation</option>
+                      {% set emp_name = frappe.get_all("Employee", fields=['*']) %}
+                      {% for i_emp_name in emp_name %}
+                          <option value="{{i_emp_name.employee_name}}">{{i_emp_name.employee_name}}</option>
+                      {% endfor %}
                     </select>
                   </div>
-                 <div style= "margin-left: 20px;" class="input-field col s12 m3">
+                 <div style= "margin-left: 20px;" class="input-field col s12 m3 no-margin-left">
                      <p style="margin-bottom: 10px; text-align: left;">Type</p>
                     <select style="width: -webkit-fill-available;">
                       <option value="" disabled selected>All Type</option>
@@ -79,25 +81,26 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     </select>
                   </div>
                 </div>
-
-                   <a href="#" class="btn-download-payslip modal-trigger waves-effect waves-light right">Download</a>
+                <div style="padding: 0 1rem;">
+                   <a href="#!" class="btn-download-payslip modal-trigger waves-effect waves-light right">Download</a>
+                </div>
                 </div>
 <br>
 <hr style="border:1px lightgrey solid;">
 
-       <div style="height: 40px;"></div>   
-           <br> 
+       <div style="height: 40px;"></div>
+           <br>
      </div>
             </div>
           </div>
         </div>
-    
 
 
 
-       
-        
-        
+
+
+
+
 
       </div>
     </div>

@@ -8,6 +8,35 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+    @media only screen and (max-width: 850px){
+      .collape-scroll{
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+
+        white-space: nowrap!important;
+      }
+
+      .collapse-width{
+        width: 660px;
+      }
+
+      .mail-img{
+        margin-left: 25px !important;
+        position: unset !important;
+      }
+
+    }
+
+    @media only screen and (max-width: 330px){
+      .mn-emp{
+        width: 100%;
+        padding: 10px 0px;
+      }
+
+    }
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -41,195 +70,96 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             <div class="breadcrumb">
                                 <a class="breadcrumb">HR Hub</a>
                                 <a class="breadcrumb">People</a>
-                                <a href="/hr/news" class="breadcrumb active">Org Chart</a>
+                                <a href="/hr/people-org-chart" class="breadcrumb active">Org Chart</a>
                             </div>
                         </div>
                         <div class="content">
-                            <div class="card">
+                            <div class="card" style="border-radius: 10px!important;">
                                 <div class="card-content">
-                                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/people.png">
-                                 <h4 class="card-title newstitle" style="display: inline;">Org Chart</h4>
-                                 <a href="#" class="manage-employees modal-trigger waves-effect waves-light right">Manage Employees</a>
-                                 <div>
-                                <a class="modal-trigger waves-effect waves-light btn left" onClick="collapseAll();" style="position: absolute; ;top: 70px;left: 30px;">Collapse All</a>
+                                    <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/people.png">
+                                    <h4 class="card-title newstitle" style="display: inline;">Org Chart</h4>
+                                    <a href="#" class="manage-employees modal-trigger waves-effect waves-light right mn-emp">Manage Employees</a>
+                                    <div>
+                                        <a class="modal-trigger waves-effect waves-light btn left" onClick="collapseAll();" style="position: absolute; ;top: 85px;left: 30px;right: unset !important;">Collapse All</a>
+                                    </div>
+                                    <div class="org-chart-dropdownlist collape-scroll" style="margin-top: 120px;position: relative;">
+                                        <ul class="collapsible collape-width" data-collapsible="accordion" style="border:none;box-shadow: none;">
+                                            {% set dep_val = frappe.get_all("Department", fields=['name']) %}
+
+                                                {% for i_dep_val in dep_val%}
+                                                    {% if (i_dep_val.name != 'All Departments') %}
+                                                    <li class="{{i_dep_val.name}}" style="margin-bottom: 15px;">
+                                                        <div class="collapsible-header collapse-width" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">{{i_dep_val.name}}</span></div>
+                                                        <div class="collapsible-body collapse-width" style="border-bottom: none; padding: 20px;">
+                                                            <div class="row">
+                                                                <div class="col s12 m12">
+                                                                    <ul class="collapsible employees" data-collapsible="accordion" style="border: none;box-shadow: none;">
+                                                                        {% set emp_val = frappe.get_all("Employee", filters={'department':i_dep_val.name}, fields=['name','employee_name','employment_type','image','reports_to']) %}
+                                                                        {% for i_emp_val in emp_val%}
+                                                                            {% if i_emp_val.reports_to != '' %}
+                                                                                <li>
+                                                                                    <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0">
+                                                                                        {% if(i_emp_val.image != '' and i_emp_val.image != 'None' and i_emp_val.image != None ) %}
+                                                                                            <img width="40" height="40" src="{{i_emp_val.image}}">
+                                                                                        {% else %}
+                                                                                            <img width="40" height="40" src="/images/profile_icon.png">
+                                                                                        {% endif %}
+                                                                                        <p style="margin-left: 0px;" class="col s9"><span style="color: #00aeef;">{{i_emp_val.employee_name}}</span>
+                                                                                            <br/><span>{{i_emp_val.employment_type}}  {{i_emp_val.reports_to}}</span>
+                                                                                        </p>
+                                                                                        <div class="contact-icons" style="top: unset !important; left: unset !important;">
+                                                                                            <!-- <p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p>
+                                                                                            <p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p> -->
+                                                                                            <!-- <p class="mail-img" style="position: absolute;right: 95px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p>
+                                                                                            <p class="mail-img" style="position: absolute;right: 65px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p> -->
+                                                                                            <p class="mail-img" style="position: absolute;right: 35px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <ul>
+                                                                                        {% set sub_emp_val_sub = frappe.get_all("Employee", filters={'reports_to':i_emp_val.name}, fields=['name','employee_name','employment_type','image']) %}
+                                                                                        {% for i_sub_emp_val in sub_emp_val_sub%}
+                                                                                            <li  style="width:95%; margin-left:5%;">
+                                                                                                <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0">
+                                                                                                    {% if(i_sub_emp_val.image != '' and i_sub_emp_val.image != 'None' and i_sub_emp_val.image != None ) %}
+                                                                                                        <img width="40" height="40" src="{{i_sub_emp_val.image}}">
+                                                                                                    {% else %}
+                                                                                                        <img width="40" height="40" src="/images/profile_icon.png">
+                                                                                                    {% endif %}
+                                                                                                    <p style="margin-left: 0px;" class="col s9"><span style="color: #00aeef;">{{i_sub_emp_val.employee_name}}</span>
+                                                                                                        <br/><span>{{i_sub_emp_val.employment_type}}</span>
+                                                                                                    </p>
+                                                                                                    <div class="contact-icons" style="top: unset !important; left: unset !important;">
+                                                                                                        <!-- <p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p>
+                                                                                                        <p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p> -->
+                                                                                                        <!-- <p class="mail-img" style="position: absolute;right: 95px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p>
+                                                                                                        <p class="mail-img" style="position: absolute;right: 65px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p> -->
+                                                                                                        <p class="mail-img" style="position: absolute;right: 35px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p>
+                                                                                                    </div>
+                                                                                            </li>
+                                                                                        {% endfor %}
+                                                                                    </ul>
+                                                                                </li>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endif %}
+                                                {% endfor %}
+
+
+                                        </ul>
+                                    </div>
                                 </div>
-<div class="org-chart-dropdownlist" style="margin-top: 120px;position: relative;">                  
-  <ul class="collapsible" data-collapsible="accordion" style="border:none;box-shadow: none;">
-    <li class="management" style="margin-bottom: 15px;">
-      <div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
-      <div class="collapsible-body" style="border-bottom: none; padding: 20px;">
-    			<div class="row">
-				<div class="col s12 m12">
-        <ul class="collapsible employees" data-collapsible="accordion" style="border: none;box-shadow: none;">
-          <li>
-            <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0"><img width="40" height="40" src="/images/org-chart-profile.png"><p style="margin-left: 15px;"><span style="color: #00aeef;">Mina Mona</span><br/><span>Head Management</span></p>
-                <div class="contact-icons"><p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p><p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p><p style="position: absolute;right: 70px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p></div></div>
-          </li>
-          <li>
-            <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0"><img width="40" height="40" src="/images/org-chart-profile-2.png"><p style="margin-left: 15px;"><span style="color: #00aeef;">Tia Nia</span><br/><span>Product Manager</span></p><div class="contact-icons"><p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p><p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p><p style="position: absolute;right: 70px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p></div></div>
-          </li>
-        </ul>
-      </div>
-      </div>
-      </div>
-    </li>
-    <li class="finance" style="margin-bottom: 15px;">
-    <div class="collapsible-header org-chart-title" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Finance</span></div>
-    <div class="collapsible-body" style="border-bottom: none; padding: 20px;">
-        <ul class="collapsible finance-employees" data-collapsible="accordion" style="border: none;box-shadow: none;">
-          <li>
-            <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0"><img width="40" height="40" src="/images/org-chart-profile.png"><p style="margin-left: 15px;"><span style="color: #00aeef;">Mina Mona</span><br/><span>Head Management</span></p>
-                <div class="contact-icons"><p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p><p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p><p style="position: absolute;right: 70px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p></div></div>
-          </li>
-          <li>
-            <div class="collapsible-header org-chart-employee" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px; margin-bottom: 20px;" tabindex="0"><img width="40" height="40" src="/images/org-chart-profile-2.png"><p style="margin-left: 15px;"><span style="color: #00aeef;">Tia Nia</span><br/><span>Product Manager</span></p><div class="contact-icons"><p style="position: absolute;right: 150px;margin-top: 10px;"><img width="20" height="20" src="/icons/people-blue.png"></p><p style="position: absolute;right: 110px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-57.png"></p><p style="position: absolute;right: 70px;margin-top: 10px;"><img width="20" height="20" src="/icons/icon-56.png"></p></div></div>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="marketing" style="margin-bottom: 15px;"> 
-      <div class="collapsible-header org-chart-title" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Marketing</span></div>
-    <div class="collapsible-body" style="border-bottom: none; padding: 20px;">
-      </div>
-    </li>
-  </ul>
-</div>
-                                    
-                                    
-                                    
-<!--<div class="org-chart-dropdownlist" style="margin-top: 120px;position: relative;">                                    
-<ul class="collapsible" data-collapsible="accordion" style="border:none;box-shadow: none;">
-	<li style="margin-bottom: 15px;">
-		<div class="collapsible-header" style="padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
-		<div class="collapsible-body" style="display: block;border-bottom: none;">
-			<div class="row">
-				<div class="col s12 m12">
-					<ul class="collapsible" data-collapsible="accordion" style="border: none;box-shadow: none;">
-                                  <li>
-      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
-          </li>
-          <li>
-      <div class="collapsible-header" style="padding-left: 40px;padding-left: 40px;border: 1px solid #d2d2d2;border-radius: 20px;margin-top: 20px;" tabindex="0"><img width="40" height="40" src="/images/profile_icon.png"><span style="margin-top: 10px;margin-left: 10px;">Management</span></div>
-          </li>
-						<li>
-							<div class="collapsible-header">
-								<i class="material-icons">place</i>Nested Second</div>
-							<div class="collapsible-body">
-								<p>Lorem ipsum dolor sit amet.</p>
-							</div>
-						</li>
-						<li>
-							<div class="collapsible-header">
-								<i class="material-icons">whatshot</i>Nested Third</div>
-							<div class="collapsible-body">
-								<p>Lorem ipsum dolor sit amet.</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="material-icons">place</i>Second</div>
-		<div class="collapsible-body">
-			<div class="container">
-				<ul class="collapsible" data-collapsible="accordion">
-					<li>
-						<div class="collapsible-header">
-							<i class="material-icons">filter_drama</i>Nested First</div>
-						<div class="collapsible-body">
-							<p>Lorem ipsum dolor sit amet.</p>
-						</div>
-					</li>
-					<li>
-						<div class="collapsible-header">
-							<i class="material-icons">place</i>Nested Second</div>
-						<div class="collapsible-body">
-							<p>Lorem ipsum dolor sit amet.</p>
-						</div>
-					</li>
-					<li>
-						<div class="collapsible-header">
-							<i class="material-icons">whatshot</i>Nested Third</div>
-						<div class="collapsible-body">
-							<p>Lorem ipsum dolor sit amet.</p>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="material-icons">whatshot</i>Third</div>
-		<div class="collapsible-body">
-			<div class="container">
-				<div class="row">
-					<div class="col s12 m12">
-						<ul class="collapsible" data-collapsible="accordion">
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">filter_drama</i>Nested First</div>
-								<div class="collapsible-body">
-									<p>Lorem ipsum dolor sit amet.</p>
-								</div>
-							</li>
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">place</i>Nested Second</div>
-								<div class="collapsible-body">
-									<p>Lorem ipsum dolor sit amet.</p>
-								</div>
-							</li>
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">whatshot</i>Nested Third</div>
-								<div class="collapsible-body">
-									<p>Lorem ipsum dolor sit amet.</p>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</li>
-</ul>
-</div>-->
-                              <!--  <table style=" font-size: 14px;">
-                                   <tr border="0" style="border-right:none!important;font-size: 16px; position: relative;background-color: #f9f9f9; width: 100%!important;" >
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>Aznul Abdullah</td>
-                                    <td>Paternity</td>
-                                    <td>22 Aug 2019 - 26 Aug 2019 <br>
-                                    3 days</td>
-                                    <td>Approved</td>
-                                    <td><a href="#">Edit</a></td>
-                                </tr>
-
-
-                            </table> -->
-                            <!--  <a href="#" class="modal-trigger waves-effect waves-light btn left" style="position: absolute;top: 70px;left: 30px;">Collapse All</a> -->
-                            <div class="row">
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 {% endblock %}

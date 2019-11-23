@@ -1,0 +1,325 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+#dropdown1 li > a{
+  padding: unset;
+  float: left;
+}
+
+#dropdown1{
+  height: auto !important;
+  width: auto !important;
+  left: 74% !important;
+  top: 330px !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+
+#dropdown1 li {
+  float: left;
+}
+
+#dropdown1 li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+
+
+.dropdown-content li{
+  clear: unset !important;
+  width: unset !important;
+}
+
+.default-indicator{
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #b0b8e0;
+  will-change: left, right;
+  left: 1% !important;
+  right: 50% !important;
+}
+
+.indicator{
+  display: none;
+}
+
+.btn-link {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: #0000EE;
+  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+
+@media only screen and (max-width: 1460px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+   
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1100px !important;
+  }
+}
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables">
+          <div class="col s12">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb" style="display: inline;">
+
+                <a class="breadcrumb">Payroll</a>
+                <a class="breadcrumb">Pay Run</a>
+                <a href="/payroll/pay-run-history" class="breadcrumb active">Payroll History</a>
+              </div>
+
+            </div>
+            <div class="content table-section">
+              <!-- People List -->
+              <div id="peoplelist" class="card" style="border-radius: 10px; overflow: unset!important;">
+                <div class="card-content">
+                 <div class="row" style="margin: auto;">
+                   <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/pay-run.png">
+                  <h4 class="card-title directorytitle" style="display: inline;">Payroll History</h4>
+                  
+                </div>
+                <br>
+                
+               
+                <br>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="input-field col s12 m6 l3 xl3">
+                      <div>Payroll Period</div>
+                      <div>
+                        <select>
+                          <option>Jul 2019</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="input-field col s12 m6 l3 xl3">
+                      <div>Payroll Type</div>
+                      <div>
+                        <select>
+                          <option>Month end pay</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="input-field col s12 m3"></div>
+                  </div>
+                </div>
+                <div id="list" class="list-section" style="display: block;">
+                  <div class="row">
+                    <div id="table-scroll" class="col s12">
+                      <table style="margin-top: 15px; display: inline-table!important;">
+                        <tr style="background-color: #eff1f9;">
+                          <th style=" border-right:none!important;"><b>Pay Month</b></th>
+                          <th style=" border-right:none!important;"><b>Net Pay</b></th>
+                          <th style=" border-right:none!important;"><b>EPF</b></th>
+                          <th style=" border-right:none!important;"><b>PCB</b></th>
+                          <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                          <th style=" border-right:none!important;"><b>EIS</b></th>
+                        </tr>
+                        <tr>
+                          <td>
+                            <a>Jul 2019</a>
+                          </td>
+                          <td>RM 96, 272.55</td>
+                          <td>RM 19, 060.95</td>
+                          <td>RM 4, 345.67</td>
+                          <td>RM 865.60</td>
+                          <td>RM 154.00</td>
+                        </tr>
+                        <tr  style="background-color: #f9f9f9;">
+                          <td>
+
+                            <a>Jun 2019</a>
+                          </td>
+                          <td>RM 96, 732.10</td>
+                          <td>RM 19, 050.86</td>
+                          <td>RM 4, 345.67</td>
+                          <td>RM 865.60</td>
+                          <td>RM 154.00</td>
+                        </tr>
+                        <tr>
+                          <td>
+                           <a>May 2019</a>
+                            
+                          </td>
+                          <td>RM 96, 732.10</td>
+                          <td>RM 19, 050.86</td>
+                          <td>RM 4, 528.40</td>
+                          <td>RM 865.60</td>
+                          <td>RM 154.00</td>
+                        </tr>
+                        <tr  style="background-color: #f9f9f9;">
+                          <td>
+                            <a>Apr 2019</a>
+                            
+                          </td>
+                          <td>RM 92, 345.20</td>
+                          <td>RM 18, 784.65</td>
+                          <td>RM 4, 345.67</td>
+                          <td>RM 865.60</td>
+                          <td>RM 154.00</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <a>Feb 2019</a>
+                            
+                          </td>
+                          <td>RM 92, 345.20</td>
+                          <td>RM 18, 784.65</td>
+                          <td>RM 4, 345.67</td>
+                          <td>RM 865.60</td>
+                          <td>RM 154.00</td>
+                        </tr>
+                  
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>     
+
+            </div>
+
+           
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function list(){
+    var list = document.getElementById('list');
+    var card = document.getElementById('card');
+    var btn_list = document.getElementById('btn_list');
+    var btn_card = document.getElementById('btn_card');
+    list.style.display = "block";
+    card.style.display = "none";
+    btn_list.classList.add('active');
+    btn_card.classList.remove('active');
+  }
+
+  function card(){
+    var list = document.getElementById('list');
+    var card = document.getElementById('card');
+    var btn_list = document.getElementById('btn_list');
+    var btn_card = document.getElementById('btn_card');
+    list.style.display = "none";
+    card.style.display = "block";
+    btn_list.classList.remove('active');
+    btn_card.classList.add('active');
+  }
+
+  function profile(){
+    var people_list = document.getElementById('peoplelist');
+    var profile = document.getElementById('profile');
+    people_list.style.display = "none";
+    profile.style.display = "block";
+  }
+
+  function removeDefault(){
+    var default_indicator = document.getElementsByClassName('default-indicator')[0];
+    var indicator = document.getElementsByClassName('indicator')[0];
+    default_indicator.style.display = "none";
+    indicator.style.display = "block";
+  }
+
+  function employee_edit(){
+    var emp_edit = document.getElementById('employee_btn');
+    var bank_edit = document.getElementById('bank_btn');
+    emp_edit.style.display = "block";
+    bank_edit.style.display = "none";
+    
+  }
+
+  function bank_edit(){
+    var emp_edit = document.getElementById('employee_btn');
+    var bank_edit = document.getElementById('bank_btn');
+    emp_edit.style.display = "none";
+    bank_edit.style.display = "block";
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+{% endblock %}
+

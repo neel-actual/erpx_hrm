@@ -10,6 +10,42 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+  @media only screen and (max-width: 1460px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1100px !important;
+    display: inline-table !important;
+  }
+  #collapse-table{
+    width: 1100px !important;
+  }
+}
+
+#collapse{
+  padding: 0;
+  padding-top: 10px;
+
+
+}
+
+table{
+  padding: 0 !important;
+}
+
+.collapsible-body{
+  padding: 0 !important;
+}
+
+
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -46,32 +82,118 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
           </div>
         </div>
         <div class="col xl20 l20 m18 s12">
-          <div id="card-stats" class="card">
+          <div id="card-stats" class="card" style="border-radius: 10px!important;">
             <div class="card-content">
              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
              <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Request</div>
-             <p>No requests</p>
-             <!--<p>Balance left</p>-->
+
              <div class="row">
-              <!--individual-card-->
-              
+                 <div style="height: 40px;"></div>
+                  <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+
+                   <ul id="collapse-table" class="collapsible">
+                     <li>
+                       <table style="font-size: 14px;" >
+                         <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                           <th style="border-right:none!important;width: 300px;">Name</th>
+                           <th style=" border-right:none!important;">Type</th>
+                           <th style=" border-right:none!important;">Date</th>
+                           <th style=" border-right:none!important;">Status</th>
+                           <th style=" border-right:none!important;"></th>
+
+                         </tr>
+                       </table>
+                     </li>
+                     {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':'open'}) %}
+                     {% for i_leave_detail in leave_detail %}
+                     <li>
+                       <div class="collapsible-header" style="padding: 0 !important;">
+                         <table>
+                           <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                             <td style="width: 300px;">
+                               {{i_leave_detail.employee_name}}
+                             </td>
+                             <td>Paternity</td>
+                             <td>
+                               <p>{{i_leave_detail.to_date}} - {{i_leave_detail.from_date}}</p>
+                               <p>{{ (i_leave_detail.to_date - i_leave_detail.from_date).days }} Days</p>
+                             </td>
+                             <td>{{i_leave_detail.status}}</td>
+                             <td>
+                               <a href="#" style="margin-right: 10px;vertical-align: -2px !important;" class="modal-trigger waves-effect waves-light" >Edit</a> <img src="/icons/icon-58.png" width="22" height="22" />
+                             </td>
+
+
+                           </tr>
+                         </table>
+                       </div>
+                       <div class="collapsible-body" style="padding:0 !important;">
+
+                         <div>
+                           <table>
+                             <tbody style="border:none !important;">
+                             <tr style="font-size: 13px;">
+                               <td style="width: 100px;">
+                                 Reason
+                               </td>
+                               <td style="width: 50px;">
+                                 :
+                               </td>
+                               <td >
+                                 {{i_leave_detail.description}}
+                               </td>
+                             </tr>
+                             <tr style="font-size: 13px;">
+                               <td style="width: 100px;">
+                                 Attachment
+                               </td>
+                               <td style="width: 50px;">
+                                 :
+                               </td>
+                               <td >
+                                No attachment
+                               </td>
+                             </tr>
+                             <tr style="font-size: 13px;">
+                               <td style="width: 100px;">
+                                 Status Detail
+                               </td>
+                               <td style="width: 50px;">
+                                 :
+                               </td>
+                               <td >
+                                {{i_leave_detail.status}}
+                               </td>
+                             </tr>
+                             </tbody>
+                           </table>
+
+                        </div>
+
+
+                            </div>
+                        </li>
+                         {% endfor %}
+                    </ul>
+                </div>
+
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="col xl16 l16 m18 s12">
-        <div class="card">
+        <div class="card" style="border-radius: 10px!important;">
          <div class="card-content">
           <form>
             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
             <h4 class="card-title directorytitle" style="text-align: left;">History</h4>
-            
-            <a href="#" class="modal-trigger waves-effect waves-light right">Clear Filter</a>
-            
+
+            <a href="#!" class="modal-trigger waves-effect waves-light right">Clear Filter</a>
+
             <div style="height: 40px;"></div>
             <div class="row margin infodetails">
-              <div class="input-field col s12 m3">
+              <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Name</p>
                 <select style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All name</option>
@@ -80,7 +202,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <option value="telecommunication">Vacation</option>
                 </select>
               </div>
-              <div class="input-field col s12 m3">
+              <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Type</p>
                 <select style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All Type</option>
@@ -89,7 +211,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <option value="telecommunication">Vacation</option>
                 </select>
               </div>
-              <div class="input-field col s12 m3">
+              <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Status</p>
                 <select style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All status</option>
@@ -98,70 +220,114 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <option value="telecommunication">Vacation</option>
                 </select>
               </div>
-              
+
             </div>
             <div class="row margin infodetails">
-              <div class="input-field col s10 m3">
+              <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px; ">Start</p>
                 <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
-                <input style="border: 1px solid #c1c1c1!important; border-radius: 5px;" id="signup-password" type="date" >
+                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+                right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
                 <!--<label for="signup-password">Password</label>-->
               </div>
-              <div class="input-field col s10 m3">
+              <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">End</p>
                 <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
-                <input style="border: 1px solid #c1c1c1!important; border-radius: 5px;" id="signup-password-confirm" type="date" >
+                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+                right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
                 <!--<label for="signup-password-confirm">Confirm Password</label>-->
               </div>
             </div>
           </form>
 
           <div style="height: 40px;"></div>
-          <table cellpadding="0" cellspacing="0" style="font-size: 14px;">
-           <tr style="font-size: 16px; background-color: #f9f9f9; width: 100%!important;" >
-            <th style="border-right:none!important;">Name</th>
-            <th style="border-right:none!important;">Type</th>
-            <th style="border-right:none!important;">Date</th>
-            <th style="border-right:none!important;">Status</th>
-            <th style="border-right:none!important;"></th>
-          </tr>
-          <tr>
-            <td>Aznul Abdullah</td>
-            <td>Paternity</td>
-            <td>22 Aug 2019 - 26 Aug 2019 <br>
-            3 days</td>
-            <td>Approved</td>
-            <td style="text-align: center;"><a href="#">Edit</a>
-              <img style="margin-left: 20px;" src="/images/delete.png" ></td>
-            </tr>
-            <tr>
-              <td>Aznul Abdullah</td>
-              <td>Hospitalisation</td>
-              <td>30 Aug 2019 - 31 Aug 2019 <br>
-              1 day</td>
-              <td>Declined</td>
-              <td style="text-align: center;"><a href="#">Edit</a>
-                <img style="margin-left: 20px;" src="/images/delete.png" ></td>
-              </tr>
-              <tr>
-                <td>Aznul Abdullah</td>
-                <td>Annual</td>
-                <td>6 May 2019 - 7 May 2019<br>
-                2 days</td>
-                <td>Approved</td>
-                <td style="text-align: center;"><a href="#">Edit</a>
-                  <img style="margin-left: 20px;" src="/images/delete.png" ></td>
-                </tr>
-                <tr>
-                  <td>Aznul Abdullah</td>
-                  <td>Annual</td>
-                  <td>22 Aug 2019 - 26 Aug 2019<br>
-                  5 days</td>
-                  <td>Approved</td>
-                  <td style="text-align: center;"><a href="#">Edit</a>
-                    <img style="margin-left: 20px;" src="/images/delete.png" ></td>
+           <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+
+            <ul id="collapse-table" class="collapsible">
+              <li>
+                <table style="font-size: 14px;" >
+                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                    <th style="border-right:none!important;width: 300px;">Name</th>
+                    <th style=" border-right:none!important;">Type</th>
+                    <th style=" border-right:none!important;">Date</th>
+                    <th style=" border-right:none!important;">Status</th>
+                    <th style=" border-right:none!important;"></th>
+
                   </tr>
                 </table>
+              </li>
+              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':'Approved'}) %}
+              {% for i_leave_detail in leave_detail %}
+              <li>
+                <div class="collapsible-header" style="padding: 0 !important;">
+                  <table>
+                    <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                      <td style="width: 300px;">
+                        {{i_leave_detail.employee_name}}
+                      </td>
+                      <td>Paternity</td>
+                      <td>
+                        <p>{{i_leave_detail.to_date}} - {{i_leave_detail.from_date}}</p>
+                        <p>{{ (i_leave_detail.to_date - i_leave_detail.from_date).days }} Days</p>
+                      </td>
+                      <td>{{i_leave_detail.status}}</td>
+                      <td>
+                        <a href="#" style="margin-right: 10px;vertical-align: -2px !important;" class="modal-trigger waves-effect waves-light" >Edit</a> <img src="/icons/icon-58.png" width="22" height="22" />
+                      </td>
+
+
+                    </tr>
+                  </table>
+                </div>
+                <div class="collapsible-body" style="padding:0 !important;">
+
+                  <div>
+                    <table>
+                      <tbody style="border:none !important;">
+                      <tr style="font-size: 13px;">
+                        <td style="width: 100px;">
+                          Reason
+                        </td>
+                        <td style="width: 50px;">
+                          :
+                        </td>
+                        <td >
+                          {{i_leave_detail.description}}
+                        </td>
+                      </tr>
+                      <tr style="font-size: 13px;">
+                        <td style="width: 100px;">
+                          Attachment
+                        </td>
+                        <td style="width: 50px;">
+                          :
+                        </td>
+                        <td >
+                         No attachment
+                        </td>
+                      </tr>
+                      <tr style="font-size: 13px;">
+                        <td style="width: 100px;">
+                          Status Detail
+                        </td>
+                        <td style="width: 50px;">
+                          :
+                        </td>
+                        <td >
+                         {{i_leave_detail.status}}
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                 </div>
+
+
+                     </div>
+                 </li>
+                  {% endfor %}
+              </ul>
+              </div>
               </div>
             </div>
           </div>

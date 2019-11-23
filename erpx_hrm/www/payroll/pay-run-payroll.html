@@ -1,0 +1,2305 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+<!--Import Google Icon Font-->
+
+<link href="https://cdn.jsdelivr.net/npm/materialize-stepper@2.1.4/materialize-stepper.css" rel="stylesheet">
+
+<style type="text/css">
+table{
+  padding: 0 !important;
+  display: inline-table !important;
+}
+#collapse{
+  padding: 0;
+  padding-top: 10px;
+  
+  
+}
+#payrun{
+  background: transparent !important;
+  color: black !important;
+}
+
+#reports{
+  background: transparent !important;
+  color: black !important;
+}
+
+#settings{
+  background: transparent !important;
+  color: black !important;
+}
+.sidenav .collapsible-header.active:after{
+  content: "keyboard_arrow_right" !important;
+}
+.waves-ripple{
+  background-color: rgba(0,0,0,0) !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):before{
+    border-right: 2px solid green !important;
+    border-bottom: 2px solid green !important;
+}
+[type="checkbox"].filled-in + span:not(.lever):after {
+  border-radius: 6px !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+ul.stepper.horizontal:before{
+  box-shadow: none !important;
+}
+
+
+@media only screen and (max-width: 993px){
+  #slide-out {
+    
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 993px){
+  #slide-out {
+    
+    display: block !important;
+  }
+
+  ul.stepper.horizontal{
+    min-height: 545px !important;
+  }
+}
+
+@media only screen and (max-width: 1460px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+   
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1100px !important;
+  }
+
+  #collapse-table{
+    width: 1100px !important;
+  }
+}
+
+@media only screen and (max-width: 1240px){
+  #step-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+   
+    white-space: nowrap!important;
+  }
+
+  #step-three{
+    width: 800px;
+  }
+}
+
+@media only screen and (max-width: 450px){
+  #summary-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+   
+    white-space: nowrap!important;
+  }
+
+  #summary-width{
+    width: 280px;
+  }
+}
+
+
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+{% block main %}
+<div id="main" onclick="close_nav();">
+  <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">Payroll</a>
+            <a class="breadcrumb">Pay Run</a>
+            <a href="/payroll/pay-run-payroll.html" class="breadcrumb active">Run Payroll</a>
+          </div>
+        </div>
+      
+      <div id="step-payroll" class="col s12 m12 l12 xl12" style="display: block">
+        <div id="card-stats" class="card" style="border-radius: 10px;">
+          <div class="card-content" style="text-align: unset !important;">
+            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+            <h4 class="card-title directorytitle" style="text-align: left;">Run Payroll</h4>
+
+            <div id="notice" class="col s12" style="background-color: #f9f9f9;padding-top: 5px;padding-bottom: 5px;margin-top: 15px;display: block; border-left: 7px solid gray">
+              <p class="col s9 m9 l9" style="padding: 0;">
+                <img src="/icons/icon-59.png" width="15" height="15" style="margin-right: 10px;vertical-align: -2px;position: absolute;margin-top: 3px;">
+                <span style="padding-left: 24px;display: block;">
+                  
+                  Please fill out required information of your employees to run a payroll.
+                </span>
+                
+              </p>
+              <a href="#" class="col s3 m3 l3"  style="color:#00AEEF;text-align: right;padding: 0;">
+                  Bulk Update
+                </a>
+            </div>
+            <div class="row margin infodetails" style="margin-top: 20px !important;">
+              <div style="margin-top: 61px;text-align: left;padding-left: 0px;" class="input-field col s12 m12 l3 xl3">Run Payroll for</div>
+              <div class="input-field col s12 m12 l4 xl4">
+                <p style="text-align: left;margin-bottom: 10px;">Payroll Period</p>
+                <select style="padding-left: 10px;width: -webkit-fill-available; ">
+                  
+                  <option value="July" disabled selected>July 2019</option>
+                </select>
+              </div>
+              <div class="input-field col s12 m12 l4 xl4">
+                <p style="text-align: left;margin-bottom: 10px;">Payroll Type</p>
+                <select style="padding-left: 10px;width: -webkit-fill-available; ">
+                  
+                  <option value="month" disabled selected>Month End Pay</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <form>
+                <ul class="stepper parallel horizontal" style="margin-top: unset;">
+
+                  <!-- Step 1 -->
+
+                  <li class="step active">
+                    <div class="step-title waves-effect waves-dark">Adjust Payroll</div>
+                    <div class="step-content">
+                      <div class="row">
+                        <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+                          <table style="margin-top: 15px;display: inline-table !important;">
+                            <tr style="background-color: #eff1f9;">
+                              <th style=" border-right:none!important;width: 50px;">
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </th>
+                              <th style=" border-right:none!important;width: 250px;"><b>Employees (0/42)</b></th>
+                              <th style=" border-right:none!important;"><b>Basic Salary</b></th>
+                              <th style=" border-right:none!important;"><b>Additions</b></th>
+                              <th style=" border-right:none!important;"><b>Gross Pay</b></th>
+                              <th style=" border-right:none!important;"><b>Deductions</b></th>
+                              <th style=" border-right:none!important;"><b>Net Pay</b></th>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;" onclick="profile();">Leanne Ko</span>
+                                  <span>Marketing manager</span>
+                                </p>
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr  style="background-color: #f9f9f9;">
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+
+                                <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Hamidi Rashidi</span>
+                                  <span>Office manager</span>
+                                </p>
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Raves Aru</span>
+                                  <span>Head of Finance</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr  style="background-color: #f9f9f9;padding:0;padding-top: 20px;">
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Siti Halina</span>
+                                  <span>UI Designer</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Yo Ling</span>
+                                  <span>Front-end Developer</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr  style="background-color: #f9f9f9;">
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Tani Sari</span>
+                                  <span>Marketing Assistant</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Kim Lee</span>
+                                  <span>Lead Manager</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr  style="background-color: #f9f9f9;">
+                              <td>
+                                <p>
+                                  <label class="container">
+                                    <input type="checkbox" class="filled-in" checked="checked" /> 
+                                    <span class="checkmark" style="vertical-align: -50%;"></span>
+                                  </label>
+                                </p>
+                              </td>
+                              <td>
+                                <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                <p style="margin-top: 5px;display: block">
+                                  <span style="display: block; color:#00AEEF;">Azizi Nordin</span>
+                                  <span>Marketing Strategist</span>
+                                </p>
+
+                              </td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 2,500.00</td>
+                              <td>RM 245.15</td>
+                              <td>RM 2,254.85</td>
+                            </tr>
+                            <tr style="background-color: #e1e1e1; height: 81px;">
+                              <td colspan="2" style="text-align: center;">
+                                <b>Grand Total</b>
+                              </td>
+                              <td>RM 20,000.00</td>
+                              <td>RM 0.00</td>
+                              <td>RM 20,000.00</td>
+                              <td>RM 20,000.00</td>
+                              <td>RM 20,000.00</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="step-actions" style="position: relative;padding: 0;padding-top: 20px;float: right;">
+                        <button class="waves-effect waves-dark btn next-step" data-validator="validateStepOne">CONTINUE</button>
+                        
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- Step 2 -->
+
+                  <li class="step">
+                    <div class="step-title waves-effect waves-dark">Review & Confirm</div>
+                    <div class="step-content" style="background-color: #f9f9f9;">
+                      <div class="row">
+                        <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+                          
+                          <ul id="collapse-table" class="collapsible">
+                            <li>
+                              <table style="font-size: 14px;">
+                                <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                                  <th style="border-right:none!important;width: 200px;">Employees</th>
+                                  <th style=" border-right:none!important;">Basic Salary</th>
+                                  <th style=" border-right:none!important;">Additions</th>
+                                  <th style=" border-right:none!important;">Gross Pay</th>
+                                  <th style=" border-right:none!important;">Deductions</th>
+                                  <th style=" border-right:none!important;">Net Pay</th>
+                                  <th style=" border-right:none!important;"><span style="color: #EC008C">Employer</span><br>EPF</th>
+                                  <th style=" border-right:none!important;"><span style="color: #EC008C">Employer</span><br>SOCSO</th>
+                                </tr>
+                              </table>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;" >Leanne Ko</span>
+                                        <span>Marketing Manager</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;" >Hamidi Rashidi</span>
+                                        <span>Office Manager</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;">Raves Aru</span>
+                                        <span>Head of Finance</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;">Siti Halina</span>
+                                        <span>UI Designer</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;">Yo Ling</span>
+                                        <span>Front-end Developer</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;" >Tani Sari</span>
+                                        <span>Marketing Assistant</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;" >Kim Lee</span>
+                                        <span>Lead Manager</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header" style="padding: 0;">
+                                <table>
+                                  <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                    <td style="width: 200px;">
+                                      <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                                      <p style="margin-top: 5px;display: block">
+                                        <span style="display: block; color:#00AEEF;">Azizi Nordin</span>
+                                        <span>Marketing Strategist</span>
+                                      </p>
+                                    </td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 0.00</td>
+                                    <td>RM 2, 500.00</td>
+                                    <td>RM 415.45</td>
+                                    <td>RM 2, 254.85</td>
+                                    <td>RM 392.00</td>
+                                    <td>RM 48.15</td>
+
+                                  </tr>
+                                </table>
+                              </div>
+                              <div class="collapsible-body" style="padding:0;">
+                                <div style="background: rgba(0, 151, 19, 0.1);">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">Basic Salary</p>
+                                      </td>
+                                      <td colspan="7">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 3,200.00</p>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        <p id="collapse" style="padding-left: 40px;"><b>EARNINGS</b></p>
+                                        <p id="collapse" style="padding-left: 40px;">EPF</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 39px;">RM 434.10</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                   <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">PCB</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 0.00</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">SOSCO</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 16.25</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                                <div style="background-color: rgba(255, 0, 0, 0.2);border-bottom: 1px solid #e1e1e1;">
+                                  <table>
+                                    <tbody style="border:none !important;">
+                                    <tr style="font-size: 13px;">
+                                      <td style="width: 200px;">
+                                        
+                                        <p id="collapse" style="padding-left: 40px;">EIS</p>
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td colspan="4">
+                                        
+                                        <p id="collapse" style="padding-top: 10px;">RM 450.35</p>
+                                      </td>
+                                      
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                </div>
+
+                              </div> 
+                            </li>
+
+                            <li>
+                              <table>
+                                <tr style="background-color: #e1e1e1; height: 81px;">
+                                  <td style="text-align: center;width: 200px;">
+                                    <b>Grand Total</b>
+                                  </td>
+                                  <td>RM 20,000.00</td>
+                                  <td>RM 0.00</td>
+                                  <td>RM 20,000.00</td>
+                                  <td>RM 20,000.00</td>
+                                  <td>RM 20,000.00</td>
+                                  <td>RM 2,170.00</td>
+                                  <td>RM 376.85</td>
+                                </tr>
+                              </table>
+                            </li>
+                          </ul>
+
+                        </div>
+                        <div id="summary" class="col s12 m12 l6 xl6" style="margin-left: 50%;margin-top: 3rem;padding-right: 0;">
+                          <div id="summary-scroll" class="card" style="border-radius: 10px;">
+                            <div id="summary-width" class="card-content" style="text-align: unset !important;padding: 0;">
+                              <div style="padding:20px;border-bottom: 1px solid #e1e1e1">
+                                <img style="display: inline;float: left;margin-right: 10px;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;">Summary (42)</h4>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Total Net Pay</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;">RM 23,457.20</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Total EPF Payment</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;">RM 57,588.00</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Total PCB Payment</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;">RM 4,582.15</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Total SOCSO Payment</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;">RM 3,233.00</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Total EIS Payment</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;">RM 15.80</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="background-color: #e1e1e1;padding: 20px;">
+                                  <p style="float: left;">Total Payment</p>
+                                </div>
+                                <div class="col s6" style="background-color: #e1e1e1;padding: 20px 20px 20px 0px;">
+                                  <p style="float: right;">RM 268,605.20</p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6 m9" style="padding: 20px;">
+                                  <p style="float: right;"><b>Payroll Report</b></p>
+                                </div>
+                                <div class="col s6 m3" style="padding: 20px;">
+                                  <p><a href="#" style="float: right;color:#00AEEF;">Download PDF</a></p>
+                                </div>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6 m9" style="padding: 20px;">
+                                  <p style="float: right;"><b>Approver</b></p>
+                                </div>
+                                <div class="col s6 m3" style="padding: 20px;">
+                                  <p style="float: right;">Aznul Abdullah</p>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="step-actions" style="position: relative;padding: 0;float: right;flex-direction: row-reverse;background-color: #f9f9f9;">
+                        <a href="#modal-confirm" class="waves-effect waves-dark btn modal-trigger">CONTINUE</a>
+                        <button class="waves-effect waves-dark btn-flat" style="color: green;">Approved</button>
+
+                        <div id="modal-confirm" class="modal modal-fixed-footer" style="border-radius: 10px;height: 300px !important;">
+                          <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+                            <h5 class="col s9 m6 l4" style="background-color: #dcdcdc;text-align: left; font-size: 110%; border-radius: 0px 30px 30px 0px;padding: 10px;"><b>Confirm Your Payroll</b></h5>
+                            <span class="col s12" style="padding-left: 20px;">Are you sure you want to confirm your payroll? Please keep in mind you cannot go back to adjust or review once you confirm your payroll.</span>
+                          </div>
+                          <div style="margin-top: 11%;" class="modal-footer">
+                            <a href="#" class="right waves-effect waves-light btn next-step" onclick="$('#modal-confirm').modal('close'); close_notice();">Confirm</a>
+                           <a href="#" class="right btn-flat" style="color: #00AEEF;" 
+                           onclick="$('#modal-confirm').modal('close')">Cancel</a>
+                         </div>
+                       </div>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- Step 3 -->
+
+                  <li class="step set-padding" style="padding-right: 23px;">
+                    <div class="step-title waves-effect waves-dark" style="padding-left: 60px !important; text-overflow: unset !important;">Payment & Submission</div>
+                    <div class="step-content set-margin" style="background-color: #f9f9f9;">
+                      <div class="row set-padding" style="padding-left: 11px;">
+                        <div class="card card-content" style="border-radius: 10px;padding: 0;">
+                          <div id="step-scroll">
+                            <div id="step-three">
+                              <div style="border-bottom: 2px solid #f1f1f1; height: 60px; padding: 10px 0px;">
+                                <p class="col s4" style="padding-top: 10px;">Payroll Report</p>
+                                <p class="col s2 push-s4">
+                                  <a href="#" class="right waves-effect waves-light btn" style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">CSV</a>
+                                </p>
+                                <p class="col s2 push-s4">
+                                  <a href="#" class="right waves-effect waves-light btn" style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">PDF</a>
+                                </p>
+                              </div>
+
+                              <div style="height: 60px; padding: 10px 0px;">
+                                <div class="col s4">
+                                  <p>Bank Report </p>
+                                  <p style="font-size: 12px;color: darkgray;">Maybank</p>
+                                </div>
+                                <p class="col s2 push-s6">
+                                  <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="card-stats" class="card" style="border-radius: 10px;margin-top: 40px;">
+                          <div class="card-content" style="text-align: unset !important;padding:24px 0px 0px;">
+                            <img style="display: inline;float: left;margin-left: 15px" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+                            <h4 class="card-title directorytitle" style="text-align: left;left: 50px;">Statory</h4>
+                            <div id="step-scroll">
+                              <div id="step-three">
+                                <div style="height: 60px; padding: 10px 0px; margin-top: 40px;border-bottom: 2px solid #f1f1f1;">
+
+                                  <p class="col s4">EPF</p>
+                                  <p class="col s2 push-s6">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Bank File</a>
+                                  </p>
+                                </div>
+
+                                <div style="border-bottom: 2px solid #f1f1f1; height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <p class="col s4" style="padding-top: 10px;">PCB</p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn" style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">CP39</a>
+                                  </p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Bank File</a>
+                                  </p>
+                                </div>
+
+                                <div style="border-bottom: 2px solid #f1f1f1; height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <p class="col s4" style="padding-top: 10px;">SOCSO</p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Borang 8A</a>
+                                  </p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Bank File</a>
+                                  </p>
+                                </div>
+
+                                <div style="border-bottom: 2px solid #f1f1f1; height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <p class="col s4" style="padding-top: 10px;">EIS</p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">EIS Lampiran 1</a>
+                                  </p>
+                                  <p class="col s2 push-s4">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Bank File</a>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="card-stats" class="card" style="border-radius: 10px;margin-top: 40px;">
+                          <div class="card-content" style="text-align: unset !important;padding:24px 0px 0px;">
+                            <img style="display: inline;float: left;margin-left: 15px" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
+                            <h4 class="card-title directorytitle" style="text-align: left;left: 50px;">Payment</h4>
+
+                            <div id="step-scroll">
+                              <div id="step-three">
+                                <div style="height: 60px; padding: 10px 0px; margin-top: 40px;border-bottom: 2px solid #f1f1f1;">
+
+                                  <p class="col s6"><b>EMPLOYEE</b></p>
+                                  <p class="col s2"><b>NET PAY</b></p>
+                                  <P class="col s4"><b>PAY SLIP</b></P>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Leanne Ko</p>
+                                    <p style="font-size: 12px;color: darkgray;">Marketing Manager</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 3, 540.25
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Hamidi Rashidi</p>
+                                    <p style="font-size: 12px;color: darkgray;">Office Manager</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 6, 210.25
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Raves Aru</p>
+                                    <p style="font-size: 12px;color: darkgray;">Head of Finance</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 3, 450.25
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Siti Halina </p>
+                                    <p style="font-size: 12px;color: darkgray;">UX Designer</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 3, 087.65
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Yo Ling </p>
+                                    <p style="font-size: 12px;color: darkgray;">Front-end Developer</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 3, 540.25
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Kim Lee </p>
+                                    <p style="font-size: 12px;color: darkgray;">Lead Manager</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 4, 500.85
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;border-bottom: 2px solid #f1f1f1;">
+                                  <div class="col s6">
+                                    <p>Azizi Nordin </p>
+                                    <p style="font-size: 12px;color: darkgray;">Product Strategist</p>
+                                  </div>
+                                  <p class="col s2">
+                                    RM 5, 600. 67
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Send</a>
+                                  </p>
+                                  <p class="col s2">
+                                    <a href="#" class="right waves-effect waves-light btn " style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: -webkit-fill-available">Download</a>
+                                  </p>
+                                </div>
+
+                                <div style="height: 60px; padding: 10px 0px;background-color: #e1e1e1;">
+                                  <p class="col s2 push-s8">
+                                    <a href="#" class="right waves-effect waves-light btn-flat " style=" width: -webkit-fill-available; color: #00AEEF;text-align: center;">Send All</a>
+                                  </p>
+                                  <p class="col s2 push-s8">
+                                    <a href="#" class="right waves-effect waves-light btn-flat " style=" width: -webkit-fill-available; color: #00AEEF;text-align: center;padding: 0;">Download All</a>
+                                  </p>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="step-actions" style="background-color: #f9f9f9;position: relative;padding: 0;float: right">
+                        <a href="#modal-complete" class="waves-effect waves-dark btn modal-trigger">Complete Jul 2019 Payroll</a>
+                        <div id="modal-complete" class="modal modal-fixed-footer" style="border-radius: 10px;height: 300px; !important;">
+                          <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+                            <h5 class="col s9 m6 l4" style="background-color: #dcdcdc;text-align: left; font-size: 110%; border-radius: 0px 30px 30px 0px;padding: 10px;"><b>Complete Payroll</b></h5>
+                            <span class="col s12" style="padding-left: 20px;">Congratulations! You’ve completed the Aug 2019’s payroll. You can find files and data at payroll history menu anytime.</span>
+                          </div>
+                          <div style="margin-top: 11%;" class="modal-footer">
+                            <a href="#" class="right waves-effect waves-light btn" onclick="close_payroll();">Complete</a>
+                            <a href="#" class="right btn-flat" style="color: #00AEEF;" 
+                            onclick="$('#modal-complete').modal('close')">Cancel</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </form>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div id="complete-payroll" class="col s12 m12 l12 xl12" style="text-align: center;display: none;margin: 10% auto;">
+        <img src="/images/logo.svg" class="pay-logo" style="width: 400px">
+        <p class="mob-font1" style="font-size: 30px;padding-bottom: 20px"><b>Tengku Bruce, you don’t have any pendinng payroll to run.</b></p>
+        <p class="mob-font2" style="padding-bottom: 20px; font-size: 20px">You’ve completed all payroll so far. Your next payroll will be open on the 1st day of next month. Please go to payroll history menu to check your past payroll.</p>
+        <p><a href="/payroll/pay-run-history" class="waves-effect waves-light btn">View Payroll History</a></p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Stepper JavaScript -->
+<script>
+  frappe.csrf_token = "{{ csrf_token }}";
+</script>
+
+<!-- Materializecss compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<!-- jQueryValidation Plugin -->
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+<script type="text/javascript">
+  
+
+  function open_nav(){
+    var sidebar = document.getElementById('slide-out');
+    sidebar.style.display = "block";
+  }
+
+  function close_nav(){
+    var width = window.outerWidth;
+    if(width <= 992){
+      var sidebar = document.getElementById('slide-out');
+      sidebar.style.display = "none";
+    }
+  }
+
+  function close_payroll(){
+    var payroll = document.getElementById('step-payroll');
+    var complete = document.getElementById('complete-payroll');
+    payroll.style.display = "none";
+    complete.style.display = "block";
+  }
+
+  function close_notice(){
+    var notice = document.getElementById('notice');
+    notice.style.display = "none";
+  }
+
+  function report_open(){
+    var report = document.getElementById('reports-submodule');
+    var payrun = document.getElementById('payrun');
+    var payrun_submodule = document.getElementById('payrun-submodule');
+    var payrun_list = document.getElementById('payrun-list');
+    var settings = document.getElementById('settings');
+    var settings_submodule = document.getElementById('settings-submodule');
+    var setting_list = document.getElementById('setting-list');
+    
+    report.classList.add("open");
+    
+    payrun.classList.remove("active");
+    payrun_submodule.classList.remove("open");
+    payrun_submodule.classList.remove("active");
+    payrun_list.style.display = "none";
+
+    settings.classList.remove("active");
+    settings_submodule.classList.remove("open");
+    settings_submodule.classList.remove("active");
+    setting_list.style.display = "none";
+    
+
+  }
+
+  function settings_open(){
+    var settings = document.getElementById('settings-submodule');
+    var reports = document.getElementById('reports');
+    var reports_submodule = document.getElementById('reports-submodule');
+    var report_list = document.getElementById('report-list');
+    var payrun = document.getElementById('payrun');
+    var payrun_submodule = document.getElementById('payrun-submodule');
+    var payrun_list = document.getElementById('payrun-list');
+
+    settings.classList.add("open");
+
+    reports.classList.remove("active");
+    reports_submodule.classList.remove("open");
+    reports_submodule.classList.remove("active");
+    report_list.style.display = "none";
+
+    payrun.classList.remove("active");
+    payrun_submodule.classList.remove("open");
+    payrun_submodule.classList.remove("active");
+    payrun_list.style.display = "none";
+  }
+
+  function payrun_open(){
+    var payrun = document.getElementById('payrun-submodule');
+    var reports = document.getElementById('reports');
+    var reports_submodule = document.getElementById('reports-submodule');
+    var report_list = document.getElementById('report-list');
+    var settings = document.getElementById('settings');
+    var settings_submodule = document.getElementById('settings-submodule');
+    var setting_list = document.getElementById('setting-list');
+
+    payrun.classList.add("open");
+
+    reports.classList.remove("active");
+    reports_submodule.classList.remove("open");
+    reports_submodule.classList.remove("active");
+    report_list.style.display = "none";
+
+    settings.classList.remove("active");
+    settings_submodule.classList.remove("open");
+    settings_submodule.classList.remove("active");
+    setting_list.style.display = "none";
+  }
+</script>
+
+<script>
+  $(document).ready(function() {
+    $('.stepper').activateStepper();
+  })
+
+  function validateStepOne() {
+  // Extract the checked checkboxes from the first step
+  if($('.step').first().find('input[type="checkbox"]:checked').length)
+    return true;
+  return false;
+}
+
+function validateStepThree() {
+  var validation = true;
+  if($('.step:nth-child(3) input[type="text"]').val().indexOf('materialize') === -1)
+    validation = false;
+  if($('.step:nth-child(3) input[type="checkbox"]:checked').length === 0)
+    validation = false;
+  return validation;
+  
+}
+
+function nextStepThreeHandler() {
+  if(validateStepThree())
+    $('.stepper').nextStep();
+  else {
+    $('.stepper ').destroyFeedback();              $('.stepper').getStep($('.stepper').getActiveStep()).addClass('wrong');
+  }
+}
+
+
+
+
+/* Materializecss Stepper - By Kinark 2016
+// https://github.com/Kinark/Materialize-stepper
+// JS v2.1.3
+*/
+
+var validation = $.isFunction($.fn.valid) ? 1 : 0;
+
+$.fn.isValid  = function() {
+ if(validation){
+  return this.valid();
+} else {
+  return true;
+}
+};
+
+if (validation) {
+ $.validator.setDefaults({
+  errorClass: 'invalid',
+  validClass: "valid",
+  errorPlacement: function (error, element) {
+   if(element.is(':radio') || element.is(':checkbox')) {
+    error.insertBefore($(element).parent());
+  } else {
+            error.insertAfter(element); // default error placement.
+            // element.closest('label').data('error', error);
+            // element.next().attr('data-error', error);
+          }
+        },
+        success: function (element) {
+         if(!$(element).closest('li').find('label.invalid:not(:empty)').length){
+          $(element).closest('li').removeClass('wrong');
+        }
+      }
+    });
+
+   // When parallel stepper is defined we need to consider invisible and
+   // hidden fields
+   if($('.stepper.parallel').length) $.validator.setDefaults({ignore:''});
+ }
+
+ $.fn.getActiveStep  = function() {
+   var active = this.find('.step.active');
+   return $(this.children('.step:visible')).index($(active))+1;
+ };
+
+ $.fn.activateStep  = function(callback) {
+   if($(this).hasClass('step')) return;
+   var stepper = $(this).closest('ul.stepper');
+   stepper.find('>li').removeAttr("data-last");
+   if(window.innerWidth < 993 || !stepper.hasClass('horizontal')) {
+    $(this).addClass("step").stop().slideDown(400, function(){
+     $(this).css({'height':'auto', 'margin-bottom': '','display': 'inherit'});if(callback)callback();
+     stepper.find('>li.step').last().attr('data-last', 'true');
+   });
+  } else {
+    $(this).addClass("step").stop().css({'width':'0%','display': 'inherit'}).animate({width:'100%'}, 400, function(){
+     $(this).css({'height':'auto', 'margin-bottom': '','display': 'inherit'});if(callback)callback();
+     stepper.find('>li.step').last().attr('data-last', 'true');
+   });
+  }
+};
+
+$.fn.deactivateStep  = function(callback) {
+ if(!$(this).hasClass('step')) return;
+ var stepper = $(this).closest('ul.stepper');
+ stepper.find('>li').removeAttr("data-last");
+ if(window.innerWidth < 993 || !stepper.hasClass('horizontal')) {
+  $(this).stop().css({'transition':'none', '-webkit-transition':'margin-bottom none'}).slideUp(400, function(){
+   $(this).removeClass("step").css({'height':'auto','margin-bottom':'','transition':'margin-bottom .4s','-webkit-transition':'margin-bottom .4s'});
+   if(callback)callback();
+   stepper.find('>li').removeAttr("data-last");
+   stepper.find('>li.step').last().attr('data-last', 'true');
+ });
+} else {
+  $(this).stop().animate({width:'0%'}, 400, function(){
+   $(this).removeClass("step").hide().css({'height':'auto', 'margin-bottom': '','display': 'none', 'width': ''});
+   if(callback)callback();
+   stepper.find('>li.step').last().attr('data-last', 'true');
+ });
+}
+};
+
+$.fn.showError  = function(error) {
+ if(validation) {
+  var name = this.attr('name');
+  var form = this.closest('form');
+  var obj = {};
+  obj[name] = error;
+  form.validate().showErrors(obj);
+  this.closest('li').addClass('wrong');
+} else {
+  this.removeClass('valid').addClass('invalid');
+  this.next().attr('data-error', error);
+}
+};
+
+$.fn.activateFeedback  = function() {
+ var active = this.find('.step.active:not(.feedbacking)').addClass('feedbacking').find('.step-content');
+ active.prepend('<div class="wait-feedback"> <div class="preloader-wrapper active"> <div class="spinner-layer spinner-blue"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-red"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-green"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div></div></div>');
+};
+
+$.fn.destroyFeedback  = function() {
+ var active = this.find('.step.active.feedbacking');
+ if(active) {
+  active.removeClass('feedbacking');
+  active.find('.wait-feedback').remove();
+}
+return true;
+};
+
+$.fn.resetStepper  = function(step) {
+ if(!step) step = 1;
+ var form = $(this).closest('form');
+ $(form)[0].reset();
+ Materialize.updateTextFields();
+ return $(this).openStep(step);
+};
+
+$.fn.submitStepper  = function(step) {
+ var form = this.closest('form');
+ if(form.isValid()) {
+  form.submit();
+}
+};
+
+$.fn.nextStep = function(callback, activefb, e) {
+ var stepper = this;
+ var settings = $(stepper).data('settings');
+ var form = this.closest('form');
+ var active = this.find('.step.active');
+ var next = $(this.children('.step:visible')).index($(active))+2;
+ var feedback = active.find('.next-step').length > 1 ? (e ? $(e.target).data("feedback") : undefined) : active.find('.next-step').data("feedback");
+   // If the stepper is parallel, we want to validate the input of the current active step. Not all elements.
+   if((settings.parallel && $(active).validateStep()) || (!settings.parallel && form.isValid())) {
+    if(feedback && activefb) {
+     if(settings.showFeedbackLoader) stepper.activateFeedback();
+     return window[feedback].call();
+   }
+   active.removeClass('wrong').addClass('done');
+   this.openStep(next, callback);
+   return this.trigger('nextstep');
+ } else {
+  return active.removeClass('done').addClass('wrong');
+}
+};
+
+$.fn.prevStep = function(callback) {
+ var active = this.find('.step.active');
+ if(active.hasClass('feedbacking')) return;
+ var prev = $(this.children('.step:visible')).index($(active));
+ active.removeClass('wrong');
+ this.openStep(prev, callback);
+ return this.trigger('prevstep');
+};
+
+$.fn.openStep = function(step, callback) {
+ var settings = $(this).closest('ul.stepper').data('settings');
+ var $this = this;
+ var step_num = step - 1;
+ step = this.find('.step:visible:eq('+step_num+')');
+ if(step.hasClass('active')) return;
+ var active = this.find('.step.active');
+ var next;
+ var prev_active = next = $(this.children('.step:visible')).index($(active));
+ var order = step_num > prev_active ? 1 : 0;
+ if(active.hasClass('feedbacking')) $this.destroyFeedback();
+ active.closeAction(order);
+ step.openAction(order, function(){
+  if(settings.autoFocusInput) step.find('input:enabled:visible:first').focus();
+  $this.trigger('stepchange').trigger('step'+(step_num+1));
+  if(step.data('event')) $this.trigger(step.data('event'));
+  if(callback)callback();
+});
+};
+
+$.fn.closeAction = function(order, callback) {
+ var closable = this.removeClass('active').find('.step-content');
+ if(window.innerWidth < 993 || !this.closest('ul').hasClass('horizontal')) {
+  closable.stop().slideUp(300,"easeOutQuad", callback);
+} else {
+  if(order==1) {
+   closable.animate({left: '-100%'},function(){closable.css({display: 'none', left: '0%'}, callback);});
+ } else {
+   closable.animate({left: '100%'},function(){closable.css({display: 'none', left: '0%'}, callback);});
+ }
+}
+};
+
+$.fn.openAction = function(order, callback) {
+ var openable = this.removeClass('done').addClass('active').find('.step-content');
+ if(window.innerWidth < 993 || !this.closest('ul').hasClass('horizontal')) {
+  openable.slideDown(300,"easeOutQuad", callback);
+} else {
+  if(order==1) {
+   openable.css({left: '100%', display: 'block'}).animate({left: '0%'}, callback);
+ } else {
+   openable.css({left: '-100%', display: 'block'}).animate({left: '0%'}, callback);
+ }
+}
+};
+
+$.fn.activateStepper = function(options) {
+ var settings = $.extend({
+  linearStepsNavigation: true,
+  autoFocusInput: true,
+  showFeedbackLoader: true,
+  autoFormCreation: true,
+      parallel: false // By default we don't assume the stepper is parallel
+    }, options);
+ $(document).on('click', function(e){
+  if(!$(e.target).parents(".stepper").length){
+   $('.stepper.focused').removeClass('focused');
+ }
+});
+
+ $(this).each(function(){
+  var $stepper = $(this);
+  if(!$stepper.parents("form").length && settings.autoFormCreation) {
+   var method = $stepper.data('method');
+   var action = $stepper.data('action');
+   var method = (method ? method : "GET");
+   action = (action ? action : "?");
+   $stepper.wrap( '<form action="'+action+'" method="'+method+'"></form>' );
+ }
+
+ $stepper.data('settings', {linearStepsNavigation: settings.linearStepsNavigation,autoFocusInput: settings.autoFocusInput,showFeedbackLoader:settings.showFeedbackLoader, parallel:$stepper.hasClass('parallel')});
+ $stepper.find('li.step.active').openAction(1);
+ $stepper.find('>li').removeAttr("data-last");
+ $stepper.find('>li.step').last().attr('data-last', 'true');
+
+ $stepper.on("click", '.step:not(.active)', function () {
+   var object = $($stepper.children('.step:visible')).index($(this));
+         if($stepper.data('settings').parallel && validation) { // Invoke parallel stepper behaviour
+          $(this).addClass('temp-active');
+          $stepper.validatePreviousSteps()
+          $stepper.openStep(object + 1);
+          $(this).removeClass('temp-active');
+        } else if(!$stepper.hasClass('linear')) {
+          $stepper.openStep(object+1);
+        } else if(settings.linearStepsNavigation) {
+          var active = $stepper.find('.step.active');
+          if($($stepper.children('.step:visible')).index($(active))+1 == object) {
+           $stepper.nextStep(undefined, true, undefined);
+         } else if ($($stepper.children('.step:visible')).index($(active))-1 == object) {
+           $stepper.prevStep(undefined);
+         }
+       }
+     }).on("click", '.next-step', function(e) {
+       e.preventDefault();
+       $stepper.nextStep(undefined, true, e);
+     }).on("click", '.previous-step', function(e) {
+       e.preventDefault();
+       $stepper.prevStep(undefined);
+     }).on("click", "button:submit:not(.next-step, .previous-step)", function (e) {
+       e.preventDefault();
+       feedback = e ? $(e.target).data("feedback") : undefined;
+       var form = $stepper.closest('form');
+       if(form.isValid()) {
+        if(feedback) {
+         stepper.activateFeedback();
+         return window[feedback].call();
+       }
+       form.submit();
+     }
+   }).on("click", function () {
+     $('.stepper.focused').removeClass('focused');
+     $(this).addClass('focused');
+   });
+ });
+};
+
+/**
+ * Return the step element on given index.
+ *
+ * @param step, index of the step to be returned
+ * @returns {*}, the step requested
+ */
+ $.fn.getStep = function(step) {
+  var settings = $(this).closest('ul.stepper').data('settings');
+  var $this = this;
+  var step_num = step - 1;
+  step = this.find('.step:visible:eq('+step_num+')');
+  return step;
+};
+
+/**
+ * Run validation over all previous steps from the steps this
+ * function is called on.
+ */
+ $.fn.validatePreviousSteps = function() {
+  var active = $(this).find('.step.temp-active');
+  var index = $(this.children('.step')).index($(active));
+    // We assume that the validator is set to ignore nothing.
+    $(this.children('.step')).each(function(i) {
+      if (i >= index) {
+        $(this).removeClass('wrong done');
+      } else {
+        $(this).validateStep();
+      }
+    });
+  };
+
+/**
+ * Validate the step that this function is called on.
+ */
+ $.fn.validateStep = function() {
+  var stepper = this.closest('ul.stepper');
+  var form = this.closest('form');
+  var step = $(this);
+    // Retrieve the custom validator for that step if exists.
+    var validator = step.find('.next-step').data("validator");
+    if(this.validateStepInput()) { // If initial base validation succeeded go on
+      if(validator) { // If a custom validator is given also call that validator
+       if (window[validator].call()) {
+         step.removeClass('wrong').addClass('done');
+         return true;
+       }
+       else {
+         step.removeClass('done').addClass('wrong');
+         return false;
+       }
+     }
+     step.removeClass('wrong').addClass('done');
+     return true;
+   } else {
+    step.removeClass('done').addClass('wrong');
+    return false;
+  }
+};
+
+/**
+ * Uses the validation variable set by the stepper constructor
+ * to run standard validation on the current step.
+ * @returns {boolean}
+ */
+ $.fn.validateStepInput = function() {
+  var valid = true;
+  if (validation) {
+        // Find all input fields dat need validation in current step.
+        $(this).find('input.validate').each(function() {
+          if (!$(this).valid()) {
+            valid = false;
+            return false;
+          }
+        });
+      }
+      return valid;
+    };
+  </script>
+  {% endblock %}

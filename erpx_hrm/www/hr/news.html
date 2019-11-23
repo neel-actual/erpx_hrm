@@ -8,6 +8,18 @@
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+@media only screen and (max-width: 380px){
+    .table-scroll{
+        overflow-x: scroll;
+    }
+
+    table{
+        width: 300px !important;
+        
+    }
+}
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -44,17 +56,17 @@
                             </div>
                         </div>
                         <div class="content">
-                            <div class="card">
+                            <div class="card" style="border-radius: 10px!important;">
                                 <div class="card-content">
                                     <img width="22" height="22" class="sidenav-icon" src="/icons/news.png">
                                     <h4 class="card-title newstitle" style="display: inline;">News</h4>
                                     <a href="#create-news.modal"
-                                       class="modal-trigger waves-effect waves-light btn right">Create
+                                       class="modal-trigger waves-effect waves-light btn right create-btn">Create
                                         News</a>
                                     <div class="row">
-                                        <div class="col s12">
-                                            <table id="page-length-option" class="display dataTable"
-                                                   style="width: 100%;padding: 20px 0px;">
+                                        <div class="col s12 table-scroll">
+                                            <table class="display dataTable"
+                                                   style="padding: 20px 0px;table-layout: auto !important;display: inline-table !important;">
                                                 <thead>
                                                 <tr style="background-color: #eff1f9;">
                                                     <th>Subject</th>
@@ -69,20 +81,26 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div id="create-news.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
                                 <div class="modal-content">
-                                    <h5 style="background-color: #dcdcdc;width: 50%;border-radius: 0px 30px 30px 0px;padding: 10px;">Add News</h5>
+                                    <p class="edit-title">Add News</p>
                                     <form class="col s12">
                                         <div class="row">
                                             <div class="input-field col s12" style="margin-bottom: 0px;">
                                                 <p>Subject</p>
-                                                <input type="text" id="news-subject">
+                                                <input type="text" id="news-subject" style="width: -webkit-fill-available;">
                                                 <!--<label for="news-subject" class="" style="left: 30px;">Subject</label>-->
                                             </div>
                                             <div class="input-field col s12" style="margin-top: 0px;">
                                                 <p>Send email to</p>
                                                 <select>
                                                     <option value="" disabled selected>None selected</option>
+                                                    {% set email = frappe.get_all("Employee", fields=['company_email']) %}
+                                                    {% for em in email%}
+                                                        <option value="{{em.company_email}}">{{em.company_email}}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="input-field col s12">

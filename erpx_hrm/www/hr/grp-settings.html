@@ -1,0 +1,692 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+.select-wrapper input.select-dropdown{
+  position: unset !important;
+
+}
+
+.select-wrapper{
+  background-color: white !important;
+}
+@media only screen and (max-width: 360px){
+      .btn-new{
+        margin-top: 5px !important;
+        width: 100% !important;
+        margin-right: 10px !important;
+      }
+      
+    }
+
+
+
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+{% block main %}
+
+<div id="main">
+  <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">HR Hub</a>
+            <a class="breadcrumb">Settings</a>
+            <a href="/hr/grp-settings" class="breadcrumb active">Group</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card" style="border-radius: 10px!important;">
+            <div class="card-content">
+             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+             <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Group</div>
+             <div style="padding-left: 1rem;">
+             <a href="#modal-add-group" style="margin-top: -37px;" class="modal-trigger waves-effect waves-light btn right btn-new">Add New Group</a>
+             </div>
+             <!--<p>Balance left</p>-->
+             <div class="row">
+              <!--individual-card-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col xl3 l4 m6 s12 profile-card-main">
+        <div class="card profile-card">
+
+          <span class="card-title">
+            <p style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">EMPLOYEE</p>
+          </span>
+          <br>
+          <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">42 people</span></p>
+
+          <p style="margin-left: 6%;font-size: 14px;">Employees have limited access.
+            <br>You can change their default
+          permissions.</p>
+
+          <div style="height: 30px"></div>
+
+          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>
+
+          <a href="#modal-epml-ppl" class="modal-trigger" style="text-align: center; display: block; padding:5%; 
+          color: #00aeef;">Edit People</a>
+        </div>
+      </div>
+
+      <div class="col xl3 l4 m6 s12 profile-card-main">
+        <div class="card profile-card">
+
+          <span class="card-title">
+            <p style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">ADMIN</p>
+          </span>
+          <br>
+          <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">1 people</span></p>
+
+          <p style="margin-left: 6%;font-size: 14px;">Employees have limited access.
+            <br>You can change their default
+          permissions.</p>
+
+          <div style="height: 30px"></div>
+
+          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-admin-per">Edit Permission</a>
+
+          <a href="#modal-admin-ppl" class="modal-trigger"  style="text-align: center; display: block; padding:5%; color: #00aeef; ">Edit People</a>
+        </div>
+      </div>
+
+      <!-- Edit admin permission -->
+
+      <div style="width: 60%;" id="modal-admin-per" class="edit-per modal modal-fixed-footer">
+        <div class="modal-content" style="padding: 0px !important;">
+          <p class="edit-title" style="text-align: left;padding-left: 9%;margin-left: 0px;">Edit Admin Permission</p>
+          <div style="margin-left: 9%">
+            <span style="color: gray; text-align: left;">Admin group must maintain full access over company account
+            </span>
+            <p class="card-title" style="font-size: 128%; text-align: left;">Profile</p>
+          </div>
+          
+          <hr>
+          <br>
+
+          <div class="row margin infodetails">
+            <div style="width: 50%; float: left">
+              <div style="padding-left: 18%;" class="input-field col s12 m12">
+                <p>Basic Information</p>
+              </div>
+
+            </div>
+
+            <div style="width: 50%; float: left">
+              <div class="input-field col s12 m12">
+                <select width: -webkit-fill-available;">
+                 <option value="" disabled selected>All employees view only</option>
+               </select>
+             </div>
+             
+           </div>
+         </div>
+
+         <div class="row margin infodetails">
+          <div  style="width: 50%; float: left">
+            <div style="padding-left: 18%;" class="input-field col s12 m12">
+              <p">All About Me</p>
+            </div>
+          </div>
+
+          <div style="width: 50%; float: left">
+            <div class="input-field col s12 m12">
+              <select width: -webkit-fill-available;">
+               <option value="" disabled selected>All employees view and edit</option>
+             </select>
+           </div>
+         </div>
+       </div>
+
+       <div class="row margin infodetails">
+        <div style="width: 50%; float: left">
+          <div style="padding-left: 18%;" class="input-field col s12 m12">
+            <p">Certificate and License</p>
+          </div>
+        </div>
+
+        <div style="width: 50%; float: left">
+          <div class="input-field col s12 m12">
+            <select width: -webkit-fill-available;">
+             <option value="" disabled selected>All employees view and edit</option>
+           </select>
+         </div>
+       </div>
+     </div>
+
+     <div class="row margin infodetails">
+      <div style="width: 50%; float: left">
+        <div style="padding-left: 18%;" class="input-field col s12 m12">
+          <p>Compensation and Bank Information</p>
+        </div>
+      </div>
+
+      <div style="width: 50%; float: left">
+        <div class="input-field col s12 m12">
+          <select width: -webkit-fill-available;">
+           <option value="" disabled selected>All employees view and edit</option>
+         </select>
+       </div>
+     </div>
+   </div>
+
+   <div class="row margin infodetails">
+    <div style="width: 50%; float: left">
+      <div style="padding-left: 18%;" class="input-field col s12 m12">
+        <p>Compensation History</p>
+      </div>
+    </div>
+
+    <div style="width: 50%; float: left">
+      <div class="input-field col s12 m12">
+        <select width: -webkit-fill-available;">
+         <option value="" disabled selected>All employees view and edit</option>
+       </select>
+     </div>
+   </div>
+ </div>
+
+ <div class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%;" class="input-field col s12 m12">
+      <p>Disciplinary Action</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%;" class="input-field col s12 m12">
+      <p>Emergency Contact</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%;" class="input-field col s12 m12">
+      <p>Family Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%;" class="input-field col s12 m12">
+      <p>Personal Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%;" class="input-field col s12 m12">
+      <p>Qualifications</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<hr>
+
+
+
+<p class="card-title" style="font-size: 128%; text-align: left;margin-left: 9%;">Leave</p>
+
+<div style="padding-bottom: 5%;" class="row margin infodetails">
+  <div style="width: 50%; float: left">
+    <div style="padding-left: 18%; margin-top: 0%; width: auto;" class="input-field col s12 m6">
+      <p>Each option will allow different calendar filter
+      and email reminder of leave information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All leaves</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+</div>
+<div class="modal-footer">
+  <a href="#" class="right waves-effect waves-light btn">Okay</a>
+  <a href="#" class="right blue-text btn-flat"
+  onclick="$('#modal-admin-per').modal('close')">Cancel</a>
+</div>
+</div>
+
+<!-- Edit Employee permission -->
+
+<div id="modal-empl-per" class="edit-per modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title" style="text-align: left;padding-left: 9%;margin-left: 0px;">Edit Employee Permission</p>
+
+<!-- <span style="color: gray; text-align: left;margin-left: 83px;">Admin group must maintain full access over company account
+</span> -->
+<p class="card-title" style="font-size: 128%; text-align: left;margin-left: 9%;">Profile</p>
+<hr>
+<br>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div class="input-field col s12 m12" style="padding-left:18%;">
+      <p>Basic Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width=" -webkit-fill-available;">
+       <option value="" disabled selected>All employees view only</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>All About Me</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width=" -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Certificate and License</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width="-webkit-fill-available;">
+       <option value="" disabled selected>My view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Compensation and Bank Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>All employees view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Compensation History</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>No permission</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Disciplinary Action</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width= "-webkit-fill-available;">
+       <option value="" disabled selected>My view only</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Emergency Contact</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width=" -webkit-fill-available;">
+       <option value="" disabled selected>My view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Family Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width=" -webkit-fill-available;">
+       <option value="" disabled selected>My view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Personal Information</p>
+    </div>
+  </div>
+
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width=" -webkit-fill-available;">
+       <option value="" disabled selected>My view and edit</option>
+     </select>
+   </div>
+ </div>
+</div>
+
+<div class="row margin infodetails">
+  <div style="width: 50%; float: left; ">
+    <div style="padding-left:18%;" class="input-field col s12 m12">
+      <p>Qualifications</p>
+    </div>
+  </div>
+
+  
+  <div style="width: 50%; float: left">
+    <div class="input-field col s12 m12">
+      <select width: -webkit-fill-available;">
+       <option value="" disabled selected>My view only</option>
+     </select>
+   </div>
+ </div>
+ 
+</div>
+
+
+
+
+<div style="background-color: #e8ebf7;">
+  <p class="card-title" style="padding-top: 2%; font-size: 128%; text-align: left;margin-left: 9%;">Leave</p>
+
+  <div style="padding-bottom: 3%;" class="row margin infodetails">
+    <div style="width: 50%; float: left">
+      <div style="padding-left: 18%; margin-top: 0%; width: auto;" class="input-field col s12 m6">
+        <p>To enable this feature, <a>upgrade your plan now</a></p>
+        <p>Each option will allow different calendar filter
+        and email reminder of leave information</p>
+      </div>
+    </div>
+
+    <div style="width: 50%; float: left">
+      <div class="input-field col s12 m12">
+        <select width: -webkit-fill-available;">
+         <option value="" disabled selected>All leaves</option>
+       </select>
+     </div>
+   </div>
+ </div>
+</div>
+
+</div>
+<div class="modal-footer">
+  <a href="#" class="right waves-effect waves-light btn">Okay</a>
+  <a href="#" class="right blue-text btn-flat"
+  onclick="$('#modal-empl-per').modal('close')">Cancel</a>
+</div>
+</div>
+
+
+<!-- Edit Employee people -->
+
+<div id="modal-epml-ppl" class="edit-ppl modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+   <p class="edit-title">Edit Employee People</p>
+
+   <div style="padding-left: 1%; padding-right: 1%;" class="row margin infodetails">
+    <div style=" margin-top: 0%" class="input-field col s12 m5">
+      <p style="text-align: left;">Selectable</p>
+      <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
+      <p style="margin-top: 2%">Admin</p>
+      <div style="overflow-y: scroll;   border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
+
+
+       <p style="font-size: small;width: -webkit-fill-available;">Aznul Abdullah</p>
+     </div>
+
+   </div>
+
+<img class="edit-icon" src="/icons/icon-63.png">
+
+
+   <div style="float: right;  margin-top: 0%" class="input-field col s12 m5">
+    <p style="text-align: left;">Selection</p>
+    <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
+
+    <p style=" margin-top: 2%">Employee</p>
+    <div style=" overflow-y: scroll; border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
+
+
+     <p style="font-size: small;">Leanne Ko</p>
+     <p style="font-size: small;">Azizi Nordin</p>
+     <p style="font-size: small;">Mina Mona</p>
+     <p style="font-size: small;">Jason Hu</p>
+     <p style="font-size: small;">Kim Lee</p>
+     <p style="font-size: small;">Yo Ling</p>
+     <p style="font-size: small;">Odin Nio</p>
+     <p style="font-size: small;">Mastun Nizam</p>
+     <p style="font-size: small;">Kina Kuno</p>
+     <p style="font-size: small;">Junita Sito</p>
+   </div>
+
+ </div>
+</div>
+
+</div>
+<div class="modal-footer">
+ <a href="#" class="right waves-effect waves-light btn">Save</a>
+ <a href="#" class="right blue-text btn-flat"
+ onclick="$('#modal-epml-ppl').modal('close')">Close</a>
+</div>
+</div>
+
+
+<!-- Edit Admin People -->
+
+<div id="modal-admin-ppl" class="edit-ppl modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+   <p class="edit-title">Edit Admin People</p>
+
+<div style="padding-left: 1%; padding-right: 1%;" class="row margin infodetails">
+    <div class="input-field col s12 m5">
+    <p style="text-align: left; margin-top: 1%;">Selection</p>
+    <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
+
+    <p style=" margin-top: 2%">Employee</p>
+    <div style=" overflow-y: scroll;  border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
+
+
+     <p style="font-size: small;">Leanne Ko</p>
+     <p style="font-size: small;">Azizi Nordin</p>
+     <p style="font-size: small;">Mina Mona</p>
+     <p style="font-size: small;">Jason Hu</p>
+     <p style="font-size: small;">Kim Lee</p>
+     <p style="font-size: small;">Yo Ling</p>
+     <p style="font-size: small;">Odin Nio</p>
+     <p style="font-size: small;">Mastun Nizam</p>
+     <p style="font-size: small;">Kina Kuno</p>
+     <p style="font-size: small;">Junita Sito</p>
+   </div>
+ </div>
+
+<img class="edit-icon" src="/icons/icon-63.png">
+
+<div style="float: right; " class="input-field col s12 m5">
+      <p style="text-align: left; margin-top: 1%;">Selectable</p>
+      <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
+      <p style="margin-top: 2%">Admin</p>
+      <div style="overflow-y: scroll; border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
+
+
+       <p style="font-size: small;">Aznul Abdullah</p>
+     </div>
+   </div>
+</div>
+
+ </div>
+ <div class="modal-footer">
+   <a href="#" class="right waves-effect waves-light btn">Save</a>
+   <a href="#" class="right blue-text btn-flat"
+   onclick="$('#modal-admin-ppl').modal('close')">Close</a>
+ </div>
+</div>
+
+<!-- Add New Group -->
+<div id="modal-add-group" class="add-new-grp modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important; ">
+    <p class="edit-title">Add New Group</p>
+
+    <form class="col s12" style="padding-top: 0px;">
+      <div class="row">
+       <div class="input-field col s12" style="margin-bottom: 0px;">
+        <p>Title</p>
+        <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">   <p>Description</p>
+        <textarea rows="6" cols="60"></textarea>         
+      </div>
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+ <a href="#" class="right waves-effect waves-light btn">Submit</a>
+ <a href="#" class="right blue-text btn-flat"
+ onclick="$('#modal-add-group').modal('close')">Cancel</a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+{% endblock %}

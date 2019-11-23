@@ -2,6 +2,43 @@
 
 {% block title %}HR Hub{% endblock %}
 {% block styles %}
+<style type="text/css">
+* { box-sizing: border-box; }
+
+#contact { 
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  
+  
+  line-height: 30px;
+  background: teal;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  
+}
+
+
+
+#contactForm { 
+  display: none;
+
+  
+  padding: 2em;
+  width: 400px;
+  
+  background: #fff;
+  position: absolute;
+  top:49%;
+  right: -180px;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -23,67 +60,85 @@
 {% include "www/footer.html" %}
 {% endblock %}
 
+<head>
+  <title>The Materialize File Example</title>
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+  <link rel = "stylesheet"
+  href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel = "stylesheet"
+  href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+  <script type = "text/javascript"
+  src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
 {% block main %}
-<div id="main">
-    <div class="row">
-        <div class="animate fadeUp main-banner">
-            <div class="main-banner-image">
-            <img src="/images/hr-banner.png" style="width: 100%;"/>
-            </div>
-            <div class="nav-wrapper black-text banner-title3">
-                <div class="breadcrumb">
-                    <a class="breadcrumb">HR Hub</a>
-                    <a href="/hr" class="breadcrumb active">Home</a>
+<head>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div id="main">
+        <div class="row">
+            <div class="animate fadeUp main-banner">
+                <div class="main-banner-image">
+                    <img src="/images/hr-banner.png" style="width: 100%;"/>
                 </div>
-            </div>
-            <!--<h5>HR Hub<span style="color: #00aeef;"> > Home</span></h5>-->
-            {% if user_doc.full_name == 'None' %}
-            <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
-            {% else %}
-            <h5 class="pink-text banner-title">Hey {{ user }}</h5>
-            {% endif %}
-            {% if emp_doc|length != 0 %}
-            <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ emp_doc[0].company }} today.</h5>
-            {% else %}
-            <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
-            {% endif %}
-            <div class="content">
-                <div class="col-12 hr-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col s12 m12 l6 xl4">
-                                <div class="card animate fadeLeft">
-                                    <div class="card-content">
-                                        <h4 class="card-title">Notifications</h4>
-                                        <p class="medium-small">You're up to date</p>
+                <div class="nav-wrapper black-text banner-title3">
+                    <div class="breadcrumb">
+                        <a class="breadcrumb">HR Hub</a>
+                        <a href="/hr" class="breadcrumb active">Home</a>
+                    </div>
+                </div>
+                <!--<h5>HR Hub<span style="color: #00aeef;"> > Home</span></h5>-->
+                {% if user_doc.full_name == 'None' %}
+                <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
+                {% else %}
+                <h5 class="pink-text banner-title">Hey {{ user }}</h5>
+                {% endif %}
+                {% if emp_doc|length != 0 %}
+                <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ emp_doc[0].company }} today.</h5>
+                {% else %}
+                <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
+                {% endif %}
+                <div class="content">
+                    <div class="col-12 hr-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col s12 m12 l12 xl4">
+                                    <div class="card animate fadeLeft" style="border-radius: 10px">
+                                        <div class="card-content">
+                                            <h4 class="card-title">Notifications</h4>
+                                            <p class="medium-small">You're up to date</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col s12 m12 l6 xl4">
-                                <div class="card animate fadeLeft">
-                                    <div class="card-content">
-                                        <h4 class="card-title">Upcoming Events</h4>
-                                        <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
-                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                                <a class="waves-effect waves-cyan" href="#">
-                                                    <div class="col s3 m3 l3" style="padding-left: 0px;">
-                                                        <i class="material-icons-outlined">cake</i>
-                                                    </div>
-                                                    <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
-                                                    <div class="col s9 m9 lg9" style="padding-left: 0px;">
-                                                        <p style="color: black; padding-top: 5px;">BIRTHDAY</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="col s6 m6 l6" style="padding: 0px;">
-                                                <div class="col s4 m2 l12 xl4" style="padding: 0px;">
-                                                    <img src="/images/profile_placeholder.png" style="width: 45px;"/>
+                                <div class="col s12 m12 l12 xl4">
+                                    <div class="card animate fadeLeft" style="border-radius: 10px">
+                                        <div class="card-content">
+                                            <h4 class="card-title">Upcoming Events</h4>
+                                            <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
+                                                <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                    <a class="waves-effect waves-cyan" href="#">
+                                                        <div class="col s12 m3 l3" style="padding-left: 0px;">
+                                                            <i class="material-icons-outlined">cake</i>
+                                                        </div>
+                                                        <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                                        <div class="col s12 m9 lg9" style="padding-left: 0px;">
+                                                            <p style="color: black; padding-top: 5px;">BIRTHDAY</p>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                                <div class="col s8 m10 l12 xl8" style="padding-left: 0px;">
-                                                    <p class="medium-small" style="color: black;">Datin Minlamin</p>
-                                                    <p class="medium-small"
-                                                       style="font-size: 11px!important;font-style: italic;">4th August
-                                                        2019, Sunday</p>
+                                                <div class="col s6 m6 l6" style="padding: 0px;">
+                                                    <div class="col s12 m2 l12 xl4" style="padding: 0px;">
+                                                        <img src="/images/profile_placeholder.png" style="width: 45px;"/>
+                                                    </div>
+                                                    <div class="col s12 m10 l12 xl8" style="padding-left: 0px;">
+                                                        <p class="medium-small" style="color: black;">Datin Minlamin</p>
+                                                        <p class="medium-small"
+                                                        style="font-size: 11px!important;font-style: italic;">4th August
+                                                    2019, Sunday</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,11 +161,11 @@
                                         <div class="col s12 m12 l12 upcoming-contents" style="padding: 0px;">
                                             <div class="col s6 m6 l6" style="padding-left: 0px;">
                                                 <a class="waves-effect waves-cyan" href="#">
-                                                    <div class="col s3 m3 l3" style="padding-left: 0px;">
+                                                    <div class="col s12 m3 l3" style="padding-left: 0px;">
                                                         <i class="material-icons-outlined">person</i>
                                                     </div>
                                                     <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
-                                                    <div class="col s9 m9 l9" style="padding: 0px;">
+                                                    <div class="col s12 m9 l9" style="padding: 0px;">
                                                         <p style="color: black;">NEW ARRIVAL</p>
                                                     </div>
                                                 </a>
@@ -122,8 +177,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col s12 m12 l6 xl4">
-                                <div class="card animate fadeLeft">
+                            <div class="col s12 m12 l12 xl4">
+                                <div class="card animate fadeLeft" style="border-radius: 10px">
                                     <div class="card-content">
                                         <h4 class="card-title">My Company</h4>
                                         <br>
@@ -133,15 +188,15 @@
                                         <p style="color: black;">OFFICE</p>
                                         <p style="color: black;display: inline-block;">MAIN BRANCH</p>
                                         <p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;">
-                                            HQ</p>
+                                        HQ</p>
                                         <p style="color: #969696;font-size: 13px;">72-3 JALAN PJU 5/22 ENCORP STRAND,
                                             PUSAT PERDAGANGAN KOTA DAMANSARA, 47810 KOTA DAMANSARA PJU 5, PETALING JAYA
-                                            SELANGOR</p>
+                                        SELANGOR</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col s12 m8 lg8">
-                                <div class="card animate fadeLeft">
+                            <div class="col s12 m12 l12 xl8">
+                                <div class="card animate fadeLeft" style="border-radius: 10px">
                                     <div class="card-content">
                                         <h4 class="card-title">My Beep</h4>
                                         <p class="medium-small">No details Available</p>
@@ -151,7 +206,7 @@
                         </div>
                         {% if emp_doc|length != 0 %}
                         <div class="col s12 m6 l4">
-                            <div class="card animate fadeLeft">
+                            <div class="card animate fadeLeft" style="border-radius: 10px">
                                 <div class="card-content">
                                     <h4 class="card-title">My Company</h4>
                                     <p>{{ emp_doc[0].company }}</p>
@@ -168,11 +223,108 @@
         </div>
     </div>
 </div>
-<a class="btn-floating btn-fab btn-large waves-effect waves-light blue"><i class="material-icons">message</i></a>
+<a href="#" id="contact" class=" btn-floating btn-fab btn-large waves-effect waves-light" style="display: block; background-color: #00AEEF;"><i class="material-icons">message</i></a>
+<a href="#" id="close_contact" class=" btn-floating btn-fab btn-large waves-effect waves-light" style="display: none"><img src="/icons/icon-66.png" width="56" height="56"></a>
+<div id="contactForm" style="padding: 0px;border-radius: 25px;overflow: hidden;max-height: 100%;height: 80%;bottom: 10%;">
+    <div class="title-contact-us" style="background-color: #e6e6e6;padding: 25px;border-radius: 0px 0px 45% 45%;">
+        <h5 style="text-align: center;margin: 0px;">Contact Us</h5>
+        <p style="text-align: center;">Need some help?<br/>Beep us and we’ll do our best to help!</p>
+    </div>
+    <div class="content popup-contactus-content" style="height: 75%;overflow-y: scroll;margin-right: 2px;">
+        <div class="content-contact-us">
+            <div class="container" style="padding: 0px 50px;">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom: 0px;">
+                            <p>Full Name</p>
+                            <input type="text" id="name" style="width: -webkit-fill-available">
+                            <label for="name" class="center-align" style="left: 20px;top: 52px;">Enter full name</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Email Address</p>
+                            <input type="text" id="email" style="width: -webkit-fill-available">
+                            <label for="email" class="center-align" style="left: 20px;top: 52px;">Enter email address</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Title</p>
+                            <input type="text" id="title" style="width: -webkit-fill-available">
+                            <label for="title" class="center-align" style="left: 20px;top: 52px;">Enter title</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Description</p>
+                            <textarea id="message"></textarea>
+                            <label for="message" class="center-align" style="left: 20px;top: 52px;">Tell us what you need help with</label>
+                        </div>
+                        <div class = "file-field input-field col s12" style="cursor: pointer;">
+                            <div class = "">
+                                <input type = "file" multiple />
+                                <i class="small material-icons icon"style="display: inline-block;position: absolute;top: 15px;left: 15px;font-size: 20px!important;color: #42a5f5;">attach_file</i>
+                                <p style="display: inline-block;padding-left: 30px!important;color: #42a5f5;border: none!important;">Attach a file <span style="color: #adadad;font-style: italic;">(Max file size: 5MB)</span></p>
+                            </div>
+                            <div class = "file-path-wrapper" style="padding-left: 0px;cursor: pointer;display: inline-block;position: absolute;top: 0px;right: 160px;">
+                             <input class = "file-path validate" type = "text"
+                             placeholder = "" style="display: inline-block;color: #42a5f5;border: none!important;"/>
+                         </div>
+                     </div>
+                     <!--<div class="g-recaptcha placeholder"><p><img src="/images/reCaptcha-img.png" style="width: 300px;padding-left: 15px;"></p></div>-->
+                     <div class="g-recaptcha col s12" id="recaptcha"  data-sitekey="6Le2Qb4UAAAAACuXQH7R9JMONtEqem0YAQUGwJw0"></div>
+                     
+                    <div class="col s12">
+                    <button class="right waves-effect waves-light btn" style="margin-top: 30px; margin-bottom: 30px;">Submit</button>
+                    <a id="cancel_contact" href="#" class="right blue-text btn-flat" style="margin-top: 30px; margin-bottom: 30px;" >Cancel</a>
+                    </div>
+                 </div>
+             </form>
+         </div>
+         
+  </div>
+</div>
+
+</div>
+</body>
 {% endblock %}
 
 {% block scripts %}
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
+</script>
+<script>
+$(function() {
+  
+  // contact form animations
+  $('#contact').click(function() {
+    $('#contactForm').fadeToggle();
+    $('#contact').css("display", "none");
+    $('#close_contact').css("display", "block");
+  });
+
+  $('#close_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+
+  $('#cancel_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+  $(document).mouseup(function (e) {
+    var container = $("#contactForm");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.fadeOut();
+        $('#contact').css("display", "block");
+        $('#close_contact').css("display", "none");
+    }
+  });
+  
+});
+
+
 </script>
 {% endblock %}

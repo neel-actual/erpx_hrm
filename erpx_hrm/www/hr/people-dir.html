@@ -4,7 +4,7 @@
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css"
-      href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
@@ -30,6 +30,37 @@
 {% endblock %}
 
 {% block main %}
+<style type="text/css">
+@media only screen and (max-width: 1460px){
+  #main .section-data-tables table{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    display: block;
+    white-space: nowrap!important;
+}
+
+}
+
+@media only screen and (max-width: 330px){
+    .mn-emp{
+        width: 100%;
+        text-align: center;
+        margin-top: 10px !important;
+    }
+
+    .switch_btn{
+        margin-right: 10px;
+    }
+
+    
+
+
+}
+.toggle-options a.active, .toggle-options a:hover{
+    background-color: #00AEEF !important;
+}
+</style>
 <div id="main">
     <div class="row">
         <div class="content-wrapper-before"></div>
@@ -44,86 +75,108 @@
                                 <a class="breadcrumb">People</a>
                                 <a href="/hr/people-dir" class="breadcrumb active">Directory</a>
                             </div>
-                            <div class="toggle-options" style="display: inline;float: right;">
-                                <a class="waves-effect waves-light btn btn-small active"><i class="material-icons">format_list_bulleted</i></a>
-                                <a class="waves-effect waves-light btn btn-small"><i class="material-icons">view_module</i></a>
-                            </div>
+
+
                         </div>
                         <div class="content table-section">
-                            <div class="list-section">
-                                <div class="card">
-                                    <div class="card-content">
-                                        <img width="22" height="22" class="sidenav-icon" src="/icons/people.png">
-                               
-                                        <h4 class="card-title directorytitle" style="display: inline;">Directory</h4>
-                                        <a href="/hr/manage-employees"
-                                           class="modal-trigger waves-effect waves-light right">Manage Employees</a>
-                                        <div class="row">
-                                            <div class="col s12">
-                                            <a href="#create-filter.modal" class="modal-trigger waves-effect waves-light btn btn-small" style="margin: 10px 0px;">Filter Option</a>
-                                            <div id="page-length-option_filter" class="dataTables_filter" style="left: 160px;top: 65px;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div>
+
+                            <div class="card" style="border-radius: 10px!important;">
+                                <div class="card-content">
+                                    <img width="22" height="22" class="sidenav-icon" src="/icons/people.png">
+
+                                    <h4 class="card-title directorytitle" style="display: inline;">Directory</h4>
+                                    <a href="/hr/manage-employees"
+                                    class="modal-trigger waves-effect waves-light right mn-emp">Manage Employees</a>
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div class="col s12 m6 l2 xl2">
+                                                <a href="#create-filter.modal" class="modal-trigger waves-effect waves-light btn btn-small " style="margin: 10px 0px;float: left;width: -webkit-fill-available">Filter Option</a>
+                                            </div>
+                                            <div id="page-length-option_filter" class="dataTables_filter col s12 m6 l4 xl4" style="left: 160px;top: unset;margin-top: 10px;position: unset;margin-left: 0px;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" id="search_i" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div>
+                                            <div class="toggle-options col s12 m6 l3 xl3 switch_btn" style="display: inline;float: right;margin-top: 10px;padding: 0;">
+
+                                                <a class="waves-effect waves-light btn btn-small" style="border-radius: unset;float: right;height: 40px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;"><i class="material-icons" style="vertical-align: -10px;font-size: 20px;">view_module</i></a>
+                                                <a class="waves-effect waves-light btn btn-small active" style="border-radius: unset;float: right;height: 40px;border-bottom-left-radius: 10px;border-top-left-radius: 10px;"><i class="material-icons" style="vertical-align: -10px;font-size: 20px;">format_list_bulleted</i></a>
+                                            </div>
+                                            
+
+                                            <div class="list-section">
                                                 <table id="user-table" class="dataTable display">
                                                     <tbody>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Department</th>
-                                                        <th>Branch</th>
-                                                        <th>Email</th>
-                                                        <th>Mobile</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                    </thead>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Department</th>
+                                                                <th>Branch</th>
+                                                                <th>Email</th>
+                                                                <th>Mobile</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
                                                     </tbody>
                                                 </table>
+
+
+                                                <div id="create-filter.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+                                                    <div class="modal-content">
+                                                        <p class="edit-title">Filter Options</p>
+                                                        <a href="/" class="modal-trigger waves-effect waves-light right" style="position: absolute;right: 20px;top: 50px;">Clear Filter</a>
+                                                        <form class="col s12">
+                                                            <div class="row">
+                                                                <div class="input-field col s12" style="margin-top: 15px;">
+                                                                    <p>Filter by Status</p>
+                                                                    <select id="i_filter_status">
+                                                                        <option value="" selected>All Status</option>
+                                                                        <option value="Active">Active</option>
+                                                                        <option value="Left">Left</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="input-field col s12" style="margin-top: 0px;">
+                                                                    <p>Filter by Department</p>
+                                                                    <select id="i_filter_department">
+                                                                        <option value="" disabled selected>All department</option>
+                                                                        {% set dep_val = frappe.get_all("Department", fields=['name']) %}
+                                                                        {% for i_dep_val in dep_val%}
+                                                                            <option value="{{i_dep_val.name}}">{{i_dep_val.name}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="input-field col s12" style="margin-top: 0px;">
+                                                                    <p>Filter by Job Title</p>
+                                                                    <select id="i_filter_job">
+                                                                        <option value="" disabled selected>All job title</option>
+                                                                        {% set job_val = frappe.get_all("Designation", fields=['name']) %}
+                                                                        {% for i_job_val in job_val%}
+                                                                            <option value="{{i_job_val.name}}">{{i_job_val.name}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="input-field col s12" style="margin-top: 0px;">
+                                                                    <p>Filter by Office</p>
+                                                                    <select id="i_filter_office">
+                                                                        <option value="" disabled selected>All office</option>
+                                                                        {% set cmp_val = frappe.get_all("Company", fields=['name']) %}
+                                                                        {% for i_cmp_val in cmp_val%}
+                                                                            <option value="{{i_cmp_val.name}}">{{i_cmp_val.name}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="#" class="right waves-effect waves-light btn" id="i_fillter_popup">Add</a>
+                                                        <a href="#" class="right blue-text btn-flat"
+                                                        onclick="$('#create-filter\\.modal').modal('close')">Cancel</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                            <div id="create-filter.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
-                                <div class="modal-content">
-                                    <h5 style="background-color: #dcdcdc;width: 50%;border-radius: 0px 30px 30px 0px;padding: 10px;">Filter Options</h5>
-                                    <a href="/" class="modal-trigger waves-effect waves-light right" style="position: absolute;right: 20px;top: 50px;">Clear Filter</a>
-                                    <form class="col s12">
-                                        <div class="row">
-                                            <div class="input-field col s12" style="margin-top: 0px;">
-                                                <p>Filter by Status</p>
-                                                <select>
-                                                    <option value="" disabled selected>All Status</option>
-                                                </select>
-                                            </div>
-                                            <div class="input-field col s12" style="margin-top: 0px;">
-                                                <p>Filter by Department</p>
-                                                <select>
-                                                    <option value="" disabled selected>All department</option>
-                                                </select>
-                                            </div>
-                                            <div class="input-field col s12" style="margin-top: 0px;">
-                                                <p>Filter by Job Title</p>
-                                                <select>
-                                                    <option value="" disabled selected>All job title</option>
-                                                </select>
-                                            </div>
-                                            <div class="input-field col s12" style="margin-top: 0px;">
-                                                <p>Filter by Office</p>
-                                                <select>
-                                                    <option value="" disabled selected>All office</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <a href="#" class="right waves-effect waves-light btn">Add</a>
-                                    <a href="#" class="right blue-text btn-flat"
-                                       onclick="$('#create-filter\\.modal').modal('close')">Cancel</a>
-                                </div>
-                            </div>
-                            </div>
                             </div>
                             <div class="cards-section row" style="display: none;">
-                            <div class="card-content dictionary-card">
-                                        <div class="waves-effect waves-light btn btn-small" style="margin: 10px 0px;display: inline-block;">Filter Option</div>
-                                            <div id="page-length-option_filter" class="dataTables_filter" style="left: 460px;top: 155px;position: absolute;background-color: white;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div></div>
+
                                 <div id="user-table" class="col xl3 l4 m6 s12 profile-card-main hide">
                                     <div class="card profile-card">
                                         <div class="card-image">
@@ -139,11 +192,12 @@
                                             <div class="dictionary-info3" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/phone_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;">+60 13 4567 8901</span></div>
                                         </div>
                                         <div class="card-action">
-                                            <a href="#" class="blue-text">Send Email</a>
+                                            <a href="#send-email.modal" class="blue-text">Send Email</a>
                                         </div>
+
                                     </div>
                                 </div>
-                            </div>
+							</div>
                             <div id="update-user.modal" class="modal modal-fixed-footer">
                                 <div class="modal-content">
                                     <h5></h5>
@@ -153,7 +207,7 @@
                                 <div class="modal-footer">
                                     <a href="#" class="accept-btn right waves-effect waves-light btn">Update</a>
                                     <a href="#" class="cancel-btn right blue-text btn-flat"
-                                       onclick="$(this).closest('.modal').modal('close')">Cancel</a>
+                                    onclick="$(this).closest('.modal').modal('close')">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -167,13 +221,12 @@
 
 {% block scripts %}
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
-        type="text/javascript"></script>
+type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script defer src="/hr/js/people_dir.js" type="text/javascript"></script>
 {% endblock %}
-

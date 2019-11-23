@@ -1,0 +1,675 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+
+@media only screen and (max-width: 1720px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    white-space: nowrap!important;
+  }
+
+  .table-wid{
+    width: 1290px !important;
+  }
+}
+
+@media only screen and (max-width: 480px){
+  .tabs-a{
+    padding: 0px!important;
+    font-size: 12px!important;
+    text-overflow: unset!important;
+  }
+
+  .tabs{
+    width: 320px !important;
+  }
+
+  .tabs-scroll{
+    overflow-x: auto !important;
+  }
+}
+
+ [type="checkbox"].filled-in:checked + span:not(.lever):before{
+    border-right: 2px solid green !important;
+    border-bottom: 2px solid green !important;
+}
+[type="checkbox"].filled-in + span:not(.lever):after {
+  border-radius: 6px !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+.indicator{
+  height: 3px !important;
+}
+
+.input-field.col label{
+  padding-left: 0px !important;
+  left: 0px !important;
+}
+
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables">
+          <div class="col s12">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb" style="display: inline;">
+
+                <a class="breadcrumb">Payroll</a>
+                <a class="breadcrumb">Settings</a>
+                <a href="/payroll/payroll-items-sett" class="breadcrumb active">Payroll Items</a>
+              </div>
+
+            </div>
+            
+            <!-- People List --> 
+            <div id="card-stats" class="card" style="margin-bottom: 0px; border-top-left-radius: 10px !important;border-top-right-radius: 10px !important;">
+              <div class="card-content">
+                <div>
+                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
+                 <h4 class="card-title newstitle" style="display: inline;">Payroll Items</h4>
+
+               </div>
+               <br><br/>
+               <div class="col s12 tabs-scroll">
+                <ul class="tabs">
+                  <li class="tab col s3"><a style="color: black!important;" href="#test1" class="tabs-a active">Additions</a></li>
+                  <li class="tab col s3"><a style="color: black!important;" href="#test2" class="tabs-a">Overtime</a></li>
+                  <li class="tab col s3"><a style="color: black!important;padding:0 !important;" href="#test3" class="tabs-a">Deductions</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <br>
+
+
+          <br>
+
+          
+
+          <div id="test1">
+            <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+              <div class="card-content">
+                <a href="#add-addition" class=" modal-trigger waves-effect waves-light right">Add Additon</a>
+
+
+                <div class="row">
+
+                  <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+                    <table class="table-wid" style="margin-top: 15px; display: inline-table!important;">
+                      <tr style="background-color: #eff1f9;">
+                        <th style=" border-right:none!important; width: 240px;"><b>Title</b></th>
+                        <th style=" border-right:none!important; width: 240px;"><b>Category</b></th>
+                        <th style=" border-right:none!important;"><b>EPF</b></th>
+                        <th style=" border-right:none!important;"><b>PCB</b></th>
+                        <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                        <th style=" border-right:none!important;"><b>EIS</b></th>
+                        <th style=" border-right:none!important; width: 100px;"><b>Default/<br>Unit<br>Amount</b></th>                        
+                        <th style=" border-right:none!important;"><b>EA Field</b></th>
+                        <th style=" border-right:none!important; width: 90px;"><b></b></th>
+                      </tr>
+                      <tr>
+
+                       <td> Leave balance amount</td>                   
+                       <td>Monthly remunation</td>
+                       <td><label><input type="checkbox" class="filled-in" name="epf1" /><span></span></label></td>
+                       <td><label><input type="checkbox" class="filled-in" name="pcb1" /><span></span></label></td>
+                       <td><label><input type="checkbox" class="filled-in" name="socso1" /><span></span></label></td>
+                       <td><label><input type="checkbox" class="filled-in" name="eis1" /><span></span></label></td>
+                       <td>RM 0.00</td>
+                       <td>B1a</td>
+                       <td><a class="modal-trigger" href="#edit-addition">Edit</a></td>
+                     </tr>
+
+
+                     <td>Arrears of salary</td>              
+                     <td>Additional remuration</td>
+                     <td><label><input type="checkbox" class="filled-in" name="epf2" /><span></span></label></td>
+                     <td><label><input type="checkbox" class="filled-in" name="pcb2" /><span></span></label></td>
+                     <td><label><input type="checkbox" class="filled-in" name="socso2" /><span></span></label></td>
+                     <td><label><input type="checkbox" class="filled-in" name="eis2" /><span></span></label></td>
+                     <td>RM 0.00</td>
+                     <td>B2</td>
+                     <td><a>Edit</a></td>
+                   </tr>
+
+                   <tr>
+                    <td>
+                     Employee share option scheme
+                   </td>
+                   <td>Additional remuration</td>
+                   <td><label><input type="checkbox" class="filled-in" name="epf3" /><span></span></label></td>
+                   <td><label><input type="checkbox" class="filled-in" name="pcb3" /><span></span></label></td>
+                   <td><label><input type="checkbox" class="filled-in" name="socso3" /><span></span></label></td>
+                   <td><label><input type="checkbox" class="filled-in" name="eis3" /><span></span></label></td>
+                   <td>RM 0.00</td>
+                   <td>B1e</td>
+                   <td><a>Edit</a></td>
+                 </tr>
+
+                 <td>
+                  Gratuity
+                </td>
+                <td>Additional remuration</td>
+                <td><label><input type="checkbox" class="filled-in" name="epf4" /><span></span></label></td>
+                <td><label><input type="checkbox" class="filled-in" name="pcb4" /><span></span></label></td>
+                <td><label><input type="checkbox" class="filled-in" name="socso4" /><span></span></label></td>
+                <td><label><input type="checkbox" class="filled-in" name="eis4" /><span></span></label></td>
+                <td>RM 0.00</td>
+                <td>B1f</td>
+                <td><a>Edit</a></td>
+              </tr>
+              <tr>
+                <td>
+                 Retirement benefits
+               </td>
+               <td>Additional remuration</td>
+               <td><label><input type="checkbox" class="filled-in" name="epf5" /><span></span></label></td>
+               <td><label><input type="checkbox" class="filled-in" name="pcb5" /><span></span></label></td>
+               <td><label><input type="checkbox" class="filled-in" name="socso5" /><span></span></label></td>
+               <td><label><input type="checkbox" class="filled-in" name="eis5" /><span></span></label></td>
+               <td>RM 0.00</td>
+               <td>C1</td>
+               <td><a>Edit</a></td>
+             </tr>
+
+             <tr>
+              <td>Severance</td>
+              <td>Additional remuration</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf6" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb6" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso6" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis6" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B6</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>Short notice amount</td>
+              <td>Additional remuration</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf7" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb7" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso7" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis7" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B1d</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>VSS</td>
+              <td>Additional remuration</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf8" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb8" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso8" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis8" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B6</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>Childcare allowance</td>
+              <td>Perquisite</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf9" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb9" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso9" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis9" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B1c</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>Loan interest</td>
+              <td>Perquisite</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf10" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb10" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso10" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis10" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B4</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>Parking fees</td>
+              <td>Perquisite</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf11" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb11" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso11" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis11" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B6</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr>
+              <td>Reimbursment</td>
+              <td>Perquisite</td>
+              <td><label><input type="checkbox" class="filled-in" name="epf12" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb12" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="socso12" /><span></span></label></td>
+              <td><label><input type="checkbox" class="filled-in" name="eis12" /><span></span></label></td>
+              <td>RM 0.00</td>
+              <td>B1e</td>
+              <td><a>Edit</a></td>
+            </tr>
+
+            <tr></tr>
+            <td>Living accomodation</td>
+            <td>Additional remuration</td>
+            <td><label><input type="checkbox" class="filled-in" name="epf13" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="pcb13" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="socso13" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="eis13" /><span></span></label></td>
+            <td>RM 0.00</td>
+            <td>B1a</td>
+            <td><a>Edit</a></td>
+          </tr>
+
+          <tr>
+            <td>Travel allowance</td>
+            <td>Additional remuration</td>
+            <td><label><input type="checkbox" class="filled-in" name="epf14" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="pcb14" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="socso14" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="eis14" /><span></span></label></td>
+            <td>RM 0.00</td>
+            <td>B1a</td>
+            <td><a>Edit</a></td>
+          </tr>
+
+          <tr>
+            <td>Meal allowance</td>
+            <td>Additional remuration</td>
+            <td><label><input type="checkbox" class="filled-in" name="epf15" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="pcb15" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="socso15" /><span></span></label></td>
+            <td><label><input type="checkbox" class="filled-in" name="eis15" /><span></span></label></td>
+            <td>RM 0.00</td>
+            <td>B1a</td>
+            <td><a>Edit</a></td>
+          </tr>
+
+          <tr>
+            <td>Paid leave</td>
+            <td>Perquisite</td>
+            <td><label><input type="checkbox" class="filled-in" name="epf16" /><span></span></l</td>
+              <td><label><input type="checkbox" class="filled-in" name="pcb16" /><span></span></l</td>
+                <td><label><input type="checkbox" class="filled-in" name="socso16" /><span></span></l</td>
+                  <td><label><input type="checkbox" class="filled-in" name="eis16" /><span></span></l</td>
+                    <td>RM 0.00</td>
+                    <td>B1a</td>
+                    <td><a>Edit</a></td>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div id="test2">
+        <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+          <div class="card-content">
+            <a href="#!" class=" modal-trigger waves-effect waves-light right">Add Additon</a>
+            <div class="row">
+
+              <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+
+
+                <table class="table-wid" style="margin-top: 15px; display: inline-table!important;">
+                  <tr style="background-color: #eff1f9;">
+                    <th style=" border-right:none!important;width: 240px;"><b>Title</b></th>
+                    <th style=" border-right:none!important;width: 240px;"><b>Category</b></th>
+                    <th style=" border-right:none!important;"><b>EPF</b></th>
+                    <th style=" border-right:none!important;"><b>PCB</b></th>
+                    <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                    <th style=" border-right:none!important;"><b>EIS</b></th>
+                    <th style=" border-right:none!important;"><b>Rate</b></th>                        
+                    <th style=" border-right:none!important;"><b>EA Field</b></th>
+                    <th style=" border-right:none!important; width: 90px;"><b></b></th>
+                  </tr>
+                  <tr>
+                    <td>
+                      Leave balance amount
+                    </td>
+                    <td>Overtime</td>
+                    <td><label><input type="checkbox" class="filled-in" name="epf17" /><span></span></label></td>
+                    <td><label><input type="checkbox" class="filled-in" name="pcb17" /><span></span></label></td>
+                    <td><label><input type="checkbox" class="filled-in" name="socso17" /><span></span></label></td>
+                    <td><label><input type="checkbox" class="filled-in" name="eis17" /><span></span></label></td>
+                    <td>Hourly 1.5</td>
+                    <td>B1a</td>
+                    <td><a>Edit</a></td>
+                  </tr>
+
+                  <tr></tr>
+                  <td>Arrears of salary</td>
+                  <td>Overtime</td>
+                  <td><label><input type="checkbox" class="filled-in" name="epf18" /><span></span></label></td>
+                  <td><label><input type="checkbox" class="filled-in" name="pcb18" /><span></span></label></td>
+                  <td><label><input type="checkbox" class="filled-in" name="socso18" /><span></span></label></td>
+                  <td><label><input type="checkbox" class="filled-in" name="eis18" /><span></span></label></td>
+                  <td>Hourly 3</td>
+                  <td>B1a</td>
+                  <td><a>Edit</a></td>
+                </tr>
+
+                <tr>
+                  <td>
+                   Employee share option scheme
+                 </td>
+                 <td>Overtime</td>
+                 <td><label><input type="checkbox" class="filled-in" name="epf19" /><span></span></label></td>
+                 <td><label><input type="checkbox" class="filled-in" name="pcb19" /><span></span></label></td>
+                 <td><label><input type="checkbox" class="filled-in" name="socso19" /><span></span></label></td>
+                 <td><label><input type="checkbox" class="filled-in" name="eis19" /><span></span></label></td>
+                 <td>Hourly 2</td>
+                 <td>B1a</td>
+                 <td><a>Edit</a></td>
+               </tr>
+
+
+             </table>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <div id="test3">
+    <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+      <div class="card-content">
+        <a href="#!" class=" modal-trigger waves-effect waves-light right">Add Additon</a>
+        <div class="row">
+
+          <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+
+
+            <table class="table-wid" style="margin-top: 15px; display: inline-table!important;">
+              <tr style="background-color: #eff1f9;">
+                <th style=" border-right:none!important;width: 240px;"><b>Title</b></th>
+                <th style=" border-right:none!important;width: 150px; text-align: center;"><b>EPF</b></th>
+                <th style=" border-right:none!important;width: 150px; text-align: center;"><b>PCB</b></th>
+                <th style=" border-right:none!important;width: 150px; text-align: center;"><b>SOCSO</b></th>
+                <th style=" border-right:none!important;width: 150px; text-align: center;"><b>EIS</b></th>
+                <th style=" border-right:none!important;width: 90px;"><b></b></th>
+              </tr>
+              <tr>
+                <td>
+                  Leave balance amount
+                </td>
+
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="epf20" /><span></span>
+                </label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="pcb20" /><span></span>
+                </label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="socso20" /><span></span></label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="eis20" /><span></span>
+                </label></td>
+
+                <td style="text-align: center;"><a>Edit</a></td>
+              </tr>
+
+              <tr>
+                <td>Arrears of salary</td>
+
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="epf21" /><span></span>
+                </label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="pcb21" /><span></span>
+                </label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="socso21" /><span></span></label></td>
+                <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="eis21" /><span></span>
+                </label></td>
+                <td style="text-align: center;"><a>Edit</a></td>
+              </tr>
+
+              <tr>
+                <td>
+                 Employee share option scheme
+               </td>
+
+               <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="epf22" /><span></span>
+               </label></td>
+               <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="pcb22" /><span></span>
+               </label></td>
+               <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="socso22" /><span></span>
+               </label></td>
+               <td style="text-align: center;"><label><input type="checkbox" class="filled-in" name="eis22" /><span></span>
+               </label></td>
+
+               <td style="text-align: center;"><a>Edit</a></td>
+             </tr>
+
+
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div id="add-addition" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+   <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+    <p class="edit-title">Add Addition</p>
+    <form class="col s12" style="padding: 24px; padding-top: 0px;">
+      <div class="row">
+
+        <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p>Name</p>
+          <input type="text" id="title"  data-length="50" style="width: -webkit-fill-available !important;">   
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Category</p>
+          <select>
+            <option value="" disabled selected>Select category</option>
+          </select>
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Unit calculation</p>
+          <label style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>You can calculate the allowance by unit calculation in Pay Run</span></label>
+        </div>
+
+        <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p>Default Amount</p>
+          <input type="label" disabled value="RM" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+          <input type="text" name="zakat_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" >   
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+         <p style="margin-bottom: 10px;">Category</p>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>EPF</span>
+         </label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>PCB</span></label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>SOCSO</span></label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>EIS</span></label>
+       </div>
+
+       <div class="input-field col s12" style="margin-top: 0px;">
+        <p>EA Form Field</p>
+        <select>
+          <option value="" disabled selected>Select a field</option>
+        </select>
+      </div>
+
+      <div class="input-field col s12">
+       <p>Assignee</p>
+       <label style="position: relative!important;"><input class="with-gap" type="radio" name="radio1" ><span>No Assignee</span></label>
+       <br>
+       <label style="position: relative!important;"><input class="with-gap" type="radio" name="radio1" checked><span>All Employees</span></label> 
+     </div>
+
+   </div>
+ </form>
+</div>
+<div class="modal-footer" style="background-color: #fff !important;">
+  <a href="#!" class="right waves-effect waves-light btn">Save</a>
+  <a href="#!" class="right blue-text btn-flat"
+  onclick="$('#add-addition').modal('close')">Cancel</a>
+</div>
+</div>
+
+<div id="edit-addition" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important;">
+ <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+  <p class="edit-title">Edit Addition</p>
+  <form class="col s12" style="padding: 24px; padding-top: 0px;">
+    <div class="row">
+
+      <div class="input-field col s12" style="margin-bottom: 0px;">
+        <p>Name</p>
+        <input type="text" id="title" value="" data-length="50" style="width: -webkit-fill-available !important;">   
+      </div>
+
+      <div class="input-field col s12" style="margin-top: 0px;">
+        <p>Category</p>
+        <select>
+          <option value="" disabled >Select category</option>
+          <option value="" selected>Monthly remunation</option>
+        </select>
+      </div>
+
+      <div class="input-field col s12" style="margin-top: 0px;">
+        <p>Unit calculation</p>
+        <label style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>You can calculate the allowance by unit calculation in Pay Run</span></label>
+      </div>
+
+      <div class="input-field col s12" style="margin-bottom: 0px;">
+        <p>Default Amount</p>
+        <input type="label" disabled value="RM" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+        <input type="text" name="zakat_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" >   
+      </div>
+
+      <div class="input-field col s12" style="margin-top: 0px;">
+        <p>Category</p>
+        <label class="col s6 m6 l3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>EPF</span></label>
+        <label class="col s6 m6 l3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>PCB</span></label>
+        <label class="col s6 m6 l3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>SOCSO</span>
+        </label>
+        <label class="col s6 m6 l3" style="position: relative!important;"><input type="checkbox" class="filled-in" name=""><span>EIS</span>
+        </label>
+      </div>
+
+      <div class="input-field col s12" style="margin-top: 0px;">
+        <p>EA Form Field</p>
+        <select>
+          <option value="" disabled >Select a field</option>
+          <option value="" selected>B1a: Gross salary, wages or leave pay (including overtime pay) </option>
+        </select>
+      </div>
+
+      <div class="input-field col s12">
+       <p>Assignee</p>
+       <label style="position: relative!important;"> <input class="with-gap" type="radio" name="radio1"><span>No Assignee</span></label>
+       <br>
+       <label style="position: relative!important;"><input class="with-gap" type="radio" name="radio1" checked><span>All Employees</span></label>
+     </div>
+
+   </div>
+ </form>
+</div>
+<div class="modal-footer" style="background-color: #fff !important;">
+  <a href="#!" class="right waves-effect waves-light btn">Save</a>
+  <a href="#!" class="right blue-text btn-flat"
+  onclick="$('#edit-addition').modal('close')">Cancel</a>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+{% endblock %}
+

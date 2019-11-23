@@ -17,8 +17,13 @@
 <!--sidenav-->
 {% include "www/claims/sidenav.html" %}
 {% endblock %}
-
+{% block footer %}
+{% include "www/footer.html" %}
+{% endblock %}
 {% block main %}
+
+
+
 <div id="main">
  <div class="row">
   <div class="container">
@@ -27,11 +32,11 @@
       <div class="col s12">
         <div class="breadcrumb">
           <a class="breadcrumb">Claims</a>
-          <a href="/claims/reports.html" class="breadcrumb active">Reports</a>
+          <a href="/claims/reports" class="breadcrumb active">Reports</a>
         </div>
       </div>
-      <div class="col xl20 l20 m18 s12">
-        <div id="card-stats" class="card">
+      <div class="col xl12 l12 m12 s12">
+        <div id="card-stats" class="card" style="overflow: unset!important; border-radius: 10px!important;">
           <div class="card-content">
             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/reports.png">
             <h4 class="card-title directorytitle" style="text-align: left;">Reports</h4>
@@ -41,7 +46,7 @@
             <br><br>
             
             <h4 class="card-title" style="text-align: left;">Export an Overview of the Approved Claims</h4> 
-            <span style="float: left; font-size: 14px; color: darkgrey">You can extract a report by selecting approve dates and employees who have submitted the claims</span>
+            <span style="float: left; font-size: 14px; color: darkgrey; text-align: justify;">You can extract a report by selecting approve dates and employees who have submitted the claims</span>
 
 
             <div style="height: 60px;"></div>
@@ -52,31 +57,31 @@
             <div class="row">
               <div style="height: 30px;"></div>
               <div class="row margin infodetails">
-                <div style="width: 250px;" class="input-field col s12 m3">
+                <div class="input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (Start)</p>
-                 <i style="margin-right: 10px ;position: absolute; padding-top: 12px; right: 10px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">date_range</i>
-                 <input style="border: 1px solid grey; border-radius: 5px;" placeholder="Submit Date" class="textbox-n" type="text" onfocus="(this.type='date')"  >
+                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n" type="date" onfocus="(this.type='date')"  >
                </div>
 
-               <div style="margin-left: 20px;" class="input-field col s12 m3">
+               <div class="appr-date-end input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (End)</p>
-                 <i style="margin-right: 10px ;position: absolute; padding-top: 12px; right: 10px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">date_range</i>
-                 <input style="border: 1px solid grey; border-radius: 5px;" placeholder="Submit Date" class="textbox-n" type="text" onfocus="(this.type='date')"  >
+                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n" type="date" onfocus="(this.type='date')"  >
                </div>
 
                <div style="margin-left: 20px;" class="right input-field col s12 m3">
                 <p style="text-align: left;margin-bottom: 10px;">Submitted By</p>
                 <select style="width: -webkit-fill-available;">
                   <option value="" disabled selected>All Employees</option>
-                  <option value="information technology">Accident</option>
-                  <option value="engineering">Sick</option>
-                  <option value="telecommunication">Vacation</option>
+                  {% for emp in employee | sort(attribute='employee_name') %}
+                  <option value={{emp.name}}>{{emp.employee_name}}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>
 
             <div style="height: 30px;"></div>
-            <a href="#" style="margin-right: 53px" class="btn-myclaims modal-trigger waves-effect waves-light right">
+            <a href="#!" style="margin-right: 10px" class=" btn-myclaims modal-trigger waves-effect waves-light right" id="download">
             Download Report</a>
 
           </div>
@@ -96,4 +101,5 @@
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
 </script>
+<script defer src="/claims/js/reports.js" type="text/javascript"></script>
 {% endblock %}

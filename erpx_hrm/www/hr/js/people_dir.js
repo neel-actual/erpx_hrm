@@ -162,4 +162,19 @@ $(function () {
         $table_view.toggle();
         $cards_view.toggle();
     });
+
+
+    $('#search_i').keyup(function(){
+      user_table.search($(this).val()).draw() ;
+    })
+
+    $('#i_fillter_popup').click(function(){
+        var filter_status = $("#i_filter_status").val();
+        user_table.column(5).search(filter_status).draw();
+        $('#create-filter\\.modal').modal('close');
+
+        
+
+    });
+
 });

@@ -1,6 +1,6 @@
 <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
     <div class="brand-sidebar">
-        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/"><img src="/images/logo.svg"
+        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/payroll" style="padding-bottom: 0 !important"><img src="/images/logo.svg"
           alt="materialize logo"></a><a
           class="navbar-toggler" href="#"><i class="material-icons-outlined">radio_button_checked</i></a></h1>
       </div>
@@ -8,18 +8,18 @@
       <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
       id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
       style="transform: translateX(0px);">
-      <li class="bold"><a class="waves-effect waves-cyan" href="/payroll"><img class="sidenav-icon" src="/icons/home.png"><span class="menu-title" data-i18n="">Home</span></a>
-        <li class="bold"><a class="waves-effect waves-cyan" href="/payroll/people"><img class="sidenav-icon" src="/icons/people.png"><span class="menu-title" data-i18n="">People</span></a>
-            <li id="payrun-submodule" class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#"
-              tabindex="0"><img class="sidenav-icon" src="/icons/pay-run.png"><span class="menu-title"
+      <li class="bold"><a class="waves-effect waves-cyan" href="/payroll"><img class="sidenav-icon" src="/icons/home.png"><img class="sidenav-icon" src="/icons/home-light.png"><span class="menu-title" data-i18n="">Home</span></a>
+        <li class="bold"><a class="waves-effect waves-cyan" href="/payroll/people.html"><img class="sidenav-icon" src="/icons/people.png"><img class="sidenav-icon" src="/icons/people-light.png"><span class="menu-title" data-i18n="">People</span></a>
+            <li id="payrun-submodule" class="bold"><a id="payrun" class="collapsible-header waves-effect waves-cyan " href="#"
+              tabindex="0" onclick="payrun_open();"><img class="sidenav-icon" src="/icons/pay-run.png"><img class="sidenav-icon" src="/icons/pay-run.png"><span class="menu-title"
               data-i18n="">Pay Run</span>
           </a>
-          <div class="collapsible-body">
+          <div id="payrun-list" class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                <li class=""><a class="collapsible-body" href="/payroll/pay-run-payroll"
+                <li class=""><a class="collapsible-body" href="/payroll/pay-run-payroll.html"
                     data-i18n=""><span>Run Payroll</span></a>
                 </li>
-                <li class=""><a class="collapsible-body" href="/payroll/pay-run-approval"
+                <li class=""><a class="collapsible-body" href="/payroll/pay-run-approval.html"
                     data-i18n=""><span>Approval</span></a>
                 </li>
                 <li class=""><a class="collapsible-body" href="/payroll/pay-run-payslip"
@@ -31,11 +31,11 @@
             </ul>
         </div>
     </li>
-    <li id="reports-submodule" class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#"
-      tabindex="0"><img class="sidenav-icon" src="/icons/reports.png"><span class="menu-title"
+    <li id="reports-submodule" class="bold"><a id="reports" class="collapsible-header waves-effect waves-cyan " href="#"
+      tabindex="0" onclick="report_open();"><img class="sidenav-icon" src="/icons/reports.png"><img class="sidenav-icon" src="/icons/reports.png"><span class="menu-title"
       data-i18n="">Reports</span>
   </a>
-  <div class="collapsible-body">
+  <div id="report-list" class="collapsible-body">
     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
         <li class=""><a class="collapsible-body" href="/payroll/reports-total.html"
             data-i18n=""><span>Total Reports</span></a>
@@ -43,27 +43,27 @@
         <li class=""><a class="collapsible-body" href="/payroll/reports-form-ea"
             data-i18n=""><span>EA Form</span></a>
         </li>
-        <li class=""><a class="collapsible-body" href="/payroll/reports-form-e"
+        <li class=""><a class="collapsible-body" href="/payroll/reports-e-form.html"
             data-i18n=""><span>E Form</span></a>
         </li>
     </ul>
 </div>
 </li>
 
-<li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0"><img class="sidenav-icon" src="/icons/settings.png"><span class="menu-title"
+<li id="settings-submodule" class="bold"><a id="settings" class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0" onclick="settings_open();"><img class="sidenav-icon" src="/icons/settings.png"><img class="sidenav-icon" src="/icons/settings.png"><span class="menu-title"
   data-i18n="">Settings</span></a>
-  <div class="collapsible-body">
+  <div id="setting-list" class="collapsible-body">
     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-        <li class=""><a class="collapsible-body" href="" data-i18n=""><span>Company Details</span></a>
+        <li class=""><a class="collapsible-body" href="/payroll/payroll-comp-details" data-i18n=""><span>Company Details</span></a>
         </li>
-        <li><a class="collapsible-body" href="" data-i18n=""><span>Payroll Settings</span></a>
+        <li><a class="collapsible-body" href="/payroll/payroll-settings" data-i18n=""><span>Payroll Settings</span></a>
         </li>
-        <li><a class="collapsible-body" href="" data-i18n=""><span>Payroll Items</span></a>
+        <li><a class="collapsible-body" href="/payroll/payroll-items-sett" data-i18n=""><span>Payroll Items</span></a>
         </li>
     </ul>
 </div>
 </li>
 </ul>
 <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
-href="#" data-target="slide-out"><i class="material-icons-outlined">menu</i></a>
+href="#" data-target="slide-out" ><i class="material-icons-outlined" onclick="open_nav();">menu</i></a>
 </aside>
