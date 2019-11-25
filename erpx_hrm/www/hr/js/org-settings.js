@@ -20,9 +20,9 @@ $(document).ready(function() {
         $("#modal-rename-job").modal("close");
         list_job.rename_doc({
             "doctype": list_job.doctype,
-            "docname": old_name,
-            "old_name": old_name,
-            "new_name": new_name
+            "merge": 0,
+            "old": old_name,
+            "new": new_name
         });
     });
     

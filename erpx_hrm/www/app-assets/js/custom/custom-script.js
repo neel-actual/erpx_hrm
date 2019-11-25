@@ -169,7 +169,7 @@ xhrm.views.ListCRUD = Class.extend({
 	rename_doc: function(args) {
         var me = this;
         frappe.call({
-            method: "frappe.model.rename_doc.update_document_title",
+            method: "frappe.model.rename_doc.rename_doc",
             args: args,
             callback: function(r){
                 if (!r.exc) {
