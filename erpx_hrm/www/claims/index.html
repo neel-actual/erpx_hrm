@@ -97,7 +97,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   </select>
                 </div>
                 <div class="input-field col s12 m12 l6 xl2">
-                  <a href="#!" style="padding-top: 15px;" class=" modal-trigger waves-effect waves-light right">Clear Filter</a>
+                  <a href="#!" style="padding-top: 15px;" class=" modal-trigger waves-effect waves-light right" id="clear_filter">Clear Filter</a>
                 </div>
               </div>
               <div class="col s12" id="table-scroll">
@@ -118,7 +118,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 {% for ex in expense %}
                 <tr>
                   {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
-                  <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                  <td><a style="color:#4F92FF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
                     ({% for e in claim_title %}
                     {{e.expense_type}}
                     {% endfor %})
@@ -220,6 +220,11 @@ type="text/javascript"></script>
     var filter_status = $("#req_filter").val();
     console.log(user_table)
     user_table.column(0).search(filter_status, true, false, false).draw();
+    });
+
+    $('#clear_filter').click(function(){
+      console.log("here")
+      location.reload(true);
     });
 
     
