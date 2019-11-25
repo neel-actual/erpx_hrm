@@ -31,10 +31,20 @@ $.extend(frappe, {
 			headers: { "X-Frappe-CSRF-Token": frappe.csrf_token },
 			statusCode: opts.statusCode || {
 				404: function() {
-					frappe.msgprint(__("Not found"));
+					M.toast({
+						html: __("Not found")
+					})
 				},
 				403: function() {
-					frappe.msgprint(__("Not permitted"));
+					M.toast({
+						html: __("Not permitted")
+					})
+				},
+				202: function() {
+					if(opts.callback)
+						opts.callback();
+					if(opts.success)
+						opts.success();
 				},
 				200: function(data) {
 					if(opts.callback)
@@ -132,3 +142,131 @@ $.extend(frappe, {
 		}
 	}
 });
+
+
+frappe.provide("xhrm.views");
+
+xhrm.views.ListCRUD = Class.extend({
+	init: function(opts) {
+        $.extend(this, opts);
+		this.get_list();
+    },
+    create_doc: function(args) {
+        var me = this;
+        frappe.ajax({
+            url: `/api/resource/${me.doctype}`,
+            args: args,
+            callback: function(r){
+                if (!r.exc) {
+                    M.toast({
+                        html: "Added Successfully!"
+                    })
+                    me.get_list();
+                }
+            }
+        });
+	},
+	rename_doc: function(args) {
+        var me = this;
+        frappe.call({
+            method: "frappe.model.rename_doc.update_document_title",
+            args: args,
+            callback: function(r){
+                if (!r.exc) {
+                    me.get_list();
+                }
+            }
+        });
+    },
+	update_doc: function(args) {
+        var me = this;
+        frappe.ajax({
+			type: "PUT",
+            url: `/api/resource/${me.doctype}`,
+            args: args,
+            callback: function(r){
+                if (!r.exc) {
+                    M.toast({
+                        html: "Updated Successfully!"
+                    })
+                    me.get_list();
+                }
+            }
+        });
+    },
+    get_list: function() {
+		var me = this;
+		frappe.call({
+			method: "frappe.client.get_list",
+			args: {
+				doctype: me.doctype,
+				limit_page_length: 0
+			},
+			callback: function(r){
+				if (!r.exc) {
+					me.render_list(r.message);
+				}
+            }
+		});
+    },
+    render_list: function(data) {
+        var me = this;
+        let html = '';
+		if (data.length) {
+			let get_item_html = item => {
+                return `
+                    <li class="list-item">
+						<span>${item.name}
+						<a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
+							<img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+                      	</a>
+                        <a style="float: right; padding-right: 10px;" href="#modal-rename-job" class="btn-rename modal-trigger" data-name="${item.name}" data-modal="modal-rename-job">Edit</a>
+                        </span>
+                    </li>
+                `;
+			};
+			html = data.map(get_item_html).join('');
+		} else {
+			html = `<li class="text-center">
+					<span class="text-muted">${__('No Item')}</span>
+				</li>`;
+		}
+        me.parent.html(`<ul class="content-width">${html}</ul>`);
+        me.bind_event();
+    },
+    bind_event: function() {
+		var me = this;
+		me.parent.find(".btn-delete").click(function(){
+			var name = $(this).attr("data-name"); 
+			var row = $(this).closest(".list-item");
+			swal({
+				title: "Are you sure you want to delete?",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					delete: 'Yes, Delete It'
+				}
+			}).then(function (result) {
+				if(result){
+					frappe.ajax({
+						type: "DELETE",
+						url: `/api/resource/${me.doctype}/${name}`,
+						callback: function(r){
+							M.toast({
+								html: __("Deleted Successfully!")
+							});
+							row.remove();
+						}
+					});	
+				}
+			})
+			return false;
+		});
+		me.parent.find(".btn-rename").click(function(){
+			var name = $(this).attr("data-name");
+			var modal = $("#"+$(this).attr("data-modal"));
+			modal.find("#old_name").val(name);
+			modal.find("#new_name").val(name);
+		});
+    }
+});    
