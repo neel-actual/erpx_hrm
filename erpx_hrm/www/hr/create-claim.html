@@ -101,11 +101,12 @@
 				  </div>
 				  
 				  <div class="col s12 m12">
-                    <p style="margin-bottom: 10px;">Approver</p>
+					<p style="margin-bottom: 10px;">Approver</p>
+					<input type="text" name="approver" style="width: -webkit-fill-available;" placeholder="Approver" id="sel_approver" readonly>
                    
-                    <select id="sel_approver" name="approver" style="padding-left: 10px;width: -webkit-fill-available;" >
+                    <!-- <select id="sel_approver" name="approver" style="padding-left: 10px;width: -webkit-fill-available;" >
 					  <option value="" disabled selected>Select Approver</option>
-                    </select>
+                    </select> -->
                  
                   </div>
 				  
@@ -114,8 +115,8 @@
 					   
 						<select id="sel_payment" name="sel_payment" style="padding-left: 10px;width: -webkit-fill-available;" >
 								<option value="" disabled selected>Select Reimbusement</option>
-								<option value="Direct Pay" >Direct Pay</option>
-								<option value="Payroll" >Via Payroll</option>
+								<option value="Direct Payment" >Direct Payment</option>
+								<option value="Submission Via Payroll" >Submission Via Payroll</option>
 						</select>
 
 					   <!-- <p style="margin-bottom: 10px;"><b>Reimbusement Type</b></p>
@@ -136,16 +137,17 @@
                   <div class="input-field col s12 m12">
                     <p style="margin-bottom: 10px;">Department</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="department" style="width: -webkit-fill-available;" placeholder="Commercial " id="department">
+						<input type="text" name="department" style="width: -webkit-fill-available;" placeholder="Commercial " id="department" readonly>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                   </div>
  
                   <div class="input-field col s12 m12">
                     <p style="margin-bottom: 10px;">Claim Amount</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-					<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #D6D6D6;">MYR 00.00</p>
+					<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #D6D6D6;">{{currency}}</p>
+					<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #D6D6D6;" id="total_amount"></p>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
-					<a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right">Save Claim</a>
+					<a href="#create-news.modal" class="modal-trigger waves-effect btn right" id="save_claim">Save Claim</a>
 						<br><br><br><br>
 				  </div>
 
@@ -227,10 +229,10 @@
 							</tbody>
 							  </table>
 							  <div class="input-field col s12 m6" style="margin-left: 530px;">
-									<p style="margin-bottom: 10px;">Total Amount</p>
+									<p style="margin-bottom: 10px; color: #87c1f1;">Total Amount</p>
 									<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-									<input type="label" disabled value="MYR" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
-									<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="tabtotal_amount">
+									<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 47px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
+									<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
 									<!--<label for="signup-name" class="center-align">Full Name</label>-->
 								  </div>
 							</div>
@@ -281,7 +283,7 @@
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Amount</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-							<input type="label" disabled value="MYR" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
+							<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 47px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
 							<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
@@ -299,7 +301,7 @@
 								<img style="display: inline;float: left;" width="140" height="140" class="sidenav-icon" src="/icons/attachment_icon.png">
 							</div>
 							<div class="input-field col s12">
-								<p style="margin-bottom: 15px;color: #00aeef;">Upload File</p>
+								<a style="margin-bottom: 15px;color: #00aeef;" id="upload_file">Upload File</a>
 								<input type="file" id="file" name="file" id="sel_file"/> 
 							</div>	
 							<div class="col s12">

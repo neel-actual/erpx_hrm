@@ -2,6 +2,8 @@ import frappe
 import datetime
 import frappe.desk.reportview
 from frappe.utils.xlsxutils import make_xlsx
+import json
+
 
 
 @frappe.whitelist()
@@ -214,4 +216,32 @@ def get_approvers(employee,doctype):
 
     return approvers
 
+@frappe.whitelist()
+def create_claim(expense_approver,requester,claim_type,expenses):
+    object = frappe.get_doc({
+    "doctype":"Expense Claim",
+    "expense_approver":expense_approver,
+    "employee":requester,
+    "reimbursement_type":claim_type,
+    "expenses":json.loads(expenses)
+    })
+    object.flags.ignore_permissions = True
+    object.insert()
+
+    return object.name
+
+@frappe.whitelist()
+def upload_file():
+    ret = frappe.get_doc({
+    "doctype": "File",
+    "attached_to_name": "HR-EXP-2019-00011",
+    "attached_to_doctype": "Expense Claim",
+    "attached_to_field": frappe.form_dict.docfield,
+    "file_url": frappe.form_dict.file_url,
+    "file_name": frappe.form_dict.filename,
+    "is_private": frappe.utils.cint(frappe.form_dict.is_private),
+    "content": frappe.form_dict.filedata,
+    "decode": True
+    })
+    ret.save()
 

@@ -344,6 +344,22 @@
     frappe.csrf_token = "{{ csrf_token }}";
 </script>
 <script>
+    $(window).on("load", function () {
+        var envntdata = [
+            {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+            {% for i_all_leave in all_leave %}
+                {
+                    title: '{{i_all_leave.employee_name}}',
+                    start: '{{i_all_leave.from_date}}',
+                    end: '{{i_all_leave.to_date}}'
+                },
+            {% endfor %}
+        ];
+        $('#basic-calendar').fullCalendar('removeEvents');
+        $('#basic-calendar').fullCalendar('removeEventSource', envntdata);
+        $('#basic-calendar').fullCalendar('addEventSource', envntdata);
+        $('#basic-calendar').fullCalendar('refetchEvents');
+});
     $(function() {
   
   // contact form animations
@@ -377,6 +393,23 @@
         $('#close_contact').css("display", "none");
     }
   });
+
+  function all_leave(){
+        var envntdata = [
+            {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+            {% for i_all_leave in all_leave %}
+                {
+                    title: '{{i_all_leave.employee_name}}',
+                    start: '{{i_all_leave.from_date}}',
+                    end: '{{i_all_leave.to_date}}'
+                },
+            {% endfor %}
+        ];
+        $('#basic-calendar').fullCalendar('removeEvents');
+        $('#basic-calendar').fullCalendar('removeEventSource', envntdata);
+        $('#basic-calendar').fullCalendar('addEventSource', envntdata);
+        $('#basic-calendar').fullCalendar('refetchEvents');
+    }
   
 });
 </script>
