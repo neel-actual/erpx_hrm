@@ -74,7 +74,8 @@ var form_department_edit = $("#form-department-edit");
 
 $.extend(list_department, {
     get_list: function () {
-		var me = this;
+        var me = this;
+        this.parent.find(`li[data-name="All Departments"]`).empty();
 		frappe.call({
 			method: "erpx_hrm.utils.settings.get_department_tree",
 			args: {},
