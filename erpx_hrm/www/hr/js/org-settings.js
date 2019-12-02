@@ -114,13 +114,14 @@ $.extend(list_department, {
 			return false;
 		});
 		me.parent.find(".btn-rename").click(function () {
-            show_form_department_edit();
+            // show_form_department_edit();
             var name = $(this).attr("data-name");
             me.get_doc(name).then((r) => {
                 let doc = r.data;
 				load_form_department_edit(doc);
 			})            
-		});
+        });
+        show_form_department_add();
     }
 });
 var show_form_department_add = function () {
@@ -138,14 +139,14 @@ var show_form_department_edit = function () {
     form_department_add.hide();    
 }
 var load_form_department_edit = function (doc) {
+    load_group_department_select(form_department_edit.find('#parent_department'),doc.parent_department);
     form_department_edit.find("#name").val(doc.name);
     form_department_edit.find("#department_name").val(doc.department_name);
-    form_department_edit.find("#parent_department").val(doc.parent_department);
     form_department_edit.find("#is_group").prop("checked", doc.is_group?true:false);
     form_department_edit.show();
     form_department_add.hide();    
 }
-var load_group_department_select = function (department_select_id) {
+var load_group_department_select = function (department_select_id, department="All Departments") {
 
     var all_department = "All Departments";
     var arr_department = [{key: all_department, value: all_department}];
@@ -163,7 +164,7 @@ var load_group_department_select = function (department_select_id) {
             if (!r.exc) {
                 r.message.forEach(row => arr_department.push({key:row.name, value: row.department_name}));
             }
-            xhrm.utils.optionArray(department_select_id, arr_department, all_department);
+            xhrm.utils.optionArray(department_select_id, arr_department, department);
             department_select_id.formSelect();
         }
     });
