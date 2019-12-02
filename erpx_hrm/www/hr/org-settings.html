@@ -65,8 +65,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
            <br><br/>
            <div class="col s12">
             <ul class="tabs">
-              <li class="tab col s3"><a style="color: black!important;" href="#test1" class="active">Job Title</a></li>
-              <li class="tab col s3"><a style="color: black!important;" href="#test2">Department</a></li>
+              <li class="tab col s3"><a style="color: black!important;" href="#section-job" class="active">Job Title</a></li>
+              <li class="tab col s3"><a style="color: black!important;" href="#section-department">Department</a></li>
 
             </ul>
           </div>
@@ -75,7 +75,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
       </div>
 
-      <div id="test1">
+      <div id="section-job">
         <div  class="card" style="margin-top:-24px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; ">
           <div class="card-content">
            <div class="row margin infodetails">
@@ -89,8 +89,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
     </div>
 
-    <div id="test2">
-     <div  class="card" style="margin-top:-24px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; ">
+    <div id="section-department">
+      <div  class="card" style="margin-top:-24px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; ">
        <div class="card-content">
          <div  class="col s12">
            <span class="dep-span">Create a new department and make your organisation structure</span>
@@ -98,169 +98,88 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
          <br><br>
          <div class="input-field col s12 m12">
            <div class="row margin infodetails">
-            <div class="col s12 m12 l6 xl6">
-              <div style="font-size: 15px;" class="input-field col s12" style="margin-bottom: 0px;">
-                <p>1. Input Department Name</p>
-                <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+            <div class="col s12 m12 l5 xl4">
+              <div style="font-size: 15px;" class="input-field col s12" style="margin-bottom: 0px;" id="form-department-add">
+                <p style="margin-bottom: 10px;">1. Input Department Name</p>
+                <input type="text" id="department_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
                 <p style="margin-bottom: 10px;">2. Choose Parent Department</p>
-                <select  padding-left: 10px;width: -webkit-fill-available;">
-                  <option value="" disabled selected>Management (No parent department)</option>
-                  <option value="information technology">Accident</option>
-                  <option value="engineering">Sick</option>
-                  <option value="telecommunication">Vacation</option>
+                <select id="parent_department"  style="padding-left: 10px; width: -webkit-fill-available;">
                 </select>
-
-                <a href="#!" style="margin-top: 4%;" class="btn-myclaims modal-trigger waves-effect waves-light right">Add</a>
-
+                <p style="margin-bottom: 10px;">
+                  <label class="container">
+                  <input type="checkbox" class="filled-in" id="is_group" value="1">
+                  <span class="checkmark" style="vertical-align: -50%;">Is Group</span>
+                  </label>
+                </p>
+                <a  id="save_department_add" href="#!" style="margin-top: 4%;" class="btn-myclaims waves-effect waves-light right">Add</a>
+              </div>
+              <div style="font-size: 15px; display:none" class="input-field col s12" style="margin-bottom: 0px;" id="form-department-edit">
+                <input type="hidden" id="name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                <p style="margin-bottom: 10px;">1. Department Name</p>
+                <input type="text" id="department_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                <p style="margin-bottom: 10px;">2. Parent Department</p>
+                <select id="parent_department"  style="padding-left: 10px; width: -webkit-fill-available;">
+                </select>
+                <p style="margin-bottom: 10px;">
+                  <label class="container">
+                  <input type="checkbox" class="filled-in" id="is_group" value="1">
+                  <span class="checkmark" style="vertical-align: -50%;">Is Group</span>
+                  </label>
+                </p>
+                <a id="save_department_edit" href="#!" style="margin-top: 4%;" class="btn-myclaims waves-effect waves-light right">Save</a>
+                <a id="cancel_department_edit" href="javascript:void(0)" class="right blue-text btn-flat">Cancel</a>
               </div>
             </div>
-            <div class="col s12 m12 l6 xl6" style="padding: 0;">
+            <div class="col s12 m12 l7 xl8" style="padding: 0;">
               <div class="vl" style="padding-left: 30px;">
-
-                <ul>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan " >
-
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Development</span></a>
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan " >
-
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Marketing</span></a>
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan " >
-
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Product</span></a>
-
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan ">
-
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Human Resources</span></a>
-
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep"  width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan ">
-
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Customer Services</span></a>
-
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan ">
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Creative</span></a>
-
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#!" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                  <li style="margin-bottom: 15px;" class="bold"><a class="waves-effect waves-cyan ">
-
-                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png"><span class="menu-title" data-i18n="" style="vertical-align: top">Operations</span></a>
-
-
-                     <a href="#modal-del" class="modal-trigger"><img class="img-del-dep" width="21" height="21"
-                      src="/icons/icon-58.png">
-                      <a style="float: right;padding-right: 6%;" href="#modal-edit" class=" modal-trigger">Edit </a>
-                    </a>
-                  </li>
-
-                </ul>
+                <div class="content-scroll" id="list-department">
+                </div>
               </div>
             </div>
-
-
-
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="modal-del" class="del-dep modal" style="border-radius: 10px!important;">
-    <div class="modal-content" style="padding: 0px !important; ">
-      <p class="edit-title" >Delete Department</p>
-      <span class="del-dep-span">Are you sure you want to delete the following department?</span>
-    </div>
-    <div style="margin-top: 11%;" class="modal-footer">
-     <a href="#" class="right waves-effect waves-light btn">Delete</a>
-     <a href="#" class="right blue-text btn-flat"
-     onclick="$('#modal-del').modal('close')">Close</a>
-   </div>
- </div>
+  <div id="modal-add" class="add-job-title modal modal-fixed-footer">
+      <div class="modal-content" style="padding: 0px !important; ">
+          <p class="edit-title">Add Job Title</p>
+          <form class="col s12" style="padding: 24px;">
+              <div class="row">
+                  <div class="input-field col s12" style="margin-bottom: 0px;">
+                  <p>Job Title</p>
+                  <input type="text" id="job_title_add" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <a href="javascript:void(0)" class="right waves-effect waves-light btn" id="save_job_add">Save</a>
+          <a href="javascript:void(0)" class="right blue-text btn-flat"
+          onclick="$('#modal-add').modal('close')">Cancel</a>
+      </div>
+  </div>
 
-    <div id="modal-add" class="add-job-title modal modal-fixed-footer">
-        <div class="modal-content" style="padding: 0px !important; ">
-            <p class="edit-title">Add Job Title</p>
-            <form class="col s12" style="padding: 24px;">
-                <div class="row">
-                    <div class="input-field col s12" style="margin-bottom: 0px;">
-                    <p>Job Title</p>
-                    <input type="text" id="job_title_add" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a href="javascript:void(0)" class="right waves-effect waves-light btn" id="save_job_add">Save</a>
-            <a href="javascript:void(0)" class="right blue-text btn-flat"
-            onclick="$('#modal-add').modal('close')">Cancel</a>
-        </div>
-    </div>
-
-    <div id="modal-rename-job" class="modal modal-fixed-footer">
-        <div class="modal-content" style="padding: 0px !important; ">
-        <p class="edit-title">Edit Job Title</p>
-            <form class="col s12" style="padding: 24px;">
-                <div class="row">
-                    <div class="input-field col s12" style="margin-bottom: 0px;">
-                    <p>Job Title</p>
-                    <input type="hidden" id="old_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
-                    <input type="text" id="new_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="right waves-effect waves-light btn" id="save_job_edit">Save</a>
-            <a href="#" class="right blue-text btn-flat"
-            onclick="$('#modal-rename-job').modal('close')">Cancel</a>
-        </div>
-    </div>
+  <div id="modal-rename-job" class="modal modal-fixed-footer">
+      <div class="modal-content" style="padding: 0px !important; ">
+      <p class="edit-title">Edit Job Title</p>
+          <form class="col s12" style="padding: 24px;">
+              <div class="row">
+                  <div class="input-field col s12" style="margin-bottom: 0px;">
+                  <p>Job Title</p>
+                  <input type="hidden" id="old_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                  <input type="text" id="new_name" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <a href="#!" class="right waves-effect waves-light btn" id="save_job_edit">Save</a>
+          <a href="#" class="right blue-text btn-flat"
+          onclick="$('#modal-rename-job').modal('close')">Cancel</a>
+      </div>
+  </div>
 
 </div>
 </div>

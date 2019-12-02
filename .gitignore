@@ -3,6 +3,7 @@
 *.egg-info
 *.swp
 tags
+__pycache__/
 erpx_hrm/docs/current
 
 node_modules
