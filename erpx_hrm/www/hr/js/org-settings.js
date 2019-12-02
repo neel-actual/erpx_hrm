@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    list_job.get_list();
+    list_department.get_list();
+
     $("#save_job_add").click(function () {
         var job_name = $("#job_title_add").val();
         $("#job_title_add").val("");
@@ -70,19 +73,70 @@ var form_department_add = $("#form-department-add");
 var form_department_edit = $("#form-department-edit");
 
 $.extend(list_department, {
+    get_list: function () {
+		var me = this;
+		frappe.call({
+			method: "erpx_hrm.utils.settings.get_department_tree",
+			args: {},
+			callback: function (r) {
+				if (!r.exc) {
+					me.render_list(r.message);
+				}
+			}
+		});
+    },
+    render_list: function (data) {
+		var me = this;
+		let html = '';
+		if (data) {
+            this.render_children_of_all_nodes(data);
+		} else {
+			html = `<li class="text-center">
+					<span class="text-muted">${__('No Item')}</span>
+				</li>`;
+		}
+		me.bind_event();
+    },
+    render_children_of_all_nodes: function(data_list) {
+		data_list.map(d => { this.render_node_children(d.parent, d.data);});
+	},
+
+	render_node_children: function(parent, data_set) {
+        var me = this;
+        var node = this.parent.find(`li[data-name="${parent}"]`);
+		var html = "";
+		if (data_set) {
+			$.each(data_set, (i, data) => {
+				html += me.get_item_html(data);
+			});
+        }
+		$(`<ul style="padding-left:30px; margin-top:15px;">${html}</ul>`).appendTo(node);
+    },
+    
     get_item_html: function (item) {
-        return `
-        <li class="list-item" style="margin-bottom: 15px;" class="bold">
-            <a class="waves-effect waves-cyan" >
-                <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png">
-                <span class="menu-title" style="vertical-align: top">${item.department_name}</span>
-            </a>
-            <a href="#" class="btn-delete" data-name="${item.name}">
-			    <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
-			</a>
-			<a style="float: right; padding-right:10px;" href="#" class="btn-rename" data-name="${item.name}">Edit</a>
-        </li>
-     	`;
+        if(item.is_group ==1){
+            return `<li data-name="${item.name}" class="list-item" style="margin-bottom: 15px;" class="bold">
+                <a class="waves-effect waves-cyan" >
+                    <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png">
+                    <span class="menu-title" style="vertical-align: top">${item.department_name}</span>
+                </a>
+                <a href="#" class="btn-delete" data-name="${item.name}">
+                    <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+                </a>
+                <a style="float: right; padding-right:10px;" href="#" class="btn-rename" data-name="${item.name}">Edit</a>
+            </li>`;
+        }else{
+            return `<li data-name="${item.name}" class="list-item" style="margin-bottom: 15px;" class="bold">
+                <a class="waves-effect waves-cyan" >
+                    <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-32.png">
+                    <span class="menu-title" style="vertical-align: top">${item.department_name}</span>
+                </a>
+                <a href="#" class="btn-delete" data-name="${item.name}">
+                    <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+                </a>
+                <a style="float: right; padding-right:10px;" href="#" class="btn-rename" data-name="${item.name}">Edit</a>
+            </li>`;
+        }
     },
     bind_event: function () {
 		var me = this;

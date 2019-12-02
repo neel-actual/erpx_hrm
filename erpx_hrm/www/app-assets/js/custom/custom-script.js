@@ -149,7 +149,6 @@ frappe.provide("xhrm.views");
 xhrm.views.ListCRUD = Class.extend({
 	init: function (opts) {
 		$.extend(this, opts);
-		this.get_list();
 	},
 	get_doc: function (name) {
 		var me = this;
