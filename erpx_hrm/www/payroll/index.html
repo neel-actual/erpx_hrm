@@ -147,7 +147,7 @@
                                     <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
                                       
                                       <span style="display: block;">Run Payroll</span>
-                                      <a href="#" style="color: #00aeef;"><b>Calculate </b></a>
+                                      <a href="/payroll/pay-run-payroll.html" style="color: #00aeef;"><b>Calculate </b></a>
                                       
                                     </p>
                                   </div>  
@@ -161,7 +161,7 @@
                                     <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
                                       
                                       <span style="display: block;">Employees Info</span>
-                                      <a href="#" style="color: #00aeef;"><b>Bulk Update</b></a>
+                                      <a href="/hr/manage-employees.html" style="color: #00aeef;"><b>Bulk Update</b></a>
                                       
                                     </p>
                                   </div>  
@@ -175,7 +175,7 @@
                                     <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
                                       
                                       <span style="display: block;">Payslips</span>
-                                      <a href="#" style="color: #00aeef;"><b>Send</b></a>
+                                      <a href="/payroll/pay-run-payslip.html" style="color: #00aeef;"><b>Send</b></a>
                                       
                                     </p>
                                   </div>  
@@ -189,7 +189,7 @@
                                     <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
                                       
                                       <span style="display: block;">Company Details</span>
-                                      <a href="#" style="color: #00aeef;"><b>Update</b></a>
+                                      <a href="/payroll/payroll-comp-details.html" style="color: #00aeef;"><b>Update</b></a>
                                       
                                     </p>
                                   </div>  
@@ -203,7 +203,7 @@
                                     <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
                                       
                                       <span style="display: block;">Payroll Report</span>
-                                      <a href="#" style="color: #00aeef;"><b>Download</b></a>
+                                      <a href="/payroll/reports-total.html" style="color: #00aeef;"><b>Download</b></a>
                                       
                                     </p>
                                   </div>  
@@ -344,6 +344,45 @@
     frappe.csrf_token = "{{ csrf_token }}";
 </script>
 <script>
+    $(window).on("load", function () {
+        // var envntdata = [
+        //     {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+        //     {% for i_all_leave in all_leave %}
+        //     console.log(all_leave)
+                // {
+                //     title: '{{i_all_leave.employee_name}}',
+                //     start: '{{i_all_leave.from_date}}',
+                //     end: '{{i_all_leave.to_date}}'
+                // },
+        //     {% endfor %}
+        // ];
+        frappe.call({
+            method:"frappe.client.get_single_value",
+            args:{
+                "doctype":"Payroll Setting",
+                "field":"pay_day"
+            },
+            callback:function(r){
+                console.log(r.message)
+                var d = new Date();
+                d.setDate(r.message);
+                console.log(d.toString())
+                var envntdata = [
+                {
+                    title: 'Payday',
+                    start: d.toString(),
+                    allDay:true
+                }
+            ]
+            $('#basic-calendar').fullCalendar('removeEvents');
+            $('#basic-calendar').fullCalendar('removeEventSource', envntdata);
+            $('#basic-calendar').fullCalendar('addEventSource', envntdata);
+            $('#basic-calendar').fullCalendar('refetchEvents');
+            }
+        })
+        
+        
+});
     $(function() {
   
   // contact form animations

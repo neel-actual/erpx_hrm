@@ -180,13 +180,13 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <i class="material-icons-outlined" style="display: inline;">person</i>
                   <h4 class="card-title directorytitle" style="display: inline;">People</h4>
                   <a href=""
-                  class="modal-trigger waves-effect waves-light right">Clear All</a>
+                  class="modal-trigger waves-effect waves-light right" id = "clear_filter">Clear All</a>
                 </div>
                 <br>
                 <div class="row" style="width: 250px; margin: auto; float: left">
 
 
-                  <i style="position: absolute;padding-top: 12px;left: 240px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined search-icon">search</i><input style="border-radius: 50px!important;" class="search-input" type="text" name="search" placeholder="  Search People">
+                  <i style="position: absolute;padding-top: 12px;left: 240px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined search-icon">search</i><input style="border-radius: 50px!important;" class="search-input" type="text" name="search" placeholder="  Search People" id="search_i">
 
                 </div>
                 <div class="toggle-options" style="display: inline;float: right;">
@@ -206,8 +206,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <div class="input-field col s12 m6 l6 xl3">
                       <div>Department</div>
                       <div>
-                        <select>
-                          <option>All department</option>
+                        <select id="sel_department">
+                          <option value="" selected>All Department</option>
+                          {% for dep in department %}                          
+                          <option value="{{dep.name}}">{{dep.department_name}}</option>
+                          {% endfor %}
                         </select>
                       </div>
                     </div>
@@ -215,24 +218,33 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <div class="input-field col s12 m6 l6 xl3">
                       <div>Office</div>
                       <div>
-                        <select>
-                          <option>All Office</option>
+                        <select id="sel_branch">
+                          <option value="" selected>All Branches</option>
+                          {% for br in branch %}  
+                          <option value="{{br.name}}">{{br.name}}</option>
+                          {% endfor %}
                         </select>
                       </div>
                     </div>
                     <div class="input-field col s12 m6 l6 xl3">
                       <div>Employment Type</div>
                       <div>
-                        <select>
-                          <option>All employment type</option>
+                        <select id="empt_sel">
+                          <option value="" selected>All Employement Type</option>
+                          {% for emp in employment_type %} 
+                          <option value="{{emp.name}}">{{emp.name}}</option>
+                          {% endfor %}
                         </select>
                       </div>
                     </div>
                     <div class="input-field col s12 m6 l6 xl3">
                       <div>Payment Method</div>
                       <div>
-                        <select>
-                          <option>All payment method</option>
+                        <select id="sal_mode">
+                            <option value="" selected>All Transfer Type</option>
+                          <option value="Bank">Bank</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Cheque">Cheque</option>
                         </select>
                       </div>
                     </div>
@@ -242,125 +254,38 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <div id="list" class="list-section" style="display: block;">
                   <div class="row">
                     <div id="table-scroll" class="col s12">
-                      <table style="margin-top: 15px; display: inline-table !important;">
+                      <table id="user-table" class="dataTable display" style="margin-top: 15px; display: inline-table !important;">
+                      
+                      <thead>
                         <tr style="background-color: #eff1f9;">
-                          <th style=" border-right:none!important;"><b>Name</b></th>
-                          <th style=" border-right:none!important;"><b>Department</b></th>
-                          <th style=" border-right:none!important;"><b>Office</b></th>
-                          <th style=" border-right:none!important;"><b>Employment</b></th>
-                          <th style=" border-right:none!important;"><b>Payment</b></th>
+                          <th style="width: 20% !important;"><b>Name</b></th>
+                          <th><b>Department</b></th>
+                          <th><b>Branch</b></th>
+                          <th><b>Employment</b></th>
+                          <th><b>Payment</b></th>
                         </tr>
+                      </thead>
+                      <tbody>
+                        {% for emp in employee %}
                         <tr>
                           <td>
-                            <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
+                            {% if emp.image %}
+                            <img src="{{emp.image}}" width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" />
+                            {% else %}
+                            <img src="/files/Ankit.png" width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" />
+                            {% endif %}
                             <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;" onclick="profile();">Leanne Ko</a></span>
-                              <span>Marketing manager</span>
+                              <span><a href="#" style="display: block; color:#00AEEF;" onclick="profile('{{emp.name}}');">{{emp.employee_name}}</a></span>
+                              <span>{% if emp.designation %}{{emp.designation}}{% endif %}</span>
                             </p>
                           </td>
-                          <td>Marketing</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
+                          <td>{% if emp.department %}{{emp.department}}{% endif %}</td>
+                          <td>{% if emp.branch %}{{emp.branch}}{% endif %}</td>
+                          <td>{% if emp.employment_type %}{{emp.employment_type}}{% endif %}</td>
+                          <td>{% if emp.salary_mode %}{{emp.salary_mode}}{% endif %}</td>
                         </tr>
-                        <tr  style="background-color: #f9f9f9;">
-                          <td>
-
-                            <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Hamidi Rashidi</a></span>
-                              <span>Office manager</span>
-                            </p>
-                          </td>
-                          <td>Human Resources</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Raves Aru</a></span>
-                              <span>Head of Finance</span>
-                            </p>
-                            
-                          </td>
-                          <td>Finance</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr  style="background-color: #f9f9f9;">
-                          <td>
-                            <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Siti Halina</a></span>
-                              <span>UI Designer</span>
-                            </p>
-                            
-                          </td>
-                          <td>Creative</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Yo Ling</a></span>
-                              <span>Front-end Developer</span>
-                            </p>
-                            
-                          </td>
-                          <td>Developer</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr  style="background-color: #f9f9f9;">
-                          <td>
-                            <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Tani Sari</a></span>
-                              <span>Marketing Assistant</span>
-                            </p>
-                            
-                          </td>
-                          <td>Management</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="/images/profile_icon.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Kim Lee</a></span>
-                              <span>Lead Manager</span>
-                            </p>
-                            
-                          </td>
-                          <td>Customer Service</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
-                        <tr  style="background-color: #f9f9f9;">
-                          <td>
-                            <img src="/images/profile_placeholder.png" width="50" height="50" style="float: left;margin-right: 5px;" />
-                            <p style="margin-top: 5px;display: block">
-                              <span><a href="#" style="display: block; color:#00AEEF;">Azizi Nordin</a></span>
-                              <span>Marketing Strategist</span>
-                            </p>
-                            
-                          </td>
-                          <td>Management</td>
-                          <td>Main Office</td>
-                          <td>Full-time</td>
-                          <td>Bank Transfer</td>
-                        </tr>
+                        {% endfor %}
+                      </tbody>
                       </table>
                     </div>
                   </div>
@@ -370,253 +295,42 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
             
             <!-- Card List -->
             <div id="card" class="cards-section row" style="display: none; padding: 20px;">
+              {% for emp in employee %}
               <div class="col xl3 l4 m6 s12 profile-card-main">
                 <div class="card profile-card">
                   <div class="card-image">
+                    {% if emp.image %}
+                    <img src="{{emp.image}}"/>
+                    {% else %}
                     <img src="/images/card-avatar.svg"/>
+                    {% endif %}
                     <span class="card-title">
-                      <h6 class="white-text">Leanne Ko</h6>
-                      <p>Marketing manager</p>
+                      <h6 class="white-text">{{emp.employee_name}}</h6>
+                      <p>{% if emp.designation %}{{emp.designation}}{% endif %}</p>
                     </span>
                   </div>
                   
                   <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
                     <div style="padding-top: 20px !important; ">
                       <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Marketing</span>
+                      <span style="margin-left: 10px;vertical-align: top">{% if emp.department %}{{emp.department}}{% endif %}</span>
                     </div>
                     <div style="padding-top: 20px !important; ">
                       <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
+                      <span style="margin-left: 10px;vertical-align: top">{% if emp.employment_type %}{{emp.employment_type}}{% endif %}</span>
                     </div>
                     <div style="padding-top: 20px !important; ">
                       <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
+                      <span style="margin-left: 10px;vertical-align: top">{% if emp.salary_mode %}{{emp.salary_mode}}{% endif %}</span>
                     </div>
                     <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
                       <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
+                      <span style="margin-left: 10px;vertical-align: top">{% if emp.branch %}{{emp.branch}}{% endif %}</span>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Hamidi Rashidi</h6>
-                      <p>Office Manager</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Human Resources</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Raves Aru</h6>
-                      <p>Head of Finance</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Finance</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Siti Halina</h6>
-                      <p>UI Designer</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Creative</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Yo Ling</h6>
-                      <p>Front-end Developer</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Developer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Tani Sari</h6>
-                      <p>Marketing Assistant</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Management</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Kim Lee</h6>
-                      <p>Lead Manager</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Customer Service</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col xl3 l4 m6 s12 profile-card-main">
-                <div class="card profile-card">
-                  <div class="card-image">
-                    <img src="/images/card-avatar.svg"/>
-                    <span class="card-title">
-                      <h6 class="white-text">Azizi Nordin</h6>
-                      <p>Marketing Strategist</p>
-                    </span>
-                  </div>
-                  
-                  <div class="card-action" style="text-align: left !important; padding-left: 16px !important; padding-right: 16px !important;height: 200px;padding: 0px; ">
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/department-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Management</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-31.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Full Time</span>
-                    </div>
-                    <div style="padding-top: 20px !important; ">
-                      <img src="/icons/icon-69.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Bank Transfer</span>
-                    </div>
-                    <div style="padding-top: 20px !important; padding-bottom: 20px !important; ">
-                      <img src="/icons/office-dark.png" width="20" height="20">
-                      <span style="margin-left: 10px;vertical-align: top">Main Branch</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
 
             </div>
 
@@ -628,27 +342,27 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                  <div class="row" style="margin: auto;">
                   <i class="material-icons-outlined" style="display: inline;">person</i>
                   <h4 class="card-title directorytitle" style="display: inline;">Profile Overview</h4>
-                  <p style="padding-left: 36px;">Here’s quick profile of Leanne Ko.</p>
+                  <p style="padding-left: 36px;" id="sum_name"></p>
 
                 </div>
                 <br>
                 <div class="col s12 m12 l12 xl4 force-center">
-                  <p><img src="/images/profile_icon.png" width="200" height="200"/></p> 
+                  <p><img src="/images/profile_icon.png" width="200" height="200" id="pro_pic"/></p> 
                 </div>
 
                 <div class="col s6 m6 l6 xl4" >
-                  <p style="margin-top: 10px !important;">Leanne Ko</p>
+                  <p style="margin-top: 10px !important;"id = "p_emp_name"></p>
                   <p style="margin-top: 10px !important;">
                     <img src="/icons/people.png" width="30" height="30" style="margin-right: 15px;" />
-                    <span style="display: inline;position: absolute;margin-top: 5px;">Marketing Manager</p>
+                    <span style="display: inline;position: absolute;margin-top: 5px;" id="s_desi"></p>
                     </p> 
                     <p style="margin-top: 10px !important;">
                       <img src="/icons/email.png" width="30" height="30" style="margin-right: 15px;" />
-                      <span style="display: inline;position: absolute;margin-top: 5px;">leanneko@bayo.my</span>
+                      <span style="display: inline;position: absolute;margin-top: 5px;" id="s_email"></span>
                     </p> 
                     <p style="margin-top: 10px !important;">
                       <img src="/icons/mobile.png" width="30" height="30" style="margin-right: 15px;" />
-                      <span style="display: inline;position: absolute;margin-top: 5px;">+60 11 2345 6789</span>
+                      <span style="display: inline;position: absolute;margin-top: 5px;" id="s_mob"></span>
                     </p>  
                   </div>
 
@@ -666,7 +380,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                           <p style="padding-top: 10px;padding-bottom: 10px; "><b>DEPARTMENT</b></p> 
                         </div>
                         <div class="col s6 m6 l6 xl12 full-width">
-                          <p style="color: #00aeef;"><b>Marketing</b></p>
+                          <p style="color: #00aeef;" id="p_dep"><b></b></p>
                           <p>Member</p>
                         </div>
                       </div>
@@ -678,8 +392,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                           <p style="padding-top: 10px;padding-bottom: 10px; "><b>JOIN DATE</b></p>  
                         </div>
                         <div class="col s6 m6 l6 xl12 full-width">
-                          <p>20 Mar 2016</p>
-                          <p>3 years, 4 months, 13 days</p>
+                          <p id="p_join">20 Mar 2016</p>
+                          <p></p>
                         </div>
                       </div>
                       
@@ -694,11 +408,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         <div class="col s6 m6 l6 xl12 full-width">
                           <div class="row">
                             <div class="col s3 m3 l3 xl3 padd-zero">
-                              <img width="50" height="50" src="/images/org-chart-profile.png" style="vertical-align: middle; float: left;">
+                              <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;" id="reportto_pic">
                             </div>
                             <div class="col s9 m9 l9 xl9">
                               <p style="margin-left: 15px;display: inline-block;vertical-align: middle; float: left;">
-                              <a href="#" class="dropdown-trigger" style="margin-top: 5px;display: block;color: #00aeef;" data-target="dropdown1"><b>Mina Mona</b></a>
+                              <a href="#" class="dropdown-trigger" style="margin-top: 5px;display: block;color: #00aeef;" data-target="dropdown1" id="a_report"></a>
                               <span>Department Head</span>
                             </div>
                           </div>
@@ -754,7 +468,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m12">
                     <p style="margin-bottom: 10px;">Full Name</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="full_name" style="width: -webkit-fill-available;" value="Leanne Ko">
+                    <input type="text" name="full_name" style="width: -webkit-fill-available;" id="i_full_name">
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                   </div>
                   <div class="input-field col s12 m6">
@@ -766,19 +480,19 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">Passport No.</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="passport_no" style="width: -webkit-fill-available;" value="MY112234455677P">
+                    <input type="text" name="passport_no" style="width: -webkit-fill-available;" id="i_pass">
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                   </div>
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">Date of Birth</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+                    <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="i_date">
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                   </div>
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">Gender</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="gender" style="padding-left: 10px;width: -webkit-fill-available;">
+                    <select name="gender" style="padding-left: 10px;width: -webkit-fill-available;" id="i_gend">
                       <option value="" disabled >Select Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female" selected>Female</option>
@@ -789,10 +503,12 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">Employment Type</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="employment_type" style="padding-left: 10px;width: -webkit-fill-available;">
-                      <option value="" disabled >Select Employment Type</option>
-                      <option value="full-time" selected>Full Time</option>
-                      <option value="part-time">Part Time</option>
+                    <select name="employment_type" style="padding-left: 10px;width: -webkit-fill-available;" id="i_emp_type">
+                      
+                      <option value="">All Employement Type</option>
+                      {% for emp in employment_type %} 
+                      <option value="{{emp.name}}">{{emp.name}}</option>
+                      {% endfor %}
 
                     </select>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
@@ -800,7 +516,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">Join Date</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="join_date" style="width: -webkit-fill-available;" value="20 Mar 2016">
+                    <input type="text" name="join_date" style="width: -webkit-fill-available;" id="i_join_date" readonly>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                   </div>
                   <div class="input-field col s12 m12">
@@ -1134,12 +850,7 @@ type="text/javascript"></script>
     btn_card.classList.add('active');
   }
 
-  function profile(){
-    var people_list = document.getElementById('peoplelist');
-    var profile = document.getElementById('profile');
-    people_list.style.display = "none";
-    profile.style.display = "block";
-  }
+  
 
   function removeDefault(){
     var default_indicator = document.getElementsByClassName('default-indicator')[0];
@@ -1174,5 +885,6 @@ type="text/javascript"></script>
   $('.dropdown-trigger').dropdown();
 </script>
 <!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+<script defer src="/payroll/js/people.js" type="text/javascript"></script>
 {% endblock %}
 
