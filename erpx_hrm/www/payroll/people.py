@@ -8,5 +8,10 @@ def get_context(context):
 
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
+    context.employee = frappe.get_all("Employee",fields=['name','employee_name','department','branch','employment_type','salary_mode','designation','image'])
+    context.department = frappe.get_all("Department",fields=['name','department_name'])
+    context.branch = frappe.get_all("Branch",fields=['name'])
+    context.employment_type = frappe.get_all("Employment Type",fields=['name'])
+    
 
     return context
