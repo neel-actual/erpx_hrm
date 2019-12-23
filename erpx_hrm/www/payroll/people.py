@@ -12,6 +12,7 @@ def get_context(context):
     context.department = frappe.get_all("Department",fields=['name','department_name'])
     context.branch = frappe.get_all("Branch",fields=['name'])
     context.employment_type = frappe.get_all("Employment Type",fields=['name'])
+    context.currency = frappe.db.get_value("HRM Setting",None,"currency")
     
 
     return context

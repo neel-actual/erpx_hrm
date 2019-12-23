@@ -2,6 +2,12 @@
 
 {% block title %}Claims{% endblock %}
 {% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 {% endblock %}
 
 {% block nav %}
@@ -60,29 +66,57 @@
                 <div class="input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (Start)</p>
                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n" type="date" onfocus="(this.type='date')"  >
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                </div>
 
                <div class="appr-date-end input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (End)</p>
                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n" type="date" onfocus="(this.type='date')"  >
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="to_date">
                </div>
 
                <div style="margin-left: 20px;" class="right input-field col s12 m3">
                 <p style="text-align: left;margin-bottom: 10px;">Submitted By</p>
-                <select style="width: -webkit-fill-available;">
-                  <option value="" disabled selected>All Employees</option>
+                <select style="width: -webkit-fill-available;" id="emp_filter">
+                  <option value="" selected>All Employees</option>
                   {% for emp in employee | sort(attribute='employee_name') %}
-                  <option value={{emp.name}}>{{emp.employee_name}}</option>
+                  <option value={{emp.employee_name}}>{{emp.employee_name}}</option>
                   {% endfor %}
                 </select>
               </div>
             </div>
-
-            <div style="height: 30px;"></div>
-            <a href="#!" style="margin-right: 10px" class=" btn-myclaims modal-trigger waves-effect waves-light right" id="download">
-            Download Report</a>
+            <div class="col s12" id="table-scroll">
+              
+                <table style="font-size: 14px;" class="table table-striped dataTable display" id="table_id">
+                <thead>
+                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                    <th style="border-right:none!important;">Title</th>
+                    <th style="border-right:none!important;">Date</th>
+                    <th style="border-right:none!important;">Amount</th>
+                    <th style="border-right:none!important;">Requester</th>
+                    <th style="border-right:none!important;">Cutoff Date</th>
+                    <th style="border-right:none!important;">Status</th>
+                  </tr>
+                </thead>
+                  <!-- {% set expense = frappe.get_all("Expense Claim", fields=['name','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %} -->
+                <tbody>
+                  {% for ex in expense %}
+                  <tr>              
+                    <td>{{ex.name}}</td>
+                    <td>{{ex.posting_date}}</td>
+                    <td>{{currency}} {{'%0.2f'| format(ex.total_claimed_amount|float)}}</td>
+                    <td>{{ex.employee_name}}</td>
+                    <td>{{ex.posting_date}}</td>
+                    <td>{{ex.status}}</td>  
+                  </tr>
+  
+                  {% endfor %}
+                </tbody>
+                </table>
+                </div>
+            <!-- <div style="height: 30px;"></div>
+            <a href="#!" style="margin-right: 10px" class=" btn-myclaims modal-trigger waves-effect waves-light right" id="export-btn">
+            Download Report</a> -->
 
           </div>
         </div>
@@ -98,8 +132,23 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script defer src="/claims/js/reports.js" type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
+  
 </script>
-<script defer src="/claims/js/reports.js" type="text/javascript"></script>
+
 {% endblock %}

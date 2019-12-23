@@ -7,11 +7,13 @@ import json
 
 
 @frappe.whitelist()
-def make_salary(expense_claim):
-    expense_claim_month = get_month(str(frappe.db.get_value("Expense Claim",expense_claim,"posting_date")))["month"]
+def make_salary(expense_claim,submit_month,submit_year):
+    # expense_claim_month = get_month(str(frappe.db.get_value("Expense Claim",expense_claim,"posting_date")))["month"]
+    expense_claim_month = submit_month
     employee = str(frappe.db.get_value("Expense Claim",expense_claim,"employee"))
     claim_amount = float(frappe.db.get_value("Expense Claim",expense_claim,"grand_total"))
-    expense_claim_year = get_month(str(frappe.db.get_value("Expense Claim",expense_claim,"posting_date")))["year"]
+    # expense_claim_year = get_month(str(frappe.db.get_value("Expense Claim",expense_claim,"posting_date")))["year"]
+    expense_claim_year = submit_year
     # Get month of expense claim
     get_salary_slip = frappe.db.get_value("Salary Slip",{"salary_month":expense_claim_month,"salary_year":expense_claim_year,"employee":employee},"name")
     # Get slary slip of same month and year
@@ -27,6 +29,7 @@ def make_salary(expense_claim):
                 if sc['salary_component'] == "Reimbursement":
                     reimb_amt = sc['amount']
             frappe.db.set_value("Salary Detail",{"parent":get_salary_slip,"parentfield": "earnings","salary_component":"Reimbursement"},"amount",float(reimb_amt+claim_amount))
+            frappe.db.set_value("Expense Claim",expense_claim,"status","Paid")
             return "Expense claim added"
         else:
             ss = frappe.get_doc("Salary Slip", get_salary_slip)
@@ -34,6 +37,7 @@ def make_salary(expense_claim):
             "salary_component": "Reimbursement",
             "amount": claim_amount})				
             ss.save()	
+            frappe.db.set_value("Expense Claim",expense_claim,"status","Paid")
             return "Expense claim added"
     else:
         object = frappe.get_doc({
@@ -48,6 +52,7 @@ def make_salary(expense_claim):
             })
         object.flags.ignore_permissions = True
         object.insert()
+        frappe.db.set_value("Expense Claim",expense_claim,"status","Paid")
         return "Salary slip Added!"
 
 
@@ -120,8 +125,6 @@ def create_payment(expense_voucher):
 
 @frappe.whitelist()
 def set_department_approver(department,approver):
-    # frappe.msgprint(str(department))
-    # dep_name = frappe.db.get_value("Department",{"department_name":department},"name")
     approver_val = frappe.db.get_value("Department Approver",{"parent":department,"parentfield":"expense_approvers","approver":approver},"approver")
     if not approver_val:
         ss = frappe.get_doc("Department", department)
@@ -129,8 +132,6 @@ def set_department_approver(department,approver):
         "approver": approver})				
         ss.save()	
         return "Approver added"
-        # frappe.db.set_value("Department Approver",{"parent":dep_name,"parentfield":"expense_approvers"},"approver",approver)
-    # frappe.msgprint(str(approver_val))
 
 @frappe.whitelist()
 def get_department_approver(department):
@@ -244,4 +245,87 @@ def upload_file():
     "decode": True
     })
     ret.save()
+
+
+@frappe.whitelist()
+def get_singles(doctype,fields_list):
+    ret = frappe.get_all(doctype,filters=[["parent", "=", None]],fields=fields_list)
+    # ret = frappe.db.get_values("SOCSO Details",
+    #     fieldname=["min_monthly_wages","max_monthly_wages","employers_contribution","employees_contribution","employer_contribution_second"],
+    #     filters={
+    #         "parent": None
+    #     },
+    #     as_dict=True
+    # )
+    return ret
+
+
+@frappe.whitelist()
+def add_child_item(child_doctype,child_doc_field,parent_doctype,parent_doc_name,check_filters,check_field,new_obj):
+    
+    # child_doctype = child doctype name e.g. "Addition"
+    # child_doc_field = child doctype field name e.g. "addition_item"
+    # parent_doctype = Parent Doctype Name e.g. "Payroll Setting"
+    # parent_doc_name = Parent doctype name e.g. TD-001 or None for single doctype
+    # check_filters = filter value to verify report_data
+    # check_field = name field or key field to check whether data exist or not
+    # new_obj = new value need to enter
+
+    check_val = frappe.get_all(child_doctype,filters=json.loads(check_filters),fields=["name1"] )
+    
+    if len(check_val) < 1:
+        ss = frappe.get_doc(parent_doctype,parent_doc_name)
+        ss.append(child_doc_field,json.loads(new_obj))				
+        ss.save()	
+        return "New Value Added"
+    else:
+        return "Value Already Exist"
+
+@frappe.whitelist()
+def update_child_item(child_doctype,child_doc_field,parent_doctype,parent_doc_name,check_filters,check_field,new_obj):
+    doc = frappe.get_doc(parent_doctype,parent_doc_name)
+    child_doc_name = frappe.get_all(child_doctype,filters=json.loads(check_filters),fields=["name"] )
+    # frappe.throw(str(child_doctype)+str(child_doc_name)+str(check_filters))
+    child = doc.getone({"doctype": child_doctype, "name": str(child_doc_name[0].name)})
+    # frappe.throw(str(json.loads(new_obj)))
+    child.update(json.loads(new_obj))
+
+    
+    child.save()
+    doc.save()
+    # frappe.throw(str(child.name1))
+    return "Child Successfully Updated!"
+    
+@frappe.whitelist()
+def get_child(doctype,filters,fields):
+    return frappe.get_all(doctype,filters=filters,fields=fields)
+
+@frappe.whitelist()
+def get_employee_payroll_info():
+    object = frappe.get_all("Employee",filters={"status":"Active"},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf"])
+
+    for obj in object:
+        add=0.00
+        ded=0.00
+        over=0.00
+        additional = frappe.db.sql("""select sum(default_amount) as additional from `tabAdditionals` where parent = %s and parentfield = "addition_items" group by parent""",(obj.name))
+        if additional:
+            add = additional[0][0]
+        deduction = frappe.db.sql("""select sum(default_amount) as additional from `tabAdditionals` where parent = %s and parentfield = "deduction_item" group by parent""",(obj.name))
+        if deduction:
+            ded = deduction[0][0]
+        
+        overtime = frappe.db.sql("""select sum(default_amount) as additional from `tabAdditionals` where parent = %s and parentfield = "overtime_item" group by parent""",(obj.name))
+        if overtime:
+            over = overtime[0][0]
+        
+        
+        obj["addition_amount"] = add
+        obj["deduction_amount"] = ded
+        obj["overtime_amount"] = over
+    return object
+
+    
+
+
 
