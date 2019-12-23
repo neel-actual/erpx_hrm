@@ -135,22 +135,6 @@ $("#save_claim").click(function(){
 
 $("#upload_file").click(function(){
 
-    frappe.call({
-        method: 'erpx_hrm.api.upload_file',
-        args: {
-            'expense_approver':$("#sel_approver").val(),
-            'requester':$("#employee_id").val(),
-            'claim_type':$("#sel_payment").val(),
-            'expenses':exp_list
-        },
-        callback: function(r) {
-            if (!r.exc) {
-                console.log(r.message)
-                M.toast({
-                    html: 'Approver Deleted Successfully!'
-                })
-            }
-        }
-    });
+    console.log($("#file").val())
 
 })

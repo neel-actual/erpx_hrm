@@ -35,7 +35,8 @@
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
-{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['approval_status','status','total_claimed_amount','employee_name','expense_approver']) %}
+{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type']) %}
+{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description"])%}
 {% endif %}
 <div id="main">
  <div class="row">
@@ -108,20 +109,20 @@
             </div>
 
           </div>
-          <br>
+          <!-- <br>
           <hr>
-          <br>
-          <div class="row margin infodetails">
+          <br> -->
+          <!-- <div class="row margin infodetails">
             <div class="option-date-appr input-field col s12 m4 l4 xl3">
               <p style="margin-bottom: 10px;float: left;">Start Date</p>
-              <img src="/icons/calendar-blue.png" width="20" height="20" style="bottom: 23px; position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" name="start_date" class="textbox-n" type="date" onfocus="(this.type='date')">
+              <img src="/icons/calendar-blue.png" width="20" height="20" style="bottom: 23px; position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" name="start_date" class="textbox-n" type="date" onfocus="(this.type='date')" id="from_date">
             </div>
             <div class="option-date-appr input-field col s12 m4 l4 xl3">
               <p style="margin-bottom: 10px;float: left
               ">End Date</p>
-              <img src="/icons/calendar-blue.png" width="20" height="20" style="bottom: 23px; position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" name="end_date" class="textbox-n" type="date" onfocus="(this.type='date')">
+              <img src="/icons/calendar-blue.png" width="20" height="20" style="bottom: 23px; position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" name="end_date" class="textbox-n" type="date" onfocus="(this.type='date')" id="to_date">
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -132,11 +133,18 @@
     <div id="card-stats" class="card" style="border-radius: 10px!important;">
       <div class="card-content">  
         <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
+        {% for claim in expense_claim %}
+        {% if claim.reimbursement_type == "Submission via Payroll" %}
         <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Reimbursement via payroll</div>
+        {% elif claim.reimbursement_type == "Direct Payment" %}
+        <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Reimbursement via Direct Pay</div>
+        {% endif %}
+        {% endfor %}
         <br>
-        {% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description"])%}
+        
         
         <table style="font-size: 14px;">
+          <thead>
          <tr style="font-size: 16px; background-color: #f9f9f9; width: 100%!important;" >
           <th style="border-right:none!important;">Date</th>
           <th style="border-right:none!important;">Claim Type</th>
@@ -145,9 +153,11 @@
           <th style="border-right:none!important;">Amount</th>
           <th style="border-right:none!important;"></th>
         </tr>
+        </thead>
+        <tbody>
         {% for claim in claim_details %}
         <tr>
-          <td>{{claim.expense_date.strftime('%d-%m-%Y')}}</td>
+          <td>{{claim.expense_date.strftime("%d-%m-%Y")}}</td>
           <td>{{claim.expense_type}}</td>
           <td>{{claim.merchant}}</td>
           <td>{{claim.description}}</td>
@@ -155,6 +165,7 @@
           <td style="text-align: center;"><i class="material-icons-outlined">attach_file</i></td>
         </tr>
         {% endfor %}
+        
         <!-- <tr>
           <td>26 Jul 2019</td>
           <td>Medical</td>
@@ -164,27 +175,30 @@
           <td style="text-align: center;"><i class="material-icons-outlined">attach_file</i></td>
 
         </tr> -->
-
+      </tbody>
+      
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>{% for ap in expense_claim %}
+          <th colspan="4">Total Claim Amount</th>
+          <!-- <th></th>
+          <th></th>
+          <th></th> -->
+          <th colspan="2">{% for ap in expense_claim %}
             {{currency}} {{'%0.2f'| format(ap.total_claimed_amount|float)}}
-            {% endfor %}</td>
-          <td></td>
+            {% endfor %}</th>
+          <!-- <th></th> -->
         </tr>
+        
+      
 
       </table> 
       
 
-      <div style="height: 90px;"></div>
-      <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
-      <div class="card-title" style="margin-top: -5px;text-align: left;margin-left: 35px;">Reimbursement via direct payment
-      </div>
-      <br>
-      <table style="font-size: 14px;">
+      <!-- <div style="height: 90px;"></div> -->
+      <!-- <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png"> -->
+      <!-- <div class="card-title" style="margin-top: -5px;text-align: left;margin-left: 35px;">Reimbursement via direct payment
+      </div> -->
+      <!-- <br> -->
+      <!-- <table style="font-size: 14px;">
        <tr style="font-size: 16px; background-color: #f9f9f9; width: 100%!important;" >
         <th style="border-right:none!important;">Date</th>
         <th style="border-right:none!important;">Claim Type</th>
@@ -206,7 +220,7 @@
         <td>Total MYR0.00</td>
         <td></td>
       </tr>
-    </table>
+    </table> -->
 
 
     <div style="height: 90px;"></div>
@@ -238,7 +252,7 @@
   class="modal-trigger waves-effect waves-dark right" id="decline">Decline</a></div>
 </div>
 
-{% elif ap.status == "Unpaid" %}
+{% elif ap.status == "Unpaid" and ap.reimbursement_type == "Direct Payment" %}
 <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
   class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
 {% endif %}
@@ -252,6 +266,8 @@
 {% endblock %}
 
 {% block scripts %}
+
+<script defer src="/claims/js/claim-title1.js" type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
 </script>
@@ -259,5 +275,4 @@
   var all_claim = document.getElementById("all-claim");
   all_claim.classList.add("active");
 </script>
-<script defer src="/claims/js/claim-title1.js" type="text/javascript"></script>
 {% endblock %}

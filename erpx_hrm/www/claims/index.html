@@ -69,7 +69,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 </div>
                 <div class="input-field col s12 m12 l6 xl2">
                   <select style="width: -webkit-fill-available;" id="req_filter">
-                    <option value="" selected>All requesters</option>
+                    <option value="" selected>All Claim Type</option>
                     {% set Requester =  frappe.get_all("Expense Claim Type", fields=['name']) %}
                     {% for req in Requester %}
                     <option value={{req.name}}>{{req.name}}</option>
@@ -80,10 +80,10 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   </select>
                 </div>
                 <div class="option-date-appr input-field col s12 m12 l6 xl2">
-                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
+                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')" data-date-format="dd-mm-yyyy" id="from_date">
                 </div>
                 <div class="option-date-appr input-field col s12 m12 l6 xl2">
-                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n" type="date" onfocus="(this.type='date')">
+                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')" data-date-format="dd-mm-yyyy" id="to_date">
                 </div>
                 <div class="input-field col s12 m12 l6 xl2">
                   <select style="width: -webkit-fill-available;" id="status_filter">
@@ -124,7 +124,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     {% endfor %})
                   </td>
                   
-                  <td>{{ex.posting_date.strftime('%d-%m-%Y')}}</td>
+                  <td>{{ex.posting_date}}</td>
                   <td>{{currency}} {{'%0.2f'| format(ex.total_claimed_amount|float)}}</td>
 
                   
@@ -135,11 +135,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                       {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
                       {% else %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/files/Ankit.png">
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
                       {% endfor %}
                     </td>
-                  <td>{{ex.posting_date.strftime('%d-%m-%Y')}}</td>
+                  <td>{{ex.posting_date}}</td>
                   {% set class_color = '' %}
                   {% if(ex.status == 'Unpaid') %}
                       {% set class_color = 'p-pending' %}
@@ -200,9 +200,51 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
+
+
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
-  var user_table = $('#table_id').DataTable();
+  var user_table = $('#table_id').DataTable({
+    columnDefs: [ {
+      targets: 1,
+      render: $.fn.dataTable.render.moment('DD-MM-YYYY')
+    },
+    {
+      targets: 4,
+      render: $.fn.dataTable.render.moment('DD-MM-YYYY')
+    } ],
+    paging: true,
+    searching: true,
+    info: true,
+    lengthChange: true,
+    ordering: true,
+    buttons: true
+  });
+
+
+  $.fn.dataTable.ext.search.push(
+  function(settings, data, dataIndex) {
+    var min = new Date(adjust_date_time(moment($('#from_date').val()).format('DD-MM-YYYY')));
+    var max = new Date(adjust_date_time(moment($('#to_date').val()).format('DD-MM-YYYY')));
+    
+    var createdAt = new Date(adjust_date_time(data[1])); // Our date column in the table
+    console.log("created "+createdAt)
+    console.log("min "+min)
+    console.log("max "+max)
+
+    if ((min == "Invalid Date" || max == "Invalid Date") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) {
+      return true;
+    }
+    return false;
+  }
+);
+
+// Re-draw the table when the a date range filter changes
+$('.date-range-filter').change(function() {
+  user_table.draw();
+});
 
   $('#search_i').keyup(function(){
     console.log("onup")
@@ -226,6 +268,11 @@ type="text/javascript"></script>
       console.log("here")
       location.reload(true);
     });
+
+    function adjust_date_time(date){
+      var date_list = date.split("-");
+      return date_list[1]+"-"+date_list[0]+"-"+date_list[2]
+    }
 
     
     </script>
