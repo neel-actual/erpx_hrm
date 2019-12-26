@@ -86,8 +86,10 @@ $.extend(frappe, {
 		}
 
 		// stringify
-		opts.args = { "data": JSON.stringify(opts.args) };
-
+		if(!opts.no_stringify){
+			opts.args = { "data": JSON.stringify(opts.args) };
+		}
+		
 		if (!opts.no_spinner) {
 			//NProgress.start();
 		}
