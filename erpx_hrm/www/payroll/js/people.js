@@ -1,4 +1,4 @@
-var personal_field_list = ["name","first_name","middle_name","last_name","employee_name","department","company_email","cell_number","date_of_joining","reports_to","date_of_birth","gender","employment_type","passport_number","marital_status","permanent_address","designation","image","nationality","country","state","city","postal_code","number_of_children","is_disabled","nric_no","residence_status","residence_type","spouse_working"]
+var personal_field_list = ["name","first_name","middle_name","last_name","employee_name","department","company_email","cell_number","date_of_joining","reports_to","date_of_birth","gender","employment_type","passport_number","marital_status","permanent_address","designation","image","nationality","country","state","city","postal_code","number_of_children","is_disabled","nric_no","residence_status","residence_type","spouse_working","spouse_disable"]
 
 var bank_info = ["name","salary_basis","salary_amount","epf_contribution","epf_no","employee_epf_rate","additional_epf","employer_epf","additional_employer_epf","pcb_no","sosco_contribution","sosco_catagory","eis_contribution","zakat_no","zakat_amount","salary_mode","total_eis_rate","total_socso_rate","employee_socso_rate","employer_socso_rate","employee_eis_rate","employer_eis_rate"]
 function profile(employee){
@@ -48,8 +48,7 @@ function profile(employee){
     hrm.list({
         doctype:"Employee",
         filters:[{"name":employee}],
-        fields:bank_info,
-        limit_page_length: 100000
+        fields:bank_info
       }).then(function(res){
         console.log(res.message)
         obj = res.message[0];
