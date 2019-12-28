@@ -1,4 +1,3 @@
-console.log(frappe.get_cookie("user_image"));
 $(document).ready(function () {
 
 	let user_image = frappe.get_cookie("user_image");
@@ -10,8 +9,6 @@ $(document).ready(function () {
 	$("#file-acc").on('change', function() {
 		var file = this.files[0];
 		var reader = new FileReader();
-		var doctype = "User";
-		var docname = "vincent@erpx.com.my";
 		reader.onload = function(){
 			var srcBase64 = reader.result;
 			frappe.ajax({
@@ -34,4 +31,52 @@ $(document).ready(function () {
 		};
 		reader.readAsDataURL(file);
 	});
+
+
+	// Update password
+	$("#update").click(function() {
+		var args = {
+			old_password: $("#old_password").val(),
+			new_password: $("#new_password").val(),
+			confirm_password: $("#confirm_password").val()
+		}
+
+		if(!args.old_password) {
+			frappe.msgprint("{{ _("Current Password Required.") }}");
+			return;
+		}
+		if(!args.new_password) {
+			frappe.msgprint("{{ _("New Password Required.") }}");
+			return;
+		}
+		if(!args.confirm_password) {
+			frappe.msgprint("{{ _("Confirm Password	Required.") }}");
+			return;
+		}
+		if(args.new_password != args.confirm_password) {
+			frappe.msgprint("{{ _("Your password does not match. Please retype it to confirm.") }}");
+			return;
+		}
+		frappe.call({
+			type: "POST",
+			method: "frappe.core.doctype.user.user.update_password",
+			btn: $("#update"),
+			args: args,
+			statusCode: {
+				401: function() {
+					frappe.msgprint("{{ _("The current password you have entered is incorrect.") }}");
+				},
+				200: function(r) {
+					$("#old_password").val("");
+					$("#new_password").val("");
+					$("#confirm_password").val("");
+					if(r.message) {
+						frappe.msgprint("{{ _("Password Updated") }}");
+					}
+				}
+			}
+		});
+
+		return false;
+	});	
 });
