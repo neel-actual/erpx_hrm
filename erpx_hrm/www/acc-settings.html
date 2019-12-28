@@ -86,26 +86,25 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             <img style="display: inline;float: left; margin-left: 4.7%;margin-right: 10px" width="22" height="22" class="sidenav-icon" src="/icons/settings.png" >
                             <div class="card-title" style="text-align: left;margin-left: 60px;">Change password</div>
                             <div style="height: 10px;"></div>
+                            
                             <div class="row margin infodetails no-padd-left" style="padding-left: 55px">
-                            <div class=" input-field col s12 m8" >
-                                <p style="float: left; margin-bottom: 5px;">Current Password</p>
-                                <input type="text" name="current-pass" style="width: -webkit-fill-available;">
-                            </div>
+                                <div class=" input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">Current Password</p>
+                                    <input id="old_password" type="password" type="text" name="old_password" style="width: -webkit-fill-available;">
+                                </div>
 
-                            <div class=" input-field col s12 m8" >
-                             <p style="float: left; margin-bottom: 5px;">New Password</p>
-                             <input type="text" name="current-pass" style="width: -webkit-fill-available;">
-                            </div>
+                                <div class=" input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">New Password</p>
+                                    <input id="new_password" type="password" name="new_password" style="width: -webkit-fill-available;">
+                                </div>
 
-                            <div class="chg-pass-text input-field col s12 m8" >
-                                <p style="float: left; margin-bottom: 5px;">Confirm Password</p>
-                                <input type="text" name="current-pass" style="width: -webkit-fill-available;">
-                            </div>
-
-                            <div class="col s12 m4" style="margin-top: 55px;margin-bottom: 40px;">
-                                <a href="#!" class=" modal-trigger waves-effect waves-light btn right">
-                                Change Password</a>
-                            </div>
+                                <div class="chg-pass-text input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">Confirm Password</p>
+                                    <input id="confirm_password" type="password" name="confirm_password" style="width: -webkit-fill-available;">
+                                </div>
+                                <div class="col s12 m4" style="margin-top: 55px;margin-bottom: 40px;">
+                                    <button type="submit" id="update" class="waves-effect waves-light btn right">Change Password</button>
+                                </div>
                             </div>
                      </div>
                  </div>

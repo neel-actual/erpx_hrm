@@ -12,6 +12,11 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR CUSTOM SCRIPT I
 
 frappe.provide("frappe");
 $.extend(frappe, {
+	msgprint: function (message) {
+		M.toast({
+			html: message
+		})
+	},
 	ajax: function (opts) {
 		if (typeof arguments[0] === 'string') {
 			opts = {
