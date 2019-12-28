@@ -124,7 +124,7 @@ $("#save_claim").click(function(){
             if (!r.exc) {
                 console.log(r.message)
                 M.toast({
-                    html: 'Approver Deleted Successfully!'
+                    html: 'AClaim Created Successfully!'
                 })
             }
         }

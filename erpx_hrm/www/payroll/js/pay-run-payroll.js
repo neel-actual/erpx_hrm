@@ -9,6 +9,74 @@ $(document).ready(async function () {
     $("#step2_content").css("display","block")
   }
   
+  $('#send_for_approval').click( function () {
+    // var data = selected_emp.rows().data();
+    // console.log(data)
+    if($('#sel_month').val() && $('#sel_year').val() && $('#pay_type').val()){
+      pay_details = []
+      selected_emp.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+        // console.log(this.data())
+        pay_details.push({
+          employee_id:this.data()[0],
+          employee_image:$(this.node()).find('img.emp_img').attr("src"),
+          employee_name:$(this.node()).find('a.emp_name').text(),
+          employee_designation:$(this.node()).find('span.emp_desi').text(),
+          basic_salary:this.data()[2].split(" ")[1],
+          additions:this.data()[3].split(" ")[1],
+          gross_pay:this.data()[4].split(" ")[1],
+          deductions:this.data()[5].split(" ")[1],
+          net_pay:this.data()[6].split(" ")[1],
+          employer_epf:this.data()[7].split(" ")[1],
+          employer_socso:this.data()[8].split(" ")[1]
+        })
+        frappe.call({
+          method: 'erpx_hrm.api.create_payroll_entry',
+          args: {
+            'month':$('#sel_month').val(),
+            'year':$('#sel_year').val(),
+            'type':$('#pay_type').val(),
+            'user':"Raj",
+            'pay_details':pay_details
+          },
+          callback: function(r) {
+              if (!r.exc) {
+                  console.log(r.message)
+                  M.toast({
+                      html: 'Payroll Entry Created Successfully!'
+                  })
+              }
+          }
+      });
+        // var img = $(this.node()).find('img.emp_img').attr("src");
+        // console.log(img)
+        // var emp_name = $(this.node()).find('a.emp_name').text();
+        // console.log(emp_name)
+        // var emp_desi = $(this.node()).find('span.emp_desi').text();
+        // console.log(emp_desi)
+        // var salary = this.data()[2];
+        // console.log(salary)
+        // var addition = this.data()[3];
+        // console.log(addition)
+        // var gross = this.data()[4];
+        // console.log(gross)
+        // var ded = this.data()[5];
+        // console.log(ded)
+        // var net = this.data()[6];
+        // console.log(net)
+        // var emp_epf = this.data()[7];
+        // console.log(emp_epf)
+        // var emp_socso = this.data()[8];
+        // console.log(emp_socso)
+        // ... do something with data(), or this.node(), etc
+    } );
+    // console.log(pay_details)
+    }else{
+      M.toast({
+        html: 'Enter All Payroll Information!'
+    })
+    }
+    
+  })
 // User Table defination
   var user_table = $('#select_emp').DataTable({
     "columnDefs": [
@@ -87,7 +155,7 @@ $(document).ready(async function () {
         var emp_epf = (((parseFloat(emp_pay_info.message[0].employee_epf_rate)+parseFloat(emp_pay_info.message[0].additional_epf)) * parseFloat(emp_pay_info.message[0].salary_amount))/100).toFixed(2);
 
 
-        let pcb = await calculate_pcb(emp_pay_info.message[0].accumulated_salary,emp_pay_info.message[0].accumulated_epf,emp_pay_info.message[0].salary_amount,emp_epf,parseFloat(emp_pay_info.message[0].employee_eis_rate).toFixed(2),emp_pay_info.message[0].employee_socso_rate,emp_pay_info.message[0].addition_amount,emp_pay_info.message[0].deduction_amount,emp_pay_info.message[0].residence_status,emp_pay_info.message[0].is_disabled,emp_pay_info.message[0].marital_status,emp_pay_info.message[0].number_of_children,emp_pay_info.message[0].spouse_working,emp_pay_info.message[0].spouse_disable,emp_pay_info.message[0].past_deduction,emp_pay_info.message[0].accumulated_socso,emp_pay_info.message[0].accumulated_mtd,emp_pay_info.message[0].accumulated_zakat);
+        let pcb = await calculate_pcb(emp_pay_info.message[0].accumulated_salary,emp_pay_info.message[0].accumulated_epf,emp_pay_info.message[0].salary_amount,emp_epf,parseFloat(emp_pay_info.message[0].employee_eis_rate).toFixed(2),emp_pay_info.message[0].employee_socso_rate,emp_pay_info.message[0].addition_amount,emp_pay_info.message[0].deduction_amount,emp_pay_info.message[0].residence_status,emp_pay_info.message[0].is_disabled,emp_pay_info.message[0].marital_status,emp_pay_info.message[0].number_of_children,emp_pay_info.message[0].spouse_working,emp_pay_info.message[0].spouse_disable,emp_pay_info.message[0].past_deduction,emp_pay_info.message[0].accumulated_socso,emp_pay_info.message[0].accumulated_mtd,emp_pay_info.message[0].accumulated_zakat,emp_pay_info.message[0].zakat_amount,emp_pay_info.message[0].accumulated_eis);
         salary_details = {
           salary : emp_pay_info.message[0].salary_amount,
           additional : emp_pay_info.message[0].addition_amount,
@@ -177,7 +245,7 @@ async function get_pay_info(user_table){
     
 
 
-    let pcb = await calculate_pcb(element.accumulated_salary,element.accumulated_epf,element.salary_amount,employee_epf,employee_eis,element.employee_socso_rate,element.addition_amount,element.deduction_amount,element.residence_status,element.is_disabled,element.marital_status,element.number_of_children,element.spouse_working,element.spouse_disable,element.past_deduction,element.accumulated_socso,element.accumulated_mtd,element.accumulated_zakat);
+    let pcb = await calculate_pcb(element.accumulated_salary,element.accumulated_epf,element.salary_amount,employee_epf,employee_eis,element.employee_socso_rate,element.addition_amount,element.deduction_amount,element.residence_status,element.is_disabled,element.marital_status,element.number_of_children,element.spouse_working,element.spouse_disable,element.past_deduction,element.accumulated_socso,element.accumulated_mtd,element.accumulated_zakat,element.zakat_amount,element.accumulated_eis);
     
 
     var deduction = (parseFloat(element.deduction_amount) + parseFloat(employee_epf)+parseFloat(element.employee_socso_rate)+parseFloat(pcb)+parseFloat(employee_eis)+parseFloat(element.zakat_amount)).toFixed(2);
@@ -187,7 +255,7 @@ async function get_pay_info(user_table){
     
     
     // console.log(employer_eis)
-    var row = $('<tr class="ideal"><td>'+element.name+'</td><td><img src='+(element.image ? element.image : '/images/profile_icon.png')+' width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" /><p style="margin-top: 5px;display: block"><span><a style="display: block; color:#00AEEF;">'+element.employee_name+'</a></span><span>'+element.designation+'</span></p></td><td>'+currency + parseFloat(element.salary_amount).toFixed(2)+'</td><td>'+currency +parseFloat(element.addition_amount).toFixed(2)+'</td><td>'+currency +gross_pay+'</td><td>'+currency +deduction+'</td><td>'+currency +net_pay+'</td><td>'+currency +employer_epf+'</td><td>'+currency +parseFloat(element.employer_socso_rate).toFixed(2)+'</td></tr>')
+    var row = $('<tr class="ideal"><td class = "emp_id">'+element.name+'</td><td class = "emp_name"><img class = "emp_img" src='+(element.image ? element.image : '/images/profile_icon.png')+' width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" /><p style="margin-top: 5px;display: block"><span><a class = "emp_name" style="display: block; color:#00AEEF;">'+element.employee_name+'</a></span><span class = "emp_desi">'+element.designation+'</span></p></td><td class = "emp_salary">'+currency + parseFloat(element.salary_amount).toFixed(2)+'</td><td class = "emp_addition">'+currency +parseFloat(element.addition_amount).toFixed(2)+'</td><td class = "emp_gross">'+currency +gross_pay+'</td><td class = "emp_deduction">'+currency +deduction+'</td><td class = "emp_net">'+currency +net_pay+'</td><td class = "emp_epf">'+currency +employer_epf+'</td><td class = "emp_socso">'+currency +parseFloat(element.employer_socso_rate).toFixed(2)+'</td></tr>')
     
     user_table.row.add(row).draw();
     // console.log(pcb)
@@ -195,7 +263,8 @@ async function get_pay_info(user_table){
     });
 }
 
-async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,current_epf,current_eis,current_socso,additions,additional_deduction,residence_status,disable_status,marital_status,number_of_children,spouse_working,spouse_disable,past_deduction,accumulated_socso,accumulated_mtd,accumulated_zakat){
+async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,current_epf,current_eis,current_socso,additions,additional_deduction,residence_status,disable_status,marital_status,number_of_children,spouse_working,spouse_disable,past_deduction,accumulated_socso,accumulated_mtd,accumulated_zakat,zakat_amount,accumulated_eis){
+  // console.log(parseFloat(current_eis))
   var tax_amount = 0;
   
   if(residence_status == "Resident"){
@@ -299,7 +368,7 @@ async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,c
     var future_epf = (4000 - accumulated_epf - current_epf)/n 
     // console.log("future epf: "+future_epf)
 
-    var taxable_salary = ((accumulated_salary - accumulated_epf) + (current_salary - current_epf) + ((current_salary - future_epf)*n)) - (individual_relief + children_relief + spouce_relief +  accumulated_socso + current_socso + additional_deduction + past_deduction)
+    var taxable_salary = ((accumulated_salary - accumulated_epf) + (current_salary - current_epf) + ((current_salary - future_epf)*n)) - (individual_relief + children_relief + spouce_relief +  accumulated_socso + accumulated_eis + current_socso + additional_deduction + past_deduction + parseFloat(current_eis))
 
     // console.log("taxable salary: "+taxable_salary)
 
@@ -321,7 +390,7 @@ async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,c
     });
     
     
-    tax_amount = ((taxable_salary - m)*(r*0.01) + b)/(n+1)
+    tax_amount = parseFloat(((taxable_salary - m)*(r*0.01) + b - (accumulated_zakat + accumulated_mtd))/(n+1)) - parseFloat(zakat_amount)
     
     // if (tax_amount < 0){
     //   tax_amount = 0
@@ -332,7 +401,9 @@ async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,c
     // console.log("Yearly tax withot addition: "+yearly_tax)
     var addition_tax = 0
     if(additions){
-      yearly_taxble_with_addition = ((accumulated_salary - accumulated_epf) + (current_salary - current_epf) + ((current_salary - future_epf)*n) + (additions - 0)) - (individual_relief + children_relief + spouce_relief +  accumulated_socso + current_socso + additional_deduction + past_deduction)
+      yearly_taxble_with_addition = ((accumulated_salary - accumulated_epf) + (current_salary - current_epf) + ((current_salary - future_epf)*n) + (additions - 0)) - (individual_relief + children_relief + spouce_relief +  accumulated_socso  + accumulated_eis +current_socso + additional_deduction + past_deduction +parseFloat(current_eis))
+      // console.log("taxable salary :"+taxable_salary)
+      // console.log("yearly taxable salary with addition:"+yearly_taxble_with_addition)
       var a_m = 0
       var a_r = 0
       var a_b = 0
@@ -350,11 +421,14 @@ async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,c
                 
         }
       });
-      yearly_tax = (accumulated_zakat + tax_amount*(n+1))
-      tax_amount_with_addition = ((yearly_taxble_with_addition - a_m)*(a_r*0.01) + a_b)
-      // console.log("Yearly tax withot addition: "+yearly_tax)
-      // console.log("tax amount with addition: "+tax_amount_with_addition)
+      yearly_tax = parseFloat(accumulated_mtd) +(accumulated_zakat + (tax_amount + parseFloat(zakat_amount))*(n+1))
+      // console.log("tax_amount :"+tax_amount)
+      tax_amount_with_addition = ((yearly_taxble_with_addition - a_m)*(a_r*0.01) + a_b )
+      // console.log("tax_amount_with_addition :"+tax_amount_with_addition)
+      console.log("Yearly tax withot addition: "+yearly_tax)
+      console.log("tax amount with addition: "+tax_amount_with_addition)
       addition_tax = tax_amount_with_addition - yearly_tax
+      // console.log("additional tax :"+addition_tax)
       tax_amount = addition_tax + tax_amount
     }
     

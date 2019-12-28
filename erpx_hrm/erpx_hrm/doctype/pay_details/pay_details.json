@@ -1,0 +1,87 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"40254521ca\"}, {\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"8eb5712ed3\"}]",
+ "autoname": "hash",
+ "creation": "2019-12-27 17:15:55.850136",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_id",
+  "employee_name",
+  "basic_salary",
+  "additions",
+  "gross_pay",
+  "deductions",
+  "net_pay",
+  "employer_epf",
+  "employer_socso"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee ID",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "basic_salary",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Basic Salary"
+  },
+  {
+   "fieldname": "additions",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Additions"
+  },
+  {
+   "fieldname": "gross_pay",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Gross Pay"
+  },
+  {
+   "fieldname": "deductions",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Deductions"
+  },
+  {
+   "fieldname": "net_pay",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Net Pay"
+  },
+  {
+   "fieldname": "employer_epf",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employer EPF"
+  },
+  {
+   "fieldname": "employer_socso",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employer Socso"
+  }
+ ],
+ "istable": 1,
+ "modified": "2019-12-27 17:18:21.423528",
+ "modified_by": "shivam@erpx.com.my",
+ "module": "ERPX-HRM",
+ "name": "Pay Details",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
