@@ -3,6 +3,7 @@ import datetime
 import frappe.desk.reportview
 from frappe.utils.xlsxutils import make_xlsx
 import json
+from frappe import utils
 
 
 
@@ -301,8 +302,8 @@ def get_child(doctype,filters,fields):
     return frappe.get_all(doctype,filters=filters,fields=fields)
 
 @frappe.whitelist()
-def get_employee_payroll_info():
-    object = frappe.get_all("Employee",filters={"status":"Active"},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf"])
+def get_employee_payroll_info(employee = None):
+    object = frappe.get_all("Employee",filters={"status":"Active","name":employee},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
 
     for obj in object:
         add=0.00
@@ -324,8 +325,25 @@ def get_employee_payroll_info():
         obj["deduction_amount"] = ded
         obj["overtime_amount"] = over
     return object
+   
+@frappe.whitelist()
+def create_payroll_entry(month,year,type,user,pay_details):
+    object = frappe.get_doc({
 
-    
+    "doctype":"HRM Payroll Entry",
+    "requested_date":utils.nowdate(),
+    "status":"Pending",
+    "payroll_month":month,
+    "payroll_year":year,
+    "payroll_type":type,
+    "submitted_by":user,
+    "payroll_details":json.loads(pay_details)
+    })
+    object.flags.ignore_permissions = True
+    object.insert()
+
+    return object.name
+
 
 
 

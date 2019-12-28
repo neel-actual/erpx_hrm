@@ -1,0 +1,68 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"1bab2d9d6a\"}]",
+ "creation": "2019-12-27 17:09:48.233963",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "payroll_month",
+  "payroll_year",
+  "payroll_type",
+  "payroll_details",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "payroll_month",
+   "fieldtype": "Data",
+   "label": "Payroll Month"
+  },
+  {
+   "fieldname": "payroll_year",
+   "fieldtype": "Data",
+   "label": "Payroll Year"
+  },
+  {
+   "fieldname": "payroll_type",
+   "fieldtype": "Data",
+   "label": "Payroll Type"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Custom Payroll Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "payroll_details",
+   "fieldtype": "Table",
+   "label": "Payroll Details",
+   "options": "Pay Details"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2019-12-27 17:17:10.468114",
+ "modified_by": "shivam@erpx.com.my",
+ "module": "ERPX-HRM",
+ "name": "Custom Payroll Entry",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

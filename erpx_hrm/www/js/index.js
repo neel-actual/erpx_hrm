@@ -160,7 +160,7 @@ $(document).ready(function () {
 				});
 			},
 
-			get_child_item:function (args) {
+			get_child_item: function (args) {
 				// update row into child table of single doctype
 
 				return new Promise(function (resolve, reject) {
@@ -171,6 +171,20 @@ $(document).ready(function () {
 							args: args,
 							callback: resolve
 						});
+					} catch (e) { reject(e); }
+				});
+			},
+			get_payroll: function (args) {
+				// update row into child table of single doctype
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.get_employee_payroll_info",
+							args: args,
+							callback: resolve
+						  });
 					} catch (e) { reject(e); }
 				});
 			}
