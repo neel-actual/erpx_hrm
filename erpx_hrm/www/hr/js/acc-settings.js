@@ -79,4 +79,29 @@ $(document).ready(function () {
 
 		return false;
 	});	
+
+	// Update password
+	$("#btn_birthday_reminder").click(function() {
+		let stop_birthday_reminders = 1;
+		if($(this).is(':checked')){
+			stop_birthday_reminders = 0;
+		}
+		
+		frappe.ajax({
+			type: "POST",
+			url: `/api/method/frappe.client.set_value`,
+			no_stringify: 1,
+			args: {
+				'doctype': 'HR Settings',
+				'name': '',
+				'fieldname': 'stop_birthday_reminders',
+				'value': stop_birthday_reminders
+			},
+			callback: function (r) {
+				M.toast({
+					html: "Updated Successfully!"
+				})
+			}
+		});
+	})
 });

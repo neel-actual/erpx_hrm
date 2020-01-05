@@ -124,7 +124,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         <li style="margin-bottom: 15px;" class="switch">
                             <span>Birthday’s</span>
                             <label class="label-switch" >
-                                <input active type="checkbox" checked>
+                                <input id="btn_birthday_reminder" type="checkbox" {% if not stop_birthday_reminders %} checked {% endif %}>
                                 <span  class="lever"></span>
                                 Enable
                             </label>
