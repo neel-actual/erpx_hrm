@@ -331,7 +331,6 @@ def create_payroll_entry(month,year,type,user,pay_details):
     object = frappe.get_doc({
 
     "doctype":"HRM Payroll Entry",
-    "requested_date":utils.nowdate(),
     "status":"Pending",
     "payroll_month":month,
     "payroll_year":year,

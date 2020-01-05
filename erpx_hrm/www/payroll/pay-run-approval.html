@@ -81,7 +81,35 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <div class="card-content">
                  <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/pay-run.png">
                  <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Request</div>
-                 <p>There is no data to display</p>
+                 <table style="font-size: 14px;" class="table table-striped dataTable display">
+                  <thead>
+                  <tr style="font-size: 16px; background-color:#eff1f9; width: 100%!important;">
+                    <th style="border-right:none!important;">Payroll Name</th>
+                    <th style="border-right:none!important;">Requester</th>
+                    <th style="border-right:none!important;">Requested Date</th>
+                    <th style="border-right:none!important;">Payroll Month</th>
+                    <th style="border-right:none!important;">Payroll Year</th>
+                    <th style="border-right:none!important;">Status</th>
+                    <th style="border-right:none!important;">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters=[["status","!=","Completed"]],fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
+                  
+                  {% for pay in pay_approval %}
+                  <tr>
+                    <td class="pay_name">{{pay.name}}</td>
+                    <td>{{pay.submitted_by}}</td>
+                    <td>{{pay.requested_date}}</td>
+                    <td class="pay_month">{{pay.payroll_month}}</td>
+                    <td class="pay_year">{{pay.payroll_year}}</td>
+                    <td class = "status" style="color: green">{{pay.status}}</td>
+                    <td><a style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;" class="modal-trigger waves-effect waves-light right review">
+                    {% if pay.status == "Pending" or pay.status == "Rejected" %}Review{% elif pay.status == "Approved" %}Run Payroll{% endif %}</a></td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
                  <!--<p>Balance left</p>-->
                  <div class="row">
                   <!--individual-card-->
@@ -126,8 +154,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
                   <a href="#!" style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 45px;" class="modal-trigger waves-effect waves-light right">
                   Refresh</a>
-                  <a id="review" style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 45px;" class="modal-trigger waves-effect waves-light right">
-                    Review</a>
+                  <!-- <a id="review" style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 45px;" class="modal-trigger waves-effect waves-light right">
+                    Review</a> -->
 
                 </div>
                 <div style="height: 25px"></div>
@@ -135,48 +163,30 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <table style="font-size: 14px;" class="table table-striped dataTable display">
                   <thead>
                   <tr style="font-size: 16px; background-color:#eff1f9; width: 100%!important;">
+                    <th style="border-right:none!important;">Payroll Name</th>
                     <th style="border-right:none!important;">Requester</th>
                     <th style="border-right:none!important;">Requested Date</th>
-                    <th style="border-right:none!important;">Payroll</th>
+                    <th style="border-right:none!important;">Payroll Month</th>
+                    <th style="border-right:none!important;">Payroll Year</th>
                     <th style="border-right:none!important;">Status</th>
                   </tr>
                   </thead>
                   <tbody>
+                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters={"status":"Completed"},fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
+                  
+                  {% for pay in pay_approval %}
                   <tr>
-                    <td>Aznul Abdullah</td>
-                    <td>25 Jul 2019 03:19:24p.m.</td>
-                    <td>Jul 2019 (Month end pay)</td>
-                    <td style="color: green">Approved</td>
+                    <td class="pay_name">{{pay.name}}</td>
+                    <td>{{pay.submitted_by}}</td>
+                    <td>{{pay.requested_date}}</td>
+                    <td class="pay_month">{{pay.payroll_month}}</td>
+                    <td class="pay_year">{{pay.payroll_year}}</td>
+                    <td class = "status" style="color: green">{{pay.status}}</td>
+                    <td><a style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;" class="modal-trigger waves-effect waves-light right review">
+                    {% if pay.status == "Pending"  %}Review{% elif pay.status == "Approved" %}Run Payroll{% endif %}</a></td>
                   </tr>
+                  {% endfor %}
                   </tbody>
-
-                  <!-- <tr>
-                    <td>Aznul Abdullah</td>
-                    <td>25 Jul 2019 03:19:24p.m.</td>
-                    <td>Jun 2019 (Month end pay)</td>
-                    <td style="color: green">Approved</td>
-                  </tr>
-
-                  <tr>
-                    <td>Aznul Abdullah</td>
-                    <td>25 Jul 2019 03:19:24p.m.</td>
-                    <td>May 2019 (Month end pay)</td>
-                    <td style="color: green">Approved</td>
-                  </tr>
-
-                  <tr>
-                    <td>Aznul Abdullah</td>
-                    <td>25 Jul 2019 03:19:24p.m.</td>
-                    <td>Apr 2019 (Month end pay)</td>
-                    <td style="color: green">Approved</td>
-                  </tr>
-
-                  <tr>
-                    <td>Aznul Abdullah</td>
-                    <td>25 Jul 2019 03:19:24p.m.</td>
-                    <td>Mar 2019 (Month end pay)</td>
-                    <td style="color: green">Approved</td>
-                  </tr> -->
                 </table>
 
               </div>

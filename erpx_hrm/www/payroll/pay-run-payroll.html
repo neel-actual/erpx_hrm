@@ -277,7 +277,7 @@ ul.stepper.horizontal:before{
                         </div>
                       </div>
                       <div class="step-actions" style="position: relative;padding: 0;padding-top: 20px;float: right;">
-                        <button class="waves-effect waves-dark btn next-step" data-validator="validateStepOne" id="select_emp">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn next-step" data-validator="validateStepOne" id="continue_select_emp">CONTINUE</button>
                         
                       </div>
                     </div>
@@ -458,14 +458,14 @@ ul.stepper.horizontal:before{
                             <div id="summary-width" class="card-content" style="text-align: unset !important;padding: 0;">
                               <div style="padding:20px;border-bottom: 1px solid #e1e1e1">
                                 <img style="display: inline;float: left;margin-right: 10px;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
-                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;">Summary (42)</h4>
+                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;" id="summary"></h4>
                               </div>
                               <div class="row" style="margin: 0;">
                                 <div class="col s6" style="padding: 20px;">
                                   <p style="float: left;">Total Net Pay</p>
                                 </div>
                                 <div class="col s6" style="padding: 20px;">
-                                  <p style="float: right;">RM 23,457.20</p>
+                                  <p style="float: right;" id="net_pay"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -473,7 +473,7 @@ ul.stepper.horizontal:before{
                                   <p style="float: left;">Total EPF Payment</p>
                                 </div>
                                 <div class="col s6" style="padding: 20px;">
-                                  <p style="float: right;">RM 57,588.00</p>
+                                  <p style="float: right;" id="total_epf"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -481,7 +481,7 @@ ul.stepper.horizontal:before{
                                   <p style="float: left;">Total PCB Payment</p>
                                 </div>
                                 <div class="col s6" style="padding: 20px;">
-                                  <p style="float: right;">RM 4,582.15</p>
+                                  <p style="float: right;" id="total_pcb"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -489,7 +489,7 @@ ul.stepper.horizontal:before{
                                   <p style="float: left;">Total SOCSO Payment</p>
                                 </div>
                                 <div class="col s6" style="padding: 20px;">
-                                  <p style="float: right;">RM 3,233.00</p>
+                                  <p style="float: right;" id="total_socso"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -497,7 +497,7 @@ ul.stepper.horizontal:before{
                                   <p style="float: left;">Total EIS Payment</p>
                                 </div>
                                 <div class="col s6" style="padding: 20px;">
-                                  <p style="float: right;">RM 15.80</p>
+                                  <p style="float: right;" id="total_eis"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -505,7 +505,7 @@ ul.stepper.horizontal:before{
                                   <p style="float: left;">Total Payment</p>
                                 </div>
                                 <div class="col s6" style="background-color: #e1e1e1;padding: 20px 20px 20px 0px;">
-                                  <p style="float: right;">RM 268,605.20</p>
+                                  <p style="float: right;" id="total_payment"></p>
                                 </div>
                               </div>
                               <div class="row" style="margin: 0;">
@@ -530,9 +530,11 @@ ul.stepper.horizontal:before{
                         </div>
                       </div>
                       <div class="step-actions" style="position: relative;padding: 0;float: right;flex-direction: row-reverse;background-color: #f9f9f9;">
-                        <a href="#modal-confirm" class="waves-effect waves-dark btn modal-trigger">CONTINUE</a>
+                        <a href="#modal-confirm" class="waves-effect waves-dark btn modal-trigger" id="continue">Continue</a>
                         <!-- <button class="waves-effect waves-dark btn-flat" style="color: green;">Approved</button> -->
                         <a href="#" class="waves-effect waves-dark btn" id="send_for_approval">Send For Approval</a>
+                        <a href="#" class="waves-effect waves-dark btn" id="approve_pay">Approve Payroll</a>
+                        <a href="#" class="waves-effect waves-dark btn" id="reject_pay">Reject Payroll</a>
                         <!-- <button class="waves-effect waves-dark btn-flat" style="color: green;" href="#" id="send_for_approval">Send For Approval</button> -->
 
                         <div id="modal-confirm" class="modal modal-fixed-footer" style="border-radius: 10px;height: 300px !important;">
