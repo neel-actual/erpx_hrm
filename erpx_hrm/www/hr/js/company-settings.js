@@ -25,3 +25,28 @@ $(document).ready(function () {
 		reader.readAsDataURL(file);
 	});
 });
+var rename_company_name = function(){
+	var old_name = company_name;
+	var new_name = $("#company_name").val();
+	if(new_name){
+		frappe.ajax({
+			type: "POST",
+			url: `/api/method/frappe.model.rename_doc.rename_doc`,
+			no_stringify: 1,
+			args: {
+				"doctype": "Company",
+				"merge": 0,
+				"old": old_name,
+				"new": new_name
+			},
+			callback: function (r) {
+				if (r.message) {
+					M.toast({
+						html: "Updated Successfully!"
+					})
+					location.reload();
+				}
+			}
+		});
+	}	
+};

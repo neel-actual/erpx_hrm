@@ -210,10 +210,10 @@ display: block;
 
                   <div style="padding-bottom: 26px;margin-left: 18px;" class="input-field col s12 ">
                     <p style="margin-bottom: 10px;">Company Name</p>
-                    <input type="text" name="company-name" placeholder="Bayo Pay M Sdn Bhd" style="width: -webkit-fill-available">
+                    <input type="text" id="company_name" name="company_name" value="{{company_name}}" style="width: -webkit-fill-available">
                   </div>
 
-                  <a href="#!" style="line-height: 40px !important" class="btn-myclaims modal-trigger waves-effect waves-light right" disabled>Save</a>
+                  <a href="#" onclick="rename_company_name(); return false;" style="line-height: 40px !important" class="btn-myclaims waves-effect waves-light right">Save</a>
                 </div>
               </div>
             </div>
@@ -710,6 +710,7 @@ display: block;
 {% block scripts %}
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
+    var company_name = "{{ company_name }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
 type="text/javascript"></script>

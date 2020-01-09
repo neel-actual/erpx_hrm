@@ -13,5 +13,6 @@ def get_context(context):
     company = get_default_company()
 
     context.company_logo = frappe.db.get_value('Company', company, 'company_logo') or None
+    context.company_name = frappe.db.get_value('Company', company, 'name') or None
 
     return context
