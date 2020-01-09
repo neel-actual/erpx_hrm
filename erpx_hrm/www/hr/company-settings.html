@@ -179,18 +179,33 @@ display: block;
 
                   <div class="row col s12" style="padding: 0px !important">
                     <div class="col xl4 l4 m12 s12 " style="margin-left: 18px;">
+                      {% if company_logo %}
+                      <img src="{{company_logo}}" style="margin-top: 24px; width: 100%;">
+                      {% else %}
                       <img src="/images/logo.svg" style="margin-top: 24px;width: 100px;">
+                      {% endif %}
                     </div>
+                    {% if company_logo %}
+                    
                     <div class="col xl2 l3 m5 s5 right" style="padding: 0 !important;">
-                      <a id="logo_download" href="#!" style="background-color: #00aeef; border-radius: 25px; width: -webkit-fill-available;  text-align: center;  color: white;  line-height: 40px; margin-top: 24px;" class="modal-trigger waves-effect waves-light right">Download Logo</a>
+                      <a target="_blank" id="logo_download" href="{{company_logo}}" 
+                        style="background-color: #00aeef; border-radius: 25px; width: -webkit-fill-available;  text-align: center;  color: white;  line-height: 40px; margin-top: 24px;" 
+                        class="btn waves-effect waves-light right">                        
+                        Download Logo
+                      </a>
                     </div>
+                     {% endif %}
                     <div class="col xl2 l3 m5 s5 right" style="padding: 0 !important; margin-right: 25px">
-                      <a id="logo_change" href="#!" style=" border-radius: 25px; width: -webkit-fill-available;  text-align: center;  line-height: 40px; margin-top: 24px;" class="btn-manage-permissions modal-trigger waves-effect waves-light right">Change Logo</a>
+                      <div class="btn btn-change-logo file-field input-field waves-effect waves-light right" style="border-radius: 25px; width: -webkit-fill-available;  text-align: center;  line-height: 40px; margin-top: 24px;">
+                          <div class="">
+                              <span>Change Logo</span>
+                              <input id="file-change-logo" type='file' accept='image/*'>
+                          </div>
+                          <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text">
+                          </div>
+                      </div>
                     </div>
-
-
-
-
                   </div>
 
                   <div style="padding-bottom: 26px;margin-left: 18px;" class="input-field col s12 ">
@@ -694,7 +709,7 @@ display: block;
 
 {% block scripts %}
 <script>
-  frappe.csrf_token = "{{ csrf_token }}";
+    frappe.csrf_token = "{{ csrf_token }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
 type="text/javascript"></script>
@@ -705,5 +720,5 @@ type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>
-<script defer src="/hr/js/news.js" type="text/javascript"></script>
+<script defer src="/hr/js/company-settings.js" type="text/javascript"></script>
 {% endblock %}
