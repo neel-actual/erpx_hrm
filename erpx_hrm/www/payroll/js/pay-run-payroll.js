@@ -4,10 +4,12 @@ $(document).ready(async function () {
   var pay_month = sessionStorage.getItem("pay_month");
   var pay_year = sessionStorage.getItem("pay_year");
   var status = sessionStorage.getItem("status");
+  let currency = await hrm.get({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
   // console.log(status)
 
   
   if(param && pay_month && pay_year && status){
+    var final_pay_list = new Array()
     $('#send_for_approval').hide();
     $('#approve_pay').show();
     $('#step1').attr('class', '').addClass("step done");
@@ -18,6 +20,22 @@ $(document).ready(async function () {
     $('#sel_month').formSelect()
     $('#sel_year').val(pay_year)
     $('#sel_year').formSelect()
+    hrm.list({
+      doctype:"HRM Payroll Entry",
+      filters:{"name":param},
+      fields:["total_net_pay","total_epf","total_pcb","total_eis","total_socso","total_pay"]
+    }).then(function(res){
+      // console.log(res)
+    $('#summary_text').text("Summary");
+    $('#net_pay').text(currency+" "+res.message[0].total_net_pay);
+    $('#total_payment').text(currency+" "+res.message[0].total_pay);
+    $('#total_epf').text(currency+" "+res.message[0].total_epf);
+    $('#total_pcb').text(currency+" "+res.message[0].total_pcb);
+    $('#total_socso').text(currency+" "+res.message[0].total_socso);
+    $('#total_eis').text(currency+" "+res.message[0].total_eis);
+    })
+    
+
     if(status == "Approved"){
       $('#continue').show();
       $('#approve_pay').hide();
@@ -32,14 +50,15 @@ $(document).ready(async function () {
       $('#reject_pay').hide();
     }
     
-    let currency = await hrm.get({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+    
     
     hrm.get_child_item({
       doctype:"Pay Detail",
       filters:{parent:param},
-      fields:["employee_id","employee_name","employee_image","employee_designation","basic_salary","additions","gross_pay","deductions","net_pay","employer_epf","employer_socso"]
+      fields:["employee_id","employee_name","employee_image","employee_designation","basic_salary","additions","gross_pay","deductions","net_pay","employer_epf","employer_socso","pcb","eis","epf","socso","zakat"]
     }).then(function(res){
       console.log(res)
+      final_pay_list = res.message;
       res.message.forEach(async(element) => {
       var row = $('<tr class="ideal"><td class = "emp_id">'+element.employee_id+'</td><td class = "emp_name"><img class = "emp_img" src='+(element.employee_image ? element.employee_image : '/images/profile_icon.png')+' width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" /><p style="margin-top: 5px;display: block"><span><a class = "emp_name" style="display: block; color:#00AEEF;">'+element.employee_name+'</a></span><span class = "emp_desi">'+element.employee_designation+'</span></p></td><td class = "emp_salary">'+currency + parseFloat(element.basic_salary).toFixed(2)+'</td><td class = "emp_addition">'+currency +parseFloat(element.additions).toFixed(2)+'</td><td class = "emp_gross">'+currency +parseFloat(element.gross_pay).toFixed(2)+'</td><td class = "emp_deduction">'+currency +parseFloat(element.deductions).toFixed(2)+'</td><td class = "emp_net">'+currency +parseFloat(element.net_pay).toFixed(2)+'</td><td class = "emp_epf">'+currency +parseFloat(element.employer_epf).toFixed(2)+'</td><td class = "emp_socso">'+currency +parseFloat(element.employer_socso).toFixed(2)+'</td></tr>')
       selected_emp.row.add(row).draw();
@@ -50,6 +69,9 @@ $(document).ready(async function () {
     $('#reject_pay').hide();
     $('#continue').hide();
   }
+  $('#submit_pay').click(function(){
+    console.log(final_pay_list);
+  })
   $('#approve_pay').click(function(){
     var param = sessionStorage.getItem("pay_name");
     if(param){
@@ -91,25 +113,36 @@ $(document).ready(async function () {
     
   })
   $('#send_for_approval').click( function () {
-    // var data = selected_emp.rows().data();
-    // console.log(data)
+    // console.log($("#net_pay").text().split(" ")[2])
+    // console.log($("#total_epf").text().split(" ")[2])
+    // console.log($("#total_pcb").text().split(" ")[2])
+    // console.log($("#total_socso").text().split(" ")[2])
+    // console.log($("#total_eis").text().split(" ")[2])
+    // console.log($("#total_payment").text().split(" ")[2])    
+    // console.log(payroll_employee)
+
     if($('#sel_month').val() && $('#sel_year').val() && $('#pay_type').val()){
-      pay_details = []
-      selected_emp.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-        // console.log(this.data())
-        pay_details.push({
-          employee_id:this.data()[0],
-          employee_image:$(this.node()).find('img.emp_img').attr("src"),
-          employee_name:$(this.node()).find('a.emp_name').text(),
-          employee_designation:$(this.node()).find('span.emp_desi').text(),
-          basic_salary:this.data()[2].split(" ")[1],
-          additions:this.data()[3].split(" ")[1],
-          gross_pay:this.data()[4].split(" ")[1],
-          deductions:this.data()[5].split(" ")[1],
-          net_pay:this.data()[6].split(" ")[1],
-          employer_epf:this.data()[7].split(" ")[1],
-          employer_socso:this.data()[8].split(" ")[1]
-        })
+      var pay_details = []
+        payroll_employee.forEach(element => {
+          pay_details.push({
+          employee_id:element.id,
+          employee_image:element.image,
+          employee_name:element.name,
+          employee_designation:element.designation,
+          basic_salary:element.salary,
+          additions:element.additions,
+          gross_pay:element.gross_pay,
+          deductions:element.deduction,
+          net_pay:element.net_pay,
+          employer_epf:element.employer_epf,
+          employer_socso:element.employer_socso,
+          pcb:element.pcb,
+          eis:element.eis,
+          epf:element.employee_epf,
+          socso:element.employee_socso,
+          zakat:element.zakat
+          })          
+        });
         frappe.call({
           method: 'erpx_hrm.api.create_payroll_entry',
           args: {
@@ -117,6 +150,12 @@ $(document).ready(async function () {
             'year':$('#sel_year').val(),
             'type':$('#pay_type').val(),
             'user':"Raj",
+            'total_net_pay':parseFloat($("#net_pay").text().split(" ")[2]),
+            'total_epf':parseFloat($("#total_epf").text().split(" ")[2]),
+            'total_pcb':parseFloat($("#total_pcb").text().split(" ")[2]),
+            'total_eis':parseFloat($("#total_socso").text().split(" ")[2]),
+            'total_socso':parseFloat($("#total_socso").text().split(" ")[2]),
+            'total_pay':parseFloat($("#total_payment").text().split(" ")[2]),
             'pay_details':pay_details
           },
           callback: function(r) {
@@ -128,29 +167,9 @@ $(document).ready(async function () {
               }
           }
       });
-        // var img = $(this.node()).find('img.emp_img').attr("src");
-        // console.log(img)
-        // var emp_name = $(this.node()).find('a.emp_name').text();
-        // console.log(emp_name)
-        // var emp_desi = $(this.node()).find('span.emp_desi').text();
-        // console.log(emp_desi)
-        // var salary = this.data()[2];
-        // console.log(salary)
-        // var addition = this.data()[3];
-        // console.log(addition)
-        // var gross = this.data()[4];
-        // console.log(gross)
-        // var ded = this.data()[5];
-        // console.log(ded)
-        // var net = this.data()[6];
-        // console.log(net)
-        // var emp_epf = this.data()[7];
-        // console.log(emp_epf)
-        // var emp_socso = this.data()[8];
-        // console.log(emp_socso)
-        // ... do something with data(), or this.node(), etc
-    } );
-    // console.log(pay_details)
+        
+    
+   
     }else{
       M.toast({
         html: 'Enter All Payroll Information!'
@@ -159,6 +178,8 @@ $(document).ready(async function () {
     
   })
 // User Table defination
+  var employee_info = new Array();
+  var payroll_employee = new Array();
   var user_table = $('#select_emp').DataTable({
     "columnDefs": [
       {   "targets": [ 0 ],
@@ -181,7 +202,6 @@ $(document).ready(async function () {
       ordering: false,
       buttons: false
     });    
-// Selected Table Defination
     var selected_emp = $('#selected_emp').DataTable({
       "columnDefs": [
         {
@@ -209,16 +229,64 @@ $(document).ready(async function () {
 // get payroll_info
       $('#sel_month').change(async function () {
         // let currency = await hrm.get({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
-        let emp_info = await get_pay_info(user_table);               
+        let emp_info = await get_pay_info(user_table);           
+        employee_info = emp_info;    
       })
 // Transfer Selected row to next table 
       $('#continue_select_emp').click(async function () {
-        // var selected_emp = []
-        selected_emp.clear().draw();
+        var selected_emp_list = [];
+        var idx = 0;
+        var total_net = 0.00;
+        var total_gross = 0.00;
+        var total_epf = 0.00;
+        var total_pcb = 0.00;
+        var total_socso = 0.00;
+        var total_eis = 0.00;
+        let currency = await hrm.get({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+             
+       selected_emp.clear().draw();
         user_table.rows('.selected').every( function () {
           var d = this.data();
           selected_emp.row.add(d).draw();
-        });        
+          selected_emp_list.push(d[0])
+          
+        });
+
+        payroll_employee =  employee_info.filter(function(emp) {
+          if(selected_emp_list.includes(emp.id)){
+            return emp
+          }
+        });
+
+        payroll_employee.forEach(element => {
+          idx = idx + 1;
+          total_net = total_net + parseFloat(element.net_pay);
+          total_gross = total_gross + parseFloat(element.gross_pay);
+          total_epf = total_epf + parseFloat(element.employee_epf);
+          total_pcb = total_pcb + parseFloat(element.pcb);
+          total_eis = total_eis + parseFloat(element.eis);
+          total_socso = total_socso + parseFloat(element.employee_socso)
+ 
+        });
+        
+        $('#summary_text').text("Summary"+"("+idx+")");
+        $('#net_pay').text(currency+" "+total_net.toFixed(2));
+        $('#total_payment').text(currency+" "+total_gross.toFixed(2));
+        $('#total_epf').text(currency+" "+total_epf.toFixed(2));
+        $('#total_pcb').text(currency+" "+total_pcb.toFixed(2));
+        $('#total_socso').text(currency+" "+total_socso.toFixed(2));
+        $('#total_eis').text(currency+" "+total_eis.toFixed(2));
+
+        });
+
+        
+
+        
+
+
+
+        
+
       });
 
       $('#select_emp tbody').on( 'click', 'tr',async function () {
@@ -227,8 +295,6 @@ $(document).ready(async function () {
       });
 
       $('#selected_emp tbody').on( 'click', 'tr',async function () {
-        // $(this).toggleClass('selected');
-        // $(this).toggleClass('ideal');
 
         let currency = await hrm.get({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
         var tr = $(this).closest('tr');
@@ -248,6 +314,8 @@ $(document).ready(async function () {
         socso : emp_pay_info.message[0].employee_socso_rate,
         zakat : emp_pay_info.message[0].zakat_amount
         }
+
+        
         
         if ( row.child.isShown() ) {
               // This row is already open - close it
@@ -259,8 +327,10 @@ $(document).ready(async function () {
               row.child( format(salary_details,currency) ).show();
               tr.addClass('shown');
             }   
+
+
            
-    } );  
+    
 
 })
   function format ( d,currency ) {
@@ -322,42 +392,41 @@ async function get_pay_info(user_table){
     var gross_pay = parseFloat(parseFloat(element.salary_amount)+parseFloat(element.addition_amount)).toFixed(2)
     var employee_epf = (((parseFloat(element.employee_epf_rate)+parseFloat(element.additional_epf)) * parseFloat(element.salary_amount))/100).toFixed(2)
     var employee_eis = parseFloat(element.employee_eis_rate).toFixed(2)
-    var employer_eis = parseFloat(((element.employer_eis_rate) * element.salary_amount)/100).toFixed(2)    
+    var employer_eis = parseFloat(element.employer_eis_rate).toFixed(2)    
     var employer_epf = parseFloat(((element.employer_epf+element.additional_employer_epf) * element.salary_amount)/100).toFixed(2)
     let pcb = await calculate_pcb(element.accumulated_salary,element.accumulated_epf,element.salary_amount,employee_epf,employee_eis,element.employee_socso_rate,element.addition_amount,element.deduction_amount,element.residence_status,element.is_disabled,element.marital_status,element.number_of_children,element.spouse_working,element.spouse_disable,element.past_deduction,element.accumulated_socso,element.accumulated_mtd,element.accumulated_zakat,element.zakat_amount,element.accumulated_eis);
     var deduction = (parseFloat(element.deduction_amount) + parseFloat(employee_epf)+parseFloat(element.employee_socso_rate)+parseFloat(pcb)+parseFloat(employee_eis)+parseFloat(element.zakat_amount)).toFixed(2);
     var net_pay = parseFloat((gross_pay - deduction).toFixed(2)).toFixed(2)    
 
-    employee_pay_directory.push({
-    "id":element.name,
-    "name":element.employee_name,
-    "designation":element.designation,
-    "image":element.image,
-    "salary":parseFloat(element.salary_amount).toFixed(2),
-    "additions":parseFloat(element.addition_amount).toFixed(2),
-    "gross_pay":parseFloat(gross_pay).toFixed(2),
-    "deduction":parseFloat(deduction).toFixed(2),
-    "net_pay":parseFloat(net_pay).toFixed(2),
-    "employer_epf":parseFloat(employer_epf).toFixed(2),
-    "employer_socso": parseFloat(element.employer_socso_rate).toFixed(2),
-    "employee_epf": parseFloat(employee_epf).toFixed(2),
-    "pcb":parseFloat(pcb).toFixed(2),
-    "eis":parseFloat(employer_eis).toFixed(2),
-    "employee_socso":parseFloat(element.employee_socso_rate).toFixed(2),
-    "zakat":parseFloat(element.zakat_amount).toFixed(2)
-    })
-    // employee_pay_directory.forEach(element => {
-    //   console.log(element)
-    // });
     
     // console.log(employer_eis)
     var row = $('<tr class="ideal"><td class = "emp_id">'+element.name+'</td><td class = "emp_name"><img class = "emp_img" src='+(element.image ? element.image : '/images/profile_icon.png')+' width="50" height="50" style="float: left;margin-right: 5px;border-radius: 50%" /><p style="margin-top: 5px;display: block"><span><a class = "emp_name" style="display: block; color:#00AEEF;">'+element.employee_name+'</a></span><span class = "emp_desi">'+element.designation+'</span></p></td><td class = "emp_salary">'+currency + parseFloat(element.salary_amount).toFixed(2)+'</td><td class = "emp_addition">'+currency +parseFloat(element.addition_amount).toFixed(2)+'</td><td class = "emp_gross">'+currency +gross_pay+'</td><td class = "emp_deduction">'+currency +deduction+'</td><td class = "emp_net">'+currency +net_pay+'</td><td class = "emp_epf">'+currency +employer_epf+'</td><td class = "emp_socso">'+currency +parseFloat(element.employer_socso_rate).toFixed(2)+'</td></tr>')
+
+    employee_pay_directory.push({
+      "id":element.name,
+      "name":element.employee_name,
+      "designation":element.designation,
+      "image":element.image,
+      "salary":parseFloat(element.salary_amount).toFixed(2),
+      "additions":parseFloat(element.addition_amount).toFixed(2),
+      "gross_pay":parseFloat(gross_pay).toFixed(2),
+      "deduction":parseFloat(deduction).toFixed(2),
+      "net_pay":parseFloat(net_pay).toFixed(2),
+      "employer_epf":parseFloat(employer_epf).toFixed(2),
+      "employer_socso": parseFloat(element.employer_socso_rate).toFixed(2),
+      "employee_epf": parseFloat(employee_epf).toFixed(2),
+      "pcb":parseFloat(pcb).toFixed(2),
+      "eis":parseFloat(employee_eis).toFixed(2),
+      "employee_socso":parseFloat(element.employee_socso_rate).toFixed(2),
+      "zakat":parseFloat(element.zakat_amount).toFixed(2)
+      })
     
     user_table.row.add(row).draw();
     // console.log(pcb)
     });
-
     return employee_pay_directory;
+
+    
 }
 
 async function calculate_pcb(accumulated_salary,accumulated_epf,current_salary,current_epf,current_eis,current_socso,additions,additional_deduction,residence_status,disable_status,marital_status,number_of_children,spouse_working,spouse_disable,past_deduction,accumulated_socso,accumulated_mtd,accumulated_zakat,zakat_amount,accumulated_eis){

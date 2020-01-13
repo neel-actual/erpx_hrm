@@ -458,7 +458,7 @@ ul.stepper.horizontal:before{
                             <div id="summary-width" class="card-content" style="text-align: unset !important;padding: 0;">
                               <div style="padding:20px;border-bottom: 1px solid #e1e1e1">
                                 <img style="display: inline;float: left;margin-right: 10px;" width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png">
-                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;" id="summary"></h4>
+                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;" id="summary_text"></h4>
                               </div>
                               <div class="row" style="margin: 0;">
                                 <div class="col s6" style="padding: 20px;">
@@ -543,7 +543,7 @@ ul.stepper.horizontal:before{
                             <span class="col s12" style="padding-left: 20px;">Are you sure you want to confirm your payroll? Please keep in mind you cannot go back to adjust or review once you confirm your payroll.</span>
                           </div>
                           <div style="margin-top: 11%;" class="modal-footer">
-                            <a href="#" class="right waves-effect waves-light btn next-step" onclick="$('#modal-confirm').modal('close'); close_notice();">Confirm</a>
+                            <a href="#" class="right waves-effect waves-light btn next-step" onclick="$('#modal-confirm').modal('close'); close_notice();" id="submit_pay">Confirm</a>
                            <a href="#" class="right btn-flat" style="color: #00AEEF;" 
                            onclick="$('#modal-confirm').modal('close')">Cancel</a>
                          </div>
