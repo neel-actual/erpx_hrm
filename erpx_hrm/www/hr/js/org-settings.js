@@ -116,7 +116,7 @@ $.extend(list_department, {
     
     get_item_html: function (item) {
         if(item.is_group ==1){
-            return `<li data-name="${item.name}" class="list-item" style="margin-bottom: 15px;" class="bold">
+            return `<li data-name="${item.name}" class="list-item bold" style="margin-bottom: 15px;">
                 <a class="waves-effect waves-cyan" >
                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-61.png">
                     <span class="menu-title" style="vertical-align: top">${item.department_name}</span>
@@ -127,7 +127,7 @@ $.extend(list_department, {
                 <a style="float: right; padding-right:10px;" href="#" class="btn-rename" data-name="${item.name}">Edit</a>
             </li>`;
         }else{
-            return `<li data-name="${item.name}" class="list-item" style="margin-bottom: 15px;" class="bold">
+            return `<li data-name="${item.name}" class="list-item bold" style="margin-bottom: 15px;">
                 <a class="waves-effect waves-cyan" >
                     <img style="margin-right: 8px;" width="21" height="21" class="sidenav-icon" src="/icons/icon-32.png">
                     <span class="menu-title" style="vertical-align: top">${item.department_name}</span>
