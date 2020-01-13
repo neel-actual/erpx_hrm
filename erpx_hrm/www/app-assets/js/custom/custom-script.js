@@ -156,6 +156,8 @@ frappe.provide("xhrm.views");
 xhrm.views.ListCRUD = Class.extend({
 	init: function (opts) {
 		$.extend(this, opts);
+		this.items = [];
+		this.fields = opts.fields || {"name":"name"};
 	},
 	get_doc: function (name) {
 		var me = this;
@@ -217,7 +219,9 @@ xhrm.views.ListCRUD = Class.extend({
 				limit_page_length: 0
 			},
 			callback: function (r) {
+				me.items = [];
 				if (!r.exc) {
+					me.items = r.message;
 					me.render_list(r.message);
 				}
 			}
@@ -236,14 +240,14 @@ xhrm.views.ListCRUD = Class.extend({
 		me.parent.html(`<ul class="content-width">${html}</ul>`);
 		me.bind_event();
 	},
-	get_item_html: function (item) {
+	get_item_html: function (item, index) {
 		return `
 			<li class="list-item">
 				<span>${item.name}
 				<a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
 					<img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
 				</a>
-				<a style="float: right; padding-right: 10px;" href="#modal-rename-job" class="btn-rename modal-trigger" data-name="${item.name}" data-modal="modal-rename-job">Edit</a>
+				<a style="float: right; padding-right: 10px;" href="#modal-rename-job" class="btn-rename modal-trigger" data-name="${item.name}" data-index="${index}" data-modal="modal-rename-job">Edit</a>
 				</span>
 			</li>
 		`;
@@ -281,6 +285,17 @@ xhrm.views.ListCRUD = Class.extend({
 			var modal = $("#" + $(this).attr("data-modal"));
 			modal.find("#old_name").val(name);
 			modal.find("#new_name").val(name);
+		});
+		me.parent.find(".btn-edit").click(function () {
+			var item = me.items[$(this).attr("data-index")];
+			console.log(item);
+
+			var name = $(this).attr("data-name");
+			var modal = $("#" + $(this).attr("data-modal"));
+
+			Object.keys(me.fields).forEach(function (key) {
+				modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+			})
 		});
 	}
 });
