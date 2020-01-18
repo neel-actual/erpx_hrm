@@ -8,6 +8,21 @@ var request_leave_fields = [
 ]
 
 $(document).ready(function () {
+
+	//Request History
+	var request_history = $('#request_history').DataTable();
+
+	$('#i_filter_leave_type').change(function(){
+		var filter_leave_type = $("#i_filter_leave_type").val();
+		request_history.column(0).search(filter_leave_type, true, false, false).draw();
+	});
+
+	$('.clr-filter').click(function(){
+        location.reload(true);
+    });
+
+	//Request Leave
+
 	load_leave_approver_select($(`#form-request-leave [data-fieldname="leave_approver"]`), glb_employee);
 
     $("#btn-request-leave").click(function () {
