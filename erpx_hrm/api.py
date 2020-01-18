@@ -327,7 +327,7 @@ def get_employee_payroll_info(employee = None):
     return object
    
 @frappe.whitelist()
-def create_payroll_entry(month,year,type,user,pay_details):
+def create_payroll_entry(month,year,type,user,pay_details,total_net_pay,total_epf,total_pcb,total_eis,total_socso,total_pay):
     object = frappe.get_doc({
 
     "doctype":"HRM Payroll Entry",
@@ -336,12 +336,54 @@ def create_payroll_entry(month,year,type,user,pay_details):
     "payroll_year":year,
     "payroll_type":type,
     "submitted_by":user,
+    "total_net_pay":total_net_pay,
+    "total_epf":total_epf,
+    "total_pcb":total_pcb,
+    "total_eis":total_eis,
+    "total_socso":total_socso,
+    "total_pay":total_pay,
     "payroll_details":json.loads(pay_details)
     })
     object.flags.ignore_permissions = True
     object.insert()
 
     return object.name
+
+# @frappe.whitelist()
+# def make_payslip(employee,submit_month,submit_year,earnings,deductions,pay_name):
+#     salary_slip_month = submit_month
+#     # expense_claim_year = get_month(str(frappe.db.get_value("Expense Claim",expense_claim,"posting_date")))["year"]
+#     expense_claim_year = submit_year
+#     # Get month of expense claim
+#     get_salary_slip = frappe.db.get_value("Salary Slip",{"salary_month":expense_claim_month,"salary_year":expense_claim_year,"employee":employee},"name")
+#     # Get slary slip of same month and year
+
+
+#     if get_salary_slip:
+#         earnings = frappe.get_all("Salary Detail",filters={"parent":get_salary_slip,"parentfield": "earnings"},fields=["salary_component","amount"])
+        
+#         ss = frappe.get_doc("Salary Slip", get_salary_slip)
+#         ss.append("earnings",{
+#         "salary_component": "Reimbursement",
+#         "amount": claim_amount})				
+#         ss.save()	
+#         frappe.db.set_value("HRM Payroll Entry",pay_name,"status","Completed")
+#         return "Salary Slip added for :" + employee 
+#     else:
+#         object = frappe.get_doc({
+#             "doctype":"Salary Slip",
+#             "employee":employee,
+#             "salary_month":expense_claim_month,
+#             "salary_year":expense_claim_year,
+#             "earnings":[{
+#                 "salary_component":"Reimbursement",
+#                 "amount":float(claim_amount)
+#             }]
+#             })
+#         object.flags.ignore_permissions = True
+#         object.insert()
+#         frappe.db.set_value("HRM Payroll Entry",pay_name,"status","Paid")
+#         return "Salary Slip added for :" + employee
 
 
 
