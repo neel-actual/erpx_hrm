@@ -70,7 +70,60 @@ $(document).ready(async function () {
     $('#continue').hide();
   }
   $('#submit_pay').click(function(){
-    console.log(final_pay_list);
+    // console.log(final_pay_list);
+    var final_list = [];
+    var earnings = [];
+    var deductions = [];
+    final_pay_list.forEach(element => {
+    // earnings.push(
+    //   {"salary_component":"Basic Salary","amount":element['basic_salary']},
+    //   {"salary_component":"Additions","amount":element['additions']}
+    // )
+    // deductions.push(
+    //   {"salary_component":"EPF","amount":element['epf']},
+    //   {"salary_component":"SOCSO","amount":element['socso']},
+    //   {"salary_component":"EIS","amount":element['eis']},
+    //   {"salary_component":"ZAKAT","amount":element['zakat']},
+    //   {"salary_component":"PCB","amount":element['pcb']}
+    // )
+    final_list.push({
+      "employee":element.employee_id,
+      "earning":[
+      {"salary_component":"Basic Salary","amount":element['basic_salary']},
+      {"salary_component":"Additions","amount":element['additions']}
+      ],
+      "deduction":[
+      {"salary_component":"EPF","amount":element['epf']},
+      {"salary_component":"SOCSO","amount":element['socso']},
+      {"salary_component":"EIS","amount":element['eis']},
+      {"salary_component":"ZAKAT","amount":element['zakat']},
+      {"salary_component":"PCB","amount":element['pcb']}
+      ],
+      "month":$('#sel_month').val(),
+      "year":$('#sel_year').val(),
+      "payname":sessionStorage.getItem("pay_name")
+    })
+    });
+    new Promise(function (resolve, reject) {
+      try {
+        frappe.call({
+          method: "erpx_hrm.api.make_payslip",
+          args: {
+            pay_list:final_list,
+          },
+          callback: resolve
+        });
+      } catch (e) { reject(e); }
+    }).then((res) => {
+      console.log(res)
+    });
+    // console.log(final_list)
+    // console.log(earnings)
+    // console.log(deductions)
+    // console.log($('#sel_month').val())
+    // console.log($('#sel_year').val())
+
+
   })
   $('#approve_pay').click(function(){
     var param = sessionStorage.getItem("pay_name");
