@@ -19,6 +19,37 @@ $(document).ready(function () {
 
 	$('.clr-filter').click(function(){
         location.reload(true);
+	});
+	
+	// Summay
+	frappe.call({
+        method: "erpnext.hr.doctype.leave_application.leave_application.get_leave_details",
+        args: {
+			employee: glb_employee,
+			date: moment().format("YYYY-MM-DD")
+        },
+        callback: function (r) {
+			let arrColor = ["blue", "purple", "pink", "red"];
+			let i = 0;
+			$.each( r.message.leave_allocation, function( key, val ) {
+				let j = i%4;
+				$(`
+					<div class="col s6 m6 l6 xl3">
+						<div class="circle ${arrColor[j]}">
+							<div class="card-content center">
+								<h4 class="card-stats-number white-text">${val.remaining_leaves}</h4>
+								<p class="card-stats-title white-text">
+									<span>available</span>
+								</p>
+							</div>
+						</div>
+						<p style="margin-top: 10px;text-align: center;">${key}</p>
+					</div>
+				`).appendTo($("#html_balancesummary"));
+				i++;
+
+			});			
+        }
     });
 
 	//Request Leave

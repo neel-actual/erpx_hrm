@@ -70,72 +70,7 @@
                             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Balance Summary</div>
                             <!--<p>Balance left</p>-->
-                            <div class="row">
-                                <!--individual-card-->
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle blue">
-                                        <div class="card-content center">
-                                            {% set leav_alo = frappe.get_all("Leave Allocation", filters={'leave_type':'Annual Leave'}) %}
-                                            {% set leav_alo_count = leav_alo|length %}
-                                            {% set leav_app = frappe.get_all("Leave Application", filters={'leave_type':'Annual Leave'}) %}
-                                            {% set leav_app_count = leav_app|length %}
-                                            <h4 class="card-stats-number white-text">{{ leav_alo_count - leav_app_count }}</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Annual</p>
-                                </div>
-
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle purple">
-                                        <div class="card-content center">
-                                            {% set leav_alo = frappe.get_all("Leave Allocation", filters={'leave_type':'Compassionate Leave'}) %}
-                                            {% set leav_alo_count = leav_alo|length %}
-                                            {% set leav_app = frappe.get_all("Leave Application", filters={'leave_type':'Compassionate Leave'}) %}
-                                            {% set leav_app_count = leav_app|length %}
-                                            <h4 class="card-stats-number white-text">{{ leav_alo_count - leav_app_count }}</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Sick</p>
-                                </div>
-
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle pink">
-                                        <div class="card-content center">
-                                            {% set leav_alo = frappe.get_all("Leave Allocation", filters={'leave_type':'Medical And Hospital Leave'}) %}
-                                            {% set leav_alo_count = leav_alo|length %}
-                                            {% set leav_app = frappe.get_all("Leave Application", filters={'leave_type':'Medical And Hospital Leave'}) %}
-                                            {% set leav_app_count = leav_app|length %}
-                                            <h4 class="card-stats-number white-text">{{ leav_alo_count - leav_app_count }}</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Hospitalisation</p>
-                                </div>
-
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle red">
-                                        <div class="card-content center">
-                                            {% set leav_alo = frappe.get_all("Leave Allocation", filters={'leave_type':'Partenity Leave'}) %}
-                                            {% set leav_alo_count = leav_alo|length %}
-                                            {% set leav_app = frappe.get_all("Leave Application", filters={'leave_type':'Partenity Leave'}) %}
-                                            {% set leav_app_count = leav_app|length %}
-                                            <h4 class="card-stats-number white-text">{{ leav_alo_count - leav_app_count }}</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Paternity</p>
-                                </div>
-
+                            <div class="row" id="html_balancesummary">
                             </div>
                         </div>
                     </div>
