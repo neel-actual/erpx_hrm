@@ -113,10 +113,10 @@ table{
                              <td style="width: 300px;">
                                {{i_leave_detail.employee_name}}
                              </td>
-                             <td>Paternity</td>
+                             <td>{{i_leave_detail.leave_type}}</td>
                              <td>
-                               <p>{{i_leave_detail.to_date}} - {{i_leave_detail.from_date}}</p>
-                               <p>{{ (i_leave_detail.to_date - i_leave_detail.from_date).days }} Days</p>
+                               <p>{{i_leave_detail.from_date}} - {{i_leave_detail.to_date}}</p>
+                               <p>{{ i_leave_detail.total_leave_days }} Days</p>
                              </td>
                              <td>{{i_leave_detail.status}}</td>
                              <td>
@@ -140,7 +140,7 @@ table{
                                  :
                                </td>
                                <td >
-                                 {{i_leave_detail.description}}
+                                 {{i_leave_detail.description or ""}}
                                </td>
                              </tr>
                              <tr style="font-size: 13px;">
@@ -256,7 +256,7 @@ table{
                   </tr>
                 </table>
               </li>
-              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':'Approved'}) %}
+              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':['!=','Open']}) %}
               {% for i_leave_detail in leave_detail %}
               <li>
                 <div class="collapsible-header" style="padding: 0 !important;">
@@ -265,10 +265,10 @@ table{
                       <td style="width: 300px;">
                         {{i_leave_detail.employee_name}}
                       </td>
-                      <td>Paternity</td>
+                      <td>{{i_leave_detail.leave_type}}</td>
                       <td>
-                        <p>{{i_leave_detail.to_date}} - {{i_leave_detail.from_date}}</p>
-                        <p>{{ (i_leave_detail.to_date - i_leave_detail.from_date).days }} Days</p>
+                        <p>{{i_leave_detail.from_date}} - {{i_leave_detail.to_date}}</p>
+                        <p>{{ i_leave_detail.total_leave_days }} Days</p>
                       </td>
                       <td>{{i_leave_detail.status}}</td>
                       <td>
@@ -292,7 +292,7 @@ table{
                           :
                         </td>
                         <td >
-                          {{i_leave_detail.description}}
+                          {{i_leave_detail.description or ""}}
                         </td>
                       </tr>
                       <tr style="font-size: 13px;">
