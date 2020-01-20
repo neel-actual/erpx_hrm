@@ -104,7 +104,7 @@ table{
                          </tr>
                        </table>
                      </li>
-                     {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':'open'}) %}
+                     {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'docstatus': 0}) %}
                      {% for i_leave_detail in leave_detail %}
                      <li>
                        <div class="collapsible-header" style="padding: 0 !important;">
@@ -120,10 +120,9 @@ table{
                              </td>
                              <td>{{i_leave_detail.status}}</td>
                              <td>
-                               <a href="#" style="margin-right: 10px;vertical-align: -2px !important;" class="modal-trigger waves-effect waves-light" >Edit</a> <img src="/icons/icon-58.png" width="22" height="22" />
+                                <a href="#" class="waves-effect waves-dark btn btn-small mr-5 approve_leave" data-name="{{i_leave_detail.name}}">Approve</a>
+                                <a href="#" class="waves-effect waves-dark red btn btn-small reject_leave" data-name="{{i_leave_detail.name}}">Reject</a>
                              </td>
-
-
                            </tr>
                          </table>
                        </div>
@@ -256,7 +255,7 @@ table{
                   </tr>
                 </table>
               </li>
-              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'status':['!=','Open']}) %}
+              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'docstatus': 1}) %}
               {% for i_leave_detail in leave_detail %}
               <li>
                 <div class="collapsible-header" style="padding: 0 !important;">
@@ -272,7 +271,9 @@ table{
                       </td>
                       <td>{{i_leave_detail.status}}</td>
                       <td>
-                        <a href="#" style="margin-right: 10px;vertical-align: -2px !important;" class="modal-trigger waves-effect waves-light" >Edit</a> <img src="/icons/icon-58.png" width="22" height="22" />
+                        <a href="#" class="delete_leave" data-name="{{i_leave_detail.name}}" data-docstatus="{{i_leave_detail.docstatus}}">
+                            <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+                        </a>
                       </td>
 
 
