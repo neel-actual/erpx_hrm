@@ -8,8 +8,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
 <style type="text/css">
   @media only screen and (max-width: 1460px){
   #table-scroll{
@@ -103,11 +103,11 @@ table{
            <div class="row margin infodetails">
             <div class="input-field col s12 m18 ">
               <p style="margin-bottom: 10px;">Employee</p>
-              <select style="padding-left: 10px; width: 10px;">
+              <select style="padding-left: 10px; width: 10px;" id="filter_employee">
                 <option value="" disabled selected>Select employee</option>
-                {% set emp_val = frappe.get_all("Employee", fields=['name','employee_name','employment_type','image','reports_to']) %}
+                {% set emp_val = frappe.get_all("Employee",filters={"status":"Active"}, fields=['name','employee_name','employment_type','image','reports_to']) %}
                 {% for i_emp_val in emp_val%}
-                    <option value="{{i_emp_val.employee_name}}">{{i_emp_val.employee_name}}</option>
+                    <option value="{{i_emp_val.name}}">{{i_emp_val.employee_name}}</option>
                 {% endfor %}
               </select>
             </div>
@@ -116,52 +116,7 @@ table{
           <div class="col xl6 l6 m6 s5">
             <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Summary</div>
             <!--<p>Balance left</p>-->
-            <div style="margin-left: 10px;" class="row circle-margin">
-              <!--individual-card-->
-              <div class="circles col s6 m6 l6 xl3">
-                <div class="circle blue" style="width: 120px;height: 120px;">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">2</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-top: 10px;margin-left: 10%;">Annual</p>
-              </div>
-              <div class="circles col s6 m6 l6 xl3">
-                <div class="circle purple" style="width: 120px;height: 120px;">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">12</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-top: 10px;margin-left: 13%;">Sick</p>
-              </div>
-              <div class="circles col s6 m6 l6 xl3">
-                <div class="circle pink" style="width: 120px;height: 120px;">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">65</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-top: 10px;margin-left: 5%;">Hospitalisation</p>
-              </div>
-              <div class="circles col s6 m6 l6 xl3">
-                <div class="circle red" style="width: 120px;height: 120px;">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">10</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-top: 10px;margin-left: 9%;">Paternity</p>
-              </div>
+            <div style="margin-left: 10px;" class="row circle-margin" id="html_balancesummary">
             </div>
           </div>
           <br>
@@ -254,15 +209,19 @@ table{
 </div>
 
 {% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+    var glb_employee = "{{ employee }}";
+</script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
-<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
-<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_balance.js" type="text/javascript"></script>
 {% endblock %}
