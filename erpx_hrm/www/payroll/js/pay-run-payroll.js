@@ -104,6 +104,7 @@ $(document).ready(async function () {
       "payname":sessionStorage.getItem("pay_name")
     })
     });
+    console.log(final_list)
     new Promise(function (resolve, reject) {
       try {
         frappe.call({
