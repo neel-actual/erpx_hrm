@@ -3,6 +3,7 @@ var request_leave_fields = [
 	"from_date",
 	"to_date",
 	"half_day",
+	"half_day_date",
 	"description",
 	"leave_approver"
 ]
@@ -19,6 +20,16 @@ $(document).ready(function () {
 
 	$('.clr-filter').click(function(){
         location.reload(true);
+	});
+
+	$("#half_day").prop("checked", false);
+
+	$('#half_day').change(function(){
+		if($(this).is(":checked")){
+			$('#div_half_day_date').show();
+		}else{
+			$('#div_half_day_date').hide();
+		}		
 	});
 	
 	// Summay
@@ -79,7 +90,13 @@ $(document).ready(function () {
 				html: "This employee is not set Holiday List"
 			})
 			return false;
-		}		
+		}	
+		if(args["half_day"] && !args["half_day_date"]){
+			M.toast({
+				html: "Half Day Date is required"
+			})
+			return false;
+		}	
 
 		frappe.ajax({
 			url: "/api/resource/Leave Application",

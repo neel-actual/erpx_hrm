@@ -132,7 +132,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee}, fields=['*']) %}
+                                    {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee, 'docstatus':['!=', 2]}, fields=['*']) %}
                                     {% for i_lev_app_dt in lev_app_li %}
                                       <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                                         <td>{{i_lev_app_dt.leave_type}}</td>
@@ -178,13 +178,18 @@
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
                                 <input data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
-                            <div class="input-field col s12 m6 hide">
+                            <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">
                                 <label class="container">
-                                <input data-fieldname="half_day" type="checkbox" class="filled-in" value="1">
+                                <input data-fieldname="half_day" id="half_day" type="checkbox" class="filled-in" value="1">
                                 <span class="checkmark" style="vertical-align: -50%;">Half Day</span>
                                 </label>
                                 </p>
+                            </div>
+                            <div class="input-field col s12 m6" id="div_half_day_date" style="display:none">
+                                <p style="margin-bottom: 10px;">Half Day Date</p>
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                <input data-fieldname="half_day_date" id="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
 
                             <div class="input-field col s12">
