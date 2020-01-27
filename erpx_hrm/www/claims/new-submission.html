@@ -182,7 +182,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         </div>
                       </div>
                       <div class="step-actions" style="float: right;">
-                        <button class="waves-effect waves-dark btn next-step" type="submit">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn next-step" data-validator="validateStepOne" type="submit">CONTINUE</button>
                         
                       </div>
                       </form>
@@ -281,7 +281,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         </div>
                       </div>
                     <div class="step-actions" style="float: right; position: relative;">
-                      <button class="waves-effect waves-dark btn next-step" id="to_step3">CONTINUE</button>
+                      <button class="waves-effect waves-dark btn next-step" data-validator="validateStepTwo" id="to_step3">CONTINUE</button>
 
                     </div>
                   </div>
@@ -476,10 +476,17 @@ type="text/javascript"></script>
   })
 
   function validateStepOne() {
-    // Extract the checked checkboxes from the first step
-    //if($('.step').first().find('input[type="checkbox"]:checked').length)
+    
+    if($("#sel_month").val() && $("#sel_year").val() && $("#pay_type").val()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  function validateStepTwo() {
+    if($('#table_id').find('.selected').length)
     return true;
-    //return false;
+  return false;
   }
 
   function validateStepThree() {

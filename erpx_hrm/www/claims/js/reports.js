@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
-  user_table.buttons().container()
-        .appendTo( '.waves-effect .waves-light .right' );
+  // user_table.buttons().container()
+  //       .appendTo( '.waves-effect .waves-light .right' );
 
     // $("#download").click(function(){
     //     console.log("here")
@@ -34,27 +34,27 @@ jQuery(document).ready(function() {
 });
   var user_table = $('#table_id').DataTable({
     dom: 'Bfrtip',
-    buttons: [{
-        extend: 'excel',
-        text: 'Excel',
-        className: 'exportExcel',
-        filename: 'Test_Excel',
-        exportOptions: { modifier: { page: 'all'} }
+    buttons: [
+    {
+      extend: 'print',
+      text: 'Print',
+      filename: 'Expense Claim Summary',
+      exportOptions: { modifier: { page: 'all'} }
     },
     {
-        extend: 'csv',
-        text: 'CSV',
-        className: 'exportExcel',
-        filename: 'Test_Csv',
-        exportOptions: { modifier: { page: 'all'} }
+      extend: 'pdf',
+      text: 'PDF',
+      filename: 'Expense Claim Summary',
+      exportOptions: { modifier: { page: 'all'} }
     },
     {
-        extend: 'pdf',
-        text: 'PDF',
-        className: 'exportExcel',
-        filename: 'Test_Pdf',
-        exportOptions: { modifier: { page: 'all'} }
-    }],
+      extend: 'excel',
+      text: 'Excel',
+      filename: 'Expense Claim Summary',
+      exportOptions: { modifier: { page: 'all'} }
+    }
+    
+  ],
     columnDefs: [ 
       {
       targets: 1,
@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
     info: true,
     lengthChange: true,
     ordering: true,
-    buttons: true
+    // buttons: true
   });
   
 

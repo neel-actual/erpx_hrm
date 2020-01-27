@@ -89,7 +89,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                     <h4 class="card-title newstitle" style="display: inline;">Claim Types</h4>
                                 
                                     <a href="#create-news.modal"
-                                    class="modal-trigger waves-effect waves-light btn right btn-claim set-claim">Add Claim Type</a>
+                                    class="modal-trigger waves-effect waves-light btn right btn-claim set-claim" id="add_claim">Add Claim Type</a>
                                     <div class="row">
                                         <div class="col s12">
                                             <table style="font-size: 14px;margin-top: 24px; border-collapse: collapse; " id="typetab">
@@ -108,11 +108,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                             {% for ex in claim_details %}
                                             <tr>
                                                 <td class="claim_title">{{ex.name}}</td>
-                                                <td>{{ex.default_account}}</td>
+                                                <td class="claim_account">{{ex.default_account}}</td>
                                                 <!-- <td>Payroll</td> -->
-                                                <td>{{ex.claim_limit}}</td>
-                                                <td>{{ex.description}}</td>
-                                                <td><a href="#" style="margin-right: 10px;vertical-align: -2px !important;margin-bottom: 0 !important" class="modal-trigger waves-effect waves-light" id="edit_but">Edit</a>
+                                                <td class="claim_limit">{{ex.claim_limit}}</td>
+                                                <td class="claim_desc">{{ex.description}}</td>
+                                                <td><a href="#create-news.modal" style="margin-right: 10px;vertical-align: -2px !important;margin-bottom: 0 !important" class="modal-trigger waves-effect waves-light edit_claim_type">Edit</a>
                                                 <a href="#" style="margin-right: 10px;vertical-align: -2px !important;margin-bottom: 0 !important" class="modal-trigger waves-effect waves-light delete_but">Delete</a>
                                                 <!-- <img href="#" src="/icons/icon-58.png" width="22" height="22" /> -->
                                                 </td>
@@ -128,17 +128,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         <div id="create-news.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
                             <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
                                 <p class="edit-title">Add Claim Type</p>
-                                <form class="col s12" style="padding: 24px;">
+                                <form class="col s12" style="padding: 24px;" id="expense_type">
                                     <div class="row">
                                         <div class="input-field col s12" style="margin-bottom: 0px;">
                                             <p>Title</p>
-                                            <input type="text" id="title" placeholder="Claim Type Name" data-length="50" style="width: -webkit-fill-available !important;">
+                                            <input type="text" name="ex_title" id="title" placeholder="Claim Type Name" data-length="50" style="width: -webkit-fill-available !important;">
                                             <!--<label for="news-subject" class="" style="left: 30px;">Subject</label>-->
                                         </div>
                                         <div class="input-field col s12" style="margin-top: 0px;">
                                             <p>Account Code</p>
-                                            <!-- <input type="text" id="account-code" placeholder="Unique reference code for this claim" data-length="50" style="width: -webkit-fill-available !important;"> -->
-                                            <select id="account-code">
+                                            <select id="account-code" name="ex_account">
                                                 <option value="" disabled selected>Select Account</option>
                                                 {% for ac in account_list | sort(attribute='name') %}
                                                 <option value="{{ac.name}}">{{ac.name}}</option>
@@ -147,17 +146,18 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                         </div>
                                         <div class="input-field col s12" style="margin-top: 0px;">
                                             <p>Description</p>
-                                            <input type="text" id="description" placeholder="Enter claim description" data-length="100" style="width: -webkit-fill-available !important;">
+                                            <input type="text" name="ex_desc" id="description" placeholder="Enter claim description" data-length="100" style="width: -webkit-fill-available !important;">
                                         </div>
                                         <div class="input-field col s12" style="margin-top: 0px;">
                                             <p>Claim Limit</p>
-                                            <input type="text" id="claim_limit" placeholder="Enter claim Limit" data-length="100" style="width: -webkit-fill-available !important;">
+                                            <input type="text" name="ex_claim_limit" id="claim_limit" placeholder="Enter claim Limit" data-length="100" style="width: -webkit-fill-available !important;">
                                         </div>
                               </div>
                           </form>
                       </div>
                       <div class="modal-footer">
                         <a href="#" class="right waves-effect waves-light btn" id="extype">Add Claim Type</a>
+                        <a href="#" class="right waves-effect waves-light btn" id="exedit">Update Claim Type</a>
                         <a href="#" class="right blue-text btn-flat"
                         onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
                     </div>
