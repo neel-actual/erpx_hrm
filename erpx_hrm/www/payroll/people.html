@@ -472,9 +472,9 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                    <div class="col s12 padd-zero" >
                     <div class="tabs-scroll" style="width: 85%; float: left">
                       <ul class="tabs">
-                        <li class="tab col s6 m4" onclick="removeDefault(); employee_edit();"><a href="#employee" class="active" style="text-overflow: initial !important;">Employee & Personal</a></li>
-                        <li class="tab col s6 m4" onclick="removeDefault(); bank_edit();"><a href="#bank" style="text-overflow: initial !important;">Bank & Statutory</a></li>
-						<li class="tab col s6 m4" onclick="removeDefault(); payroll_hist_edit();"><a href="#PayrollHist" style="text-overflow: initial !important;">Payroll History </a></li>
+                        <li class="tab col s6 m4" ><a href="#employee" class="active" style="text-overflow: initial !important;">Employee & Personal</a></li>
+                        <li class="tab col s6 m4" ><a href="#bank" style="text-overflow: initial !important;">Bank & Statutory</a></li>
+						<li class="tab col s6 m4" ><a href="#PayrollHist" style="text-overflow: initial !important;">Payroll History </a></li>
 						<li class="default-indicator" style="display: block"></li>
                       </ul>
                     </div>
@@ -805,8 +805,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">SOCSO Contribution</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="socso_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
-                      <option value="" selected>Is Sosco Applicable</option>
+                    <select name="sosco_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
+                      <option value="">Is Sosco Applicable</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
 
@@ -817,7 +817,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <div class="input-field col s12 m6">
                     <p style="margin-bottom: 10px;">SOCSO Category</p>
                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="socso_catagory" style="padding-left: 10px;width: -webkit-fill-available;">
+                    <select name="sosco_catagory" style="padding-left: 10px;width: -webkit-fill-available;">
                       <option value="" selected>Select Sosco Category</option>
                       <option value="First">First</option>
                       <option value="Second">Second</option>
@@ -914,19 +914,20 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 				<!-- Current Year Payroll History Tab -->
 				
                 <div id="PayrollHist">
-                  <form id="Payroll_History_form">				
+            <form id="pay_history">				
 					  <div class="input-field col s12 m6">
+              <input type="text" name="name" style="width: -webkit-fill-available;" readonly hidden>
 						<p style="margin-bottom: 10px;">Accumulated Salary Amount</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 						<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
-						<input type="text" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Type your salary amount">
+						<input type="text" name="accumulated_salary" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Type your salary amount">
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
 				
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Accumulated EPF</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="accumulated_epf"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -934,7 +935,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Accumulated SOCSO</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="accumulated_socso"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -942,7 +943,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Accumulated MTD</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="accumulated_mtd"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -950,7 +951,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Accumulated Zakat</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="accumulated_zakat"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -958,7 +959,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Accumulated EIS</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="accumulated_eis"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -966,7 +967,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Past Deduction</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="past_deduction"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
 					  </div>
@@ -974,10 +975,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 					  <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Past Addition</p>
 						<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-						<input type="text" name="employer_epf" class="epf_values" style="width: -webkit-fill-available;">
+						<input type="text" name="past_addition"  style="width: -webkit-fill-available;">
 
 						<!--<label for="signup-name" class="center-align">Full Name</label>-->
-					  </div>					  
+            </div>	
+            
+            <div class="input-field col s12 m12">
+              <a href="#" id="update_pay_history" class="accept-btn right waves-effect waves-light btn">Update</a>
+          </div>
                   </form>
                 </div>				
 
@@ -1047,39 +1052,14 @@ type="text/javascript"></script>
     indicator.style.display = "block";
   }
 
-  function employee_edit(){
-    var emp_edit = document.getElementById('employee_btn');
-    var bank_edit = document.getElementById('bank_btn');
-	var payroll_hist_edit = document.getElementById('payroll_hist_btn');
-    emp_edit.style.display = "block";
-    bank_edit.style.display = "none";
-    Payroll_Hist_edit.stye.display = "none";
-  }
-
-  function bank_edit(){
-    var emp_edit = document.getElementById('employee_btn');
-    var bank_edit = document.getElementById('bank_btn');
-	var payroll_hist_edit = document.getElementById('payroll_hist_btn');
-    emp_edit.style.display = "none";
-    bank_edit.style.display = "block";
-	Payroll_Hist_edit.stye.display = "none";
-  }
-  
-  function payroll_hist_edit(){
-    var emp_edit = document.getElementById('employee_btn');
-    var bank_edit = document.getElementById('bank_btn');
-	var payroll_hist_edit = document.getElementById('payroll_hist_btn');
-    emp_edit.style.display = "none";
-    bank_edit.style.display = "none";
-	payroll_hist_edit.stye.display = "block";
-  }
+  // fv
   
 </script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems, options);
-  });
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   var elems = document.querySelectorAll('.dropdown-trigger');
+  //   var instances = M.Dropdown.init(elems, options);
+  // });
 
   // Or with jQuery
 

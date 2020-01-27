@@ -1,6 +1,8 @@
 var personal_field_list = ["name","first_name","middle_name","last_name","employee_name","department","company_email","cell_number","date_of_joining","reports_to","date_of_birth","gender","employment_type","passport_number","marital_status","permanent_address","designation","image","nationality","country","state","city","postal_code","number_of_children","is_disabled","nric_no","residence_status","residence_type","spouse_working","spouse_disable"]
 
 var bank_info = ["name","salary_basis","salary_amount","epf_contribution","epf_no","employee_epf_rate","additional_epf","employer_epf","additional_employer_epf","pcb_no","sosco_contribution","sosco_catagory","eis_contribution","zakat_no","zakat_amount","salary_mode","total_eis_rate","total_socso_rate","employee_socso_rate","employer_socso_rate","employee_eis_rate","employer_eis_rate"]
+
+var employee_history = ["name","accumulated_salary","accumulated_epf","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis","past_deduction","past_addition"]
 function profile(employee){
     // console.log(employee)
     
@@ -63,12 +65,33 @@ function profile(employee){
             });
 
         set_epf_property($("form#bank_form :input[name=epf_contribution]").val(),["employee_epf_rate","additional_epf","employer_epf","additional_employer_epf"])
-        set_epf_property($("form#bank_form :input[name=socso_contribution]").val(),["sosco_amount"])
+        set_epf_property($("form#bank_form :input[name=sosco_contribution]").val(),["sosco_catagory","employee_socso_rate","employer_socso_rate"])
         set_epf_property($("form#bank_form :input[name=eis_contribution]").val(),["eis_amount"])
         set_eis_contribution()
-        set_socso_contribution()
+        // set_socso_contribution()
         calculate_total($("form#bank_form :input[name=employee_epf_rate]").val(),$("form#bank_form :input[name=additional_epf]").val(),"total_employee_rate") 
         calculate_total($("form#bank_form :input[name=employer_epf]").val(),$("form#bank_form :input[name=additional_employer_epf]").val(),"total_employer_rate") 
+
+
+      })
+
+
+      hrm.list({
+        doctype:"Employee",
+        filters:[{"name":employee}],
+        fields:employee_history
+      }).then(function(res){
+        // console.log(res.message) 
+        obj = res.message[0];
+        $.each( obj, function( key, value ) {
+            // console.log( key + ": " + value );
+            if($("form#pay_history :input[name={0}]".format(key)).length){
+                $("form#pay_history :input[name={0}]".format(key)).val(value) 
+                if($("form#pay_history :input[name={0}]".format(key)).is("select")){
+                    $("form#pay_history :input[name={0}]".format(key)).formSelect()
+                }
+            }    
+            });
 
 
       })
@@ -89,12 +112,14 @@ $(document).ready(function () {
             }     
         });
         hrm.update('Employee', emp_dict).then(function(res){
-            console.log(res)
+            // console.log(res)
             M.toast({
                     html: 'Update successful!'
                 })
             location.reload(true);
         })
+
+        
     });
 
     $('#update_bank_info').click(function(){
@@ -105,7 +130,24 @@ $(document).ready(function () {
             }     
         });
         hrm.update('Employee', emp_dict).then(function(res){
-            console.log(res)
+            // console.log(res)
+            M.toast({
+                    html: 'Update successful!'
+                })
+            location.reload(true);
+        })
+    });
+
+    $('#update_pay_history').click(function(){
+        var emp_dict = {}
+        employee_history.forEach(element => {
+            if($("form#pay_history :input[name={0}]".format(element)).val()){
+                emp_dict[element] = $("form#pay_history :input[name={0}]".format(element)).val()
+            }     
+        });
+        console.log(emp_dict)
+        hrm.update('Employee', emp_dict).then(function(res){
+            // console.log(res)
             M.toast({
                     html: 'Update successful!'
                 })
@@ -190,11 +232,11 @@ $(document).ready(function () {
         set_epf_property($("form#bank_form :input[name=epf_contribution]").val(),["employee_epf_rate","additional_epf","employer_epf","additional_employer_epf"]) 
     })
 
-    $("form#bank_form :input[name=socso_contribution]").change(function(){
+    $("form#bank_form :input[name=sosco_contribution]").change(function(){
         set_socso_contribution()     
          
     })
-    $("form#bank_form :input[name=socso_catagory]").change(function(){
+    $("form#bank_form :input[name=sosco_catagory]").change(function(){
         set_socso_contribution()     
          
     })
@@ -243,11 +285,12 @@ function calculate_total(epf,additional,field_name){
 function set_socso_contribution(){
     hrm.get_single_child("SOCSO Details",["min_monthly_wages","max_monthly_wages","employers_contribution","employees_contribution","employer_contribution_second"]).then(function(res){
         var salary = $("form#bank_form :input[name=salary_amount]").val()
-        if ($("form#bank_form :input[name=socso_contribution]").val() == "Yes"){
-            set_epf_property($("form#bank_form :input[name=socso_contribution]").val(),["sosco_amount"])
-            if ($("form#bank_form :input[name=socso_catagory]").val() == "First"){
+        if ($("form#bank_form :input[name=sosco_contribution]").val() == "Yes"){
+            set_epf_property($("form#bank_form :input[name=sosco_contribution]").val(),["sosco_catagory","employee_socso_rate","employer_socso_rate"])
+            console.log($("form#bank_form :input[name=sosco_catagory]").val())
+            if ($("form#bank_form :input[name=sosco_catagory]").val() == "First"){
                 res.message.forEach(element => {
-                    console.log(element)
+                    // console.log(element)
                     if(salary > element.min_monthly_wages && salary <= element.max_monthly_wages){
                         $("form#bank_form :input[name=employee_socso_rate]").val(element.employees_contribution)
                         $("form#bank_form :input[name=employer_socso_rate]").val(element.employers_contribution)
@@ -258,7 +301,7 @@ function set_socso_contribution(){
 
             }else{
                 res.message.forEach(element => {
-                    console.log(element)
+                    // console.log(element)
                     if(salary > element.min_monthly_wages && salary <= element.max_monthly_wages){
                         $("form#bank_form :input[name=employee_socso_rate]").val(0.00)
                         $("form#bank_form :input[name=employer_socso_rate]").val(element.employer_contribution_second)
@@ -281,7 +324,7 @@ function set_socso_contribution(){
             // });
 
         }else{
-            set_epf_property($("form#bank_form :input[name=socso_contribution]").val(),["sosco_amount"])
+            set_epf_property($("form#bank_form :input[name=sosco_contribution]").val(),["sosco_catagory","employee_socso_rate","employer_socso_rate"])
             $("form#bank_form :input[name=employee_socso_rate]").val(0.00)
             $("form#bank_form :input[name=employer_socso_rate]").val(0.00)
             $("form#bank_form :input[name=total_socso_rate]").val(0.00)
@@ -297,7 +340,7 @@ function set_eis_contribution(){
         if ($("form#bank_form :input[name=eis_contribution]").val() == "Yes"){
             set_epf_property($("form#bank_form :input[name=eis_contribution]").val(),["sosco_amount"])
             res.message.forEach(element => {
-                console.log(element)
+                // console.log(element)
                 if(salary > element.min_monthly_wages && salary <= element.max_monthly_wages){
                     $("form#bank_form :input[name=employee_eis_rate]").val(element.employees_contribution)
                     $("form#bank_form :input[name=employer_eis_rate]").val(element.employers_contribution)
