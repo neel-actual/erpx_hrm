@@ -102,17 +102,54 @@ $(document).ready(function () {
 			url: "/api/resource/Leave Application",
 			args: args,
 			callback: function (r) {
-				console.log(r);
-				if (!r.exc) {
-					M.toast({
-						html: "Added Successfully!"
-					})
-					location.reload(true);
-				}
+				upload_file_request(r);				
 			}
-		});
+		})
 	});
 });
+
+var upload_file_request = function(r){
+	if (!r.exc) {
+		var doc = r.data;
+		var file = $("#file-request").get(0).files[0];
+		console.log(file);
+		if (file){
+			var reader = new FileReader();
+			reader.onload = function(){
+				var srcBase64 = reader.result;
+				frappe.ajax({
+					type: "POST",
+					url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+					no_stringify: 1,
+					args: {
+						name : "file",
+						filename : file.name,
+						filedata : srcBase64,
+						doctype: "Leave Application",
+						docname: doc.name,
+						folder: "Home/Attachments",
+						is_private: 1,
+						from_form : 1
+					},
+					callback: function (r) {
+						if (!r.exc_type) {
+							M.toast({
+								html: "Added Successfully!"
+							})
+							location.reload();
+						}
+					}
+				});
+			};
+			reader.readAsDataURL(file);
+		}else{
+			M.toast({
+				html: "Added Successfully!"
+			})
+			location.reload();
+		}
+	}
+}
 
 var load_leave_approver_select = function (select_id, employee) {
 
