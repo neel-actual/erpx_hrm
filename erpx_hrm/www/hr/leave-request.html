@@ -189,9 +189,19 @@
                             <div class="input-field col s12 m6" id="div_half_day_date" style="display:none">
                                 <p style="margin-bottom: 10px;">Half Day Date</p>
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input data-fieldname="half_day_date" id="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                                <input autocomplete="off" data-fieldname="half_day_date" id="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
-
+                            <div class="input-field col s12">
+                                <div class="btn file-field input-field waves-effect waves-light">
+                                    <div class="">
+                                        <span>Upload File</span>
+                                        <input id="file-request" type='file' autocomplete="off">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Reason</p>
                                 <textarea data-fieldname="description" type="text"></textarea>
