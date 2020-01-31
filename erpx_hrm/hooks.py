@@ -14,6 +14,8 @@ app_license = "MIT"
 # Includes in <head>
 # ------------------
 
+update_website_context = "erpx_hrm.boot.update_website_context"
+
 # include js, css files in header of desk.html
 # app_include_css = "/assets/erpx_hrm/css/erpx_hrm.css"
 # app_include_js = "/assets/erpx_hrm/js/erpx_hrm.js"

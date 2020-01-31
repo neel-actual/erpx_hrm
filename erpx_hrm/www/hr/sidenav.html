@@ -70,14 +70,23 @@
                 <span class="menu-title" data-i18n="">Leave</span></a>
                 <div class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                        <li class=""><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
+                        
+                        {% if show_menu["leave-request"]: %}
+                        <li class="menu-leave-request"><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
                         </li>
-                        <li><a class="collapsible-body" href="/hr/leave-approval" data-i18n=""><span>Approval</span></a>
+                        {% endif %}
+                        {% if show_menu["leave-approval"]: %}
+                        <li class="menu-leave-approval"><a class="collapsible-body" href="/hr/leave-approval" data-i18n=""><span>Approval</span></a>
                         </li>
-                        <li><a class="collapsible-body" href="/hr/leave-balance" data-i18n=""><span>Balance</span></a>
+                        {% endif %}
+                        {% if show_menu["leave-balance"]: %}
+                        <li class="menu-leave-balance"><a class="collapsible-body" href="/hr/leave-balance" data-i18n=""><span>Balance</span></a>
                         </li>
-                        <li><a class="collapsible-body" href="/hr/leave-settings" data-i18n=""><span>Leave Settings</span></a>
+                        {% endif %}
+                        {% if show_menu["leave-settings"]: %}
+                        <li class="menu-leave-settings"><a class="collapsible-body" href="/hr/leave-settings" data-i18n=""><span>Leave Settings</span></a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </li>
