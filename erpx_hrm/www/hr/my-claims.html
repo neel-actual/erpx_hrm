@@ -131,7 +131,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             {% set exp_list = frappe.get_all("Expense Claim", fields=['*']) %}
                             {% for i_exp_list in exp_list %}
                                 <tr>
-                                    <td><a style="color: black" href="/claims/claim-title1.html">{{i_exp_list.name}}</a></td>
+                                    <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td>
                                     <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }} - {{ i_exp_list.posting_date.strftime("  %d-%m-%Y ")  }}</td>
                                     <td>MYR {{i_exp_list.total_claimed_amount}}</td>
                                     <td>{{ i_exp_list.modified.date()  }}</td>
@@ -183,8 +183,10 @@ type="text/javascript"></script>
 <script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready( function () {
-        var user_table = $('#table_id').DataTable();
-
+        var user_table = $('#table_id').DataTable({
+          "order": [[ 3, "desc" ]]
+        });
+      
         $('#search_i').keyup(function(){
           user_table.search($(this).val()).draw() ;
         })

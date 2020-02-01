@@ -52,23 +52,28 @@ $("#claim_requester").change(function(){
 $("#add_claim").click(function(){
     var dt = $('#claim_table').DataTable()
     var index = 0
-    var claim_type = ($('#sel_claim_type').val())
-    var claim_date =($('#sel_date').val())
-    var claim_merchant =($('#sel_merchant').val())
-    var claim_amount =($('#sel_amount').val())
-    var claim_desc =$('#sel_desc').val()
-    var claim_attach =($('#file').val())
+    // var claim_type = ($('#sel_claim_type').val())
+    // var claim_date =($('#sel_date').val())
+    // var claim_merchant =($('#sel_merchant').val())
+    // var claim_amount =($('#sel_amount').val())
+    // var claim_desc =$('#sel_desc').val()
+    // var claim_attach =($('#file').val())
     
-    console.log($('#claim_table').DataTable().rows().count());
+    // console.log($('#claim_table').DataTable().rows().count());
     // if(claim_type && claim_date && claim_merchant && claim_amount && claim_desc && claim_attach){
         if(dt.row(':last').data() == null){
             index = 1
         }else{
             index = parseInt(dt.row(':last').data()[0]) + 1 
         }
-        dt.row.add([
-            index, $('#sel_date').val(), $('#sel_claim_type').val(),$('#sel_merchant').val(),$('#sel_desc').val(),$('#sel_amount').val(),$('#file').val()
-          ]).draw();
+
+
+
+        var row = $('<tr><td class="selectable">'+index+'</td><td>'+$('#sel_date').val()+'</td><td>'+$('#sel_claim_type').val()+'</td><td>'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td>'+$('#sel_amount').val()+'</td><td><input type="file"/></td></tr>')
+        dt.row.add(row).draw();
+        // dt.row.add([
+        //     index, $('#sel_date').val(), $('#sel_claim_type').val(),$('#sel_merchant').val(),$('#sel_desc').val(),$('#sel_amount').val(),$('#file').val()
+        //   ]).draw();
           var data = dt.rows().data();
           var total = 0
           data.each(function (value, index) {
@@ -120,7 +125,7 @@ $("#save_claim").click(function(){
         
         
     }
-    console.log(exp_list)
+    // console.log(exp_list)
    
     frappe.call({
         method: 'erpx_hrm.api.create_claim',
@@ -133,8 +138,9 @@ $("#save_claim").click(function(){
         callback: function(r) {
             if (!r.exc) {
                 console.log(r.message)
+                console.log(exp_list)
                 M.toast({
-                    html: 'AClaim Created Successfully!'
+                    html: 'Claim Created Successfully!'
                 })
             }
         }
@@ -158,7 +164,7 @@ $("#upload_file").click(function(){
                 filename:$("#file")[0].files[0].name,
                 filedata:srcBase64,
                 doctype:"Expense Claim",
-                docname:"HR-EXP-2020-00004"
+                docname:"New Expense Claim 1"
 
             },
             callback: function(res){
