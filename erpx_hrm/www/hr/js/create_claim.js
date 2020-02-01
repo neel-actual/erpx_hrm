@@ -89,6 +89,16 @@ $("#add_claim").click(function(){
     
     //   console.log($('#claim_table').DataTable().row(':last').data());
 });
+
+$('#claim_table tbody').on( 'click', 'tr', function () {
+    $(this).toggleClass('selected');
+    // $(this).toggleClass('ideal')
+  } );
+
+$("#remove_claim").click(function(){
+  $('#claim_table').DataTable().rows('.selected').remove().draw(false);
+})
+
 $("#save_claim").click(function(){
     var dt = $('#claim_table').DataTable()
     var exp_list = []
@@ -135,6 +145,32 @@ $("#save_claim").click(function(){
 
 $("#upload_file").click(function(){
 
-    console.log($("#file").val())
+    console.log($("#file"))
+    var file = $("#file")[0].files[0];
+    
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(){
+        var srcBase64 = reader.result;
+        frappe.call({
+            method:'frappe.client.attach_file',
+            args: {
+                filename:$("#file")[0].files[0].name,
+                filedata:srcBase64,
+                doctype:"Expense Claim",
+                docname:"HR-EXP-2020-00004"
+
+            },
+            callback: function(res){
+                console.log(res)
+            }
+        });
+    }
+
+    
+        
+            
+        
+
 
 })
