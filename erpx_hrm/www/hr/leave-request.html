@@ -84,12 +84,21 @@
                                 <div class="row">
                                     <div class="col s12 leavetabs" style="margin-bottom: 20px;">
                                       <ul class="tabs">
-                                        <li class="tab col s6 m3"><a class="active" href="#">All leaves</a></li>
-                                        <li class="tab col s6 m6"><a href="#">Department's leaves</a></li>
-                                        <li class="tab col s6 m3"><a href="#">My leaves</a></li>
+                                        {% if show_menu["leave-balance"] %}
+                                        <li class="tab col s6 m3"><a class="active" href="#calendar-leave-all">All leaves</a></li>
+                                        {% endif %}
+                                        {% if show_menu["leave-approval"] %}
+                                        <li class="tab col s6 m6"><a href="#calendar-leave-department">Department's leaves</a></li>
+                                        {% endif %}    
+                                        {% if show_menu["leave-balance"] %}
+                                        <li class="tab col s6 m3"><a href="#calendar-leave-employee">My leaves</a></li>
+                                        {% endif %}
                                       </ul>
                                     </div>
-                                <div id="basic-calendar2" class="fc fc-unthemed fc-ltr"></div>
+                                
+                                <div id="calendar-leave-all" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-department" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-employee" class="fc fc-unthemed fc-ltr"></div>
                                 </div>
                             </div>
                     </div>
@@ -273,7 +282,8 @@ request is approved.</p>
         });
 
         function all_leave(){
-            $('#basic-calendar2').fullCalendar({
+            {% if show_menu["leave-balance"] %}
+            $('#calendar-leave-all').fullCalendar({
                 defaultView: 'month',
                 editable: true,
                 eventLimit: true,
@@ -288,6 +298,43 @@ request is approved.</p>
                     {% endfor %}
                 ],
             });
+            {% endif %}
+
+            {% if show_menu["leave-approval"] %}
+            $('#calendar-leave-department').fullCalendar({
+                defaultView: 'month',
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"department": department}) %}
+                    {% for i_all_leave in all_leave %}
+                        {
+                            title: '{{i_all_leave.employee_name}}',
+                            start: '{{i_all_leave.from_date}}',
+                            end: '{{i_all_leave.to_date}}'
+                        },
+                    {% endfor %}
+                ],
+            });
+            {% endif %}
+
+            {% if show_menu["leave-request"] %}
+            $('#calendar-leave-employee').fullCalendar({
+                defaultView: 'month',
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"employee": employee}) %}
+                    {% for i_all_leave in all_leave %}
+                        {
+                            title: '{{i_all_leave.employee_name}}',
+                            start: '{{i_all_leave.from_date}}',
+                            end: '{{i_all_leave.to_date}}'
+                        },
+                    {% endfor %}
+                ],
+            });
+            {% endif %}
         }
     </script>
 {% endblock %}

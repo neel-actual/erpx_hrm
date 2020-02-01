@@ -13,7 +13,7 @@ def update_website_context(context):
 	if frappe.utils.is_subset(valid_roles, frappe.get_roles()):
 		show_menu["leave-request"] = 1
 	
-	valid_roles = ['HR Manager', 'Leave Approver']
+	valid_roles = ['Leave Approver']
 	if frappe.utils.is_subset(valid_roles, frappe.get_roles()):
 		show_menu["leave-approval"] = 1
 	
