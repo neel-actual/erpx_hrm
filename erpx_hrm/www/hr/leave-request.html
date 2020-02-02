@@ -180,14 +180,14 @@
                             <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">Start Date</p>
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                                <input id="leave_request_from_date" data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
                             <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">End Date</p>
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                                <input id="leave_request_to_date" data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m6" id="div_half_day" style="display:none">
                                 <p style="margin-bottom: 10px;">
                                 <label class="container">
                                 <input data-fieldname="half_day" id="half_day" type="checkbox" class="filled-in" value="1">
@@ -195,10 +195,12 @@
                                 </label>
                                 </p>
                             </div>
-                            <div class="input-field col s12 m6" id="div_half_day_date" style="display:none">
-                                <p style="margin-bottom: 10px;">Half Day Date</p>
-                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input autocomplete="off" data-fieldname="half_day_date" id="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                            <div class="input-field col s12 m6" id="div_half_day_shift" style="display:none">
+                                 <select data-fieldname="half_day_shift" style="padding-left: 10px;width: -webkit-fill-available;">
+                                    <option value="" disabled selected>Half Day Shift</option>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
                             </div>
                             <div class="input-field col s12">
                                 <div class="btn file-field input-field waves-effect waves-light">
