@@ -230,7 +230,7 @@ def create_claim(expense_approver,requester,claim_type,expenses):
     object.flags.ignore_permissions = True
     object.insert()
 
-    return object.name
+    return object
 
 @frappe.whitelist()
 def upload_file():
