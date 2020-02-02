@@ -3,6 +3,8 @@
 
 $(document).ready(function(){
 
+dt = $('#claim_table').DataTable()
+
 $("#claim_requester").change(function(){
     $("#employee_id").val($(this).val());
     frappe.call({
@@ -50,7 +52,7 @@ $("#claim_requester").change(function(){
 })
 
 $("#add_claim").click(function(){
-    var dt = $('#claim_table').DataTable()
+    // var dt = $('#claim_table').DataTable()
     var index = 0
     // var claim_type = ($('#sel_claim_type').val())
     // var claim_date =($('#sel_date').val())
@@ -69,7 +71,7 @@ $("#add_claim").click(function(){
 
 
 
-        var row = $('<tr><td class="selectable">'+index+'</td><td>'+$('#sel_date').val()+'</td><td>'+$('#sel_claim_type').val()+'</td><td>'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td>'+$('#sel_amount').val()+'</td><td><input type="file"/></td></tr>')
+        var row = $('<tr><td>'+index+'</td><td>'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td class="claimamount">'+$('#sel_amount').val()+'</td><td><input class="fileinput" type="file"/></td></tr>')
         dt.row.add(row).draw();
         // dt.row.add([
         //     index, $('#sel_date').val(), $('#sel_claim_type').val(),$('#sel_merchant').val(),$('#sel_desc').val(),$('#sel_amount').val(),$('#file').val()
@@ -95,17 +97,23 @@ $("#add_claim").click(function(){
     //   console.log($('#claim_table').DataTable().row(':last').data());
 });
 
-$('#claim_table tbody').on( 'click', 'tr', function () {
-    $(this).toggleClass('selected');
-    // $(this).toggleClass('ideal')
-  } );
+// $('#claim_table tbody').on( 'click', 'tr', function () {
+//     $(this).toggleClass('selected');
+//     // $(this).toggleClass('ideal')
+//   } );
 
 $("#remove_claim").click(function(){
-  $('#claim_table').DataTable().rows('.selected').remove().draw(false);
+    
+    // dt.rows().nodes().to$()
+    // array.forEach(element => {
+        
+    // });
+    
+//   dt.rows('.selected').remove().draw(false);
 })
 
 $("#save_claim").click(function(){
-    var dt = $('#claim_table').DataTable()
+    // var dt = $('#claim_table').DataTable()
     var exp_list = []
     // console.log($("#employee_id").val())
     // console.log($("#sel_approver").val())
@@ -137,8 +145,60 @@ $("#save_claim").click(function(){
         },
         callback: function(r) {
             if (!r.exc) {
-                console.log(r.message)
-                console.log(exp_list)
+                var data = this.nodes().to$();
+                var file = $(data.find('.fileinput'))[0].files[0]
+                var docname = ''
+                $('#claim_table').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                    r.message.expenses.forEach(element => {
+                        if(element['expense_type']== $(data.find('.claimtype')).text() && element['merchant'] == $(data.find('.merchant')).text() || element['amount'] ==  parseInt($(data.find('.claimamount')).text())){
+                            docname =  element['name']
+                        }
+                });  
+                if(file){
+                    var reader = new FileReader();
+                    reader.onload = function(){
+                    var srcBase64 = reader.result;
+                    frappe.ajax({
+                        type: "POST",
+                        url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                        no_stringify: 1,
+                        args: {
+                            name : "file",
+                            filename : file.name,
+                            filedata : srcBase64,
+                            doctype: "Expense Claim",
+                            docname: r.message.name,
+                            folder: "Home/Attachments",
+                            is_private: 1,
+                            from_form : 1
+                        },
+                        callback: function (r) {
+                            if (!r.exc_type) {
+                                console.log(r)
+                                frappe.call({
+                                    method: 'frappe.client.set_value',
+                                    args: {
+                                        doctype: "Expense Claim Detail",
+                                        name: docname,
+                                        fieldname: "attach_document",
+                                        value:r.message.file_url
+                                    },
+                                    callback: function(res){
+                                        console.log(res)
+                                    }
+                                });
+                                M.toast({
+                                    html: "Added Successfully!"
+                                })
+                                // location.reload();
+                            }
+                        }
+                    });
+                    }
+                    reader.readAsDataURL(file);
+                }
+
+                });
                 M.toast({
                     html: 'Claim Created Successfully!'
                 })
@@ -151,7 +211,7 @@ $("#save_claim").click(function(){
 
 $("#upload_file").click(function(){
 
-    console.log($("#file"))
+    console.log($("#file")[0].files[0])
     var file = $("#file")[0].files[0];
     
     var reader = new FileReader();
@@ -180,3 +240,47 @@ $("#upload_file").click(function(){
 
 
 })
+
+var upload_attachment = function(){
+    var reader = new FileReader();
+                    reader.onload = function(){
+                    var srcBase64 = reader.result;
+                    frappe.ajax({
+                        type: "POST",
+                        url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                        no_stringify: 1,
+                        args: {
+                            name : "file",
+                            filename : file.name,
+                            filedata : srcBase64,
+                            doctype: "Expense Claim",
+                            docname: r.message.name,
+                            folder: "Home/Attachments",
+                            is_private: 1,
+                            from_form : 1
+                        },
+                        callback: function (r) {
+                            if (!r.exc_type) {
+                                console.log(r)
+                                frappe.call({
+                                    method: 'frappe.client.set_value',
+                                    args: {
+                                        doctype: "Expense Claim Detail",
+                                        name: docname,
+                                        fieldname: "attach_document",
+                                        value:r.message.file_url
+                                    },
+                                    callback: function(res){
+                                        console.log(res)
+                                    }
+                                });
+                                M.toast({
+                                    html: "Added Successfully!"
+                                })
+                                // location.reload();
+                            }
+                        }
+                    });
+                    }
+                    reader.readAsDataURL(file);
+}
