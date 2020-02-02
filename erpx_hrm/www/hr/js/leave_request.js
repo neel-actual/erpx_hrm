@@ -3,7 +3,7 @@ var request_leave_fields = [
 	"from_date",
 	"to_date",
 	"half_day",
-	"half_day_date",
+	"half_day_shift",
 	"description",
 	"leave_approver"
 ]
@@ -23,14 +23,23 @@ $(document).ready(function () {
 	});
 
 	$("#half_day").prop("checked", false);
+	toggle_div_half_day();
+
+	$('#leave_request_from_date').change(function(){
+		toggle_div_half_day();
+	});
+	$('#leave_request_to_date').change(function(){
+		toggle_div_half_day();
+	});
 
 	$('#half_day').change(function(){
 		if($(this).is(":checked")){
-			$('#div_half_day_date').show();
+			$('#div_half_day_shift').show();
 		}else{
-			$('#div_half_day_date').hide();
+			$('#div_half_day_shift').hide();
 		}		
 	});
+	
 	
 	// Summay
 	frappe.call({
@@ -91,11 +100,8 @@ $(document).ready(function () {
 			})
 			return false;
 		}	
-		if(args["half_day"] && !args["half_day_date"]){
-			M.toast({
-				html: "Half Day Date is required"
-			})
-			return false;
+		if(!args["half_day"]){
+			args["half_day_shift"] = "";
 		}	
 
 		frappe.ajax({
@@ -107,6 +113,17 @@ $(document).ready(function () {
 		})
 	});
 });
+
+var toggle_div_half_day = function(){
+	
+	if($('#leave_request_from_date').val() && $('#leave_request_to_date').val() && $('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
+		$("#div_half_day").show();
+		return;
+	}
+	$("#half_day").prop("checked", false);
+	$("#div_half_day").hide();
+	
+}
 
 var upload_file_request = function(r){
 	if (!r.exc) {
