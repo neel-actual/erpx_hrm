@@ -33,7 +33,7 @@
    "modified_by": "Administrator",
    "name": "Leave Application-half_day_shift",
    "no_copy": 0,
-   "options": "AM\nPM",
+   "options": "\nAM\nPM",
    "owner": "Administrator",
    "parent": null,
    "parentfield": null,
