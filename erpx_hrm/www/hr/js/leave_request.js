@@ -102,7 +102,12 @@ $(document).ready(function () {
 		}	
 		if(!args["half_day"]){
 			args["half_day_shift"] = "";
-		}	
+		}else if(!args["half_day_shift"]){
+			M.toast({
+				html: "Half Day Shift is required"
+			})
+			return false;
+		}
 
 		frappe.ajax({
 			url: "/api/resource/Leave Application",
