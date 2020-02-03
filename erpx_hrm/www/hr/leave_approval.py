@@ -11,7 +11,7 @@ def get_context(context):
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
 
-    valid_roles = ['HR Manager', 'Leave Approver']
+    valid_roles = ['Leave Approver']
     
     if not frappe.utils.is_subset(valid_roles, frappe.get_roles()):
         frappe.throw(_('Only users with {0} role can access').format(', '.join(valid_roles)),
