@@ -91,6 +91,11 @@ doctype_js = {
 # 		"on_trash": "method"
 #	}
 # }
+doc_events = {
+	"Leave Application": {
+		"on_update": "erpx_hrm.utils.leave_application.on_update"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

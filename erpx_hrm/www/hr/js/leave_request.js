@@ -1,5 +1,6 @@
 var request_leave_fields = [
 	"leave_type",
+	"emergency",
 	"from_date",
 	"to_date",
 	"half_day",
@@ -24,6 +25,7 @@ $(document).ready(function () {
 
 	$("#half_day").prop("checked", false);
 	toggle_div_half_day();
+	toggle_div_emergency();
 
 	$('#leave_request_from_date').change(function(){
 		toggle_div_half_day();
@@ -38,6 +40,10 @@ $(document).ready(function () {
 		}else{
 			$('#div_half_day_shift').hide();
 		}		
+	});
+
+	$('#leave_request_leave_type').change(function(){
+		toggle_div_emergency();
 	});
 	
 	
@@ -81,7 +87,7 @@ $(document).ready(function () {
         request_leave_fields.forEach(element => {
             if($(`#form-request-leave [data-fieldname="${element}"]`).val()){
 				args[element] = $(`#form-request-leave [data-fieldname="${element}"]`).val();
-				if(element=="half_day"){
+				if(element=="half_day" || element=="emergency"){
 					args[element] = $(`#form-request-leave [data-fieldname="${element}"]:checked`).val() || 0;
 				}
             }     
@@ -118,6 +124,18 @@ $(document).ready(function () {
 		})
 	});
 });
+
+var toggle_div_emergency = function(){
+	
+	if($('#leave_request_leave_type').val() == "Annual Leave"){
+		$("#div_emergency").show();
+		return;
+	}
+	$("#emergency").prop("checked", false);
+	$("#div_emergency").hide();
+	
+}
+
 
 var toggle_div_half_day = function(){
 	
