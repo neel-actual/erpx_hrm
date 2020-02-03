@@ -60,7 +60,7 @@ $(document).ready(function () {
 			$.each( r.message.leave_allocation, function( key, val ) {
 				let j = i%4;
 				$(`
-					<div class="col s6 m6 l6 xl3">
+					<div class="col s6 m6 l6 xl4 mt-2 mb-2">
 						<div class="circle ${arrColor[j]}">
 							<div class="card-content center">
 								<h4 class="card-stats-number white-text">${val.remaining_leaves}</h4>
