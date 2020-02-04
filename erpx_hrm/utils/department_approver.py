@@ -5,10 +5,6 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
-from frappe.model.document import Document
-
-class DepartmentApprover(Document):
-	pass
 
 @frappe.whitelist()
 def get_approvers(doctype, txt, searchfield, start, page_len, filters):
@@ -39,6 +35,6 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 				approver.parent = %s
 				and user.name like %s
 				and approver.parentfield = %s
-				and approver.approver=user.name""",(d, "%" + txt + "%", parentfield), as_list=True)
+				and approver.approver=user.name order by approver.idx asc""",(d, "%" + txt + "%", parentfield), as_list=True)
 
 	return approvers

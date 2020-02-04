@@ -212,18 +212,23 @@ var load_leave_approver_select = function (select_id, employee) {
     var arr = [];
 
     frappe.call({
-        method: "erpx_hrm.api.get_approvers",
+        method: "frappe.desk.search.search_link",
         args: {
-            employee: employee,
-            doctype: "Leave Application",
+			query: "erpx_hrm.utils.department_approver.get_approvers",
+			doctype: "User",
+			txt: "",
+			filters: {
+				employee: employee,
+            	doctype: "Leave Application",
+			}            
         },
         callback: function (r) {
 			let selected = "";
-            r.message[0].forEach(function(row, index){
+            r.results.forEach(function(row, index){
 				if(index==0){
-					selected = row;
+					selected = row.value;
 				}
-				arr.push({key:row, value: row});
+				arr.push({key:row.value, value: row.value});
 			});
             xhrm.utils.optionArray(select_id, arr, selected);
             select_id.formSelect();
