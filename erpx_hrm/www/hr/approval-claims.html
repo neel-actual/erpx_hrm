@@ -130,7 +130,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                             {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'approval_status':'Draft'}) %}
                                             {% for i_exp_list in exp_list %}
                                                 <tr>
-                                                    <td><a style="color: black" href="/claims/claim-title1.html">{{i_exp_list.name}}</a></td>
+                                                    <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}}">{{i_exp_list.name}}</a></td>
                                                     <td>{{ i_exp_list.posting_date.strftime(" %d %b %Y ")  }} - {{ i_exp_list.posting_date.strftime(" %d %b %Y ")  }}</td>
                                                     <td>MYR {{i_exp_list.total_claimed_amount}}</td>
                                                     <td>
