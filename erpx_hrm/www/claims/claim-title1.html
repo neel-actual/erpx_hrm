@@ -36,7 +36,7 @@
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
 {% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type']) %}
-{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description"])%}
+{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document"])%}
 {% endif %}
 <div id="main">
  <div class="row">
@@ -162,7 +162,11 @@
           <td>{{claim.merchant}}</td>
           <td>{{claim.description}}</td>
           <td>{{currency}} {{'%0.2f'| format(claim.amount|float)}}</td>
-          <td style="text-align: center;"><i class="material-icons-outlined">attach_file</i></td>
+          {% if claim.attach_document %}
+          <td style="text-align: center;"><a href="{{site_url}}{{claim.attach_document}}"><i class="material-icons-outlined">attach_file</i></a></td>
+          {%else%}
+          <td style="text-align: center;">No Attachment</td>
+          {% endif %}
         </tr>
         {% endfor %}
         

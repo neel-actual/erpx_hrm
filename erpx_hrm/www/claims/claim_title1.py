@@ -9,6 +9,7 @@ def get_context(context):
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
     context.currency = frappe.db.get_value("Global Defaults",None,"default_currency")   
+    context.site_url = frappe.utils.get_url()
      
 
     return context
