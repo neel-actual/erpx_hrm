@@ -11,16 +11,32 @@ var request_leave_fields = [
 
 $(document).ready(function () {
 
-	//Request History
-	var request_history = $('#request_history').DataTable();
-
-	$('#i_filter_leave_type').change(function(){
-		var filter_leave_type = $("#i_filter_leave_type").val();
-		request_history.column(0).search(filter_leave_type, true, false, false).draw();
+	var request_history = $('#request_history').DataTable({
+		"columnDefs": [
+            {
+                "targets": [ 1 ],
+                "visible": false,
+            },
+            {
+                "targets": [ 2 ],
+                "visible": false
+            }
+        ]
 	});
 
-	$('.clr-filter').click(function(){
-        location.reload(true);
+	$('#i_filter_leave_type').change(function(){ 
+		var filter_leave_type = $("#i_filter_leave_type").val(); 
+		request_history.column(0).search(filter_leave_type, true, false, false).draw();
+	});
+	
+	$('.date-range-filter').change( function() {
+		request_history.draw();
+	});
+
+	$('.clr_filter_requesthistory').click(function(){		
+		$('.i_filter_requesthistory').val("");
+		$("#i_filter_leave_type").formSelect();
+		request_history.search('').columns().search('').draw();
 	});
 
 	$("#half_day").prop("checked", false);
@@ -214,3 +230,21 @@ var load_leave_approver_select = function (select_id, employee) {
         }
     });
 }
+
+// Extend dataTables search
+$.fn.dataTable.ext.search.push(
+	function (settings, data, dataIndex) {
+		let min = $('#i_filter_from_date').val();
+		let max = $('#i_filter_to_date').val();
+		let from_date = data[1];
+		let to_date = data[2];
+		
+		if( min!="" && moment(from_date).isBefore(min)	){
+			return false;
+		}
+		if( max!="" && moment(to_date).isAfter(max)	){
+			return false;
+		}
+		return true;
+	}
+);
