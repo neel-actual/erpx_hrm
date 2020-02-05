@@ -7,7 +7,7 @@ import frappe
 from frappe import _
 
 @frappe.whitelist()
-def get_approvers(doctype, txt, searchfield, start, page_len, filters):
+def get_approvers(doctype=None, txt="", searchfield=None, start=None, page_len=None, filters=None):
 
 	if not filters.get("employee"):
 		frappe.throw(_("Please select Employee Record first."))
