@@ -121,9 +121,9 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                         <thead>
                             <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
                                 <th style="border-right:none!important;">Title</th>
-                                <th style="border-right:none!important;">Period</th>
+                                <th style="border-right:none!important;">Date</th>
                                 <th style="border-right:none!important;">Amount</th>
-                                <th style="border-right:none!important;">Last Updated</th>
+                                <th style="border-right:none!important;">Cutoff Date</th>
                                 <th style="border-right:none!important;">Status</th>
                             </tr>
                         </thead>
@@ -131,10 +131,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             {% set exp_list = frappe.get_all("Expense Claim", fields=['*']) %}
                             {% for i_exp_list in exp_list %}
                                 <tr>
-                                    <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td>
-                                    <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }} - {{ i_exp_list.posting_date.strftime("  %d-%m-%Y ")  }}</td>
-                                    <td>MYR {{i_exp_list.total_claimed_amount}}</td>
-                                    <td>{{ i_exp_list.modified.date()  }}</td>
+                                    <!-- <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td> -->
+                                    {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': i_exp_list.name},fields=["expense_type"])%}               
+                                  <td><a style="color:#4F92FF" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a><br>
+                                    ({% for e in claim_title %}
+                                    {{e.expense_type}}
+                                    {% endfor %})
+                                  </td>
+                                    <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }}</td>
+                                    <td>{{currency}} {{'%0.2f'| format(i_exp_list.total_claimed_amount|float)}}</td>
+                                    <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }}</td>
                                     {% set class_color = '' %}
                                     {% if(i_exp_list.status == 'Unpaid') %}
                                         {% set class_color = 'p-pending' %}
@@ -184,7 +190,8 @@ type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready( function () {
         var user_table = $('#table_id').DataTable({
-          "order": [[ 3, "desc" ]]
+          "order": [[ 1, "desc" ]],
+          paging: true,
         });
       
         $('#search_i').keyup(function(){
