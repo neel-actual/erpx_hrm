@@ -74,24 +74,24 @@
              <div class="pend-apprv right">
               {% for ap in expense_claim %}
               {% if ap.status == 'Draft' %}
-              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #b2a30f;color: white;font-size: 10px;">
+              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #b2a30f;color: white;font-size: 20px;">
                   {{ap.status}}
               </p>
               {% elif ap.status == 'Unpaid' %}
-              <p style="border-radius: 20px;text-align: center;width: 100%;background-color:  #b2a30f;color: white;font-size: 10px;">
+              <p style="border-radius: 20px;text-align: center;width: 100%;background-color:  #b2a30f;color: white;font-size: 20px;">
                   {{ap.status}}
                 </p>
               
               
               
               {% elif ap.status == 'Paid' %}
-              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #0c811b;color: white;font-size: 10px;">
+              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #0c811b;color: white;font-size: 20px;">
                   {{ap.status}}
                 </p>
               
               
               {% elif ap.status == 'Rejected'%}
-              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #ff0000;color: white;font-size: 10px;">
+              <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #ff0000;color: white;font-size: 20px;">
                   {{ap.status}}
                 </p>
               

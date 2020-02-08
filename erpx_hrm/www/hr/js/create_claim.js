@@ -1,4 +1,11 @@
 $(document).ready(async function(){
+console.log(frappe.session)
+
+var today = moment().format('YYYY-MM-DD');
+document.getElementById("sel_date").value = today;
+
+
+
 let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
 dt = $('#claim_table').DataTable({
     columnDefs: [ {
