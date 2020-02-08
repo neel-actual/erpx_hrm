@@ -2,19 +2,27 @@ $(document).ready(function () {
 	var request_history = $('#request_history').DataTable({
 		"columnDefs": [
             {
-                "targets": [ 1 ],
+                "targets": [ 5 ],
                 "visible": false,
             },
             {
-                "targets": [ 2 ],
+                "targets": [ 6 ],
                 "visible": false
             }
         ]
 	});
 	
-	$('#i_filter_leave_type').change(function(){ 
-		var filter_leave_type = $("#i_filter_leave_type").val(); 
-		request_history.column(0).search(filter_leave_type, true, false, false).draw();
+	$('#i_filter_employeee').change(function(){ 
+		var i_filter_employeee = $("#i_filter_employeee").val(); 
+		request_history.column(0).search(i_filter_employeee, true, false, false).draw();
+	});
+	$('#i_filter_eave_type').change(function(){ 
+		var i_filter_eave_type = $("#i_filter_eave_type").val(); 
+		request_history.column(1).search(i_filter_eave_type, true, false, false).draw();
+	});
+	$('#i_filter_leave_status').change(function(){ 
+		var i_filter_leave_status = $("#i_filter_leave_status").val(); 
+		request_history.column(3).search(i_filter_leave_status, true, false, false).draw();
 	});
 	
 	$('.date-range-filter').change( function() {
@@ -23,6 +31,8 @@ $(document).ready(function () {
 
 	$('.clr_filter_requesthistory').click(function(){		
 		$('.i_filter_requesthistory').val("");
+		$("#i_filter_leave_type").formSelect();
+		$("#i_filter_leave_type").formSelect();
 		$("#i_filter_leave_type").formSelect();
 		request_history.search('').columns().search('').draw();
 	});
@@ -114,3 +124,21 @@ var cancel_leave = function(name){
 		}
 	});
 }
+
+// Extend dataTables search
+$.fn.dataTable.ext.search.push(
+	function (settings, data, dataIndex) {
+		let min = $('#i_filter_from_date').val();
+		let max = $('#i_filter_to_date').val();
+		let from_date = data[5];
+		let to_date = data[6];
+		
+		if( min!="" && moment(from_date).isBefore(min)	){
+			return false;
+		}
+		if( max!="" && moment(to_date).isAfter(max)	){
+			return false;
+		}
+		return true;
+	}
+);
