@@ -24,9 +24,18 @@
 
     }
 
-    .collapsible-body{
+.collapsible-body{
   padding: 0 !important;
 }
+.file-field .file-path-wrapper{
+    width: 100%;
+    padding-left:0px !important;
+}
+.file-field .file-path-wrapper input[type=text].file-path{
+    border:none !important;
+    border-radius: 0px !important;
+}
+
 </style>
 {% endblock %}
 
@@ -218,10 +227,10 @@
                                 </select>
                             </div>
                             <div class="input-field col s12">
-                                <div class="btn file-field input-field waves-effect waves-light">
-                                    <div class="">
+                                <div class="file-field input-field">
+                                    <div class="btn">
                                         <span>Upload File</span>
-                                        <input id="file-request" type='file' autocomplete="off">
+                                        <input id="file-request" type="file" autocomplete="off">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text" autocomplete="off">
@@ -305,10 +314,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type']) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -323,10 +332,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"department": department}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -341,10 +350,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"employee": employee}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
