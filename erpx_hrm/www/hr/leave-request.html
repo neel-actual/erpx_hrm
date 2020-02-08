@@ -160,7 +160,7 @@
                                         <td>{{i_lev_app_dt.leave_type}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.from_date, format_string="yyyy-mm-dd")}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.to_date, format_string="yyyy-mm-dd")}}</td>
-                                        <td>{{i_lev_app_dt.from_date}}<br>{{i_lev_app_dt.to_date}}</td>
+                                        <td>{{ frappe.utils.formatdate(i_lev_app_dt.from_date) }}<br>{{ frappe.utils.formatdate(i_lev_app_dt.to_date) }}</td>
                                         <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
                                         <td>
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
