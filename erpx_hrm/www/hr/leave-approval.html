@@ -199,29 +199,29 @@ table{
             <div class="row margin infodetails">
               <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Name</p>
-                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                <select autocomplete="off" id="i_filter_employeee" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All name</option>
-                  <option value="information technology">Accident</option>
-                  <option value="engineering">Sick</option>
-                  <option value="telecommunication">Vacation</option>
+                  {% for item in list_employee: %}
+                  <option value="{{item.name}}">{{item.employee_name}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Type</p>
-                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                <select autocomplete="off" id="i_filter_eave_type" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All Type</option>
-                  <option value="information technology">Accident</option>
-                  <option value="engineering">Sick</option>
-                  <option value="telecommunication">Vacation</option>
+                  {% for item in list_leave_type: %}
+                  <option value="{{item.name}}">{{item.name}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Status</p>
-                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                <select autocomplete="off" id="i_filter_leave_status" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" disabled selected>All status</option>
-                  <option value="information technology">Accident</option>
-                  <option value="engineering">Sick</option>
-                  <option value="telecommunication">Vacation</option>
+                  {% for item in list_leave_status: %}
+                  <option value="{{item}}">{{item}}</option>
+                  {% endfor %}
                 </select>
               </div>
 

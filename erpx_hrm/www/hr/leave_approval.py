@@ -31,4 +31,8 @@ def get_context(context):
 		where la.docstatus = 1
 	""", as_dict=True)
 
+    context.list_employee = frappe.db.get_all("Employee",fields=["name", "employee_name"])
+    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
+    context.list_leave_status = ["Open","Approved","Rejected","Cancelled"]
+
     return context

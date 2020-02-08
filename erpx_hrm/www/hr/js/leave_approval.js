@@ -1,4 +1,32 @@
 $(document).ready(function () {
+	var request_history = $('#request_history').DataTable({
+		"columnDefs": [
+            {
+                "targets": [ 1 ],
+                "visible": false,
+            },
+            {
+                "targets": [ 2 ],
+                "visible": false
+            }
+        ]
+	});
+	
+	$('#i_filter_leave_type').change(function(){ 
+		var filter_leave_type = $("#i_filter_leave_type").val(); 
+		request_history.column(0).search(filter_leave_type, true, false, false).draw();
+	});
+	
+	$('.date-range-filter').change( function() {
+		request_history.draw();
+	});
+
+	$('.clr_filter_requesthistory').click(function(){		
+		$('.i_filter_requesthistory').val("");
+		$("#i_filter_leave_type").formSelect();
+		request_history.search('').columns().search('').draw();
+	});
+
 	$('.approve_leave').click(function(){
 		let doctype = "Leave Application";
 		let name = $(this).attr("data-name");
