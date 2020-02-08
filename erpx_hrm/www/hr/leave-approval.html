@@ -104,8 +104,7 @@ table{
                          </tr>
                        </table>
                      </li>
-                     {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'docstatus': 0}) %}
-                     {% for i_leave_detail in leave_detail %}
+                     {% for i_leave_detail in leave_requests %}                     
                      <li>
                        <div class="collapsible-header" style="padding: 0 !important;">
                          <table>
@@ -139,7 +138,9 @@ table{
                                  :
                                </td>
                                <td >
-                                 {{i_leave_detail.description or ""}}
+                                 {% if (i_leave_detail.description) %}
+                                 {{i_leave_detail.description | replace("\n","<br>")}}
+                                 {% endif %}
                                </td>
                              </tr>
                              <tr style="font-size: 13px;">
@@ -150,7 +151,11 @@ table{
                                  :
                                </td>
                                <td >
-                                No attachment
+                                {% if(i_leave_detail.file_url) %}
+                                <a href="{{ i_leave_detail.file_url }}" target="_blank" title="{{ i_leave_detail.file_name }}">
+                                  <span>{{ i_leave_detail.file_name }}</span>
+                                </a>
+                                {% endif %}
                                </td>
                              </tr>
                              <tr style="font-size: 13px;">
@@ -255,8 +260,7 @@ table{
                   </tr>
                 </table>
               </li>
-              {% set leave_detail = frappe.get_all("Leave Application", fields=['*'], filters={'docstatus': 1}) %}
-              {% for i_leave_detail in leave_detail %}
+              {% for i_leave_detail in leave_historys %}
               <li>
                 <div class="collapsible-header" style="padding: 0 !important;">
                   <table>
@@ -287,13 +291,15 @@ table{
                       <tbody style="border:none !important;">
                       <tr style="font-size: 13px;">
                         <td style="width: 100px;">
-                          Reason
+                          Reason111
                         </td>
                         <td style="width: 50px;">
                           :
                         </td>
                         <td >
-                          {{i_leave_detail.description or ""}}
+                          {% if (i_leave_detail.description) %}
+                          {{i_leave_detail.description | replace("\n","<br>")}}
+                          {% endif %}
                         </td>
                       </tr>
                       <tr style="font-size: 13px;">
@@ -304,7 +310,11 @@ table{
                           :
                         </td>
                         <td >
-                         No attachment
+                          {% if(i_leave_detail.file_url) %}
+                          <a href="{{ i_leave_detail.file_url }}" target="_blank" title="{{ i_leave_detail.file_name }}">
+                            <span>{{ i_leave_detail.file_name }}</span>
+                          </a>
+                          {% endif %}
                         </td>
                       </tr>
                       <tr style="font-size: 13px;">
