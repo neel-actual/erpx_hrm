@@ -24,9 +24,18 @@
 
     }
 
-    .collapsible-body{
+.collapsible-body{
   padding: 0 !important;
 }
+.file-field .file-path-wrapper{
+    width: 100%;
+    padding-left:0px !important;
+}
+.file-field .file-path-wrapper input[type=text].file-path{
+    border:none !important;
+    border-radius: 0px !important;
+}
+
 </style>
 {% endblock %}
 
@@ -77,7 +86,7 @@
                 </div>
 
                 <div class=" calendar">
-                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
+                    <div id="card-stats-2" class="card" style="border-radius: 10px!important;">
                             <div class="card-content">
                                   <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                                 <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
@@ -104,10 +113,10 @@
                     </div>
                 </div>
 
-                <div class=" requesthistory">
-                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
+                <div class="requesthistory">
+                    <div id="card-stats-3" class="card" style="border-radius: 10px!important; overflow:visible">
                         <div class="card-content">
-                            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
+                            <img style="display: inline; float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Request History</div>
                             <p class="clr_filter_requesthistory" style="position: absolute;top: 30px;right: 20px;color: #00aeef;">Clear filters</p>
                             <form>
@@ -151,7 +160,7 @@
                                         <td>{{i_lev_app_dt.leave_type}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.from_date, format_string="yyyy-mm-dd")}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.to_date, format_string="yyyy-mm-dd")}}</td>
-                                        <td>{{i_lev_app_dt.from_date}}<br>{{i_lev_app_dt.to_date}}</td>
+                                        <td>{{ frappe.utils.formatdate(i_lev_app_dt.from_date) }}<br>{{ frappe.utils.formatdate(i_lev_app_dt.to_date) }}</td>
                                         <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
                                         <td>
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
@@ -161,6 +170,7 @@
                                 </tbody>
                             </table>
                             </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </div>
@@ -218,10 +228,10 @@
                                 </select>
                             </div>
                             <div class="input-field col s12">
-                                <div class="btn file-field input-field waves-effect waves-light">
-                                    <div class="">
+                                <div class="file-field input-field">
+                                    <div class="btn">
                                         <span>Upload File</span>
-                                        <input id="file-request" type='file' autocomplete="off">
+                                        <input id="file-request" type="file" autocomplete="off">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text" autocomplete="off">
@@ -305,10 +315,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type']) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -323,10 +333,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"department": department}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -341,10 +351,10 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date'], filters={"employee": employee}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },

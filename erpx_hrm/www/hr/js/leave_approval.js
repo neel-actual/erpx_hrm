@@ -2,11 +2,11 @@ $(document).ready(function () {
 	var request_history = $('#request_history').DataTable({
 		"columnDefs": [
             {
-                "targets": [ 5 ],
+                "targets": [ 6 ],
                 "visible": false,
             },
             {
-                "targets": [ 6 ],
+                "targets": [ 7 ],
                 "visible": false
             }
         ]
@@ -130,8 +130,8 @@ $.fn.dataTable.ext.search.push(
 	function (settings, data, dataIndex) {
 		let min = $('#i_filter_from_date').val();
 		let max = $('#i_filter_to_date').val();
-		let from_date = data[5];
-		let to_date = data[6];
+		let from_date = data[6];
+		let to_date = data[7];
 		
 		if( min!="" && moment(from_date).isBefore(min)	){
 			return false;

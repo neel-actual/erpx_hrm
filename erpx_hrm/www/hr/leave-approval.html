@@ -95,11 +95,12 @@ table{
                      <li>
                        <table style="font-size: 14px;" >
                          <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
-                           <th style="border-right:none!important;width: 300px;">Name</th>
+                           <th style="border-right:none!important;width: 250px;">Name</th>
+                           <th style="border-right:none!important;">Request DateTime</th>
                            <th style=" border-right:none!important;">Type</th>
                            <th style=" border-right:none!important;">Date</th>
                            <th style=" border-right:none!important;">Status</th>
-                           <th style=" border-right:none!important;"></th>
+                           <th style=" border-right:none!important; width: 200px;"></th>
 
                          </tr>
                        </table>
@@ -109,16 +110,17 @@ table{
                        <div class="collapsible-header" style="padding: 0 !important;">
                          <table>
                            <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
-                             <td style="width: 300px;">
+                             <td style="width: 250px;">
                                {{i_leave_detail.employee_name}}
                              </td>
+                             <td>{{ frappe.utils.format_datetime(i_leave_detail.creation) }}</td>
                              <td>{{i_leave_detail.leave_type}}</td>
                              <td>
-                               <p>{{i_leave_detail.from_date}} - {{i_leave_detail.to_date}}</p>
+                               <p>{{ frappe.utils.formatdate(i_leave_detail.from_date) }} - {{ frappe.utils.formatdate(i_leave_detail.to_date) }}</p>
                                <p>{{ i_leave_detail.total_leave_days }} Days</p>
                              </td>
                              <td>{{i_leave_detail.status}}</td>
-                             <td>
+                             <td style="width: 200px;">
                                 <a href="#" class="waves-effect waves-dark btn green btn-small mr-5 approve_leave" data-name="{{i_leave_detail.name}}">Approve</a>
                                 <a href="#" class="waves-effect waves-dark red btn btn-small reject_leave" data-name="{{i_leave_detail.name}}">Reject</a>
                              </td>
@@ -187,7 +189,7 @@ table{
       </div>
 
       <div class="col xl16 l16 m18 s12">
-        <div class="card" style="border-radius: 10px!important;">
+        <div class="card" style="border-radius: 10px!important;  overflow:visible">
         <div class="card-content">
           <form>
             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
@@ -245,10 +247,11 @@ table{
               <table class="table table-striped dataTable display" style="font-size: 14px;" id="request_history">
                 <thead>  
                 <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
-                  <th style="border-right:none!important;width: 300px;">Name</th>
+                  <th style="border-right:none!important;width: 250px;">Name</th>
                   <th style=" border-right:none!important;">Type</th>
                   <th style=" border-right:none!important;">Date</th>
                   <th style=" border-right:none!important;">Status</th>
+                  <th style="border-right:none!important;">Process DateTime</th>
                   <th style=" border-right:none!important;"></th>
                   <th style="border-right:none!important;">From Date</th>
                   <th style="border-right:none!important;">To Date</th>
@@ -257,15 +260,16 @@ table{
                 <tbody>
                 {% for i_leave_detail in leave_historys %}
                 <tr style="font-size: 13px;">
-                  <td style="width: 300px;">
+                  <td style="width: 250px;">
                     {{i_leave_detail.employee_name}}
                   </td>
                   <td>{{i_leave_detail.leave_type}}</td>
                   <td>
-                    <p>{{i_leave_detail.from_date}} - {{i_leave_detail.to_date}}</p>
+                    <p>{{ frappe.utils.formatdate(i_leave_detail.from_date) }}<br>{{ frappe.utils.formatdate(i_leave_detail.to_date) }}</p>
                     <p>{{ i_leave_detail.total_leave_days }} Days</p>
                   </td>
                   <td>{{i_leave_detail.status}}</td>
+                  <td>{{ frappe.utils.format_datetime(i_leave_detail.modified) }}</td>
                   <td>
                     <a href="#" class="delete_leave" data-name="{{i_leave_detail.name}}" data-docstatus="{{i_leave_detail.docstatus}}">
                         <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
