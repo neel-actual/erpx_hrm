@@ -25,7 +25,7 @@ var get_balance_summary = function(employee){
 					let j = i%4;
 					console.log(key);
 					$(`
-						<div class="circles col s6 m6 l6 xl3 center">
+						<div class="col s12 m6 l6 xl3 pt-2" style="min-height:200px; text-align: center;">
 							<div class="circle ${arrColor[j]}" style="width: 120px; height: 120px;">
 							<div class="card-content center">
 								<h4 class="card-stats-number white-text">${val.remaining_leaves}</h4>
@@ -34,7 +34,7 @@ var get_balance_summary = function(employee){
 								</p>
 							</div>
 							</div>
-							<p style="margin-top: 10px;">${key}</p>
+							<p style="margin-top: 10px;text-align: center;">${key}</p>
 						</div>	
 					`).appendTo($("#html_balancesummary"));
 					i++;
