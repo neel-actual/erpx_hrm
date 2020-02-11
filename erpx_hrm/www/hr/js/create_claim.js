@@ -1,12 +1,8 @@
 $(document).ready(async function(){
-console.log(frappe.session)
-
 var today = moment().format('YYYY-MM-DD');
 document.getElementById("sel_date").value = today;
-
-
-
 let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+
 dt = $('#claim_table').DataTable({
     columnDefs: [ {
         targets: 0,
@@ -110,7 +106,7 @@ $("#remove_claim").click(function(){
   dt.rows('.selected').remove().draw(false);
 })
 
-$("#save_claim").click(function(){
+$("#save_claim").click(async function(){
     // var dt = $('#claim_table').DataTable()
     var exp_list = []
     // console.log($("#employee_id").val())
@@ -120,25 +116,29 @@ $("#save_claim").click(function(){
     console.log(dt.column(0).data().length)
     for (let i = 0; i < dt.column().data().length; i++) {
         const element = dt.rows(i).data()[0];
+
         exp_list.push({
             "expense_date":element[1],
             "expense_type":element[2].toString(),
             "merchant":element[3].toString(),
             "description":element[4].toString(),
             "amount":parseFloat(element[5].split(" ")[1]),
-            "sanctioned_amount":parseFloat(element[5])
+            "sanctioned_amount":parseFloat(element[5].split(" ")[1])
         })
         
         
     }
-    // console.log(exp_list)
-   
+    console.log(exp_list)
+    
+    let cutoff = await get_cutoff()
+    console.log(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate()))
     frappe.call({
         method: 'erpx_hrm.api.create_claim',
         args: {
             'expense_approver':$("#sel_approver").val(),
             'requester':$("#employee_id").val(),
             'claim_type':$("#sel_payment").val(),
+            'cutoff_date':(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate())).toString(),
             'expenses':exp_list
         },
         callback: function(r) {
@@ -234,6 +234,14 @@ $("#claim_form").validate({
         required: "Please Enter Claim Amount",
         number: "Claim Amount Should be number only"
       }
+    },
+    errorPlacement: function(error, element) {
+        if (element.attr("name") == "claim_type" )
+            error.insertAfter(".claim_type_error");
+        else if  (element.attr("name") == "claim_amount" )
+            error.insertAfter(".claim_amount_error");
+        else
+            error.insertAfter(element);
     }
   });
 
@@ -289,3 +297,20 @@ var get_value = function (opts) {
         } catch (e) { reject(e); }
     });
 }
+
+var get_cutoff = async function(){
+    let cutoff_day = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.cutoff_day})
+    
+    var d = new Date();
+    var cd = new Date(d.getFullYear(),d.getMonth(),cutoff_day)
+    if(cd <= d){
+        cd = new Date(d.getFullYear(),d.getMonth()+1,cutoff_day)
+    }
+    return cd
+}
+function appendLeadingZeroes(n){
+    if(n <= 9){
+      return "0" + n;
+    }
+    return n
+  }

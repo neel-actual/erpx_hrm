@@ -77,7 +77,8 @@
                   </tr>
                   </thead>
                   <tbody>
-                      {% for ex in pending_submission %}
+                      {% set pending_submission1 = frappe.get_all("Expense Claim",filters={"status":"Unpaid","reimbursement_type":"Submission via Payroll"},fields=['name','approval_status','status','employee','employee_name','cutoff_date','total_claimed_amount','posting_date']) %}
+                      {% for ex in pending_submission1 %}
                       <tr>
                         {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
                         <td>{{ex.name}}<br>
@@ -101,7 +102,7 @@
                             {% endif %}
                             {% endfor %}
                           </td>
-                        <td>{{ex.posting_date.strftime('%d-%m-%Y')}}</td>
+                        <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
                         {% set class_color = '' %}
                         {% if(ex.status == 'Unpaid') %}
                             {% set class_color = 'p-pending' %}

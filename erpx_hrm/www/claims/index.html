@@ -101,7 +101,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 </div>
               </div>
               <div class="col s12" id="table-scroll">
-              
+                
               <table style="font-size: 14px;" class="table table-striped dataTable display" id="table_id">
               <thead>
                 <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
@@ -113,9 +113,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <th style="border-right:none!important;">Status</th>
                 </tr>
               </thead>
-                <!-- {% set expense = frappe.get_all("Expense Claim", fields=['name','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %} -->
+                {% set expense1 = frappe.get_all("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date']) %}
               <tbody>
-                {% for ex in expense %}
+                {% for ex in expense1 %}
+               
+                
                 <tr>
                   {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
                   <td><a style="color:#4F92FF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
@@ -139,7 +141,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                       {% endif %}
                       {% endfor %}
                     </td>
-                  <td>{{ex.posting_date}}</td>
+                  <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
                   {% set class_color = '' %}
                   {% if(ex.status == 'Unpaid') %}
                       {% set class_color = 'p-pending' %}
@@ -207,14 +209,12 @@ type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
   var user_table = $('#table_id').DataTable({
+    "order": [[ 1, "desc" ]],
     columnDefs: [ {
       targets: 1,
       render: $.fn.dataTable.render.moment('DD-MM-YYYY')
     },
-    {
-      targets: 4,
-      render: $.fn.dataTable.render.moment('DD-MM-YYYY')
-    } ],
+    ],
     paging: true,
     searching: true,
     info: true,

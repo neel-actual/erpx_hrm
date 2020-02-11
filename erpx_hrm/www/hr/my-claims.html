@@ -140,7 +140,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                   </td>
                                     <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }}</td>
                                     <td>{{currency}} {{'%0.2f'| format(i_exp_list.total_claimed_amount|float)}}</td>
-                                    <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }}</td>
+                                    <td>{% if(i_exp_list.cutoff_date) %}{{ i_exp_list.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
                                     {% set class_color = '' %}
                                     {% if(i_exp_list.status == 'Unpaid') %}
                                         {% set class_color = 'p-pending' %}

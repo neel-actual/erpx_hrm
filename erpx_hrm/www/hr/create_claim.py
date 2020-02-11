@@ -13,7 +13,7 @@ def get_context(context):
     context.employee_id = employee
     context.employee_name = frappe.db.get_value("Employee",employee,"employee_name")
     context.department = frappe.db.get_value("Employee",employee,"department")
-    context.approver = get_approvers("Expense Claim",employee)
+    context.approver = get_approvers(employee,"Expense Claim")[0][0]
     
     context.employee = frappe.get_all("Employee",fields = ["name","employee_name"])
     context.claim_type = frappe.get_all("Expense Claim Type",fields = ["name"])
@@ -51,6 +51,6 @@ def get_approvers(employee,doctype):
                 approver.parent = %s
                 and approver.parentfield = %s
                 and approver.approver=user.name""",(d, parentfield), as_list=True)
-        frappe.throw(str(approvers))
+        # frappe.throw(str(approvers))
 
     return approvers
