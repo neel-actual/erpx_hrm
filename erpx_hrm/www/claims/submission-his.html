@@ -79,7 +79,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 </tr>
                 </thead>
                 <tbody>
-                {% for ex in expense %}
+                  {% set expense1 = frappe.get_all("Expense Claim", fields=['name','cutoff_date','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %}
+                {% for ex in expense1 %}
                 <tr>
                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}
                     <td>{{ex.name}}<br>
@@ -99,7 +100,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     {% endif %}
                     {% endfor %}
                     </td>
-                  <td>{{ex.posting_date}}</td>
+                  <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -125,14 +126,12 @@ type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
   var user_table = $('#table_id').DataTable({
+    "order": [[ 1, "desc" ]],
     columnDefs: [ {
       targets: 1,
       render: $.fn.dataTable.render.moment('DD-MM-YYYY')
     },
-    {
-      targets: 4,
-      render: $.fn.dataTable.render.moment('DD-MM-YYYY')
-    } ],
+     ],
     paging: true,
     searching: true,
     info: true,

@@ -35,7 +35,7 @@
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
-{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type']) %}
+{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type']) %}
 {% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document"])%}
 {% endif %}
 <div id="main">
@@ -51,6 +51,7 @@
         </div>
       
       </div>
+      
       <div class="col xl20 l20 m18 s12">
         <div id="card-stats" class="card" style="border-radius: 10px!important;">
           <div class="card-content">        
@@ -59,17 +60,54 @@
               <div class="row margin infodetails">
                <div class=" border-request requester">
                 {% for exp in expense_claim %}
-                <a href="#">Requester : {{exp.employee_name}}</a>
-                <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg">
+                
+                
+                <!-- <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg"> -->
+                
+                <table style="table-layout: auto; display: contents !important;">
+                  <tr>
+                    <td><a href="#">Requester : {{exp.employee_name}}</a></td>
+                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'name':exp.employee},fields=['image'])%}
+                      {% for file in employee_pic %}    
+                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% else %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
+                      {% endif %}
+                      {% endfor %}</td>
+                  </tr>
+                </table>
                 {% endfor %}
               </div>
 
-              <div style="margin-left: 35px; float: left;" class="border-request">
+              <div class=" border-request requester" style="margin-left: 35px; float: left;">
+                {% for exp in expense_claim %}
+                
+                
+                <!-- <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg"> -->
+                
+                <table style="table-layout: auto ;    display: contents !important;">
+                  <tr>
+                    <td><a href="#">Approver : {{exp.expense_approver}}</a></td>
+                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'user_id':exp.expense_approver},fields=['image'])%}
+                      {% for file in employee_pic %}    
+                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% else %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
+                      {% endif %}
+                      {% endfor %}</td>
+                  </tr>
+                </table>
+                {% endfor %}
+              </div>
+
+              <!-- <div style="margin-left: 35px; float: left;" class="border-request">
               {% for exp in expense_claim %}
                <a href="#">Approver : {{exp.expense_approver}}</a>
                <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg">
               {% endfor %}
-             </div>
+             </div> -->
 
              <div class="pend-apprv right">
               {% for ap in expense_claim %}

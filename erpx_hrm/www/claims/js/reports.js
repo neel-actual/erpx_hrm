@@ -33,6 +33,7 @@ jQuery(document).ready(function() {
     // }
 });
   var user_table = $('#table_id').DataTable({
+    "order": [[ 1, "desc" ]],
     dom: 'Bfrtip',
     buttons: [
     {
@@ -63,7 +64,6 @@ jQuery(document).ready(function() {
     },
     {
       targets: 4,
-      render: $.fn.dataTable.render.moment('DD-MM-YYYY'),
       width: "10%"
     } ,
     {

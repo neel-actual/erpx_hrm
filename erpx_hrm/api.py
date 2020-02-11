@@ -219,12 +219,13 @@ def get_approvers(employee,doctype):
     return approvers
 
 @frappe.whitelist()
-def create_claim(expense_approver,requester,claim_type,expenses):
+def create_claim(expense_approver,requester,claim_type,cutoff_date,expenses):
     object = frappe.get_doc({
     "doctype":"Expense Claim",
     "expense_approver":expense_approver,
     "employee":requester,
     "reimbursement_type":claim_type,
+    "cutoff_date":cutoff_date,
     "expenses":json.loads(expenses)
     })
     object.flags.ignore_permissions = True

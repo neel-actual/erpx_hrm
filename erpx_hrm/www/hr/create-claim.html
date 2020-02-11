@@ -109,7 +109,7 @@
                     <p style="margin-bottom: 10px;">Requester</p>
 					
 
-					<input type="text"  style="width: -webkit-fill-available;" value="{{employee_id}}" readonly>
+					<input type="text"  style="width: -webkit-fill-available;" value="{{employee_name}}" id="claim_requester" readonly>
 					<!-- <select name="claim_requester" style="padding-left: 10px;width: -webkit-fill-available;" id="claim_requester">
 						<option value="" disabled selected>Requester</option>
 						{% for emp in employee | sort(attribute='employee_name') %}
@@ -121,14 +121,14 @@
                   <div class="input-field col s12 m6">
 					  
                     <p style="margin-bottom: 10px;">Employee ID</p>
-						<input type="text"  style="width: -webkit-fill-available;" value="{{employee_name}}" readonly>
+						<input type="text"  style="width: -webkit-fill-available;" value="{{employee_id}}" id="employee_id" name="employee_id" readonly>
 						<!-- <input type="text" name="employee_id" style="width: -webkit-fill-available;" placeholder="BAYO-1909-003" id="employee_id" readonly> -->
                     
 				  </div>
 				  
 				  <div class="col s12 m12">
 					<p style="margin-bottom: 10px;">Approver</p>
-					<input type="text"  style="width: -webkit-fill-available;" value="{{approver}}" readonly>
+					<input type="text"  style="width: -webkit-fill-available;" value="{{approver}}" name="approver" id="sel_approver" readonly>
 					<!-- <input type="text" name="approver" style="width: -webkit-fill-available;" placeholder="Approver" id="sel_approver" readonly> -->
                  
                   </div>
@@ -137,9 +137,9 @@
 					  <p style="margin-bottom: 10px;"><b>Reimbusement Type</b></p>
 					   
 						<select id="sel_payment" name="sel_payment" style="padding-left: 10px;width: -webkit-fill-available;" >
-								<option value="" disabled selected>Select Reimbusement</option>
+								<!-- <option value="" disabled selected>Select Reimbusement</option> -->
 								<option value="Direct Payment" >Direct Payment</option>
-								<option value="Submission via Payroll" >Submission Via Payroll</option>
+								<option value="Submission via Payroll" selected>Submission Via Payroll</option>
 						</select>
                   </div>
 
@@ -289,15 +289,16 @@
 <!-- Claim Detail-->
 
 			<!-- <div class="card" style="border-radius: 10px!important;"> -->
-			<div id="add_claim_modal" class="modal" style="max-height:110% !important; top:3%">
-			  <div class="card-content">
+			<div id="add_claim_modal" class="modal" style="max-height:110% !important; ">
+			  <div class="modal-content">
 					  <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
-					  <div class="card-title" style="text-align: left;margin-left: 63px;margin-top: 20px;">Claim Details</div>
+					  <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
 				  <form id="claim_form">
 					<div class="row margin infodetails">
 							<div class="input-field col s6">
 								<p style="margin-bottom: 10px;">Claim type</p>
 								<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+								
 								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type">
 								<option value="" disabled selected>Select Type</option>
 									{% set leave_type = frappe.get_all("Expense Claim Type", fields=['name']) %}
@@ -305,12 +306,15 @@
 										<option value="{{i_leave_type.name}}">{{i_leave_type.name}}</option>
 									{% endfor %}
 								</select>
+								<label class='claim_type_error'></label>
+
 								<!--<label for="signup-name" class="center-align">Full Name</label>-->
 							</div>
 						  <div class="input-field col s6">
 							<p style="margin-bottom: 10px;">Claim Date</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 							<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="sel_date" value="2013-01-08" name="claim_date">
+							<!-- <label class='error'>Error</label> -->
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
 		  
@@ -318,6 +322,7 @@
 							<p style="margin-bottom: 10px;">Merchant</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 								<input type="text" name="merchant" style="width: -webkit-fill-available;" placeholder="e.g. Miya Motors " id="sel_merchant">
+								<!-- <label class='error'>Error</label> -->
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
 						  <div class="input-field col s12 m6">
@@ -325,6 +330,7 @@
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 							<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 40px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
 							<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
+							<label class='claim_amount_error'></label>
 							
 						  </div>
 
@@ -335,14 +341,15 @@
 								
 							</div>
 
-							<div class="modal-footer" style="background-color: #fff !important;">
-								<a href="#!" class="right waves-effect waves-light btn" id="add_claim">Add Claim</a>
-								<a href="#!" class="right blue-text btn-flat"
-								onclick="$('#add_claim_modal').modal('close')">Cancel</a>
-							  </div>
+							
 							
 					</div>
 				  </form>
+			  </div>
+			  <div class="modal-footer" style="background-color: #fff !important;">
+				<a href="#!" class="right waves-effect waves-light btn" id="add_claim">Add Claim</a>
+				<a href="#!" class="right blue-text btn-flat"
+				onclick="$('#add_claim_modal').modal('close')">Cancel</a>
 			  </div>
 			</div>
 
