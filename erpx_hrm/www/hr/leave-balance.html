@@ -97,7 +97,7 @@ table{
            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
            <h4 class="card-title directorytitle" style="text-align: left;">Balance</h4>
 
-           <a href="#!" class="btn-bulk-update modal-trigger waves-effect waves-light right btn-bulk">Bulk Update</a>
+           <a href="#!" class="btn-bulk-update modal-trigger waves-effect waves-light right btn-bulk hide">Bulk Update</a>
 
            <div style="height: 40px;"></div>
            <div class="row margin infodetails">
@@ -105,9 +105,8 @@ table{
               <p style="margin-bottom: 10px;">Employee</p>
               <select style="padding-left: 10px; width: 10px;" id="filter_employee">
                 <option value="" disabled selected>Select employee</option>
-                {% set emp_val = frappe.get_all("Employee",filters={"status":"Active"}, fields=['name','employee_name','employment_type','image','reports_to']) %}
-                {% for i_emp_val in emp_val%}
-                    <option value="{{i_emp_val.name}}">{{i_emp_val.employee_name}}</option>
+                {% for employee in list_employee%}
+                    <option value="{{employee.name}}">{{employee.employee_name}}</option>
                 {% endfor %}
               </select>
             </div>
@@ -115,22 +114,20 @@ table{
           <br>
           <div class="col xl6 l6 m6 s5">
             <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Summary</div>
-            <!--<p>Balance left</p>-->
             <div style="margin-left: 10px;" class="row circle-margin" id="html_balancesummary">
             </div>
           </div>
           <br>
-          <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Change History</div>
+          <div class="card-title hide" style="text-align: left;margin-left: 25px;">Balance Change History</div>
           <div style="height: 5px"></div>
-          <div class="col x2 l6 m6 s5">
+          <div class="col x2 l6 m6 s5 hide">
            <div class="row margin infodetails">
             <div class="input-field col s12 m4 ">
               <p style="margin-bottom: 10px;">Type</p>
               <select style="padding-left: 10px; width: 10px;">
                 <option value="" selected>All type</option>
-                {% set leavtype_val = frappe.get_all("Leave Type", fields=['*']) %}
-                {% for i_leavtype_val in leavtype_val%}
-                    <option value="{{i_leavtype_val.leave_type_name}}">{{i_leavtype_val.leave_type_name}}</option>
+                {% for i_leavtype_val in list_leave_type%}
+                    <option value="{{i_leavtype_val.name}}">{{i_leavtype_val.name}}</option>
                 {% endfor %}
               </select>
             </div>
@@ -138,8 +135,8 @@ table{
         </div>
         <br>
       </form>
-      <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
-      <ul id="collapse-table" class="collapsible">
+      <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
+      <ul id="collapse-table" class="collapsible hide">
               <li>
                 <table style="font-size: 14px;" >
                   <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
