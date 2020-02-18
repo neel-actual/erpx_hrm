@@ -88,23 +88,37 @@ $(document).ready(function () {
 	if(glb_holiday_list_name!=""){
 		list_holiday.get_list();
 	}
-	
-	$("#save_holiday_add").click(function () {
-        var holiday_name = $("#holiday_title_add").val();
-        $("#holiday_title_add").val("");
-        $("#modal-add").modal("close");
-        list_holiday.create_doc({ "designation_name": holiday_name });
-	});
 
 	$("#save_holiday").click(function () {
         let name = $(`#form-holiday-edit [data-fieldname="name"]`).val();
 		var args = {}
 		Object.keys(list_holiday.fields).forEach(function (element) {
-			args[element] = $(`#form-holiday-edit [data-fieldname="${element}"]`).val();   
-		})        
-		list_holiday.update_doc(name, args);
+			if(element!= "name")
+				args[element] = $(`#form-holiday-edit [data-fieldname="${element}"]`).val();   
+		})
+		if(name){
+			list_holiday.update_doc(name, args);
+		}else{
+			args["parent"] = glb_holiday_list_name;
+			args["parentfield"] = "holidays";
+			args["parenttype"] = "Holiday List";
+			list_holiday.create_doc(args);
+		}		
 		$('#modal-holiday').modal('close');
-    });
+	});
+	
+	$("#btn-add-holiday").click(function () {
+		var item = {
+			"name" : "",
+			"holiday_date" : "",
+			"description" : "",
+		};
+		var modal = $("#" + $(this).attr("data-modal"));
+		Object.keys(list_holiday.fields).forEach(function (element) {
+			modal.find(`[data-fieldname="${element}"]`).val(item[element]);
+		})
+		modal.modal('open');
+	});
 });
 
 //holiday
