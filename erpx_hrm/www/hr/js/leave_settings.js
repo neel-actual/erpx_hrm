@@ -157,8 +157,8 @@ $.extend(list_holiday, {
 	get_item_html: function (item, item_index) {
 		if (item.description != "Saturday" && item.description != "Sunday"){
 			return `
-				<tr>
-					<td> ${item.holiday_date}</td>
+				<tr class="list-item">
+					<td>${item.holiday_date}</td>
 					<td>${item.description}</td>
 					<td>
 						<a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
