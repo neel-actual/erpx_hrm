@@ -84,9 +84,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <tr>
                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}
                     <td>{{ex.name}}<br>
-                      ({% for e in claim_title %}
-                      {{e.expense_type}}
-                      {% endfor %})
+                      ({% for e in range(claim_title|length) %}
+                    {% if e < 2 %}
+                    {{claim_title[e].expense_type}}
+                    {% endif %}
+                    {% endfor %}
+                    {% if (claim_title|length) > 2 %}
+                    ...
+                    {% endif %})
                     </td>
                   <td>{{ex.posting_date}}</td>
                   <td>{{ex.total_claimed_amount}}</td>

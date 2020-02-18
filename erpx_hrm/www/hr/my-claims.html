@@ -133,10 +133,15 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                 <tr>
                                     <!-- <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td> -->
                                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': i_exp_list.name},fields=["expense_type"])%}               
-                                  <td><a style="color:#4F92FF" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a><br>
-                                    ({% for e in claim_title %}
-                                    {{e.expense_type}}
-                                    {% endfor %})
+                                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a><br>
+                                    ({% for e in range(claim_title|length) %}
+                                    {% if e < 2 %}
+                                    {{claim_title[e].expense_type}}
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if (claim_title|length) > 2 %}
+                                    ...
+                                    {% endif %})
                                   </td>
                                     <td>{{ i_exp_list.posting_date.strftime(" %d-%m-%Y ")  }}</td>
                                     <td>{{currency}} {{'%0.2f'| format(i_exp_list.total_claimed_amount|float)}}</td>
@@ -156,7 +161,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                         {% set class_color = 'p-approved' %}
                                     {% endif %}
 
-                                    <td><p class="{{class_color}}">{{i_exp_list.status}}</p></td>
+                                    <td><p class="{{class_color}}">{% if(i_exp_list.status == 'Draft') %}Pending{% else %}{{i_exp_list.status}}{% endif %}</p></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -190,6 +195,7 @@ type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready( function () {
         var user_table = $('#table_id').DataTable({
+          bFilter: false,
           "order": [[ 1, "desc" ]],
           paging: true,
         });
