@@ -288,7 +288,6 @@ xhrm.views.ListCRUD = Class.extend({
 		});
 		me.parent.find(".btn-edit").click(function () {
 			var item = me.items[$(this).attr("data-index")];
-			console.log(item);
 
 			var name = $(this).attr("data-name");
 			var modal = $("#" + $(this).attr("data-modal"));

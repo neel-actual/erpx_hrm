@@ -33,6 +33,15 @@ def get_context(context):
     context.list_company = frappe.db.get_all("Company",fields=["company_name"])
     context.list_holiday = frappe.db.get_all("Holiday List",fields=["holiday_list_name"])
 
+    holiday_list_name = frappe.get_cached_value('Company',  company,  "default_holiday_list")
+
+    if holiday_list_name:
+        context.holiday_list_name = holiday_list_name
+        context.holiday = frappe.get_doc("Holiday List", holiday_list_name)
+    else:
+        context.holiday = frappe.get_doc("Holiday List")
+        context.holiday_list_name = ""
+
     return context
 
 
