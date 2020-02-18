@@ -22,7 +22,6 @@
 		}
 
 		table {
-			width: 1000px !important;
 			display: inline-table !important;
 		}
 
@@ -89,378 +88,173 @@
 
 								<img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon"
 									src="/icons/leave.png">
-								<h4 class="card-title directorytitle" style="text-align: left;">General Settings</h4>
-								<a id="add-office " href="#create-news.modal"
-									class=" modal-trigger waves-effect waves-light right office-btn">Edit</a>
-
+								<h4 class="card-title directorytitle" style="text-align: left;">Leave Period</h4>
 
 								<div style="height: 40px;"></div>
-								<div class="row margin infodetails">
-
+								<div class="row margin infodetails" id="form-leave-period">
+									<input data-fieldname="name"  value="{{leave_period.name}}" type="hidden" autocomplete="off">
 									<div class="input-field col s12 m6">
 										<p style="margin-bottom: 10px;">Start</p>
 										<img src="/icons/calendar-blue.png" width="20" height="20"
 											style="position: absolute; margin-top: 12px; right: 35px;">
-										<input
+										<input data-fieldname="from_date"  autocomplete="off"
 											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+											placeholder="" class="textbox-n" type="date" value="{{leave_period.from_date}}" onfocus="(this.type='date')">
 									</div>
-
 									<div class="input-field col s12 m6">
 										<p style="margin-bottom: 10px;">End</p>
 										<img src="/icons/calendar-blue.png" width="20" height="20"
 											style="position: absolute; margin-top: 12px; right: 35px;">
-										<input
+										<input data-fieldname="to_date"   autocomplete="off"
 											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+											placeholder="" class="textbox-n" type="date" value="{{leave_period.to_date}}" onfocus="(this.type='date')">
 									</div>
-
 									<div class="input-field col s12 m9">
 										<p style="margin-bottom: 10px;">Company</p>
-										<select name="company"
-											style="padding-left: 10px;width: -webkit-fill-available;">
+										<select data-fieldname="company"
+											style="padding-left: 10px; width: -webkit-fill-available;" autocomplete="off">
 											<option value="">Select Comapny</option>
-											{% set ev1 = frappe.get_all("Company", fields=['*']) %}
-											{% for i_ev1 in ev1%}
-											<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+											{% for row in list_company %}											
+											<option {% if row.company_name == leave_period.company %} selected {% endif %} value="{{row.company_name}}">{{row.company_name}}</option>
 											{% endfor %}
 										</select>
 									</div>
-
 									<div class="input-field col s12 m9">
 										<p style="margin-bottom: 10px;">Holiday List</p>
-										<select style="padding-left: 10px; width: 10px;">
-											<option value="" disabled selected>Select Holiday List</option>
-											<option value="information technology">Selangor Holiday 2019</option>
+										<select data-fieldname="optional_holiday_list" style="padding-left: 10px; width: 10px;" autocomplete="off">
+											<option value="">Select Holiday List</option>
+											{% for row in list_holiday %}											
+											<option {% if row.holiday_list_name == leave_period.optional_holiday_list %} selected {% endif %} value="{{row.holiday_list_name}}">{{row.holiday_list_name}}</option>
+											{% endfor %}
 										</select>
 									</div>
-									<br>
-									<br>
-									<div style="width: 100%; display: inline-block;">
-										<hr />
-									</div>
-
-									<div class="input-field col s12 m6">
-										<p style="margin-bottom: 10px;">Start</p>
-										<img src="/icons/calendar-blue.png" width="20" height="20"
-											style="position: absolute; margin-top: 12px; right: 35px;">
-										<input
-											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-									</div>
-
-									<div class="input-field col s12 m6">
-										<p style="margin-bottom: 10px;">End</p>
-										<img src="/icons/calendar-blue.png" width="20" height="20"
-											style="position: absolute; margin-top: 12px; right: 35px;">
-										<input
-											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-									</div>
-
-
-									<div class="col xl6 l6 m9 s9">
-										<p style="margin-bottom: 10px;">Total Holidays</p>
-										<input type="text" name="entitlement2">
+									<div class="col s12">
+										<button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-leave-period" class="btn waves-effect waves-light right">Save</button>
+										
 									</div>
 								</div>
+							</div>
 
-								<!-- Holiday table list   -->
-								<br>
-								<div class="step-content">
-									<div class="row">
-										<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
-											<table style="margin-top: 15px;display: inline-table !important;">
-												<tr style="background-color: #eff1f9;">
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<th style=" border-right:none!important;width: 20px;"><b></b></th>
-													<th style=" border-right:none!important;width: 50px;"><b>Date</b>
-													</th>
-													<th style=" border-right:none!important;width: 150px;">
-														<b>Description</b></th>
-													<th style=" border-right:none!important;width: 100px;"><b>Action</b>
-													</th>
-												</tr>
+						</div>
 
-												<tr>
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<td></td>
-													<td>
-														<span>01/01/2019</span>
-													</td>
-													<td>New Year's Day</td>
-													<td>
-
-
-														<p style="float: left;margin-right: 35px;display: block">
-															<span style="display: block; color:#00AEEF;">Edit</span>
-														</p>
-														<img src="/icons/icon-58.png" width="20" height="20"
-															style="float: left;margin-right: 5px;" />
-													</td>
-												</tr>
-
-												<tr style="background-color: #f9f9f9;">
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<td></td>
-													<td>
-														<span>21/01/2019</span>
-													</td>
-													<td>Thaipusam</td>
-													<td>
-
-
-														<p style="float: left;margin-right: 35px;display: block">
-															<span style="display: block; color:#00AEEF;">Edit</span>
-														</p>
-														<img src="/icons/icon-58.png" width="20" height="20"
-															style="float: left;margin-right: 5px;" />
-													</td>
-												</tr>
-
-												<th style=" border-right:none!important;width: 50px;">
-													<p>
-														<label class="container">
-															<input type="checkbox" class="filled-in"
-																checked="checked" />
-															<span class="checkmark"
-																style="vertical-align: -50%;"></span>
-														</label>
-													</p>
-												</th>
-												<td></td>
-												<td>
-													<span>21/01/2019</span>
-												</td>
-												<td>Thaipusam</td>
-												<td>
-
-
-													<p style="float: left;margin-right: 35px;display: block">
-														<span style="display: block; color:#00AEEF;">Edit</span>
-													</p>
-													<img src="/icons/icon-58.png" width="20" height="20"
-														style="float: left;margin-right: 5px;" />
-												</td>
-
-												<tr style="background-color: #f9f9f9;padding:0;padding-top: 20px;">
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<td></td>
-													<td>
-														<span>21/01/2019</span>
-													</td>
-													<td>Thaipusam</td>
-													<td>
-
-
-														<p style="float: left;margin-right: 35px;display: block">
-															<span style="display: block; color:#00AEEF;">Edit</span>
-														</p>
-														<img src="/icons/icon-58.png" width="20" height="20"
-															style="float: left;margin-right: 5px;" />
-													</td>
-												</tr>
-
-												<th style=" border-right:none!important;width: 50px;">
-													<p>
-														<label class="container">
-															<input type="checkbox" class="filled-in"
-																checked="checked" />
-															<span class="checkmark"
-																style="vertical-align: -50%;"></span>
-														</label>
-													</p>
-												</th>
-												<td></td>
-												<td>
-													<span>21/01/2019</span>
-												</td>
-												<td>Thaipusam</td>
-												<td>
-
-
-													<p style="float: left;margin-right: 35px;display: block">
-														<span style="display: block; color:#00AEEF;">Edit</span>
-													</p>
-													<img src="/icons/icon-58.png" width="20" height="20"
-														style="float: left;margin-right: 5px;" />
-												</td>
-
-
-												<tr style="background-color: #f9f9f9;">
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<td></td>
-													<td>
-														<span>21/01/2019</span>
-													</td>
-													<td>Thaipusam</td>
-													<td>
-
-
-														<p style="float: left;margin-right: 35px;display: block">
-															<span style="display: block; color:#00AEEF;">Edit</span>
-														</p>
-														<img src="/icons/icon-58.png" width="20" height="20"
-															style="float: left;margin-right: 5px;" />
-													</td>
-												</tr>
-
-
-												<th style=" border-right:none!important;width: 50px;">
-													<p>
-														<label class="container">
-															<input type="checkbox" class="filled-in"
-																checked="checked" />
-															<span class="checkmark"
-																style="vertical-align: -50%;"></span>
-														</label>
-													</p>
-												</th>
-												<td></td>
-												<td>
-													<span>21/01/2019</span>
-												</td>
-												<td>Thaipusam</td>
-												<td>
-
-
-													<p style="float: left;margin-right: 35px;display: block">
-														<span style="display: block; color:#00AEEF;">Edit</span>
-													</p>
-													<img src="/icons/icon-58.png" width="20" height="20"
-														style="float: left;margin-right: 5px;" />
-												</td>
-
-
-												<tr style="background-color: #f9f9f9;">
-													<th style=" border-right:none!important;width: 50px;">
-														<p>
-															<label class="container">
-																<input type="checkbox" class="filled-in"
-																	checked="checked" />
-																<span class="checkmark"
-																	style="vertical-align: -50%;"></span>
-															</label>
-														</p>
-													</th>
-													<td></td>
-													<td>
-														<span>21/01/2019</span>
-													</td>
-													<td>Thaipusam</td>
-													<td>
-
-
-														<p style="float: left;margin-right: 35px;display: block">
-															<span style="display: block; color:#00AEEF;">Edit</span>
-														</p>
-														<img src="/icons/icon-58.png" width="20" height="20"
-															style="float: left;margin-right: 5px;" />
-													</td>
-												</tr>
-
-											</table>
+						<!-- Holidays -->
+						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+							<div class="card-content">
+								<div class="row" style="margin: auto;">
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="display: inline;">Holidays </h4>
+									<div style="height: 40px;"></div>
+									<div class="row margin infodetails" id="form-holiday">
+										<input data-fieldname="name"  value="{{holiday.name}}" type="hidden" autocomplete="off">
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Start</p>
+											<img src="/icons/calendar-blue.png" width="20" height="20"
+												style="position: absolute; margin-top: 12px; right: 35px;">
+											<input data-fieldname="from_date" value="{{holiday.from_date}}"  autocomplete="off"
+												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
 										</div>
+
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">End</p>
+											<img src="/icons/calendar-blue.png" width="20" height="20"
+												style="position: absolute; margin-top: 12px; right: 35px;">
+											<input data-fieldname="to_date" value="{{holiday.to_date}}"  autocomplete="off"
+												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+										</div>
+										<div class="col s12 m6">
+											<p style="margin-bottom: 10px;">Total Holidays: {{holiday.total_holidays}} include Saturdays and Sundays</p>
+										</div>
+										<div class="col s12 m6">
+											<button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-holiday" class="btn waves-effect waves-light right">Save</button>
+										</div>
+										<br>
+										<div class="col s12 m12">
+											<button data-modal="modal-holiday" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday" class="btn waves-effect waves-light">Add Holiday</button>
+										</div>
+										<br>
+										<div class="step-content">
+											<div class="row">
+												<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+													<table id="list-holiday" style="margin-top: 15px; display: inline-table !important;">
+														
+														{% for row in holiday.holidays %}
+														{% if row.description != "Saturday" and row.description != "Sunday" %}
+														
+														{% endif %}
+														{% endfor %}
+													</table>
+												</div>
+											</div>
+										</div>
+											
 									</div>
 								</div>
+							</div>
+						</div>
 
-								<br>
-								<div class="input-field col s12 m12" style="margin-bottom: 0px;">
-									<p>Branch</p>
-								</div>
-								<div class="input-field col s9 m6">
-									<select name="company" style="padding-left: 10px;width: -webkit-fill-available;">
-										<option value="">Select Comapny</option>
-										{% set ev1 = frappe.get_all("Company", fields=['*']) %}
-										{% for i_ev1 in ev1%}
-										<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
-										{% endfor %}
-									</select>
-								</div>
-								<div class="input-field col s12 m6">
-									<a class="left waves-effect waves-light btn"
-										style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: 170px;"
-										href="#!">Add Branch</a>
-								</div>
-								<div class="input-field col s9 m9">
-									<textarea rows="6" cols="60">Main Office</textarea>
-								</div>
-								
-								<ul id="dropdown1" class="dropdown-content">
-									<li><a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
-									<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
-									<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
-								</ul>
-
-								<div class="col s12">
-									<a href="#!"
-										style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 14px;"
-										class="modal-trigger waves-effect waves-light right">
-										Save
-									</a>
-									<a href="#!" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">
-										Cancel
-									</a>
-								</div>
-
-								<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
-									<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-
+						<!-- Branches -->
+						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+							<div class="card-content">
+								<div class="row" style="margin: auto;">
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="display: inline;">Branches </h4>
+									<div class="row margin infodetails">
+										<div class="input-field col s12 m12" style="margin-bottom: 0px;">
+											<p>Branch</p>
+										</div>
+										<div class="input-field col s9 m6">
+											<select name="company" style="padding-left: 10px;width: -webkit-fill-available;">
+												<option value="">Select Comapny</option>
+												{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+												{% for i_ev1 in ev1%}
+												<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="input-field col s12 m6">
+											<a class="left waves-effect waves-light btn"
+												style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: 170px;"
+												href="#!">Add Branch</a>
+										</div>
+										<div class="input-field col s9 m9">
+											<textarea rows="6" cols="60">Main Office</textarea>
+										</div>
+										
 										<ul id="dropdown1" class="dropdown-content">
-											<li> <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
+											<li><a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
 											<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
 											<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
 										</ul>
+
+										<div class="col s12">
+											<a href="#!"
+												style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 14px;"
+												class="modal-trigger waves-effect waves-light right">
+												Save
+											</a>
+											<a href="#!" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">
+												Cancel
+											</a>
+										</div>
+
+										<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+											<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+												<ul id="dropdown1" class="dropdown-content">
+													<li> <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
+													<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+													<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+												</ul>
+											</div>
+										</div>
+											
 									</div>
 								</div>
-
 							</div>
-
 						</div>
 
 						<!-- Leave Type -->
@@ -970,6 +764,32 @@
 							</div>
 						</div>
 
+						<div id="modal-holiday" class="modal modal-fixed-footer">
+							<div class="modal-content" style="padding: 0px !important; ">
+							<p class="edit-title">Edit Holiday</p>
+								<form class="col s12" style="padding: 24px;" id="form-holiday-edit">
+									<input type="hidden" data-fieldname="name"  autocomplete="off">
+									<div class="row">
+										<div class="input-field col s12 m12" style="margin-top: 0px;">
+											<p>Date</p>
+											<input data-fieldname="holiday_date"  autocomplete="off"
+											style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+										</div>
+										<div class="input-field col s12 m12" style="margin-top: 0px;">
+											<p>Description</p>
+											<input type="text" data-fieldname="description" autocomplete="off">
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="right waves-effect waves-light btn" id="save_holiday">Save</a>
+								<a href="#" class="right blue-text btn-flat"
+								onclick="$('#modal-holiday').modal('close')">Cancel</a>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -980,29 +800,7 @@
 
 {% block scripts %}
 <script type="text/javascript">
-	function checked() {
-		if (document.getElementById('check1').checked == false) {
-			document.getElementById('check2').checked = false;
-		}
-	}
-	function checked1() {
-		if (document.getElementById('check2').checked == true) {
-			document.getElementById('check1').checked = false;
-		}
-	}
-
-	function checked2() {
-		if (document.getElementById('check3').checked == false) {
-			document.getElementById('check4').checked = false;
-		}
-	}
-	function checked3() {
-		if (document.getElementById('check4').checked == true) {
-
-			document.getElementById('check3').checked = false;
-		}
-	}
-
+	var glb_holiday_list_name = "{{ holiday_list_name }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
 	type="text/javascript"></script>
@@ -1013,6 +811,7 @@
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
 <script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
 <script defer src="/hr/js/leave_settings.js" type="text/javascript"></script>
