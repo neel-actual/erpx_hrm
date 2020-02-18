@@ -120,10 +120,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 
                 <tr>
                   {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
-                  <td><a style="color:#4F92FF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
-                    ({% for e in claim_title %}
-                    {{e.expense_type}}
-                    {% endfor %})
+                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                    
+                    ({% for e in range(claim_title|length) %}
+                    {% if e < 2 %}
+                    {{claim_title[e].expense_type}}
+                    {% endif %}
+                    {% endfor %}
+                    {% if (claim_title|length) > 2 %}
+                    ...
+                    {% endif %})
                   </td>
                   
                   <td>{{ex.posting_date}}</td>
@@ -156,7 +162,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   {% elif(ex.status == 'Submitted') %}
                       {% set class_color = 'p-approved' %}
                   {% endif %}
-                  <td><p class={{class_color}}>{{ex.status}}</p></td>  
+                  <td><p class={{class_color}}>{% if(ex.status == 'Draft') %}Pending{% else %}{{ex.status}}{% endif %}</p></td>  
                 </tr>
 
                 {% endfor %}

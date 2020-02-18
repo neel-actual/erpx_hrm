@@ -115,7 +115,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td>{{currency}} {{'%0.2f'| format(ex.total_claimed_amount|float)}}</td>
                     <td>{{ex.employee_name}}</td>
                     <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
-                    <td>{{ex.status}}</td>  
+                    <td>{% if(ex.status == 'Draft') %}Pending{% else %}{{ex.status}}{% endif %}</td>  
                   </tr>
   
                   {% endfor %}

@@ -1,9 +1,12 @@
 $(document).ready(async function(){
+
+
 var today = moment().format('YYYY-MM-DD');
 document.getElementById("sel_date").value = today;
 let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
 
 dt = $('#claim_table').DataTable({
+    bFilter: false,
     columnDefs: [ {
         targets: 0,
         width: "5%"
@@ -70,7 +73,7 @@ $("#add_claim").click(function(){
         }else{
             index = parseInt(dt.row(':last').data()[0]) + 1 
         }
-        var row = $('<tr><td>'+index+'</td><td>'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" type="file"/></td></tr>')
+        var row = $('<tr><td class="index">'+index+'</td><td>'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td></tr>')
         dt.row.add(row).draw();
         var data = dt.rows().data();
         var total = 0
@@ -91,7 +94,7 @@ $("#add_claim").click(function(){
    
 });
 
-$('#claim_table tbody').on( 'click', 'tr', function () {
+$('#claim_table tbody').on( 'click', 'td.index', function () {
     $(this).toggleClass('selected');
     // $(this).toggleClass('ideal')
   } );
@@ -105,6 +108,15 @@ $("#remove_claim").click(function(){
     
   dt.rows('.selected').remove().draw(false);
 })
+
+// $("#file_upload").change(function(){
+//     console.log("here")
+// })
+$('#claim_table tbody').on( 'change', '#file_upload', function () {
+    if($(this).val()){
+        $(this).removeClass('custom-file-input').addClass('custom-file-input-after');
+    }
+  } );
 
 $("#save_claim").click(async function(){
     // var dt = $('#claim_table').DataTable()
