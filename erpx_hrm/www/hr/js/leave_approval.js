@@ -85,11 +85,22 @@ $(document).ready(function () {
 		let doctype = "Leave Application";
 		let name = $(this).attr("data-name");
 		let docstatus = $(this).attr("data-docstatus");
-		if(docstatus!=1){
-			// delete_leave(name);
-		}else{
-			cancel_leave(name);//.then(delete_leave(name));
-		}
+		swal({
+			title: "Are you sure you want to delete?",
+			icon: 'warning',
+			buttons: {
+				cancel: true,
+				delete: 'Yes, Delete It'
+			}
+		}).then(function (result) {
+			if (result) {
+				if(docstatus!=1){
+					// delete_leave(name);
+				}else{
+					cancel_leave(name);//.then(delete_leave(name));
+				}
+			}
+		});		
 		return false;
 	});
 });
