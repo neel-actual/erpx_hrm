@@ -38,10 +38,12 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 table{
   padding: 0 !important;
+  max-width: 100%;
 }
 
 .collapsible-body{
   padding: 0 !important;
+  background-color:#fcf8e3
 }
 
 
@@ -158,17 +160,6 @@ table{
                                   <span>{{ i_leave_detail.file_name }}</span>
                                 </a>
                                 {% endif %}
-                               </td>
-                             </tr>
-                             <tr style="font-size: 13px;">
-                               <td style="width: 100px;">
-                                 Status Detail
-                               </td>
-                               <td style="width: 50px;">
-                                 :
-                               </td>
-                               <td >
-                                {{i_leave_detail.status}}
                                </td>
                              </tr>
                              </tbody>
