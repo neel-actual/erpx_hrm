@@ -1,13 +1,20 @@
-
-<div class="switch">
+<input type="hidden" data-fieldname="name"  autocomplete="off" value="{{doc.name or ""}}">
+    <div class="input-field col s9 m12">
+        {% if doc.name %}
         <span style="margin-left: 18px; padding-bottom:10px; "><b>{{doc.name}}</b></span>
-        <label class="switch-settings" style="float: right;">
-            <input type="checkbox">
-            <span class=" lever"></span>
-        </label>
+        {% else %}
+        <p style="margin-bottom: 10px;">Leave Type Name</p>
+        <input value="" type="text" name="leave_type_name" data-fieldname="leave_type_name" autocomplete="off">
+        {% endif %}
+        <div class="switch">
+            <label class="switch-settings hide" style="float: right;">
+                <input type="checkbox">
+                <span class=" lever"></span>
+            </label>
+        </div>
     </div>
     <br>
-    <div class="input-field col s9 m12 hide">
+    <div class="input-field col s9 m12">
         <div class="switch">
             <label>
                 <input type="checkbox" />
@@ -20,84 +27,63 @@
             </label>
         </div>
     </div>
-
     <div class="input-field col s9 m9">
         <p style="margin-bottom: 10px;">Max Leaves Allowed</p>
-        <input value="{{doc.max_leaves_allowed}}" type="text" name="max_leaves_allowed">
+        <input value="{{doc.max_leaves_allowed}}" type="text" name="max_leaves_allowed" data-fieldname="max_leaves_allowed"  autocomplete="off">
     </div>
-
-    <a id="add-office " href="#create-news.modal"
-        class=" modal-trigger waves-effect waves-light right office-btn">Edit</a>
-
     <div class="input-field col s12 m6">
-        <p style="margin-bottom: 10px;">Carry Forward</p>
-        <p style="width: 30px">
+        <p style="margin-bottom: 10px;">
             <label>
-                <input type="checkbox" class="filled-in" id="is_carry_forward_0" name="is_carry_forward"  value="0" {{"checked" if not doc.is_carry_forward else ""}}/>
-                <span style="margin-left: 15px;padding-left: 22px;">No</span>
-            </label>
-            <label>
-                <input type="checkbox" class="filled-in" id="is_carry_forward_1"  name="is_carry_forward" value="1" {{"checked" if doc.is_carry_forward else ""}}/>
-                <span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+                <input data-fieldname="is_carry_forward" type="checkbox" class="filled-in" id="is_carry_forward"  name="is_carry_forward" value="1" {{"checked" if doc.is_carry_forward else ""}}/>
+                <span>Carry Forward</span>
             </label>
         </p>
     </div>
 
     <div class="input-field col s12 m6">
-        <p style="margin-bottom: 10px;">Earned Leave</p>
-        <p style="width: 30px">
+        <p style="margin-bottom: 10px;">
             <label>
-                <input type="checkbox" class="filled-in" id="check1" />
-                <span style="margin-left: 15px;padding-left: 22px;"
-                    onclick="checked()">No</span>
-            </label>
-
-            <label>
-                <input onclick="checked1()" class="filled-in" type="checkbox"
-                    id="check2" />
-                <span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+                <input data-fieldname="is_earned_leave" type="checkbox" class="filled-in" id="is_earned_leave"  name="is_earned_leave" value="1" {{"checked" if doc.is_earned_leave else ""}}/>
+                <span>Earned Leave</span>
             </label>
         </p>
     </div>
 
-    <div class="input-field col s9 m6">
+    <div class="input-field col s9 m6" id="div_earned_leave_frequency">
         <p style="margin-bottom: 10px;">Earned Leaves Frequency</p>
-        <select name="company"
-            style="padding-left: 10px;width: -webkit-fill-available;">
-            <option value="">Select Month</option>
-            {% set ev1 = frappe.get_all("Company", fields=['*']) %}
-            {% for i_ev1 in ev1%}
-            <option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+        <select data-fieldname="earned_leave_frequency"  autocomplete="off" name="earned_leave_frequency" id ="earned_leave_frequency" style="padding-left: 10px;width: -webkit-fill-available;">
+            <option value="">Select Frequency</option>
+            {% for item in list_earned_leave_frequency%}
+            <option value="{{item}}" {{"selected" if item==doc.earned_leave_frequency}}>{{item}}</option>
             {% endfor %}
         </select>
     </div>
 
-    <div class="input-field col s9 m6">
+    <div class="input-field col s9 m6" id="div_rounding">
         <p style="margin-bottom: 10px;">Earned Leaves Rounding</p>
-        <select name="company"
+        <select data-fieldname="rounding" name="rounding" id ="rounding"  autocomplete="off"
             style="padding-left: 10px;width: -webkit-fill-available;">
             <option value="">Select Rounding</option>
-            {% set ev1 = frappe.get_all("Company", fields=['*']) %}
-            {% for i_ev1 in ev1%}
-            <option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+            {% for item in list_rounding%}
+            <option value="{{item}}" {{"selected" if item==doc.rounding}}>{{item}}</option>
             {% endfor %}
         </select>
+    </div>
+
+   <div class="col s12">
+        <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-leave-type" class="btn waves-effect waves-light right">Save</button>
+        <button style="border-radius: 25px; width: 150px; margin-right:10px" type="button" id="btn-delete-leave-type" class="btn red waves-effect waves-light right">Delete</button>
+        
     </div>
 
     <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
         <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-
             <ul id="dropdown1" class="dropdown-content">
                 <li>
-                    <a href="#!"><img src="/icons/people-blue.png" width="20"
-                            height="20" /></a>
-
-
+                    <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
                 </li>
-                <li><a href="#!"><img src="/icons/icon-57.png" width="20"
-                            height="20" /></a></li>
-                <li><a href="#!"><img src="/icons/icon-56.png" width="20"
-                            height="20" /></a></li>
+                <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+                <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
             </ul>
         </div>
     </div>

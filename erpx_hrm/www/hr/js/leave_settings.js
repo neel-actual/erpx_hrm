@@ -11,6 +11,15 @@ var holiday_fields = [
 	"to_date",
 ]
 
+var leave_type_fields = [
+	"leave_type_name",
+	"max_leaves_allowed",
+	"is_carry_forward",
+	"is_earned_leave",	
+	"earned_leave_frequency",
+	"rounding"
+]
+
 $(document).ready(function () {
 	$("#btn-save-leave-period").click(function () {
 		let name = $(`#form-leave-period [data-fieldname="name"]`).val();
@@ -123,24 +132,107 @@ $(document).ready(function () {
 	$("#select-leave-type").change(function () {
 		let leave_type = $(this).val();
 		if(leave_type!=""){
-			frappe.call({
-				method: "erpx_hrm.utils.leave_type.show_detail",
-				args : {
-					name : leave_type
-				},
-				callback: function(r) {
-					$("#div-leave-type").html(r.message);
-				}
-			});
+			show_detail_leave_type(leave_type);
 		}else{
-			$("#div-leave-type").empty();
-		}
+			$("#form-leave-type").empty();
+		}		
+	});
+});
 
-		
+var show_detail_leave_type = function(leave_type){
+	frappe.call({
+		method: "erpx_hrm.utils.leave_type.show_detail",
+		args : {
+			name : leave_type
+		},
+		callback: function(r) {
+			$("#form-leave-type").html("<hr><br>" + r.message);
+			$("#form-leave-type #earned_leave_frequency").formSelect();
+			$("#form-leave-type #rounding").formSelect();
+			bind_leave_type();
+		}
+	});
+}
+
+var bind_leave_type = function(){
+	$("#form-leave-type #is_earned_leave").change(function(){
+		if ($(this).is(':checked')) {
+			$("#form-leave-type #div_earned_leave_frequency").show();
+			$("#form-leave-type #div_rounding").show();
+		}else{
+			$("#form-leave-type #div_earned_leave_frequency").hide();
+			$("#form-leave-type #div_rounding").hide();
+		}
+	})
+
+	$("#form-leave-type #is_earned_leave").trigger("change");
+
+	$("#form-leave-type #btn-delete-leave-type").click(function () {
+		let name = $(`#form-leave-type [data-fieldname="name"]`).val();
+		if (name){
+			swal({
+				title: "Are you sure you want to delete?",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					delete: 'Yes, Delete It'
+				}
+			}).then(function (result) {
+				if (result) {
+					frappe.ajax({
+						type: "DELETE",
+						url: `/api/resource/Leave Type/${name}`,
+						callback: function (r) {
+							M.toast({
+								html: __("Deleted Successfully!")
+							});
+							location.reload();
+						}
+					});
+				}
+			})
+			return false;
+		}	
 	});
 
-	
-});
+	$("#form-leave-type #btn-save-leave-type").click(function () {
+		let name = $(`#form-leave-type [data-fieldname="name"]`).val();
+		var args = {}
+        leave_type_fields.forEach(element => {
+			args[element] = $(`#form-leave-type [data-fieldname="${element}"]`).val();
+			if(element=="is_carry_forward" || element=="is_earned_leave"){
+				args[element] = $(`#form-leave-type [data-fieldname="${element}"]:checked`).val() || 0;
+			}
+		});
+		
+		if (!name){
+			frappe.ajax({
+				url: "/api/resource/Leave Type",
+				args: args,
+				callback: function (r) {
+					M.toast({
+						html: "Added Successfully!"
+					})
+					location.reload();		
+				}
+			})
+		}else{
+			frappe.ajax({
+				type: "PUT",
+				url: `/api/resource/Leave Type/${name}`,
+				args: args,
+				callback: function (r) {
+					if (!r.exc) {
+						M.toast({
+							html: "Updated Successfully!"
+						})
+						location.reload();
+					}
+				}
+			});
+		}		
+	});
+}
 
 //holiday
 var options = {
