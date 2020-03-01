@@ -219,10 +219,11 @@ def get_approvers(employee,doctype):
     return approvers
 
 @frappe.whitelist()
-def create_claim(expense_approver,requester,claim_type,cutoff_date,expenses):
+def create_claim(expense_approver,expense_verifier,requester,claim_type,cutoff_date,expenses):
     object = frappe.get_doc({
     "doctype":"Expense Claim",
     "expense_approver":expense_approver,
+    'expense_verifier':expense_verifier,
     "employee":requester,
     "reimbursement_type":claim_type,
     "cutoff_date":cutoff_date,

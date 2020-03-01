@@ -14,6 +14,7 @@ $(document).ready(function(){
                     M.toast({
                         html: 'Cutoff Date Saved Successfully!'
                     })
+                    location.reload(true);
                 }
             }
         });
@@ -37,6 +38,7 @@ $(document).ready(function(){
                     M.toast({
                         html: 'Currency Saved Successfully!'
                     })
+                    location.reload(true);
                 }
             }
         });
@@ -57,6 +59,7 @@ $(document).ready(function(){
                     M.toast({
                         html: 'Approver Saved Successfully!'
                     })
+                    location.reload(true);
                 }
             }
         });
@@ -65,8 +68,7 @@ $(document).ready(function(){
 
     // approver_val = frappe.db.get_value("Department Approver",{"parent":dep_name,"parentfield":"expense_approvers","approver":approver},"approver")
 
-    $("#depval").change(function(){
-        console.log($("#depval").val())
+    $("#depval").change(async function(){        
         frappe.call({
             method: 'erpx_hrm.api.get_department_approver',
             args: {
@@ -91,8 +93,31 @@ $(document).ready(function(){
                 }
             }
         });
+        let verifier =await hrm.get_value("Department",fieldname=['expense_verifier'],filters={'name':$("#depval").val()})
+        console.log(verifier.message.expense_verifier)
+        if(verifier.message.expense_verifier){
+            $("#verval").val(verifier.message.expense_verifier)
+            $("#verval").formSelect()
+        }else{
+            $("#verval").val("")
+            $("#verval").formSelect()
+        }
     })
-
+    $("#verifier_update").click(function(){
+        if($("#depval").val() && $("#verval").val()){
+            hrm.update("Department",{"name":$("#depval").val(),"expense_verifier":$("#verval").val()}).then(function(){
+                M.toast({
+                    html: 'Verifier Updated Successfully!'
+                })  
+                location.reload(true);
+            })
+        }else{
+            M.toast({
+                html: 'Please Select Appropriate Department and Verify!'
+            })
+        }
+        
+    })
     $("#delapp").click(function(){
 
         frappe.call({
@@ -101,12 +126,14 @@ $(document).ready(function(){
                 'department': $("#depval").val(),
                 'approver': $("#appval").val()
             },
+            
             callback: function(r) {
                 if (!r.exc) {
                     console.log(r.message)
                     M.toast({
                         html: 'Approver Deleted Successfully!'
                     })
+                    location.reload(true);
                 }
             }
         });

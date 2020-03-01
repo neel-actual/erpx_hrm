@@ -188,6 +188,22 @@
             <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
           </div>
 
+          <div class="row margin infodetails">
+            <div style="margin-top: 61px;text-align: left" class="input-field col s12 m3">Verifier</div>
+            <div class="input-field col s12 m5" style="margin-top: 46px;">
+              {% set user = frappe.get_all("User",filters={'user_type':'System User'},fields=['name']) %}
+              <select style="padding-left: 10px;width: -webkit-fill-available;" id="verval">
+                <option value="" selected disabled>Verifier</option>
+                {% for us in user %}
+                <option value={{us.name}}>{{us.name}}</option>
+                {% endfor %}
+              </select>
+              
+            </div>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="verifier_update">Update Verifier</a>
+            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
+          </div>
+
 
         </div>
       </div>

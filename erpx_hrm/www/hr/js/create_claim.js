@@ -94,7 +94,7 @@ $("#add_claim").click(function(){
    
 });
 
-$('#claim_table tbody').on( 'click', 'td.index', function () {
+$('#claim_table tbody').on( 'click', 'tr', function () {
     $(this).toggleClass('selected');
     // $(this).toggleClass('ideal')
   } );
@@ -148,6 +148,7 @@ $("#save_claim").click(async function(){
         method: 'erpx_hrm.api.create_claim',
         args: {
             'expense_approver':$("#sel_approver").val(),
+            'expense_verifier':$("#sel_verifier").val(),
             'requester':$("#employee_id").val(),
             'claim_type':$("#sel_payment").val(),
             'cutoff_date':(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate())).toString(),
