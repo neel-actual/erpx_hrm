@@ -1,0 +1,536 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+
+@media only screen and (max-width: 1720px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    white-space: nowrap!important;
+  }
+
+  .table-wid{
+    width: 1290px !important;
+  }
+}
+
+@media only screen and (max-width: 480px){
+  .tabs-a{
+    padding: 0px!important;
+    font-size: 12px!important;
+    text-overflow: unset!important;
+  }
+
+  .tabs{
+    width: 320px !important;
+  }
+
+  .tabs-scroll{
+    overflow-x: auto !important;
+  }
+}
+
+ [type="checkbox"].filled-in:checked + span:not(.lever):before{
+    border-right: 2px solid green !important;
+    border-bottom: 2px solid green !important;
+}
+[type="checkbox"].filled-in + span:not(.lever):after {
+  border-radius: 6px !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+.indicator{
+  height: 3px !important;
+}
+
+.input-field.col label{
+  padding-left: 0px !important;
+  left: 0px !important;
+}
+
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables">
+          <div class="col s12">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb" style="display: inline;">
+
+                <a class="breadcrumb">Payroll</a>
+                <a class="breadcrumb">Settings</a>
+                <a href="/payroll/payroll-items-sett" class="breadcrumb active">Payroll Items</a>
+              </div>
+
+            </div>
+            
+            <!-- People List --> 
+            <div id="card-stats" class="card" style="margin-bottom: 0px; border-top-left-radius: 10px !important;border-top-right-radius: 10px !important;">
+              <div class="card-content">
+                <div>
+                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
+                 <h4 class="card-title newstitle" style="display: inline;">Payroll Items</h4>
+
+               </div>
+               <br><br/>
+               <div class="col s12 tabs-scroll">
+                <ul class="tabs">
+                  <li class="tab col s3"><a style="color: black!important;" href="#test1" class="tabs-a active">Additions</a></li>
+                  <li class="tab col s3"><a style="color: black!important;" href="#test2" class="tabs-a">Deductions</a></li>
+                  <li class="tab col s3"><a style="color: black!important;padding:0 !important;" href="#test3" class="tabs-a">Overtime</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <br>
+
+
+          <br>
+
+          
+
+          <div id="test1">
+            <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+              <div class="card-content">
+                <a href="#add-addition" class=" modal-trigger waves-effect waves-light right" id="addition">Add Additon</a>
+
+
+                <div class="row">
+
+                  <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+                    <table class="table-wid" style="margin-top: 15px; display: inline-table!important;" id="add_item">
+                      <tr style="background-color: #eff1f9;">
+                        <th style=" border-right:none!important; width: 240px;"><b>Title</b></th>
+                        <th style=" border-right:none!important; width: 240px;"><b>Category</b></th>
+                        <th style=" border-right:none!important;"><b>EPF</b></th>
+                        <th style=" border-right:none!important;"><b>PCB</b></th>
+                        <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                        <th style=" border-right:none!important;"><b>EIS</b></th>
+                        <th style=" border-right:none!important;"><b>Unit<br>Calculation</b></th>
+                        <th style=" border-right:none!important; width: 100px;"><b>Default/<br>Unit<br>Amount</b></th>                        
+                        <th style=" border-right:none!important;"><b>EA Field</b></th>
+                        
+                        <th style=" border-right:none!important; width: 90px;"><b></b></th>
+                      </tr>
+
+                     {% for item in addition_item %}
+                     <tr>
+                        
+                        <td class="name1">{{item.name1}}</td>                   
+                        <td class="category">{{item.category}}</td>
+                        <td class="epf"><label><input type="checkbox" class="filled-in" name="epf1" {% if item.epf == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="pcb"><label><input type="checkbox" class="filled-in" name="pcb1" {% if item.pcb == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="socso"><label><input type="checkbox" class="filled-in" name="socso1" {% if item.socso == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="eis"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.eis == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="unit_calculation"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.unit_calculation == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="default_amount">{{currency}} {{item.default_amount}}</td>
+                        <td class="ea_form_field">{{item.ea_form_field}}</td>
+                        <td><a class="modal-trigger edit" href="#edit-addition">Edit/Assign</a></td>
+                      </tr>
+
+                     {% endfor %}
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div id="test2">
+        <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+          <div class="card-content">
+            <a href="#add-addition" class=" modal-trigger waves-effect waves-light right" id="deduction">Add Deduction</a>
+            <div class="row">
+
+              <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+
+
+                <table class="table-wid" style="margin-top: 15px; display: inline-table!important;">
+                  <tr style="background-color: #eff1f9;">
+                    <th style=" border-right:none!important; width: 240px;"><b>Title</b></th>
+                    <th style=" border-right:none!important; width: 240px;"><b>Category</b></th>
+                    <th style=" border-right:none!important;"><b>EPF</b></th>
+                    <th style=" border-right:none!important;"><b>PCB</b></th>
+                    <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                    <th style=" border-right:none!important;"><b>EIS</b></th>
+                    <th style=" border-right:none!important;"><b>Unit<br>Calculation</b></th>
+                    <th style=" border-right:none!important; width: 100px;"><b>Default/<br>Unit<br>Amount</b></th>                        
+                    <th style=" border-right:none!important;"><b>EA Field</b></th>
+                    
+                    <th style=" border-right:none!important; width: 90px;"><b></b></th>
+                  </tr>
+
+                  {% for item in deduction_item %}
+                     <tr>
+                        
+                        <td class="name1">{{item.name1}}</td>                   
+                        <td class="category">{{item.category}}</td>
+                        <td class="epf"><label><input type="checkbox" class="filled-in" name="epf1" {% if item.epf == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="pcb"><label><input type="checkbox" class="filled-in" name="pcb1" {% if item.pcb == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="socso"><label><input type="checkbox" class="filled-in" name="socso1" {% if item.socso == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="eis"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.eis == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="unit_calculation"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.unit_calculation == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="default_amount">{{currency}} {{item.default_amount}}</td>
+                        <td class="ea_form_field">{{item.ea_form_field}}</td>
+                        <td><a class="modal-trigger edit-deduction" href="#edit-addition">Edit/Assign</a></td>
+                      </tr>
+
+                     {% endfor %}
+                  
+
+
+             </table>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <div id="test3">
+    <div  class="card" style="margin-top:-44px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+      <div class="card-content">
+        <a href="#add-addition" class=" modal-trigger waves-effect waves-light right" id="overtime">Add Overtime</a>
+        <div class="row">
+
+          <div id="table-scroll" class="col s12" style="padding: 0 0.75rem !important;">
+
+
+
+            <table class="table-wid" style="margin-top: 15px; display: inline-table!important;">
+              <tr style="background-color: #eff1f9;">
+                <th style=" border-right:none!important; width: 240px;"><b>Title</b></th>
+                <th style=" border-right:none!important; width: 240px;"><b>Category</b></th>
+                <th style=" border-right:none!important;"><b>EPF</b></th>
+                <th style=" border-right:none!important;"><b>PCB</b></th>
+                <th style=" border-right:none!important;"><b>SOCSO</b></th>
+                <th style=" border-right:none!important;"><b>EIS</b></th>
+                <th style=" border-right:none!important;"><b>Unit<br>Calculation</b></th>
+                <th style=" border-right:none!important; width: 100px;"><b>Default/<br>Unit<br>Amount</b></th>                        
+                <th style=" border-right:none!important;"><b>EA Field</b></th>
+                
+                <th style=" border-right:none!important; width: 90px;"><b></b></th>
+              </tr>
+
+              {% for item in overtime_item %}
+                     <tr>
+                        
+                        <td class="name1">{{item.name1}}</td>                   
+                        <td class="category">{{item.category}}</td>
+                        <td class="epf"><label><input type="checkbox" class="filled-in" name="epf1" {% if item.epf == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="pcb"><label><input type="checkbox" class="filled-in" name="pcb1" {% if item.pcb == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="socso"><label><input type="checkbox" class="filled-in" name="socso1" {% if item.socso == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="eis"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.eis == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="unit_calculation"><label><input type="checkbox" class="filled-in" name="eis1" {% if item.unit_calculation == 1 %}checked{% else %}{% endif %}/><span></span></label></td>
+                        <td class="default_amount">{{currency}} {{item.default_amount}}</td>
+                        <td class="ea_form_field">{{item.ea_form_field}}</td>
+                        <td><a class="modal-trigger edit-overtime" href="#edit-addition">Edit/Assign</a></td>
+                      </tr>
+
+              {% endfor %}
+              
+
+
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div id="add-addition" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+   <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+    <p class="edit-title">Add Addition</p>
+    <form class="col s12" style="padding: 24px; padding-top: 0px;" id = "addition">
+      <div class="row">
+
+        <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p>Name</p>
+          <input type="text" id="title" name="name1"  data-length="50" style="width: -webkit-fill-available !important;">  
+          <input type="text" id="child_field" name="child_field"  data-length="50" style="width: -webkit-fill-available !important;" readonly hidden>  
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Category</p>
+          <select name="category" >
+            <option value="" selected>Select category</option>
+            <option value="Allowance" >Allowance</option>
+            <option value="Remuneration" >Remuneration</option>
+          </select>
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Unit calculation</p>
+          <label style="position: relative!important;"><input type="checkbox" class="filled-in" name="unit_calculation" ><span>You can calculate the allowance by unit calculation in Pay Run</span></label>
+        </div>
+
+        <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p>Default Amount</p>
+          <input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+          <input type="text" name="default_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" >   
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+         <p style="margin-bottom: 10px;">Category</p>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="epf"><span>EPF</span>
+         </label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="pcb"><span>PCB</span></label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="socso"><span>SOCSO</span></label>
+         <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="eis"><span>EIS</span></label>
+       </div>
+
+       <div class="input-field col s12" style="margin-top: 0px;">
+        <p>EA Form Field</p>
+        <select name = "ea_form_field">
+          <option value="" disabled selected>Select a field</option>
+          <option value="B1a">B1a</option>
+          <option value="B1b">B1b</option>
+          <option value="B1c">B1c</option>
+          <option value="B1d">B1d</option>
+          <option value="B1e">B1e</option>
+          <option value="B1f">B1f</option>
+          <option value="B2">B2</option>
+          <option value="B5">B5</option>
+          <option value="B6">B6</option>
+          <option value="C1">C2</option>
+          <option value="C2">C2</option>
+          <option value="N/A">N/A</option>
+        </select>
+      </div>
+
+      <!-- <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p style="margin-bottom: 5px;">Assignee</p>
+          <p>
+            <label>
+              <input class="with-gap" name="group1" type="radio"  checked />
+              <span>No Assignee</span>
+            </label>
+          </p>
+          <br>
+          <p>
+            <label>
+              <input class="with-gap" name="group1" type="radio"  />
+              <span>All Employees</span>
+            </label>
+          </p>
+          <br>
+          <p>
+            <label class="input-field col s12 m12 l5" style="margin-top: 0;">
+              <input class="with-gap" name="group1" type="radio"  />
+              <span style="width: -webkit-fill-available">
+                  <select multiple>
+                    
+                      <option value="" disabled>Select Employee</option>
+                      {% for emp in employee %}
+                      <option value="{{emp.name}}">{{emp.employee_name}}</option>
+                      {% endfor %}
+                    </select>
+              </span>
+            </label>
+          </p>
+        </div> -->
+
+   </div>
+ </form>
+</div>
+<div class="modal-footer" style="background-color: #fff !important;">
+  <a href="#!" class="right waves-effect waves-light btn" id = "save_add">Save</a>
+  <a href="#!" class="right blue-text btn-flat"
+  onclick="$('#add-addition').modal('close')">Cancel</a>
+</div>
+</div>
+
+<div id="edit-addition" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important;">
+    <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+        <p class="edit-title">Add Addition</p>
+        <form class="col s12" style="padding: 24px; padding-top: 0px;" id = "edit">
+          <div class="row">
+    
+            <div class="input-field col s12" style="margin-bottom: 0px;">
+              <p>Name</p>
+              <input type="text" id="title" name="name1"  data-length="50" style="width: -webkit-fill-available !important;" readonly>
+              <input type="text" id="edit_child_field" name="edit_child_field"  data-length="50" style="width: -webkit-fill-available !important;" readonly hidden>    
+            </div>
+    
+            <div class="input-field col s12" style="margin-top: 0px;">
+              <p>Category</p>
+              <select name="category" readonly>
+                <option value="" selected>Select category</option>
+                <option value="Allowance" >Allowance</option>
+                <option value="Remuneration" >Remuneration</option>
+              </select>
+            </div>
+    
+            <div class="input-field col s12" style="margin-top: 0px;">
+              <p>Unit calculation</p>
+              <label style="position: relative!important;"><input type="checkbox" class="filled-in" name="unit_calculation" ><span>You can calculate the allowance by unit calculation in Pay Run</span></label>
+            </div>
+    
+            <div class="input-field col s12" style="margin-bottom: 0px;">
+              <p>Default Amount</p>
+              <input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+              <input type="text" name="default_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" >   
+            </div>
+    
+            <div class="input-field col s12" style="margin-top: 0px;">
+             <p style="margin-bottom: 10px;">Category</p>
+             <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="epf"><span>EPF</span>
+             </label>
+             <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="pcb"><span>PCB</span></label>
+             <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="socso"><span>SOCSO</span></label>
+             <label class="col s6 m6 l3 xl3" style="position: relative!important;"><input type="checkbox" class="filled-in"  name="eis"><span>EIS</span></label>
+           </div>
+    
+           <div class="input-field col s12" style="margin-top: 0px;">
+            <p>EA Form Field</p>
+            <select name = "ea_form_field">
+              <option value="" disabled selected>Select a field</option>
+              <option value="B1a">B1a</option>
+              <option value="B1b">B1b</option>
+              <option value="B1c">B1c</option>
+              <option value="B1d">B1d</option>
+              <option value="B1e">B1e</option>
+              <option value="B1f">B1f</option>
+              <option value="B2">B2</option>
+              <option value="B5">B5</option>
+              <option value="B6">B6</option>
+              <option value="C1">C2</option>
+              <option value="C2">C2</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+    
+          <div class="input-field col s12" style="margin-bottom: 0px;">
+              <p style="margin-bottom: 5px;">Assignee</p>
+              <p>
+                <label>
+                  <input class="with-gap" name="group1" type="radio"  checked />
+                  <span>No Assignee</span>
+                </label>
+              </p>
+              <br>
+              <p>
+                <label>
+                  <input class="with-gap" name="group1" type="radio" id="all_assign" />
+                  <span>All Employees</span>
+                </label>
+              </p>
+              <br>
+              <p>
+                <label class="input-field col s12 m12 l5" style="margin-top: 0;">
+                  <input class="with-gap" name="group1" type="radio"  id="multi_assign" />
+                  <span style="width: -webkit-fill-available">
+                      <select multiple id="select_multi" disabled>
+                        
+                          <option value="" disabled>Select Employee</option>
+                          {% for emp in employee %}
+                          <option value="{{emp.name}}">{{emp.employee_name}}</option>
+                          {% endfor %}
+                        </select>
+                  </span>
+                </label>
+              </p>
+            </div>
+    
+       </div>
+     </form>
+    </div>
+<div class="modal-footer" style="background-color: #fff !important;">
+  <a href="#!" class="right waves-effect waves-light btn" id="assign">Assign</a>
+  <a href="#!" class="right waves-effect waves-light btn" id="save_edit">Save</a>
+  
+  <a href="#!" class="right blue-text btn-flat"
+  onclick="$('#edit-addition').modal('close')">Cancel</a>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<script src="/payroll/js/payroll-items-sett.js" type="text/javascript"></script>
+{% endblock %}
+

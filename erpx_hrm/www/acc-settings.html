@@ -1,0 +1,181 @@
+{% extends "www/master.html" %}
+
+{% block title %}Account Setting{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/custom/custom.css">
+<style type="text/css">
+    @media only screen and (max-width: 480px){
+      .no-padd-left{
+        padding-left: 0 !important;
+      }
+      
+    }
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+<div id="main">
+    <div class="row">
+        <div class="container">
+            <div class="section-data-tables nav-wrapper black-text banner-title3 leave-request">
+             
+            <div class="content">
+                <div class="col xl7 l12 m12 s12 ">
+                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
+                        <div style="padding: 0!important;" class="card-content">
+                            <img style="display: inline;float: left; margin-left: 4.7%;margin-right: 10px" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+                            <div style="margin-top: 18px; text-align: left; margin-left: 60px;" class="card-title">Account Information</div>
+                            <span class="acc-info">You can edit your basic information and change passsword</span>
+                            <br>
+                            <div style="height: 20px;"></div>
+                            <hr>
+                            <div style="height: 20px;"></div>
+
+                            <img style="display: inline;float: left; margin-left: 4.7%;margin-right: 10px" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+                            <div class="card-title" style="text-align: left;margin-left: 60px;">Account Profile</div>
+                            <div style="height: 10px;"></div>
+
+
+                            <div class="row margin infodetails" >
+                                <div class="avatar-frame img-acc-settings" style="background-image:url(/icons/icon-79.png)"></div>
+                                <div class="prof-name">
+                                    <p class="acc-name">{{user_full_name}}</p>
+                                    <p style="font-size: 14px; color: #7e7a7a;">{{user}}</p>
+                                </div>
+                                <div class="btn btn-upload file-field input-field waves-effect waves-light" style="margin-top: 43px !important">
+                                    <div class="">
+                                        <span>Upload Photo</span>
+                                        <input id="file-acc" type='file' accept='image/*'>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <hr>
+                            <div style="height: 20px;"></div>
+
+                            <img style="display: inline;float: left; margin-left: 4.7%;margin-right: 10px" width="22" height="22" class="sidenav-icon" src="/icons/settings.png" >
+                            <div class="card-title" style="text-align: left;margin-left: 60px;">Change password</div>
+                            <div style="height: 10px;"></div>
+                            
+                            <div class="row margin infodetails no-padd-left" style="padding-left: 55px">
+                                <div class=" input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">Current Password</p>
+                                    <input id="old_password" type="password" type="text" name="old_password" style="width: -webkit-fill-available;">
+                                </div>
+
+                                <div class=" input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">New Password</p>
+                                    <input id="new_password" type="password" name="new_password" style="width: -webkit-fill-available;">
+                                </div>
+
+                                <div class="chg-pass-text input-field col s12 m8" >
+                                    <p style="float: left; margin-bottom: 5px;">Confirm Password</p>
+                                    <input id="confirm_password" type="password" name="confirm_password" style="width: -webkit-fill-available;">
+                                </div>
+                                <div class="col s12 m4" style="margin-top: 55px;margin-bottom: 40px;">
+                                    <button type="submit" id="update" class="waves-effect waves-light btn right">Change Password</button>
+                                </div>
+                            </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col xl5 l12 m12 s12 ">
+                <div class="card" style="border-radius: 10px!important;">
+                    <div class="card-content">
+                      <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+                      <div class="card-title" style="text-align: left;margin-left: 35px;">Notification Settings</div>
+                      <p style="color: darkgrey; margin-left: 37px;">You can turn on/off the notifications and choose only what you wish to recieve</p>
+
+                      <div style="height: 20px;"></div>
+                      <div class="card-title" style="text-align: left;margin-left: 35px;">Emails</div>
+
+                      <ul id="acc-notice" class="acc-noti-set">
+                        <li style="margin-bottom: 15px;" class="switch">
+                            <span>Birthday’s</span>
+                            <label class="label-switch" >
+                                <input id="btn_birthday_reminder" type="checkbox" {% if not stop_birthday_reminders %} checked {% endif %}>
+                                <span  class="lever"></span>
+                                Enable
+                            </label>
+                        </li>
+
+                        <li style="margin-bottom: 15px;" class="switch">
+                            <span>Leaves</span>
+                            <label class="label-switch">
+                                <input active type="checkbox" checked>
+                                <span class="lever"></span>
+                                Enable
+                            </label>
+                        </li>
+
+                        <li style="margin-bottom: 15px;" class="switch">
+                            <span>Holidays</span>
+                            <label class="label-switch">
+                                <input active type="checkbox" checked>
+                                <span class="lever"></span> 
+                                Enable  
+                            </label>
+                        </li>   
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+</script>
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script defer src="/hr/js/acc-settings.js" type="text/javascript"></script>
+
+{% endblock %}

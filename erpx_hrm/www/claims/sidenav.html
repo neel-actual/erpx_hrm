@@ -1,6 +1,6 @@
 <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
     <div class="brand-sidebar">
-        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/"><img src="/images/logo.svg"
+        <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="/claims" style="padding-bottom: 0 !important"><img src="/images/logo.svg"
           alt="materialize logo"></a><a
           class="navbar-toggler" href="#"><i class="material-icons-outlined">radio_button_checked</i></a></h1>
       </div>
@@ -8,38 +8,41 @@
       <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
       id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
       style="transform: translateX(0px);">
-      <li class="bold"><a class="waves-effect waves-cyan" href="/claims"><img class="sidenav-icon" src="/icons/claims.png"><span class="menu-title" data-i18n="">All Claims</span></a>
-        <li class="bold"><a class="waves-effect waves-cyan" href="/claims/reports"><img class="sidenav-icon" src="/icons/reports.png"></i><span class="menu-title" data-i18n="" onclick="window.location.href='/claims/reports.html'">Reports</span></a>
-            <li id="reimbursement-submodule" class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#"
-              tabindex="0"><img class="sidenav-icon" src="/icons/reimbursement.png"><span class="menu-title"
+      <li class="bold"><a id="all-claim" class="waves-effect waves-cyan" href="/claims">
+        <img class="sidenav-icon" src="/icons/claims.png">
+        <img class="sidenav-icon" src="/icons/claims-light.png">
+        <span class="menu-title" data-i18n="">All Claims</span></a>
+        <li class="bold"><a class="waves-effect waves-cyan" href="/claims/reports"><img class="sidenav-icon" src="/icons/reports.png"><img class="sidenav-icon" src="/icons/reports-light.png"></i><span class="menu-title" data-i18n="" >Reports</span></a>
+            <li id="reimbursement-submodule" class="bold"><a id="reimbursement" class="collapsible-header waves-effect waves-cyan " href="#"
+              tabindex="0" onclick="reimbursement_open();"><img class="sidenav-icon" src="/icons/reimbursement.png"><img class="sidenav-icon" src="/icons/reimbursement.png"><span class="menu-title"
               data-i18n="">Reimbursement</span>
           </a>
-          <div class="collapsible-body">
+          <div id="reimbursement-list" class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                <li class="">
-                    <a class="collapsible-body" href="/claims/submit-to-payroll.html"
+                <!-- <li class="">
+                    <a id="submission" class="collapsible-body" href="/claims/submit-to-payroll.html"
                     data-i18n="">
                     <span>Submit to Payroll</span></a>
-                </li>
+                </li> -->
                 <li><a class="collapsible-body" href="/claims/submission-his.html" data-i18n=""><span>Submission History</span></a>
                 </li>
             </ul>
         </div>
     </li>
-    <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0">  <img class="sidenav-icon" src="/icons/settings.png">
+    <li id="settings-submodule" class="bold"><a id="settings" class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0" onclick="settings_open();">  <img class="sidenav-icon" src="/icons/settings.png"><img class="sidenav-icon" src="/icons/settings.png">
        <span class="menu-title" data-i18n="">Settings</span></a>
-       <div class="collapsible-body">
+       <div id="setting-list" class="collapsible-body">
         <ul class="collapsible collapsible-sub" data-collapsible="accordion">
             <li class=""><a class="collapsible-body" href="/claims/set-general.html" data-i18n=""><span>General</span></a>
             </li>
             <li><a class="collapsible-body" href="/claims/set-claim-type.html" data-i18n=""><span>Claim Types</span></a>
             </li>
-            <li><a class="collapsible-body" href="/claims/set-reimbursement.html" data-i18n=""><span>Reimbursement</span></a>
-            </li>
+            <!-- <li><a class="collapsible-body" href="/claims/set-reimbursement.html" data-i18n=""><span>Reimbursement</span></a>
+            </li> -->
         </ul>
     </div>
 </li>
 </ul>
 <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
-href="#" data-target="slide-out"><i class="material-icons-outlined">menu</i></a>
+href="#" data-target="slide-out"><i class="material-icons-outlined" onclick="open_nav();">menu</i></a>
 </aside>

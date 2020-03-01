@@ -1,0 +1,232 @@
+{% extends "www/master.html" %}
+
+{% block title %}HR Hub{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+  @media only screen and (max-width: 1260px){
+  #table-scroll{
+    width: 100%;
+
+    overflow-x: scroll;
+
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1015px !important;
+    display: inline-table !important;
+  }
+}
+
+@media only screen and (max-width: 480px){
+
+
+  .tabs{
+    width: 410px !important;
+  }
+
+  .tabs-scroll{
+    overflow-x: auto !important;
+  }
+}
+
+@media only screen and (max-width: 330px){
+ .create-btn{
+  width: 100%;
+  margin-top: 30px !important;
+ }
+
+ .set-margin{
+  margin-right: 10px !important;
+ }
+}
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+<div id="main">
+  <div class="row">
+    <div class="container">
+      <div class="section-data-tables nav-wrapper black-text banner-title3">
+        <!--<div class="content-wrapper-before"></div>-->
+        <div class="col s12">
+          <div class="breadcrumb">
+            <a class="breadcrumb">Claims</a>
+            <a href="/hr/my-claims" class="breadcrumb active">All Claims</a>
+          </div>
+        </div>
+        <div class="col xl20 l20 m18 s12">
+          <div id="card-stats" class="card" style="border-radius: 10px!important;">
+            <div class="card-content">
+              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
+              <h4 class="card-title directorytitle" style="text-align: left;">My Claims</h4>
+              <div class="right set-margin btn-left" style="margin-left: -20px !important">
+
+                <a href="#create-claims.modal" class="btn modal-trigger waves-effect waves-light create-btn btn-left">
+                Create Claim</a>
+              </div>
+              <br><br>
+              <div class="row">
+                <div class="row margin infodetails">
+                  <div class="input-field col s12 m12 l6 xl4 ">
+
+                    <i style="position: absolute; padding-top: 12px; right: 20px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="width: -webkit-fill-available" type="text" name="search" placeholder="  Search Entities" id="search_i">
+                  </div>
+                  <div class="input-field col s12 m12 l6 xl3">
+
+                    <select style="width: -webkit-fill-available;" id="i_filter_status">
+                      <option value="" selected>All Status</option>
+                      <option value="Draft">Draft</option>
+                      <option value="Unpaid">Unpaid</option>
+                      <option value="Cancelled">Cancelled</option>
+                      <option value="Rejected">Rejected</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Submitted">Submitted</option>
+                    </select>
+                  </div>
+
+                  <a href="#!" class="clr-fil-myclaims modal-trigger waves-effect waves-light right btn-left" style="margin-right: 1rem;padding-bottom: 25px;">Clear Filter</a>
+                </div>
+
+                <div class="col s12" id="table-scroll">
+                    <table class="table table-striped dataTable display" style="font-size: 14px;" id="table_id">
+                        <thead>
+                            <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                                <th style="border-right:none!important;">Title</th>
+                                <th style="border-right:none!important;">Period</th>
+                                <th style="border-right:none!important;">Amount</th>
+                                <th style="border-right:none!important;">Last Updated</th>
+                                <th style="border-right:none!important;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*']) %}
+                            {% for i_exp_list in exp_list %}
+                                <tr>
+                                    <td><a style="color: black" href="/claims/claim-title1.html">{{i_exp_list.name}}</a></td>
+                                    <td>{{ i_exp_list.posting_date.strftime(" %d %b %Y ")  }} - {{ i_exp_list.posting_date.strftime(" %d %b %Y ")  }}</td>
+                                    <td>MYR {{i_exp_list.total_claimed_amount}}</td>
+                                    <td>{{ i_exp_list.modified.date()  }}</td>
+                                    {% set class_color = '' %}
+                                    {% if(i_exp_list.status == 'Unpaid') %}
+                                        {% set class_color = 'p-pending' %}
+                                    {% elif(i_exp_list.status == 'Draft') %}
+                                        {% set class_color = 'p-pending' %}
+                                    {% elif(i_exp_list.status == 'Cancelled') %}
+                                        {% set class_color = 'p-declined' %}
+                                    {% elif(i_exp_list.status == 'Rejected') %}
+                                        {% set class_color = 'p-declined' %}
+                                    {% elif(i_exp_list.status == 'Paid') %}
+                                        {% set class_color = 'p-approved' %}
+                                    {% elif(i_exp_list.status == 'Submitted') %}
+                                        {% set class_color = 'p-approved' %}
+                                    {% endif %}
+
+                                    <td><p class="{{class_color}}">{{i_exp_list.status}}</p></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+              </div>
+            </div>
+			
+                            <div id="create-claims.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+                                <div class="modal-content">
+                                    <p class="edit-title">Create Claim</p>
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12" style="margin-bottom: 0px;">
+                                                <p>Claim Series</p>
+                                                <input type="text" id="news-subject" style="width: -webkit-fill-available;">
+                                                <!--<label for="news-subject" class="" style="left: 30px;">Subject</label>-->
+                                            </div>
+                                            <div class="input-field col s12" style="margin-top: 0px;">
+                                                <p>Send email to</p>
+                                                <select>
+                                                    <option value="" disabled selected>None selected</option>
+                                                    {% set email = frappe.get_all("Employee", fields=['company_email']) %}
+                                                    {% for em in email%}
+                                                        <option value="{{em.company_email}}">{{em.company_email}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <textarea id="news-editor">Message</textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="right waves-effect waves-light btn">Add</a>
+                                    <a href="#" class="right blue-text btn-flat"
+                                       onclick="$('#create-claims\\.modal').modal('close')">Cancel</a>
+                                </div>
+                            </div>			
+			
+          </div>
+        </div>
+        <br><br><br><br><br><br><br>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready( function () {
+        var user_table = $('#table_id').DataTable();
+
+        $('#search_i').keyup(function(){
+          user_table.search($(this).val()).draw() ;
+        })
+
+        $('#i_filter_status').change(function(){
+            var filter_status = $("#i_filter_status").val();
+            user_table.column(4).search(filter_status, true, false, false).draw();
+        });
+    });
+</script>
+{% endblock %}

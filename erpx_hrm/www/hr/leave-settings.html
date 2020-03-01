@@ -4,308 +4,814 @@
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css"
-href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+	href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
+
+<style type="text/css">
+	@media only screen and (max-width: 1460px) {
+		#table-scroll {
+			width: 100%;
+			overflow-y: hidden;
+			overflow-x: scroll;
+
+			white-space: nowrap !important;
+		}
+
+		table {
+			display: inline-table !important;
+		}
+
+	}
+</style>
 {% endblock %}
 
 {% block nav %}
-{% if user == 'Guest' %}
-<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
-{% endif %}
-{% if user != 'Guest' %}
-{% include "www/nav.html" %}
-{% endif %}
+	{% if user == 'Guest' %}
+		<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+	{% endif %}
+	{% if user != 'Guest' %}
+		{% include "www/nav.html" %}
+	{% endif %}
 {% endblock %}
 
 {% block sidenav %}
-<!--sidenav-->
-{% include "www/hr/sidenav.html" %}
+	<!--sidenav-->
+	{% include "www/hr/sidenav.html" %}
 {% endblock %}
 
 {% block footer %}
-<!--footer-->
-{% include "www/footer.html" %}
+	<!--footer-->
+	{% include "www/footer.html" %}
 {% endblock %}
 
 {% block main %}
+<style type="text/css">
+	[type="checkbox"].filled-in:checked+span:not(.lever):before {
+		border-right: 2px solid green !important;
+		border-bottom: 2px solid green !important;
+	}
+
+	[type="checkbox"].filled-in+span:not(.lever):after {
+		border-radius: 6px !important;
+	}
+
+	[type="checkbox"].filled-in:checked+span:not(.lever):after {
+		border: 2px solid #e1e1e1 !important;
+		background-color: white !important;
+	}
+
+	[type="checkbox"].filled-in:not(:checked)+span:not(.lever):after {
+		border: 2px solid #e1e1e1 !important;
+		background-color: white !important;
+	}
+</style>
 
 <div id="main">
-  <div class="row">
-    <div class="container">
-      <div class="section-data-tables nav-wrapper black-text banner-title3">
-        <!--<div class="content-wrapper-before"></div>-->
-        <div class="col s12">
-          <div class="breadcrumb">
-            <a class="breadcrumb">HR Hub</a>
-            <a class="breadcrumb">Leave</a>
-            <a href="/hr/leave-settings" class="breadcrumb active">Leave Settings</a>
-          </div>
-        </div>
-        <div class="col s12">
-          <div id="card-stats" class="card">
-            <div class="card-content">
-              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
-              <h4 class="card-title directorytitle" style="text-align: left;">General Settings</h4>
+	<div class="row">
+		<div class="container">
+			<div class="section-data-tables nav-wrapper black-text banner-title3">
+				<!--<div class="content-wrapper-before"></div>-->
+				<div class="col s12">
+					<div class="breadcrumb">
+						<a class="breadcrumb">HR Hub</a>
+						<a class="breadcrumb">Leave</a>
+						<a href="/hr/leave-settings" class="breadcrumb active">Leave Settings</a>
+					</div>
+					<div class="col xl12 l12 m12 s12">
+						<!-- General Settings  -->
+						<div class="card" style="border-radius: 10px!important;">
+							<div class="card-content">
 
-              <a href="#" style=" text-align: center; line-height: 50px; margin: 0px; margin-top: -10px;" class="modal-trigger waves-effect waves-light right">Edit</a>
-              <br>
-                
-            <div class="col s12" style="padding: 15px 0px;">
-            <div class="col s12 m3 leave-calculation">
-            <p style="border-right:none!important; white-space: initial!important;">LEAVE CALCULATION<br><span style="font-size: 14px;"> <strong>Monthly Basis</strong></span></p>     
-            </div>
-            <div class="col s12 m3 annual-cycle">
-            <p style=" border-right:none!important; white-space: initial!important;">ANNUAL CYCLE<br><span style="font-size: 14px;">
-            <strong>Next cycle starts on :</strong></span><br>
-            <span style="font-size: 14px;">January 2020</span></p> 
-            </div>
-            <div class="col s12 m6 company-setting">
-            <p style="background-color: #eee8e8;border-left:5px darkgrey solid ; border-right:none!important; white-space: initial!important;padding: 10px;"> <i class="material-icons-outlined" style="float: left;">info</i>
-            <span style="font-size: 14px;">You can configure your company’s workday and holidays in<br>
-            <a href="#">Company Settings</a></span></p>    
-            </div>
-            </div>
-              <!--<table style="border-collapse: initial;" >
-                <tr style="border-bottom: none !important;">
-                  <td style="border-right:none!important; white-space: initial!important;">LEAVE CALCULATION<br>
-                   <span style="font-size: 14px;"> Monthly Basis</span></td>
+								<img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon"
+									src="/icons/leave.png">
+								<h4 class="card-title directorytitle" style="text-align: left;">Leave Period</h4>
 
-                   <td style=" border-right:none!important; white-space: initial!important;">ANNUAL CYCLE<br>
-                    <span style="font-size: 14px;">
-                    Next cycle starts on :</span><br>
-                    <span style="font-size: 14px;">January 2020</span></td>
+								<div style="height: 40px;"></div>
+								<div class="row margin infodetails" id="form-leave-period">
+									<input data-fieldname="name"  value="{{leave_period.name}}" type="hidden" autocomplete="off">
+									<div class="input-field col s12 m6">
+										<p style="margin-bottom: 10px;">Start</p>
+										<img src="/icons/calendar-blue.png" width="20" height="20"
+											style="position: absolute; margin-top: 12px; right: 35px;">
+										<input data-fieldname="from_date"  autocomplete="off"
+											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+											placeholder="" class="textbox-n" type="date" value="{{leave_period.from_date}}" onfocus="(this.type='date')">
+									</div>
+									<div class="input-field col s12 m6">
+										<p style="margin-bottom: 10px;">End</p>
+										<img src="/icons/calendar-blue.png" width="20" height="20"
+											style="position: absolute; margin-top: 12px; right: 35px;">
+										<input data-fieldname="to_date"   autocomplete="off"
+											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+											placeholder="" class="textbox-n" type="date" value="{{leave_period.to_date}}" onfocus="(this.type='date')">
+									</div>
+									<div class="input-field col s12 m9">
+										<p style="margin-bottom: 10px;">Company</p>
+										<select data-fieldname="company"
+											style="padding-left: 10px; width: -webkit-fill-available;" autocomplete="off">
+											<option value="">Select Comapny</option>
+											{% for row in list_company %}											
+											<option {% if row.company_name == leave_period.company %} selected {% endif %} value="{{row.company_name}}">{{row.company_name}}</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="input-field col s12 m9">
+										<p style="margin-bottom: 10px;">Holiday List</p>
+										<select data-fieldname="optional_holiday_list" style="padding-left: 10px; width: 10px;" autocomplete="off">
+											<option value="">Select Holiday List</option>
+											{% for row in list_holiday %}											
+											<option {% if row.holiday_list_name == leave_period.optional_holiday_list %} selected {% endif %} value="{{row.holiday_list_name}}">{{row.holiday_list_name}}</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="col s12">
+										<button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-leave-period" class="btn waves-effect waves-light right">Save</button>
+										
+									</div>
+								</div>
+							</div>
 
-                    <td style="background-color: #eee8e8;border-left:5px darkgrey solid ; border-right:none!important; white-space: initial!important;"> <i class="material-icons-outlined" style="float: left;">info</i>
-                      <p style="font-size: 14px ;padding-left: 47px;">You can configure your company’s workday and holidays in<br>
-                      <a href="#">Company Settings</a></p></td>
+						</div>
 
-                    </tr>
+						<!-- Holidays -->
+						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+							<div class="card-content">
+								<div class="row" style="margin: auto;">
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="display: inline;">Holidays </h4>
+									<div style="height: 40px;"></div>
+									<div class="row margin infodetails" id="form-holiday">
+										<input data-fieldname="name"  value="{{holiday.name}}" type="hidden" autocomplete="off">
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Start</p>
+											<img src="/icons/calendar-blue.png" width="20" height="20"
+												style="position: absolute; margin-top: 12px; right: 35px;">
+											<input data-fieldname="from_date" value="{{holiday.from_date}}"  autocomplete="off"
+												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+										</div>
 
-                  </table>-->
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">End</p>
+											<img src="/icons/calendar-blue.png" width="20" height="20"
+												style="position: absolute; margin-top: 12px; right: 35px;">
+											<input data-fieldname="to_date" value="{{holiday.to_date}}"  autocomplete="off"
+												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
+												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+										</div>
+										<div class="col s12 m6">
+											<p style="margin-bottom: 10px;">Total Holidays: {{holiday.total_holidays}} include Saturdays and Sundays</p>
+										</div>
+										<div class="col s12 m6">
+											<button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-holiday" class="btn waves-effect waves-light right">Save</button>
+										</div>
+										<br>
+										<div class="col s12 m12">
+											<button data-modal="modal-holiday" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday" class="btn waves-effect waves-light">Add Holiday</button>
+										</div>
+										<br>
+										<div class="step-content">
+											<div class="row">
+												<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+													<table id="list-holiday" style="margin-top: 15px; display: inline-table !important;">
+														
+														{% for row in holiday.holidays %}
+														{% if row.description != "Saturday" and row.description != "Sunday" %}
+														
+														{% endif %}
+														{% endfor %}
+													</table>
+												</div>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+							</div>
+						</div>
 
-                  <!--<p>Balance left</p>-->
-                  <div class="row">
-                    <!--individual-card-->
+						<!-- Branches -->
+						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+							<div class="card-content">
+								<div class="row" style="margin: auto;">
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="display: inline;">Branches </h4>
+									<div class="row margin infodetails">
+										<div class="input-field col s12 m12" style="margin-bottom: 0px;">
+											<p>Branch</p>
+										</div>
+										<div class="input-field col s9 m6">
+											<select name="company" style="padding-left: 10px;width: -webkit-fill-available;">
+												<option value="">Select Comapny</option>
+												{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+												{% for i_ev1 in ev1%}
+												<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="input-field col s12 m6">
+											<a class="left waves-effect waves-light btn"
+												style="background-color: white;color: #00AEEF;border: 1px solid #00AEEF; width: 170px;"
+												href="#!">Add Branch</a>
+										</div>
+										<div class="input-field col s9 m9">
+											<textarea rows="6" cols="60">Main Office</textarea>
+										</div>
+										
+										<ul id="dropdown1" class="dropdown-content">
+											<li><a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
+											<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+											<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+										</ul>
 
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col xl16 l16 m18 s12">
-              <div class="card">
-               <div class="card-content">
-                <form>
-                 <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
-                 <h4 class="card-title directorytitle" style="text-align: left;">Leave Policy Settings</h4>
+										<div class="col s12">
+											<a href="#!"
+												style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 14px;"
+												class="modal-trigger waves-effect waves-light right">
+												Save
+											</a>
+											<a href="#!" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">
+												Cancel
+											</a>
+										</div>
+
+										<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+											<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+												<ul id="dropdown1" class="dropdown-content">
+													<li> <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a></li>
+													<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+													<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+												</ul>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Leave Type -->
+						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+							<div class="card-content">
+								<div class="row" style="margin: auto;">
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="display: inline;">Leave Type </h4>
+									<a id="add-office " href="#create-news.modal"
+										class=" modal-trigger waves-effect waves-light right office-btn">Add Leave
+										Type</a>
+
+									<div style="height: 40px;"></div>
+									<div class="row margin infodetails">
+										<div class="row margin infodetails">
+											<div class="input-field col s12 m9 ">
+												<p style="margin-bottom: 10px;">Office</p>
+												<select style="padding-left: 10px; width: 10px;">
+													<option value="" disabled selected>Select office/branch</option>
+													<option value="information technology">Accident</option>
+													<option value="engineering">Sick</option>
+													<option value="telecommunication">Vacation</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<br>
+									<hr>
+									<br>
+
+									<div class="switch">
+										<span style="margin-left: 18px; padding-bottom:10px; "><b>Annual
+												Leave</b></span>
+
+										<label class="switch-settings" style="float: right;">
+											<input type="checkbox">
+											<span class=" lever"></span>
+										</label>
+									</div>
+									<br>
+									<div class="input-field col s9 m12">
+										<div class="switch">
+											<label>
+												<input type="checkbox" />
+												<span style="color: black">Adjust employee’s leave balance to an updated
+													entitlement
+													immediately<br>
+													(Any updates made to entitlement, carry forward and custom policy
+													will be effective from this
+													cycle)</span>
+											</label>
+										</div>
+									</div>
+
+									<div class="input-field col s9 m9">
+										<p style="margin-bottom: 10px;">Max Leaves Allowed</p>
+										<input type="text" name="entitlement">
+									</div>
+
+									<a id="add-office " href="#create-news.modal"
+										class=" modal-trigger waves-effect waves-light right office-btn">Edit</a>
+
+									<div class="input-field col s12 m6">
+										<p style="margin-bottom: 10px;">Carry Forward</p>
+										<p style="width: 30px">
+											<label>
+												<input type="checkbox" class="filled-in" id="check1" />
+												<span style="margin-left: 15px;padding-left: 22px;"
+													onclick="checked()">No</span>
+											</label>
+											<label>
+												<input onclick="checked1()" class="filled-in" type="checkbox"
+													id="check2" />
+												<span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+											</label>
+										</p>
+									</div>
+
+									<div class="input-field col s12 m6">
+										<p style="margin-bottom: 10px;">Earned Leave</p>
+										<p style="width: 30px">
+											<label>
+												<input type="checkbox" class="filled-in" id="check1" />
+												<span style="margin-left: 15px;padding-left: 22px;"
+													onclick="checked()">No</span>
+											</label>
+
+											<label>
+												<input onclick="checked1()" class="filled-in" type="checkbox"
+													id="check2" />
+												<span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+											</label>
+										</p>
+									</div>
+
+									<div class="input-field col s9 m6">
+										<p style="margin-bottom: 10px;">Earned Leaves Frequency</p>
+										<select name="company"
+											style="padding-left: 10px;width: -webkit-fill-available;">
+											<option value="">Select Month</option>
+											{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+											{% for i_ev1 in ev1%}
+											<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+											{% endfor %}
+										</select>
+									</div>
+
+									<div class="input-field col s9 m6">
+										<p style="margin-bottom: 10px;">Earned Leaves Rounding</p>
+										<select name="company"
+											style="padding-left: 10px;width: -webkit-fill-available;">
+											<option value="">Select Rounding</option>
+											{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+											{% for i_ev1 in ev1%}
+											<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+											{% endfor %}
+										</select>
+									</div>
+
+									<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+										<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+											<ul id="dropdown1" class="dropdown-content">
+												<li>
+													<a href="#!"><img src="/icons/people-blue.png" width="20"
+															height="20" /></a>
 
 
-                 <div style="height: 40px;"></div>
-                 <div class="row margin infodetails">
-                  <div class="input-field col s12 m18 ">
-                    <p style="margin-bottom: 10px;">Office</p>
-                    <select style="padding-left: 10px; width: 10px;">
-                      <option value="" disabled selected>Select office/branch</option>
-                      <option value="information technology">Accident</option>
-                      <option value="engineering">Sick</option>
-                      <option value="telecommunication">Vacation</option>
-                    </select>
-                  </div> 
+												</li>
+												<li><a href="#!"><img src="/icons/icon-57.png" width="20"
+															height="20" /></a></li>
+												<li><a href="#!"><img src="/icons/icon-56.png" width="20"
+															height="20" /></a></li>
+											</ul>
+										</div>
+									</div>
 
-                </div>
-                <div class="switch">
-                  <span style="margin-left: 18px; padding-bottom:10px; ">2 Levels of Approval</span>
-                  <i class="material-icons-outlined" style="margin-left: 15px;">info</i>
+								</div>
+							</div>
+						</div>
 
-                  <label class="switch-settings">
-                    <input type="checkbox">
-                    <span class="lever"></span>
-                  </label>
+						<!-- Infor -->
+						<div class="col xl3 l4 m6 s3 profile-card-main">
+							<div class="card" style="border-radius: 10px!important;">
 
-                </div>
-                <br>
-                <a href="#" class="btn-add-policy modal-trigger waves-effect waves-light right">
-                Add policy type</a>
-                <br><br><br>
-                <hr> 
-                <br>
+								<span class="card-title">
+									<p
+										style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">
+										INFO</p>
+								</span>
+								<br>
+								<p style="margin-left: 6%;font-size: 14px;">You can configure
+									<br>your company workday and
+									<br>holidays in <span style="color: #00aeef">Company Settings</span></p>
 
-                <h4 class="card-title directorytitle" style="float: left;">Leave Policy Settings</h4>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox" />
-                    <span style="color: black">Adjust employee’s leave balance to an updated entitlement immediately<br>
-                    (Any updates made to entitlement, carry forward and cusom policy will be effective from this cycle)</span>
-                  </label>
-                  <label class="switch-settings" style="float: right;">
-                    <input  type="checkbox">
-                    <span class=" lever"></span>
-                  </label>
-                </div>
-                <br>
-              
-                  <p style="margin-bottom: 10px;">Entitlement</p>
-                  <input style="width: 40%;" type="text" name="entitlement">  
-                  <a href="#" style=" margin-right: 500px; line-height: 50px; margin-top: -10px;" class="modal-trigger waves-effect waves-light right">Edit</a>
+								<div style="height: 30px"></div>
 
-             
-                <br>
+								<a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;"
+									class="modal-trigger" href="#modal-empl-per"></a>
+
+								<a href="#modal-epml-ppl" class="modal-trigger" style="text-align: center; display: block; padding:5%; 
+				  color: #00aeef;"></a>
+							</div>
+
+						</div>
+
+						<!-- Leave Policy Details  -->
+						<div class="col xl9 l9 m9 s6">
+							<div class="card" style="border-radius: 10px!important;">
+								<div class="card-content">
+
+									<img style="display: inline;float: left;" width="22" height="22"
+										class="sidenav-icon" src="/icons/leave.png">
+									<h4 class="card-title directorytitle" style="text-align: left;">Leave Policy Details
+									</h4>
 
 
-                <p style="margin-bottom: 10px;">Carry Forward</p>
-                <p>
-                  <label>
-                    <input type="checkbox" id="check1"/>
-                    <span onclick="checked()">No</span> 
-                  </label>
+
+									<!-- Leave Type Table   -->
+									<br><br><br>
+									<div class="step-content">
+										<div class="row">
+											<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+												<table style="margin-top: 15px;display: inline-table !important;">
+													<tr style="background-color: #eff1f9;">
+														<th style=" border-right:none!important;width: 50px;">
+															<p>
+																<label class="container">
+																	<input type="checkbox" class="filled-in"
+																		checked="checked" />
+																	<span class="checkmark"
+																		style="vertical-align: -50%;"></span>
+																</label>
+															</p>
+														</th>
+														<th style=" border-right:none!important;width: 10px;"><b></b>
+														</th>
+														<th style=" border-right:none!important;width: 150px;"><b>Leave
+																Type</b></th>
+														<th style=" border-right:none!important;width: 100px;">
+															<b>Allocation</b></th>
+														<th style=" border-right:none!important;width: 100px;">
+															<b>Action</b></th>
+													</tr>
+
+													<tr>
+														<th style=" border-right:none!important;width: 50px;">
+															<p>
+																<label class="container">
+																	<input type="checkbox" class="filled-in"
+																		checked="checked" />
+																	<span class="checkmark"
+																		style="vertical-align: -50%;"></span>
+																</label>
+															</p>
+														</th>
+														<td></td>
+														<td>
+															<span>Annual Leave</span>
+														</td>
+														<td>14</td>
+														<td>
 
 
-                  <label>
-                   <input onclick="checked1()" type="checkbox" id="check2"/>
-                   <span  style="margin-left: 25px;">Yes</span> 
-                 </label>  
-                 <a href="#" style=" margin-right: 500px; line-height: 50px;" class="modal-trigger waves-effect waves-light right">Edit</a>        
-                 <br><br><br><br>
-                 <p style="margin-bottom: 10px;">Earned Leave</p>
-                 <p>
-                  <label >
-                    <input type="checkbox" id="check3" />
-                    <span onclick="checked2()">No</span>
-                  </label>
-                  <label>
-                   <input onclick="checked3()" type="checkbox" id="check4" />
-                   <span   style="margin-left: 25px;">Yes</span>  
-                 </label>
-                 <a href="#" style=" margin-right: 500px; line-height: 50px;" class="modal-trigger waves-effect    waves-light right">Edit</a>
-               </p>
-             </form>
+															<p style="float: left;margin-right: 35px;display: block">
+																<span style="display: block; color:#00AEEF;">Edit</span>
+															</p>
+															<img src="/icons/icon-58.png" width="20" height="20"
+																style="float: left;margin-right: 5px;" />
+														</td>
+													</tr>
+
+													<tr style="background-color: #f9f9f9;">
+														<th style=" border-right:none!important;width: 50px;">
+															<p>
+																<label class="container">
+																	<input type="checkbox" class="filled-in"
+																		checked="checked" />
+																	<span class="checkmark"
+																		style="vertical-align: -50%;"></span>
+																</label>
+															</p>
+														</th>
+														<td></td>
+														<td>
+															<span>Medical and Hospital Leave</span>
+														</td>
+														<td>60</td>
+														<td>
 
 
-             <div style="height: 40px;"></div>
-             <table cellpadding="0" cellspacing="0" style="font-size: 14px;">
-               <tr style="font-size: 16px; background-color: #f9f9f9; width: 100%!important;" >
-                <th style="border-right:none!important;">Name</th>
-                <th style="border-right:none!important;">Entitlement</th>
-                <th style="border-right:none!important;">Assignee</th>
-                <th style="border-right:none!important;"></th>
+															<p style="float: left;margin-right: 35px;display: block">
+																<span style="display: block; color:#00AEEF;">Edit</span>
+															</p>
+															<img src="/icons/icon-58.png" width="20" height="20"
+																style="float: left;margin-right: 5px;" />
+														</td>
+													</tr>
 
-              </tr>
-              <tr>
-                <td>Aznul Abdullah</td>
-                <td>1</td>
-                <td><img height="36" width="30" src="/images/avatar.svg"></td>
-
-
-                <td align="center"><a style="margin-top: 10px;" href="#">Edit</a>
-                  <img style="margin-left: 20px;" src="/images/delete.png" >
-                </td>
-              </tr>
-            </table>
-            <br>
-            <form>
-              <div class="switch">
-               <p style="margin-bottom: 10px;"><b>Sick</b></p>
-               <label>
-                <input type="checkbox" />
-                <span style="color: black">Adjust employee’s leave balance to an updated entitlement immediately<br>
-                (Any updates made to entitlement, carry forward and cusom policy will be effective from this cycle)</span>
-              </label>
-              <label class="switch-settings" style="float: right;">
-                <input  type="checkbox">
-                <span  class=" lever"></span>
-              </label>
-            </div>
-            <br><br>
-            <div class="title-ent-settings">
-              <p style="margin-bottom: 10px;">Entitlement</p>
-              <input class="input-ent-settings" style="width: 40%" type="text" name="entitlement">  
-              <a href="#" style=" margin-right: 500px; line-height: 50px; margin-top: -10px;" class="modal-trigger waves-effect waves-light right">Edit</a>
-
-            </div>
-            <br>
-            <div>
-             <p style="text-align: center;display: inline;">Custom Policy</p>
-             <a href="#" class="btn-add-custom-policy modal-trigger waves-effect waves-light right">
-             Add Custom Policy</a>
-           </div>
-           <div style="height: 20px;"></div>
-           <br>
-
-           <table cellpadding="0" cellspacing="0" style="font-size: 14px;">
-
-             <tr style="font-size: 16px; position: relative;background-color: #f9f9f9; width: 100%!important;" >
-              <th style="border-right:none!important;">Name</th>
-              <th style="border-right:none!important;">Entitlement</th>
-              <th style="border-right:none!important;">Assignee</th>
-              <th style="border-right:none!important;"></th>
-
-            </tr>
-
-            <tr>
-              <td style="text-align: center;" colspan="4">There isn’t any custom policy yet</td>
+													<th style=" border-right:none!important;width: 50px;">
+														<p>
+															<label class="container">
+																<input type="checkbox" class="filled-in"
+																	checked="checked" />
+																<span class="checkmark"
+																	style="vertical-align: -50%;"></span>
+															</label>
+														</p>
+													</th>
+													<td></td>
+													<td>
+														<span>Maternity Leave</span>
+													</td>
+													<td>90</td>
+													<td>
 
 
-            </tr>
-          </table>
+														<p style="float: left;margin-right: 35px;display: block">
+															<span style="display: block; color:#00AEEF;">Edit</span>
+														</p>
+														<img src="/icons/icon-58.png" width="20" height="20"
+															style="float: left;margin-right: 5px;" />
+													</td>
 
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+													<tr style="background-color: #f9f9f9;padding:0;padding-top: 20px;">
+														<th style=" border-right:none!important;width: 50px;">
+															<p>
+																<label class="container">
+																	<input type="checkbox" class="filled-in"
+																		checked="checked" />
+																	<span class="checkmark"
+																		style="vertical-align: -50%;"></span>
+																</label>
+															</p>
+														</th>
+														<td></td>
+														<td>
+															<span>Paternity Leave</span>
+														</td>
+														<td>3</td>
+														<td>
+
+
+															<p style="float: left;margin-right: 35px;display: block">
+																<span style="display: block; color:#00AEEF;">Edit</span>
+															</p>
+															<img src="/icons/icon-58.png" width="20" height="20"
+																style="float: left;margin-right: 5px;" />
+														</td>
+													</tr>
+
+													<th style=" border-right:none!important;width: 50px;">
+														<p>
+															<label class="container">
+																<input type="checkbox" class="filled-in"
+																	checked="checked" />
+																<span class="checkmark"
+																	style="vertical-align: -50%;"></span>
+															</label>
+														</p>
+													</th>
+													<td></td>
+													<td>
+														<span>Compassionate Leave</span>
+													</td>
+													<td>3</td>
+													<td>
+
+
+														<p style="float: left;margin-right: 35px;display: block">
+															<span style="display: block; color:#00AEEF;">Edit</span>
+														</p>
+														<img src="/icons/icon-58.png" width="20" height="20"
+															style="float: left;margin-right: 5px;" />
+													</td>
+
+
+
+												</table>
+											</div>
+										</div>
+									</div>
+
+
+									<br>
+
+									<ul id="dropdown1" class="dropdown-content">
+										<li>
+											<a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
+
+
+										</li>
+										<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a>
+										</li>
+										<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a>
+										</li>
+									</ul>
+
+
+									<div class="col s12">
+										<a id="add-office " href="#AddLeavePolicy.modal"
+											class=" modal-trigger waves-effect waves-light right btn">Add Leave
+											Policy</a>
+									</div>
+
+									<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+										<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+											<ul id="dropdown1" class="dropdown-content">
+												<li>
+													<a href="#!"><img src="/icons/people-blue.png" width="20"
+															height="20" /></a>
+
+
+												</li>
+												<li><a href="#!"><img src="/icons/icon-57.png" width="20"
+															height="20" /></a></li>
+												<li><a href="#!"><img src="/icons/icon-56.png" width="20"
+															height="20" /></a></li>
+											</ul>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<!-- add leave type pop-up -->
+						<div id="create-news.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+							<div class="modal-content" style="padding: 0px !important;">
+								<p class="edit-title">Add Leave Type</p>
+								<form class="col s12" style="padding: 24px;">
+									<div class="row">
+
+										<div class="input-field col s12" style="margin-bottom: 0px;">
+											<p>Leave Type Name</p>
+											<input type="text" id="title" data-length="50"
+												style="width: -webkit-fill-available !important;">
+											<!--  <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
+										</div>
+
+										<div class="input-field col s12" style="margin-top: 0px;">
+											<p>Max Leaves Allowed</p>
+											<input type="text" id="account-code" data-length="50"
+												style="width: -webkit-fill-available !important;">
+										</div>
+
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Carry Forward</p>
+											<p style="width: 30px">
+												<label>
+													<input type="checkbox" class="filled-in" id="check1" />
+													<span style="margin-left: 15px;padding-left: 22px;"
+														onclick="checked()">No</span>
+												</label>
+												<label>
+													<input onclick="checked1()" class="filled-in" type="checkbox"
+														id="check2" />
+													<span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+												</label>
+											</p>
+										</div>
+
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Earned Leave</p>
+											<p style="width: 30px">
+												<label>
+													<input type="checkbox" class="filled-in" id="check1" />
+													<span style="margin-left: 15px;padding-left: 22px;"
+														onclick="checked()">No</span>
+												</label>
+
+												<label>
+													<input onclick="checked1()" class="filled-in" type="checkbox"
+														id="check2" />
+													<span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+												</label>
+											</p>
+										</div>
+
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Earned Leaves Frequency</p>
+											<select name="company"
+												style="padding-left: 10px;width: -webkit-fill-available;">
+												<option value="">Select Month</option>
+												{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+												{% for i_ev1 in ev1%}
+												<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+												{% endfor %}
+											</select>
+										</div>
+
+										<div class="input-field col s12 m6">
+											<p style="margin-bottom: 10px;">Earned Leaves Rounding</p>
+											<select name="company"
+												style="padding-left: 10px;width: -webkit-fill-available;">
+												<option value="">Select Rounding</option>
+												{% set ev1 = frappe.get_all("Company", fields=['*']) %}
+												{% for i_ev1 in ev1%}
+												<option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+												{% endfor %}
+											</select>
+										</div>
+
+
+
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="right waves-effect waves-light btn">Add</a>
+								<a href="#!" class="right blue-text btn-flat"
+									onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
+							</div>
+						</div>
+
+						<!-- add leave policy pop-up -->
+						<div id="AddLeavePolicy.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+							<div class="modal-content" style="padding: 0px !important;">
+								<p class="edit-title">Add Leave Policy</p>
+								<form class="col s12" style="padding: 24px;">
+									<div class="row">
+
+										<div class="input-field col s12" style="margin-bottom: 0px;">
+											<p>Policy Name</p>
+											<input type="text" id="title" data-length="50"
+												style="width: -webkit-fill-available !important;">
+											<!--  <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
+										</div>
+
+										<div class="input-field col s12" style="margin-top: 0px;">
+											<p>Annual Allocation</p>
+											<input type="text" id="account-code" data-length="50"
+												style="width: -webkit-fill-available !important;">
+										</div>
+
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="right waves-effect waves-light btn">Add</a>
+								<a href="#!" class="right blue-text btn-flat"
+									onclick="$('#AddLeavePolicy\\.modal').modal('close')">Cancel</a>
+							</div>
+						</div>
+
+						<div id="modal-holiday" class="modal modal-fixed-footer">
+							<div class="modal-content" style="padding: 0px !important; ">
+							<p class="edit-title">Edit Holiday</p>
+								<form class="col s12" style="padding: 24px;" id="form-holiday-edit">
+									<input type="hidden" data-fieldname="name"  autocomplete="off">
+									<div class="row">
+										<div class="input-field col s12 m12" style="margin-top: 0px;">
+											<p>Date</p>
+											<input data-fieldname="holiday_date"  autocomplete="off"
+											style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+											placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+										</div>
+										<div class="input-field col s12 m12" style="margin-top: 0px;">
+											<p>Description</p>
+											<input type="text" data-fieldname="description" autocomplete="off">
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="right waves-effect waves-light btn" id="save_holiday">Save</a>
+								<a href="#" class="right blue-text btn-flat"
+								onclick="$('#modal-holiday').modal('close')">Cancel</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div><!--container -->
+	</div><!--row -->
+</div><!--main -->	
 {% endblock %}
-</div>
-</div>
 
 {% block scripts %}
 <script type="text/javascript">
-  function checked()
-  {
-    if(document.getElementById('check1').checked==false)
-    {
-      document.getElementById('check2').checked = false;
-    }
-  }
-  function checked1()
-  {
-   if(document.getElementById('check2').checked==true)
-   {
-    document.getElementById('check1').checked = false;
-  }
-}
-
-function checked2()
-{
-  if(document.getElementById('check3').checked==false)
-  {
-    document.getElementById('check4').checked = false;
-  }
-}
-function checked3()
-{
- if(document.getElementById('check4').checked==true)
- {
-
-  document.getElementById('check3').checked = false;
-}
-}
-
+	var glb_holiday_list_name = "{{ holiday_list_name }}";
 </script>
-
-
-<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+	type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
-type="text/javascript"></script>
-<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+	type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+	type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
-<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
-<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_settings.js" type="text/javascript"></script>
 {% endblock %}

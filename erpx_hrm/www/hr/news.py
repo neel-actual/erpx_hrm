@@ -8,5 +8,6 @@ def get_context(context):
 
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
+    context.employeeemail = frappe.get_all("Employee")
 
     return context

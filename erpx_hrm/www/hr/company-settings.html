@@ -30,98 +30,600 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 {% endblock %}
 
 {% block main %}
+<style type="text/css">
+table{
+  border-radius: 23px;
+  overflow: hidden;
+}
+
+.add-holi-link{
+  font-size: 14px;
+  margin-right: 14%;
+}
+
+@media only screen and (max-width: 480px) {
+
+  .add-holi-link{
+    font-size: 14px;
+    margin-right: 14px !important;
+  }
+
+  .label-pad{
+    text-align: center;
+    font-size: 14px;
+    padding: 0px!important;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+
+  .tabs{
+    width: 225px !important;
+  }
+
+  .tabs-scroll{
+    overflow-x: auto !important;
+  }
+
+}
+
+@media only screen and (max-width: 330px) {
+  #logo_download{
+    font-size: 10px !important;
+  }
+
+  #logo_change{
+    font-size: 10px !important;
+  }
+
+  .office-btn{
+
+    width: 100% !important;
+    margin-top: 15px !important;
+    text-align: right !important;
+    right: 10px !important;
+
+  }
+}
+[type="checkbox"].filled-in:checked + span:not(.lever):before{
+  border-right: 2px solid green !important;
+  border-bottom: 2px solid green !important;
+}
+[type="checkbox"].filled-in + span:not(.lever):after {
+  border-radius: 6px !important;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after{
+  border: 2px solid #e1e1e1 !important;
+  background-color: white !important;
+}
+
+.label-pad{
+  text-align: center;
+  font-size: 14px;
+  padding: 11px;
+ width: 100%;
+display: block;
+
+}
+
+.seven-cols{
+  padding: 0 !important;
+}
+</style>
 <div id="main">
-    <div class="row">
-        <div class="content-wrapper-before"></div>
-        <div class="col-12">
-            <div class="container">
-                <div class="row section-data-tables" style="margin: 50px;">
-                    <div class="col s12">
-                        <div class="nav-wrapper black-text banner-title3">
-                            <div class="breadcrumb">
-                                <a class="breadcrumb">HR Hub</a>
-                                <a class="breadcrumb">Settings</a>
-                                <a href="/hr/company-settings" class="breadcrumb active">Company Settings</a>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="card">
-                                <div class="card-content">
-                                <div>
-                                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/reports.png">
-                                 <h4 class="card-title newstitle" style="display: inline;">Profile Report</h4>
-                                </div><br/>
-                                <div class="col s12" style="margin: 20px;">
-                                <p>Make your own custom report! You can make a custom report as needed.<br/>Sort, select, and download. It’s that easy!</p>
-                                </div>
-                            <div class="input-field col s12 m6">
-                                <p style="margin-bottom: 10px;">Employee</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                <option value="" disabled selected>Select employees</option>
-                                <option value="information technology">Accident</option>
-                                <option value="engineering">Sick</option>
-                                <option value="telecommunication">Vacation</option>
-                                </select>
-                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                            </div>
-                          <div class="input-field col s12 m6">
-                                <p style="margin-bottom: 10px;">Information Type</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                <option value="" disabled selected>Select columns</option>
-                                <option value="information technology">Accident</option>
-                                <option value="engineering">Sick</option>
-                                <option value="telecommunication">Vacation</option>
-                                </select>
-                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                            </div>
-                            <div class="input-field col s12">
-                                <p style="margin-bottom: 10px;display: inline-block;">Reports</p>
-                                <p style="margin-bottom: 10px;display: inline-block;float: right;color: #00aeef;">Clear All</p>
-                                <textarea id="reports" type="text"></textarea>
-                            <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</a>
-                            </div>
-                        </div>
-                    </div>
-                                <div style="margin: 30px;"></div>
-                                <div class="card">
-                                <div class="card-content">
-                                <div>
-                                 <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/reports.png">
-                                 <h4 class="card-title newstitle" style="display: inline;">Leave Report</h4>
-                                </div><br/>
-                                <div class="col s12" style="margin: 20px;">
-                                </div>
-                            <div class="input-field col s12">
-                                <p style="margin-bottom: 10px;">Employee</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                <option value="" disabled selected>All employees</option>
-                                <option value="information technology">Accident</option>
-                                <option value="engineering">Sick</option>
-                                <option value="telecommunication">Vacation</option>
-                                </select>
-                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                            </div>
-                  <div class="option-date-appr input-field col s12 m6">
-                    <p style="margin-bottom: 10px;">Start</p>
-                    <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                    </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables" style="margin: 50px;">
+          <div class="col s12 ">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb">
+                <a class="breadcrumb">HR Hub</a>
+                <a class="breadcrumb">Settings</a>
+                <a href="/hr/company-settings.html" class="breadcrumb active">Company Settings</a>
+              </div>
+            </div>
+            <div class="content">
+              <div class="card" style="margin-bottom: 0px; border-top-left-radius: 10px !important;border-top-right-radius: 10px !important;">
+                <div class="card-content">
+                  <div>
+                   <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
+                   <h4 class="card-title newstitle" style="display: inline;">Company Settings</h4>
+
+                 </div>
+                 <br><br/>
+                 <div class="col s12">
+                  <div class="tabs-scroll">
+                    <ul class="tabs">
+                      <li class="tab col s3"><a href="#test1" class="active" style="color: black!important; text-overflow:
+                    unset;">General</a></li>
+                      <li class="tab col s3"><a href="#test2" style="color: black!important; text-overflow: unset;">Holiday</a></li>
+                    </ul>
                   </div>
-                <div class="option-date-appr input-field col s12 m6">
-                    <p style="margin-bottom: 10px;">End</p>
-                    <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                    </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-                    <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</a>
-                  </div>
-                        </div>
-                    </div>
                 </div>
+              </div>
+            </div>
+            <div id="test1">
+              <div class="card" style="margin-top: 0px; border-bottom-left-radius: 10px !important;border-bottom-right-radius: 10px !important;">
+                <div class="card-content">
+
+
+                 <div class="row">
+
+
+                  <div  class="col s12">
+
+                    <div style="height: 30px;"></div>
+                    <div>
+                     <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
+                     <h4 style="margin-left: 10px; font-size: 18px;display: inline;">Company Profile</h4>
+                     <br>
+                     <span style="margin-left: 33px;margin-top: 15px;float: left; font-size: 14px; color: #6c6868">Show of your logo! Upload and edit your company name and logo here.
+                      <ul >
+                        <li>- Recomended size for image is 200px*200px</li>
+                        <li>- Max. file size of 5MB</li>
+                        <li>- File format must be in jpg, jpeg, png or gif</li>
+                      </ul>
+                    </span>
+                  </div>
+
+                  <div style="height: 30px"></div>
+                  <br>
+
+                  <div class="row col s12" style="padding: 0px !important">
+                    <div class="col xl4 l4 m12 s12 " style="margin-left: 18px;">
+                      {% if company_logo %}
+                      <img src="{{company_logo}}" style="margin-top: 24px; width: 100%;">
+                      {% else %}
+                      <img src="/images/logo.svg" style="margin-top: 24px;width: 100px;">
+                      {% endif %}
+                    </div>
+                    {% if company_logo %}
+                    
+                    <div class="col xl2 l3 m5 s5 right" style="padding: 0 !important;">
+                      <a target="_blank" id="logo_download" href="{{company_logo}}" 
+                        style="background-color: #00aeef; border-radius: 25px; width: -webkit-fill-available;  text-align: center;  color: white;  line-height: 40px; margin-top: 24px;" 
+                        class="btn waves-effect waves-light right">                        
+                        Download Logo
+                      </a>
+                    </div>
+                     {% endif %}
+                    <div class="col xl2 l3 m5 s5 right" style="padding: 0 !important; margin-right: 25px">
+                      <div class="btn btn-change-logo file-field input-field waves-effect waves-light right" style="border-radius: 25px; width: -webkit-fill-available;  text-align: center;  line-height: 40px; margin-top: 24px;">
+                          <div class="">
+                              <span>Change Logo</span>
+                              <input id="file-change-logo" type='file' accept='image/*'>
+                          </div>
+                          <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="padding-bottom: 26px;margin-left: 18px;" class="input-field col s12 ">
+                    <p style="margin-bottom: 10px;">Company Name</p>
+                    <input type="text" id="company_name" name="company_name" value="{{company_name}}" style="width: -webkit-fill-available">
+                  </div>
+
+                  <a href="#" onclick="rename_company_name(); return false;" style="line-height: 40px !important" class="btn-myclaims waves-effect waves-light right">Save</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="border-radius: 10px!important;margin-top: 3rem;">
+           <div class="card-content">
+              <div>
+                  <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
+                  <h4 class="card-title newstitle" style="display: inline;">Company Settings</h4>
+                  <a id="add-office " href="#create-news.modal" class=" modal-trigger waves-effect waves-light right office-btn">
+                  Add Office</a>
+                  <span style="margin-left: 14px; margin-top: 40px;float: left; font-size: 14px; color: darkgrey">You can extract a report by selecting approve dates and employees who have submitted the claims</span>
+                  <div class="clear"></div>
+              </div>
+              <br>
+              <br>
+              <div class="content-scroll" id="list-branch"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="test2">
+      <div  class="card" style="margin-top: 0px; border-bottom-right-radius: 10px!important;
+      border-bottom-left-radius: 10px!important; ">
+      <div class="card-content">
+
+        <div style="height: 40px;"></div>
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m3">
+            <select style="padding-left: 10px;width: -webkit-fill-available;">
+                <option value="" disabled selected>Main Branch</option>
+                {% set branch_val = frappe.get_all("Branch", fields=['*']) %}
+                {% for i_branch_val in branch_val %}
+                    <option value="{{i_branch_val.name}}" >{{i_branch_val.name}}</option>
+                {% endfor %}
+            </select>
+          </div>
+
+          <div class="input-field col s12 m3">
+            <select style="padding-left: 10px;width: -webkit-fill-available;">
+              <option value="" disabled selected>2019</option>
+            </select>
+          </div>
+
+          <a href="#modal2" style="margin-top: 25px;" class="add-holi-link modal-trigger waves-effect waves-light right">
+          Add Holiday</a>
+        </div>
+
+        <br>
+        <table style="border-collapse: unset;">
+          <tr style="font-size: 16px; background-color: #e8ebf7; width: 100%!important;">
+            <th style="border-right:none!important;width: 40%">Holiday Name</th>
+            <th style="border-right:none!important;width: 20%">Date</th>
+            <th style="border-right:none!important;width: 20%">Type</th>
+            <th style="border-right:none!important;width: 20%">Action</th>
+          </tr>
+
+            {% set holiday_val = frappe.get_all("Holiday List", fields=['*']) %}
+            {% for i_holiday_val in holiday_val %}
+                <tr>
+                    <td>{{i_holiday_val.holiday_list_name}}</td>
+                    <td>{{ i_holiday_val.from_date  }} - {{ i_holiday_val.to_date }}</td>
+                    <td>public Holiday</td>
+                    <td>
+                        <a style="margin-top: 10px;" href="#modal_edit" class=" modal-trigger">Edit</a>
+                        <img style="margin-left: 20px;" width="21" height="21" src="/icons/icon-58.png" >
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_edit" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title">Edit Holiday</p>
+
+    <form class="modal-holi col s12">
+      <div class="row">
+       <div class="input-field col s12" style="margin-bottom: 0px;">
+        <p>Name</p>
+        <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="Company Under Renovation">
+      </div>
+
+      <div class="row margin infodetails">
+        <div class="input-field col s12 m6" style="margin-top: 0px;">
+          <p style="margin-bottom: 10px; ">Start</p>
+          <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
+           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+          <!--<label for="signup-password">Password</label>-->
+        </div>
+        <div class="input-field col s12 m6" style="margin-top: 0px;">
+          <p style="margin-bottom: 10px;">End</p>
+          <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
+           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+          <!--<label for="signup-password-confirm">Confirm Password</label>-->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+ <a href="#!" class="right waves-effect waves-light btn">Save</a>
+ <a href="#!" class="right blue-text btn-flat"
+ onclick="$('#modal_edit').modal('close')">Cancel</a>
+</div>
+</div>
+
+<div id="modal_delete" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <h5 style="background-color: #dcdcdc;text-align: center; font-weight: 600; border-radius: 0px 30px 30px 0px;padding: 10px;">Delete Department</h5>
+
+    <p>Are you sure you want to delete the following department?</p>
+  </div>
+  <div class="modal-footer">
+   <a href="#!" class="right waves-effect waves-light btn">Save</a>
+   <a href="#!" class="right blue-text btn-flat"
+   onclick="$('#modal_edit').modal('close')">Cancel</a>
+ </div>
+</div>
+
+<div id="modal2" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title">Create New Holiday</p>
+
+    <form class="col s12 modal-holi">
+      <div class="row">
+       <div class="input-field col s12" style="margin-bottom: 0px;">
+        <p>Name</p>
+        <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="Main Branch">
+      </div>
+
+      <div class="row margin infodetails">
+        <div class="option-date-appr input-field col s12 m6" style="margin-top: 0px;">
+          <p style="margin-bottom: 10px; ">Start</p>
+           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+        </div>
+        <div class="option-date-appr input-field col s12 m6" style="margin-top: 0px;">
+          <p style="margin-bottom: 10px;">End</p>
+          <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
+            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+ <a href="#!" class="right waves-effect waves-light btn">Create</a>
+ <a href="#!" class="right blue-text btn-flat"
+ onclick="$('#modal2').modal('close')">Cancel</a>
+</div>
+</div>
+
+
+
+<div id="modal-branch-edit" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title" >Edit Office</p>
+    <form class="col s12" style="padding: 24px;">
+      <div class="row">
+
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Branch Name</p>
+          <input type="text" data-fieldname="branch" style="width: -webkit-fill-available !important;">
+          <!-- <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
+        </div>
+
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Street Address</p>
+          <input type="text" data-fieldname="address_line_1"  style="width: -webkit-fill-available !important;">
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;" >
+            <p>City</p>
+            <input type="text" data-fieldname="city" data-length="100"
+            style="width: -webkit-fill-available !important;">
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Post Code</p>
+            <input type="text" data-fieldname="pincode" data-length="100"
+            style="width: -webkit-fill-available !important;" placeholder="47810">
+          </div>
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Country</p>
+            <select data-fieldname="country"></select>
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>State</p>
+            <input type="text" data-fieldname="state" style="width: -webkit-fill-available !important;">
+          </div>
+        </div>
+
+        <div class="input-field col s12 " style="margin-top: 0px;">
+          <p>Workday</p>
+          <form>
+            <div style="border: 1px solid #c1c1c1; margin: 0;" class=" row button-group">
+              <div class="col seven-cols">
+                <input id="checkbox1" type="checkbox" data-fieldname="sunday">
+                <label class="label-pad" for="checkbox1">Sunday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox2" type="checkbox" data-fieldname="monday">
+                <label class="label-pad" for="checkbox2">Monday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox3" type="checkbox" data-fieldname="tuesday">
+                <label class="label-pad" for="checkbox3">Tuesday</label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox4" type="checkbox" data-fieldname="wednesday">
+                <label class="label-pad" for="checkbox4">Wednesday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox5" type="checkbox" data-fieldname="thursday">
+                <label class="label-pad" for="checkbox5">Thursday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox6" type="checkbox" data-fieldname="friday">
+                <label class="label-pad" for="checkbox6">Friday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox7" type="checkbox" data-fieldname="saturday">
+                <label class="label-pad" for="checkbox7">Saturday
+                </label>
+              </div>
 
             </div>
+          </form>
+
         </div>
-    </div>
+
+
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Timezone</p>
+          <input type="text" data-fieldname="time_zone"  style="width: -webkit-fill-available !important;">
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Language</p>
+            <input type="text" id="description" data-length="100" data-fieldname="language" style="width: -webkit-fill-available !important;">
+          </div>
+          <div class="option-date-appr input-field col s12 m6" style="margin-top: 5px;">
+            <p style="margin-bottom: 10px;">Date Format</p>
+            <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+            <select data-fieldname="date_format"></select>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+   <a href="#!" class="right waves-effect waves-light btn">Save</a>
+   <a href="#!" class="right blue-text btn-flat"
+   onclick="$('#modal-branch-edit').modal('close')">Cancel</a>
+ </div>
+</div>
+
+
+<!-- add new pop-up -->
+
+<div id="create-news.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title" >Add Office</p>
+    <form class="col s12" style="padding: 24px;">
+      <div class="row">
+
+        <div class="input-field col s12" style="margin-bottom: 0px;">
+          <p>Branch Name</p>
+          <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;">
+          <!--  <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Street Address</p>
+          <input type="text" id="account-code"  data-length="50" style="width: -webkit-fill-available !important;">
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>City</p>
+            <input type="text" id="description" data-length="100"
+            style="width: -webkit-fill-available !important;">
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Post Code</p>
+            <input type="text" id="description" data-length="100"
+            style="width: -webkit-fill-available !important;">
+          </div>
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;position: unset;">
+            <p>Country</p>
+            <select>
+              <option value="" disabled selected>Select country</option>
+            </select>
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;position: unset;">
+            <p>State</p>
+            <select>
+              <option value="" disabled selected>Select State</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Workday</p>
+
+
+          <form>
+            <div style="border: 1px solid #c1c1c1; margin: 0;" class=" row button-group">
+              <div class="col seven-cols">
+                <input id="checkbox8" type="checkbox">
+                <label  class="label-pad" for="checkbox8">Sunday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox9" type="checkbox">
+                <label  class="label-pad" for="checkbox9">Monday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox10" type="checkbox">
+                <label  class="label-pad" for="checkbox10">Tuesday</label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox11" type="checkbox">
+                <label class="label-pad" for="checkbox11">Wednesday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox12" type="checkbox">
+                <label  class="label-pad" for="checkbox12">Thursday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox13" type="checkbox">
+                <label  class="label-pad" for="checkbox13">Friday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox14" type="checkbox">
+                <label  class="label-pad" for="checkbox14">Saturday
+                </label>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Timezone</p>
+          <input type="text" id="account-code"  data-length="50" style="width: -webkit-fill-available !important;"
+          placeholder="+8:00 Asia/Kuala Lumpur">
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Language</p>
+            <input type="text" id="description" data-length="100"
+            style="width: -webkit-fill-available !important;" placeholder="EN">
+          </div>
+          <div class="option-date-appr input-field col s12 m6" style="margin-top: 5px;">
+            <p style="margin-bottom: 10px;">Date Format</p>
+            <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="right waves-effect waves-light btn">Add</a>
+    <a href="#!" class="right blue-text btn-flat"
+    onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
+  </div>
+</div>
+
+
+
+</div>
+
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -131,6 +633,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 {% block scripts %}
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
+    var company_name = "{{ company_name }}";
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
 type="text/javascript"></script>
@@ -141,5 +644,5 @@ type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>
-<script defer src="/hr/js/news.js" type="text/javascript"></script>
+<script defer src="/hr/js/company-settings.js" type="text/javascript"></script>
 {% endblock %}

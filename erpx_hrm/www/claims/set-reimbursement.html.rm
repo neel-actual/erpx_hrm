@@ -1,0 +1,160 @@
+{% extends "www/master.html" %}
+
+{% block title %}Claims{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/claims/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+<div id="main">
+ <div class="row">
+  <div class="container">
+    <div class="section-data-tables nav-wrapper black-text banner-title3">
+      <!--<div class="content-wrapper-before"></div>-->
+      <div class="col s12">
+        <div class="breadcrumb">
+          <a class="breadcrumb">Claims</a>
+          <a class="breadcrumb">Settings</a>
+          <a href="/claims/set-reimbursement.html" class="breadcrumb active">Reimbursement</a>
+        </div>
+      </div>
+      <div class="col xl20 l20 m18 s12">
+        <div id="card-stats" class="card" style="overflow: unset!important;border-radius: 10px!important;">
+          <div class="card-content">
+            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/settings.png">
+            <h4 class="card-title directorytitle" style="text-align: left;">Reimbursement</h4>
+
+            <br><br>
+            <h4 class="card-title" style="text-align: left;">Connect claim types with payroll items</h4> 
+            <span style="margin-top: 15px;float: left; font-size: 14px; color: #6c6868; text-align: justify;">This is the list of the claim types with reimbursement method as payroll. To submit claim reports to payroll, you need to connect claim types with payroll items.</span>
+            <br>
+
+            <div class="row">
+              <div style="height: 40px;"></div>
+              <div class="row margin infodetails">
+                <div class="input-field col s12 m5">
+                  <p style="text-align: left;margin-bottom: 5px;">Claim Type</p>
+                  <input type="text" name="search" placeholder="Medical" style="width: -webkit-fill-available">
+                  <input type="text" name="search" placeholder="Entertainment" style="width: -webkit-fill-available">
+                  <input type="text" name="search" placeholder="Transport" style="width: -webkit-fill-available">
+                  <input type="text" name="search" placeholder="Meals" style="width: -webkit-fill-available">
+                </div>
+                <div class="payroll-item input-field col s12 m6">
+                  <p style="text-align: left;margin-bottom: 5px;">Payroll Item</p>
+                  <select style="width: -webkit-fill-available;">
+
+                    <option value="" disabled selected>Select Payroll Item</option>
+                    <option value="telecommunication">Leave Balance Amount</option>
+                    <option value="telecommunication">Petrol/Travel Allowance</option>
+                    <option value="telecommunication">Child Care Allowance</option>
+                    <option value="telecommunication">Broadband/Telephone/Mobile</option>
+                    <option value="telecommunication">Service excellence/Productivity award</option>
+                    <option value="telecommunication">Parking fees</option>
+                    <option value="telecommunication">Meal allowance</option>
+                    <option value="telecommunication">Load interest</option>
+                    <option value="telecommunication">Reimbursement</option>
+                    <option value="telecommunication">Arrears of salary</option>
+                    <option value="telecommunication">Gratuity</option>
+                    <option value="telecommunication">Employee share option scheme</option>
+                    <option value="telecommunication">Tax borne by employee</option>
+                    <option value="telecommunication">Severance</option>
+                  </select>
+
+                  <select style="width: -webkit-fill-available;">
+                    <option value="" disabled selected>Select Payroll Item</option>
+                    <option value="telecommunication">Leave Balance Amount</option>
+                    <option value="telecommunication">Petrol/Travel Allowance</option>
+                    <option value="telecommunication">Child Care Allowance</option>
+                    <option value="telecommunication">Broadband/Telephone/Mobile</option>
+                    <option value="telecommunication">Service excellence/Productivity award</option>
+                    <option value="telecommunication">Parking fees</option>
+                    <option value="telecommunication">Meal allowance</option>
+                    <option value="telecommunication">Load interest</option>
+                    <option value="telecommunication">Reimbursement</option>
+                    <option value="telecommunication">Arrears of salary</option>
+                    <option value="telecommunication">Gratuity</option>
+                    <option value="telecommunication">Employee share option scheme</option>
+                    <option value="telecommunication">Tax borne by employee</option>
+                    <option value="telecommunication">Severance</option>
+                  </select>
+
+                  <select style="width: -webkit-fill-available;">
+                    <option value="" disabled selected>Select Payroll Item</option>
+                    <option value="telecommunication">Leave Balance Amount</option>
+                    <option value="telecommunication">Petrol/Travel Allowance</option>
+                    <option value="telecommunication">Child Care Allowance</option>
+                    <option value="telecommunication">Broadband/Telephone/Mobile</option>
+                    <option value="telecommunication">Service excellence/Productivity award</option>
+                    <option value="telecommunication">Parking fees</option>
+                    <option value="telecommunication">Meal allowance</option>
+                    <option value="telecommunication">Load interest</option>
+                    <option value="telecommunication">Reimbursement</option>
+                    <option value="telecommunication">Arrears of salary</option>
+                    <option value="telecommunication">Gratuity</option>
+                    <option value="telecommunication">Employee share option scheme</option>
+                    <option value="telecommunication">Tax borne by employee</option>
+                    <option value="telecommunication">Severance</option>
+                  </select>
+
+                  <select style="width: -webkit-fill-available;">
+                    <option value="" disabled selected>Select Payroll Item</option>
+                    <option value="telecommunication">Leave Balance Amount</option>
+                    <option value="telecommunication">Petrol/Travel Allowance</option>
+                    <option value="telecommunication">Child Care Allowance</option>
+                    <option value="telecommunication">Broadband/Telephone/Mobile</option>
+                    <option value="telecommunication">Service excellence/Productivity award</option>
+                    <option value="telecommunication">Parking fees</option>
+                    <option value="telecommunication">Meal allowance</option>
+                    <option value="telecommunication">Load interest</option>
+                    <option value="telecommunication">Reimbursement</option>
+                    <option value="telecommunication">Arrears of salary</option>
+                    <option value="telecommunication">Gratuity</option>
+                    <option value="telecommunication">Employee share option scheme</option>
+                    <option value="telecommunication">Tax borne by employee</option>
+                    <option value="telecommunication">Severance</option>
+                  </select>
+                </div>
+                
+                
+              </div>
+              <div class="col s12">
+                <a href="#!" style="background-color: #00aeef;border-radius: 25px;width: 95px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 14px;" class="modal-trigger waves-effect waves-light right">
+                Save</a>
+                <a href="/claims/set-reimbursement.html" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Cancel</a>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  frappe.csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

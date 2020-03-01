@@ -2,6 +2,60 @@
 
 {% block title %}Payroll{% endblock %}
 {% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+      href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+    
+    @media only screen and (min-width: 1520px){
+        .row .col .sp5{
+            width: 20% !important;
+            margin-left: auto;
+            left: auto;
+            right: auto;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+#contact { 
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  
+  
+  line-height: 30px;
+  background: teal;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+ 
+}
+
+
+#contactForm { 
+  display: none;
+
+  
+  padding: 2em;
+  width: 400px;
+  
+  background: #fff;
+  position: absolute;
+  top:49%;
+  right: -180px;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -17,25 +71,362 @@
 <!--sidenav-->
 {% include "www/payroll/sidenav.html" %}
 {% endblock %}
-
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
 {% block main %}
+<style type="text/css">
+    @media only screen and (max-width: 735px){
+        .main-banner .banner-title{
+            position: absolute !important;
+            top: 90px !important;
+            margin-left: 12px !important;
+            font-size: 14px !important; 
+            width: 100% !important;
+            
+        }
+
+        .main-banner .banner-title3{
+            position: absolute !important;
+            top: 70px !important;
+            margin-left: 12px !important;
+            font-size: 12px !important; 
+            width: 30% !important;
+            
+        }
+
+        .main-banner .banner-title4{
+            position: absolute !important;
+            top: 110px !important;
+            margin-left: 12px !important;
+            font-size: 12px !important; 
+            width: 40% !important;
+            line-height: 1.3 !important;
+        }
+    }
+
+    @media only screen and (max-width: 480px){
+        .pay-card{
+            margin-top: 80px !important; 
+        }
+    }
+
+    .fc-view-container{
+        position: sticky!important;
+    }
+</style>
 <div id="main">
     <div class="animate fadeUp main-banner">
-            <img src="/images/payroll-banner.png" />
-            <div class="nav-wrapper black-text banner-title3">
-                <div class="breadcrumb">
-                    <a class="breadcrumb">Payroll</a>
-                    <a href="/payroll" class="breadcrumb active">Home</a>
-                </div>
+        <img src="/images/payroll-banner.png" />
+        <div class="nav-wrapper black-text banner-title3">
+            <div class="breadcrumb">
+                <a class="breadcrumb">Payroll</a>
+                <a href="/payroll" class="breadcrumb active">Home</a>
             </div>
-            <h5 class="pink-text banner-title">Sit back, relax and enjoy</h5>
-            <h5 class="banner-subtitle black-text banner-title4">Your employees will receive exciting emails that connects to their payslips for this period.</h5>
         </div>
+        <h5 class="pink-text banner-title">Sit back, relax and enjoy</h5>
+        <h5 class="banner-subtitle black-text banner-title4">Your employees will receive exciting emails that connects to their payslips for this period.</h5>
+        <h5 class="banner-subtitle banner-title4" style="margin-top: 95px;">
+            <a href="/payroll/pay-run-payslip" class="btn">Review Payslips</a>
+        </h5>
+    </div>
+    <div class="content" style="margin-top: 35px;">
+        <div class="col-12 ">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="card pay-card" style="border-radius: 10px;">
+                            <div class="card-content">
+                                <h4 class="card-title">Quick Action</h4>
+                                <div class="col xl3 l4 m6 s12 sp5" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                                  <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;height: 71.8px;">
+                                    <img width="50" height="50" src="/icons/icon-69.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;margin-top: 10px;">
+                                  
+                                  
+                                    <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
+                                      
+                                      <span style="display: block;">Run Payroll</span>
+                                      <a href="/payroll/pay-run-payroll.html" style="color: #00aeef;"><b>Calculate </b></a>
+                                      
+                                    </p>
+                                  </div>  
+                                </div>
+
+                                <div class="col xl3 l4 m6 s12 sp5" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                                  <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;height: 71.8px;">
+                                    <img width="50" height="50" src="/icons/icon-70.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;margin-top: 10px;">
+                                  
+                                  
+                                    <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
+                                      
+                                      <span style="display: block;">Employees Info</span>
+                                      <a href="/hr/manage-employees.html" style="color: #00aeef;"><b>Bulk Update</b></a>
+                                      
+                                    </p>
+                                  </div>  
+                                </div>
+                                
+                                <div class="col xl3 l4 m6 s12 sp5" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                                  <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;height: 71.8px;">
+                                    <img width="50" height="50" src="/icons/icon-71.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;margin-top: 10px;">
+                                  
+                                  
+                                    <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
+                                      
+                                      <span style="display: block;">Payslips</span>
+                                      <a href="/payroll/pay-run-payslip.html" style="color: #00aeef;"><b>Send</b></a>
+                                      
+                                    </p>
+                                  </div>  
+                                </div>
+                                
+                                <div class="col xl3 l4 m6 s12 sp5" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                                  <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;height: 71.8px;">
+                                    <img width="50" height="50" src="/icons/icon-72.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;margin-top: 10px;">
+                                  
+                                  
+                                    <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
+                                      
+                                      <span style="display: block;">Company Details</span>
+                                      <a href="/payroll/payroll-comp-details.html" style="color: #00aeef;"><b>Update</b></a>
+                                      
+                                    </p>
+                                  </div>  
+                                </div>
+                                    
+                                <div class="col xl3 l4 m6 s12 sp5" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                                  <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;height: 71.8px;">
+                                    <img width="50" height="50" src="/icons/icon-73.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;margin-top: 10px;">
+                                  
+                                  
+                                    <p style="padding-top: 14px;text-align:center;margin-left: 15px;vertical-align: middle; ">
+                                      
+                                      <span style="display: block;">Payroll Report</span>
+                                      <a href="/payroll/reports-total.html" style="color: #00aeef;"><b>Download</b></a>
+                                      
+                                    </p>
+                                  </div>  
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m12 l6 xl6" style="margin-top: 10px;">
+                        <div class="card " style="border-radius: 10px;">
+                            <div class="card-content">
+                                <h4 class="card-title"><b>Notification</b></h4>
+                                <div class="col s12 m12 l12 xl12 upcoming-content" style="padding: 0px;">
+                                    <div class="col s12 m12 l12 xl12" style="padding-left: 0px;margin-bottom: 5px">
+                                        <p><b>New Payroll History</b></p>
+                                    </div>
+                                    <div class="col s10 m10 l10 xl10" style="padding-left: 0px;padding-bottom: 14px">
+                                        <p>You have successfully completed a payroll for April. </p>
+                                        <p>You can see the details at your payroll history</p>
+                                    </div>
+                                    <div class="col s2 m2 l2 xl2">
+                                        <img width="20" height="20" src="/icons/icon-74.png" style="vertical-align: middle; float: right;">
+                                    </div>
+                                </div>
+                                <div class="col s12 m12 l12 xl12 upcoming-content" style="padding: 0px;">
+                                    <div class="col s12 m12 l12 xl12" style="padding-left: 0px;margin-bottom: 5px">
+                                        <p><b>New Payroll History</b></p>
+                                    </div>
+                                    <div class="col s10 m10 l10 xl10" style="padding-left: 0px;padding-bottom: 14px">
+                                        <p>You have successfully completed a payroll for April. </p>
+                                        <p>You can see the details at your payroll history</p>
+                                    </div>
+                                    <div class="col s2 m2 l2 xl2">
+                                        <img width="20" height="20" src="/icons/icon-74.png" style="vertical-align: middle; float: right;">
+                                    </div>
+                                </div>
+                                <div class="col s12 m12 l12 xl12 upcoming-contents" style="padding: 0px;">
+                                    <div class="col s12 m12 l12 xl12" style="padding-left: 0px;margin-bottom: 5px">
+                                        <p><b>New Payroll History</b></p>
+                                    </div>
+                                    <div class="col s10 m10 l10 xl10" style="padding-left: 0px;padding-bottom: 14px">
+                                        <p>You have successfully completed a payroll for April. </p>
+                                        <p>You can see the details at your payroll history</p>
+                                    </div>
+                                    <div class="col s2 m2 l2 xl2">
+                                        <img width="20" height="20" src="/icons/icon-74.png" style="vertical-align: middle; float: right;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m12 l6 xl6" style="margin-top: 10px;">        
+                        <div id="card-stats" class="card" style="border-radius: 10px;">
+                            <div class="card-content">
+                                
+                                <div class="card-title" style="text-align: left;"><b>Calendar</b></div>
+                                
+                                    
+                                    <div id="basic-calendar" class="fc fc-unthemed fc-ltr">
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<a href="#" id="contact" class=" btn-floating btn-fab btn-large waves-effect waves-light " style="display: block;background-color: #00AEEF;"><i class="material-icons">message</i></a>
+<a href="#" id="close_contact" class=" btn-floating btn-fab btn-large waves-effect waves-light " style="display: none"><img src="/icons/icon-66.png" width="56" height="56"></a>
+<div id="contactForm" style="padding: 0px;border-radius: 25px;overflow: hidden;max-height: 100%;height: 80%;bottom: 10%;">
+    <div class="title-contact-us" style="background-color: #e6e6e6;padding: 25px;border-radius: 0px 0px 45% 45%;">
+        <h5 style="text-align: center;margin: 0px;">Contact Us</h5>
+        <p style="text-align: center;">Need some help?<br/>Beep us and we’ll do our best to help!</p>
+    </div>
+    <div class="content popup-contactus-content" style="height: 75%;overflow-y: scroll;margin-right: 2px;">
+        <div class="content-contact-us">
+            <div class="container" style="padding: 0px 50px;">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom: 0px;">
+                            <p>Full Name</p>
+                            <input type="text" id="name" style="width: -webkit-fill-available">
+                            <label for="name" class="center-align" style="left: 20px;top: 52px;">Enter full name</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Email Address</p>
+                            <input type="text" id="email" style="width: -webkit-fill-available">
+                            <label for="email" class="center-align" style="left: 20px;top: 52px;">Enter email address</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Title</p>
+                            <input type="text" id="title" style="width: -webkit-fill-available">
+                            <label for="title" class="center-align" style="left: 20px;top: 52px;">Enter title</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Description</p>
+                            <textarea id="message"></textarea>
+                            <label for="message" class="center-align" style="left: 20px;top: 52px;">Tell us what you need help with</label>
+                        </div>
+                        <div class = "file-field input-field col s12" style="cursor: pointer;">
+                            <div class = "">
+                                <input type = "file" multiple />
+                                <i class="small material-icons icon"style="display: inline-block;position: absolute;top: 15px;left: 15px;font-size: 20px!important;color: #42a5f5;">attach_file</i>
+                                <p style="display: inline-block;padding-left: 30px!important;color: #42a5f5;border: none!important;">Attach a file <span style="color: #adadad;font-style: italic;">
+                                (Max file size: 5MB)</span></p>
+                            </div>
+                            <div class = "file-path-wrapper" style="padding-left: 0px;cursor: pointer;display: inline-block;position: absolute;top: 0px;right: 160px;">
+                             <input class = "file-path validate" type = "text"
+                             placeholder = "" style="display: inline-block;color: #42a5f5;border: none!important;"/>
+                         </div>
+                     </div>
+                     <!--<div class="g-recaptcha placeholder"><p><img src="/images/reCaptcha-img.png" style="width: 300px;padding-left: 15px;"></p></div>-->
+                     <div class="g-recaptcha col s12" id="recaptcha"  data-sitekey="6Le2Qb4UAAAAACuXQH7R9JMONtEqem0YAQUGwJw0"></div>
+                     
+                    <div class="col s12">
+                    <button class="right waves-effect waves-light btn" style="margin-top: 30px; margin-bottom: 30px;">Submit</button>
+                    <a id="cancel_contact" href="#" class="right blue-text btn-flat" style="margin-top: 30px; margin-bottom: 30px;">Cancel</a>
+                    </div>
+                 </div>
+             </form>
+         </div>
+         
+  </div>
+</div>
+
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
 </script>
+<script>
+    $(window).on("load", function () {
+        // var envntdata = [
+        //     {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date']) %}
+        //     {% for i_all_leave in all_leave %}
+        //     console.log(all_leave)
+                // {
+                //     title: '{{i_all_leave.employee_name}}',
+                //     start: '{{i_all_leave.from_date}}',
+                //     end: '{{i_all_leave.to_date}}'
+                // },
+        //     {% endfor %}
+        // ];
+        frappe.call({
+            method:"frappe.client.get_single_value",
+            args:{
+                "doctype":"Payroll Setting",
+                "field":"pay_day"
+            },
+            callback:function(r){
+                console.log(r.message)
+                var d = new Date();
+                d.setDate(r.message);
+                console.log(d.toString())
+                var envntdata = [
+                {
+                    title: 'Payday',
+                    start: d.toString(),
+                    allDay:true
+                }
+            ]
+            $('#basic-calendar').fullCalendar('removeEvents');
+            $('#basic-calendar').fullCalendar('removeEventSource', envntdata);
+            $('#basic-calendar').fullCalendar('addEventSource', envntdata);
+            $('#basic-calendar').fullCalendar('refetchEvents');
+            }
+        })
+        
+        
+});
+    $(function() {
+  
+  // contact form animations
+  $('#contact').click(function() {
+    $('#contactForm').fadeToggle();
+    $('#contact').css("display", "none");
+    $('#close_contact').css("display", "block");
+  });
+
+  $('#close_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+
+  $('#cancel_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+  $(document).mouseup(function (e) {
+    var container = $("#contactForm");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.fadeOut();
+        $('#contact').css("display", "block");
+        $('#close_contact').css("display", "none");
+    }
+  });
+  
+});
+</script>
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+        type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
 {% endblock %}

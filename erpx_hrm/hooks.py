@@ -14,6 +14,8 @@ app_license = "MIT"
 # Includes in <head>
 # ------------------
 
+update_website_context = "erpx_hrm.boot.update_website_context"
+
 # include js, css files in header of desk.html
 # app_include_css = "/assets/erpx_hrm/css/erpx_hrm.css"
 # app_include_js = "/assets/erpx_hrm/js/erpx_hrm.js"
@@ -27,6 +29,11 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Branch": "custom_scripts/branch_custom.js"
+}
+
+fixtures = ["Custom Field","Property Setter"]
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -86,6 +93,11 @@ home_page = "index"
 # 		"on_trash": "method"
 #	}
 # }
+doc_events = {
+	"Leave Application": {
+		"on_update": "erpx_hrm.utils.leave_application.on_update"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

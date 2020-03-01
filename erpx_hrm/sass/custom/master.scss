@@ -300,7 +300,7 @@ table.dataTable tbody tr[role] {
     color: #00aeef;
     line-height: 40px;
     margin: 0px;
-    margin-top: -10px;
+    
     border: 1px solid #00aeef;
 }
 
@@ -327,6 +327,7 @@ textarea {
     border-radius: 5px!important;
     border: 1px solid #c1c1c1!important;
     height: 8rem!important;
+    padding-left: 10px!important;
 }
 
 .balancesummary {
@@ -392,6 +393,9 @@ textarea {
 }
 
 @media only screen and (max-width: 1500px) {
+.fc-toolbar .fc-left > h2 {
+    font-size: 25px;
+}
 #user-table .card .card-image  {
     max-height: 140px;
     position: relative;
@@ -515,6 +519,7 @@ nav ul a {
 }
 
 @media only screen and (max-width: 601px) {
+ 
   #nav-avatar {
     .avatar {
       div, .avatar-frame {
@@ -581,6 +586,192 @@ title4 {
 }
 
 @media only screen and (max-width: 480px) {
+.circles > p {
+    margin-left: 10%!important;
+    text-align: center;   
+    margin-bottom: 15px!important;
+}
+.pay-logo{
+  width: 290px !important;
+}
+
+#contactForm{
+  width: 350px !important;
+  height: 75% !important;
+  top: 49% !important;
+  right: -165px !important;
+}
+
+.set-padding{
+  padding: 0 !important;
+}
+
+.set-margin{
+  margin: 0 !important;
+}
+
+.mob-font1{
+  font-size: 20px !important;
+}
+
+.mob-font2{
+  font-size: 16px !important;
+}
+.profile-card .card-image .card-title h6 {
+    font-size: 0.9rem;
+}
+.profile-card .card-image .card-title p {
+    font-size: 0.9rem;
+}
+.popup-contactus-content {
+    height: 70%!important;    
+}   
+.pend-apprv{
+    margin-right: 78px!important;
+    margin-top: 20px;
+}
+    
+.requester{       
+    float: left;
+    margin-left: 10%!important;
+    }
+    
+    .payroll-item {       
+    margin-right:0px!important;
+    float: right;
+     }
+    
+    .down-report-btn{
+         margin-right: 77px;
+    }
+    
+.appr-date-end{
+    margin-left: 0px!important;
+}
+    
+    .add-holi-link{
+    font-size: 14px;
+    margin-right: 14px !important;
+    }
+
+    
+ .modal-holi{
+    padding: 10px!important;
+}
+    
+    .del-dep-span{
+    margin-left: 14%;
+    float: left;
+    margin-bottom: 25px!important;
+}   
+    
+    .del-dep{
+        width: 95%!important;
+    }
+    
+    .img-del-dep{
+    float: right;
+    margin-right: 0px!important;
+    margin-bottom: -4px;
+}
+    
+    .btn-add-holiday{  
+    margin-top: 0px;
+    margin-right: 0px!important;
+    font-size: 14px;
+    margin-bottom: 10px!important;    
+}
+    
+    .holi-list{       
+     margin-left: 20px;
+    float: right;
+    margin-right: 0px!important;
+    }
+    
+    .add-job-title{
+        width: 80%!important;
+    }
+    
+    .add-new-grp{
+        width: 100%!important;
+    }
+    
+    .edit-ppl{
+        width: 100%!important;
+    }
+    
+    .edit-icon{
+    width: 21px!important;
+    height: 21px!important;
+    margin-left: 48%!important;
+    margin-top: 15%!important;
+    }
+    
+    .edit-title{
+        font-size: 14px!important; 
+        background-color: #dcdcdc!important;
+        width: 50%!important;
+        text-align: center!important;  
+        border-radius: 0px 30px 30px 0px!important;
+        padding: 10px!important;
+    }
+    
+    .edit-per{
+        width: 100%!important;
+    } 
+    
+ .label-switch{
+     float: right;
+   margin-right: 24px!important;
+}
+    
+    #acc-notice{        
+        padding-left: 0px !important;
+    }
+    
+    .acc-info{
+    margin-right: 0px!important; 
+    color: darkgrey;  
+    }
+    
+    .prof-name{
+    float: none!important;
+    margin-top: 40px!important;
+    margin-left: 0px!important;
+}
+    
+     .img-acc-settings{
+        width: 120px!important ;
+        height: 120px!important ;
+        float: none !important;
+        margin-left: 0px !important;
+    }
+    #chg-pass-text{
+        margin-left: -5px!important;
+        
+    }
+    
+    #btn-chg-pass{
+        margin-bottom: 25px!important;
+        margin-right: 24%!important;
+    }
+    
+    
+   .btn-upload{
+    margin-top: 43px;
+    margin-right: 0px!important;
+    float: none!important;
+    }
+    
+.paginate_button {
+    padding: 6px 10px !important;
+}
+.content-contact-us .container {
+    padding: 0px 15px!important;    
+}
+.g-recaptcha-placeholder > p > img {
+    width: 250px!important;    
+} 
 .leave-calculation {
     padding: 15px 0px!important;     
 }
@@ -624,7 +815,7 @@ title4 {
     color: #00aeef;
     line-height: 40px;
     margin: 0px;
-    margin-top: -10px;
+    margin-right: -10px !important;
     border: 1px solid #00aeef;
     padding: 0px 10px;
     font-size: 12px;
@@ -700,6 +891,7 @@ td {
 //}
 .card {
     margin-top: 30px;
+    border-radius: 10px;
 }
 .signinbutton > a {
     position: relative !important;
@@ -756,7 +948,7 @@ td {
     margin-left: 50px;
   }
   .hr-content {
-    margin: 10px 0px!important;
+    margin: 80px 0px!important;
   }
 .main-banner .banner-title4 {
     position: absolute;
@@ -843,17 +1035,17 @@ td {
 }
 .main-banner .banner-title {
     position: absolute!important;
-    top: 90px!important;
+    top: 160px!important;
     margin-left: 12px!important;
     font-size: 14px!important;
     width: 100%!important;
 }
 .main-banner .banner-title4 {
     position: absolute!important;
-    top: 110px!important;
+    top: 180px!important;
     margin-left: 12px!important;
     font-size: 14px!important;
-    width: 40%!important;
+    width: 60%!important;
     line-height: 1.3!important;
 }
 .section-data-tables {
@@ -881,13 +1073,153 @@ td {
     overflow-x: auto!important;
     display: inline-table!important;    
 }
+    .acc-name{
+    float: none!important;
+}
+}
+
+ .holi-list{    
+    margin-left: 20px;
+    float: right;
+    margin-right: 241px;
+    }
+
+.add-job-title{
+        width: 55%;
+    }
+
+ .add-new-grp{
+        width: 45%;
+    }
+
+ .edit-ppl{
+        width: 55%;
+    }
+
+ .edit-title{
+    margin-left: -1%;
+    font-size: 128%;
+    background-color: #dcdcdc;
+    width: 45%;
+    text-align: center;
+    border-radius: 0px 30px 30px 0px;
+    padding: 10px;
+}
+
+.edit-icon{
+        width: 4%; 
+        height: 5%; 
+        margin-left: 6%; 
+        margin-top: 31%;
+    }
+    
+    .edit-per{
+        width: 60%;
+    }
+
+.acc-info{
+    margin-right: 125px; 
+    color: darkgrey;  
+    }
+
+.acc-name{
+    float: left;
+}
+
+ .btn-upload{
+    margin-top: 43px;
+    margin-right: 50px;
+    float: right;
+    }
+
+ #chg-pass-text{
+        margin-left: 100px;
+    }
+
+#btn-chg-pass{
+        margin-bottom: 25px;
+        margin-right: 220px;
+    }
+
+.btn-add-holiday{  
+    margin-top: 0px;
+    margin-right: 21%;
+    font-size: 14px;
+}
+
+.img-del-dep{
+    float: right;
+    margin-right: 17%;
+    margin-bottom: -4px;
+}
+
+ .del-dep{
+        width: 40%;
+    }
+
+.del-dep-span{
+    margin-left: 14%;
+    float: left;
+}   
+
+.dep-span{
+    margin-left: 14px; 
+    margin-top: 0px;
+    float: left; 
+    font-size: 14px; 
+    color: darkgrey
+}
+
+.modal-holi{
+    padding: 24px;
+}
+
+.add-holi-link{
+    font-size: 14px;
+    margin-right: 192px;
+}
+
+.appr-date-end{
+    margin-left: 20px;
+}
+
+.down-report-btn{
+    margin-right: 53px;
+}
+
+ .payroll-item {       
+    margin-right:20px;
+    float: right;
+     }
+
+ .requester{       
+    float: left;
+    margin-left: 4%;
+    }
+
+.pend-apprv{
+    margin-right: 4%;
 }
 
 @media only screen and (max-width: 380px) {
+.btn-claim{
+  font-size:9px !important;
+}
+.main-banner .banner-title {
+    top: 150px!important;
+    margin-left: 25px!important;
+}
+.main-banner .banner-title4 {
+    top: 170px !important;
+    margin-left: 25px!important;
+}
+#add-office{
+ margin-right: -7px !important; 
+}
 .card-content .waves-effect {
-    margin-bottom: 10px;
+    margin-top: 0px;
     height: auto;
-    line-height: 26px; 
+    line-height: 30px; 
     font-size: 12px;
 }
 .footer-privacy {
@@ -939,16 +1271,8 @@ td {
 .main-banner .banner-title3 {
     top: 70px!important;
 }
-.main-banner .banner-title {
-    top: 150px!important;
-    margin-left: 25px!important;
-}
-.main-banner .banner-title4 {
-    top: 170px !important;
-    margin-left: 25px!important;
-}
 #main .content {
-    margin-top: 40px;     
+    margin-top: 10px;     
 } 
 .privacy {
     padding: 0px 10px!important;      
@@ -962,6 +1286,17 @@ td {
 }
 
 @media only screen and (max-width: 330px) {
+.hide-icon{
+  display: none !important;
+}
+.create-btn{
+  width: 100px !important;
+  position: unset !important;
+}
+#contactForm{
+  width: 300px !important;
+  right: -140px !important;
+}
 .landing-page-nav-links li a {
     padding: 0 5px !important;
     font-size: 9px !important;
@@ -1253,7 +1588,7 @@ input[type=password]:not(.browser-default) {
     top: 160px;
     margin-left: 50px;
     font-size: 21px;
-    width: 40%;
+    width: 50%;
     line-height: 1.3;
 }
 
@@ -1448,7 +1783,7 @@ th {
 }
 
 .paginate_button {
-    padding: 10px 20px !important;
+    padding: 10px 20px;
 }
 
 .toggle-options .bulkupload > p > a:hover {
@@ -1481,6 +1816,14 @@ th {
 }
 
 @media only screen and (max-width: 400px){
+    
+   
+   .btn-upload{
+    margin-top: 43px;
+    margin-right: 0px!important;
+    float: none!important;
+    }
+    
 .clr-fil-appr {
     padding-top: 5px!important;
     margin-right: 5px!important;
@@ -1551,7 +1894,7 @@ th {
     text-align: center; 
     color: white; 
     line-height: 40px;
-    margin-right: 57px;
+    margin-right: 57px!important;
     margin-top: 48px;
 }
 .input-field.col label {
@@ -1605,7 +1948,33 @@ th {
     padding-right: 5px;
     padding-left: 5px;
 }
+        
 }
+
+.label-switch{
+    float: right;
+   margin-right: 45px;
+}
+
+ .acc-noti-set{        
+        padding-left: 37px !important;
+    }
+
+.prof-name{
+    float: left;
+    margin-top: 40px;
+    margin-left: 23px;
+}
+
+.img-acc-settings{
+    width: 120px;
+    height: 120px;
+    float: left;
+    margin-left: 55px;
+    text-align: center;
+    
+}
+
 
 .btn-add-policy {
   background-color: #00aeef; 
@@ -1732,7 +2101,7 @@ color: white;
 .p-pending {
 border-radius: 20px;
 text-align: center;
-width: 80%; 
+width: 122px; 
 background-color:#b2a30f; 
 color: white;
 }
@@ -1747,5 +2116,111 @@ color: white;
     transition: transform 0.3s ease-in-out, opacity 0.25s ease-in-out 0.1s, -webkit-transform 0.3s ease-in-out;
     padding-top: 7px;
     left: -20px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+
+.tooltip.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+top: -5px;
+  right: 105%;
+}
+.tooltip:hover.tooltiptext {
+  visibility: visible;
+}
+
+
+
+$selected-color: #00aeef;
+
+.button-group input{
+  display: none;
+}
+
+.button-group input:checked + label,
+.button-group input:checked + label:active {
+  background-color: $selected-color;
+    color: white;
+}
+
+
+
+.vl {
+  border-left: 1px solid darkgray;
+  height: 270px;
+}
+
+.modal.modal-fixed-footer .modal-content {
+  padding-left: 0px; 
+}
+
+.modal-content > h5 {
+  padding-left: 20px!important;  
+}
+
+.modal.modal-fixed-footer {
+  border-radius: 15px;
+}
+
+@media (max-width: 900px){
+  .seven-cols {
+    width: 100%;
+    text-align:center !important;
+  }
+}
+
+@media (min-width: 900px){
+  .seven-cols {
+    width: 14.285714285714285714285714285714%;
+    
+  }
+}
+
+
+
+
+
+@media only screen and (max-width: 993px){
+  .vl{
+    border-left:unset !important;
+    border-top: 1px solid darkgray !important;
+    height: auto !important;
+    padding-left: 0px !important;
+  }
+
+  #summary{
+    margin-left: 0 !important;
+  }
+}
+
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #039be5;
+    will-change: left, right;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: black;
+}
+
+.p-pending {
+    width: 60%;
 }
 

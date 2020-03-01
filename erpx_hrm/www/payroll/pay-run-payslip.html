@@ -1,0 +1,232 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+  /*.dropdown-content{
+    position: relative !important;
+  }*/
+
+  @media only screen and (max-width: 1460px){
+    .small-fonts{
+      font-size: 12px;
+    }
+  }
+
+  @media only screen and (max-width: 330px){
+    .card-scroll{
+      overflow-x: scroll;
+    }
+
+    .card-width{
+      width: 220px !important;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/payroll/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables">
+          <div class="col s12">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb" style="display: inline;">
+                <a class="breadcrumb">Payroll</a>
+                <a class="breadcrumb">Pay Run</a>
+                <a href="/payroll/pay-run-payslip" class="breadcrumb active">Payslip</a>
+              </div>
+            </div>
+            <div class="col s12 m12 l12 xl12">
+              <div id="card-stats" class="card" style="border-radius: 10px; overflow: unset!important;">
+                <div class="card-content" style="text-align: unset !important;">
+                  <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/pay-run.png">
+                  <h4 class="card-title directorytitle" style="text-align: left;"><b>Group Payslip</b></h4>
+
+
+                  <div class="row margin infodetails" style="margin-top: 20px !important; border-bottom: 1px solid gray">
+
+                    <div class="input-field col s12 m12 l3 xl3">
+                      <p style="text-align: left;margin-bottom: 10px;">Payroll Period</p>
+                      <select style="padding-left: 10px;width: -webkit-fill-available; ">
+
+                        <option value="July" disabled selected>Aug 2019</option>
+                      </select>
+                    </div>
+
+                    <div class="input-field col s12 m12 l3 xl3">
+                      <p style="text-align: left;margin-bottom: 10px;">Payroll Type</p>
+                      <select style="padding-left: 10px;width: -webkit-fill-available; ">
+
+                        <option value="month" disabled selected>Month end pay</option>
+                      </select>
+                    </div>
+
+                    <div class="input-field col s12 m12 l3 xl3">
+                      <p style="text-align: left;margin-bottom: 10px;">Employee</p>
+                      <select multiple>
+                        <option value="" disabled selected>Choose payslip</option>
+                        
+                        <option value="leanne_ko">Leanne Ko</option>
+                        <option value="hamidi_rashidi">Hamidi Rashidi</option>
+                        <option value="siti_halina">Siti Halina</option>
+                        <option value="tani_sari">Tani Sari</option>
+                        <option value="yo_ling">Yo Ling</option>
+                        <option value="azizi_nordin">Azizi Nordin</option>
+                      </select>
+                    </div>
+
+                    <div style="float: right;margin-top: 55px;margin-bottom: 30px;">
+                      <button class="waves-effect waves-dark btn-flat" style="color: #00AEEF;">Send All</button>
+                      <button class="waves-effect waves-dark btn ">Download All</button>
+                        
+                    </div>
+
+                  </div>
+                  <div class="row margin infodetails small-fonts card-scroll" style="margin-top: 20px !important;">
+                    <div class="card-width">
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important;">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;">
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle;">
+                          <span style="color: #00aeef;"><b>Leanne Ko</b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">Marketing Manager</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important;">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;">
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle; ">
+                          <span style="color: #00aeef;"><b>Hamidi Rashidi </b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">Office Manager</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important;">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;"> 
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle; ">
+                          <span style="color: #00aeef;"><b>Siti Halina </b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">UI Designer</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important;">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;">
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle; ">
+                          <span style="color: #00aeef;"><b>Tani Sari</b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">Marketing Assistant</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;">
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle; ">
+                          <span style="color: #00aeef;"><b>Yo Ling</b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">Front-end Developer</span>
+                          
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="col xl3 l4 m6 s12" style="padding:0px 10px !important;margin-bottom: 24px !important; ">
+                      <div class="card card-content" style="white-space: nowrap;padding: 0; margin: 0; border: 1px solid #c1c1c1; box-shadow: none;border-radius: 10px;">
+                        <img width="50" height="50" src="/images/profile_icon.png" style="vertical-align: middle; float: left;margin-left:10px;margin-right:10px;">
+                      
+                      
+                        <p style="padding-top: 5px;text-align:left;margin-left: 15px;vertical-align: middle; ">
+                          <span style="color: #00aeef;"><b>Azizi Nordin </b></span>
+                          <img src="/icons/icon-74.png" width="8" height="8" style="margin-right: 5px;float: right;">
+                          <span style="display: block;">Marketing Strategist</span>
+                          
+                        </p>
+                      </div>  
+                    </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+{% endblock %}
+

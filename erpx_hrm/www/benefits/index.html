@@ -2,6 +2,52 @@
 
 {% block title %}Payroll{% endblock %}
 {% block styles %}
+<style type="text/css">
+    
+    @media only screen and (min-width: 1520px){
+        .row .col .sp5{
+            width: 20% !important;
+            margin-left: auto;
+            left: auto;
+            right: auto;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+#contact { 
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  
+  
+  line-height: 30px;
+  background: teal;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+ 
+}
+
+
+#contactForm { 
+  display: none;
+
+  
+  padding: 2em;
+  width: 400px;
+  
+  background: #fff;
+  position: absolute;
+  top:49%;
+  right: -180px;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -17,8 +63,71 @@
 <!--sidenav-->
 {% include "www/benefits/sidenav.html" %}
 {% endblock %}
-
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
 {% block main %}
+<style type="text/css">
+@media only screen and (max-width: 480px){
+
+.main-banner .banner-title{
+            position: absolute !important;
+            top: 138px !important;
+            margin-left: 12px !important;
+            font-size: 14px !important; 
+            width: 100% !important;
+            
+        }
+
+        .main-banner .banner-title3{
+            position: absolute !important;
+            top: 70px !important;
+            margin-left: 12px !important;
+            font-size: 12px !important; 
+            width: 30% !important;
+            
+        }
+
+  .main-banner .banner-title4{
+            position: absolute !important;
+            top: 135px !important;
+            margin-left: 12px !important;
+            font-size: 12px !important; 
+            line-height: 1.3 !important;
+        }
+
+ .get-started-btn{
+   margin-top: 0px!important;
+} 
+
+.div-margin-top{
+   margin-top: 90px!important;
+}
+
+}
+.footer{
+  padding-top: 9px;
+}
+
+.get-started-btn{
+    margin-top: 30px;
+}
+
+.div-margin-top{
+    margin-top: 55px;
+}
+
+.dropdown-content{
+  border-radius: 10px;
+  width: 140px !important;
+  height: unset !important;
+}
+.dropdown-content li{
+  min-height: unset !important;
+}
+</style>
+
 <div id="main">
     <div class="animate fadeUp main-banner">
         <img src="/images/benefits-banner.png" style="width: 100%;"/>
@@ -28,14 +137,169 @@
                 <a href="/hr" class="breadcrumb active">Get benefits</a>
             </div>
         </div>
-        <h5 class="pink-text banner-title">Providing benefits to employees has never been easier!</h5>
-        <h5 class="black-text banner-title4">Drop few lines and get an instant recommendation within a minute</h5>
+        <h5 class="pink-text banner-title">Providing benefits to employees<br>has never been easier!</b5>
+ 
+        
+        <h5 style="margin-top: 44px;" class="black-text banner-title4">Drop few lines and get an instant<br> recommendation within a minute</h5>
+
+        <h5 class="banner-subtitle banner-title4" style="margin-top: 80px;">
+            <a href="/payroll/pay-run-payslip" class="get-started-btn btn">Get Started</a>
+        </h5>
     </div>
+
+    <div class="div-margin-top row infodetails" >
+     <div class="col xl5 l5 m12 s12" >
+        <div class="card" style="border-radius: 10px!important;overflow: unset !important; height: 280px;">
+         <div class="card-content">
+           <h4 class="card-title newstitle" style="display: contents;">Dashboard</h4>
+
+           <div style="margin-top: 16px; border: 1px #c1c1c1 solid; border-radius: 10px; padding: 13px;"
+           class="input-field col s12">
+           <p><b>Draft 1 <img src="/icons/icon-65.png" width="35" height="35" data-target="dropdown1" class="dropdown-trigger" style="float: right;"></b></p>
+           <span>Last edited 8 Aug 2019</span>
+           <div style="height: 30px;"></div>
+
+           <span>Step: Recommendation</span>
+
+           <div style="height: 40px;"></div>
+
+           <a class="right">Continue Draft</a>
+            <ul id="dropdown1" class="dropdown-content" >
+              <li style="padding: 0">
+                <a href="#!" style="text-align: center;color: #00AEEF; padding: 5px; font-size: 14px">Edit Draft</a>
+              </li>
+              <li style="padding: 0"><a href="#!" style="text-align: center;color: red; padding: 5px; font-size: 14px">Delete</a></li>
+              
+            </ul>
+       </div>
+   </div>
+</div>
+</div>
+
+<div class="col xl7 l7 m12 s12" >
+  <div style="padding: 10px; background-color: #e3e3e3; border-left: 7px gray solid; margin-top: 16px;">     
+    <img width="18" height="18" style="position: absolute;" class="sidenav-icon" src="/icons/icon-59.png">
+    <span style="padding-left: 35px;"><b>Make sure you’re in the right country!</b></span>
+    <p style="padding-left: 35px;">
+       Medical benefits differs by countries and each of your employees’ location (country) is automatically detected according to
+       the country that you’ve set in <a>Office</a>.</p>
+   </div>
+   <div style="height: 30px"></div>
+   </div>
+
+</div>
+<a href="#" id="contact" class=" btn-floating btn-fab btn-large waves-effect waves-light " style="display: block; background-color: #00AEEF;"><i class="material-icons">message</i></a>
+<a href="#" id="close_contact" class=" btn-floating btn-fab btn-large waves-effect waves-light " style="display: none"><img src="/icons/icon-66.png" width="56" height="56"></a>
+<div id="contactForm" style="padding: 0px;border-radius: 25px;overflow: hidden;max-height: 100%;height: 80%;bottom: 10%;">
+    <div class="title-contact-us" style="background-color: #e6e6e6;padding: 25px;border-radius: 0px 0px 45% 45%;">
+        <h5 style="text-align: center;margin: 0px;">Contact Us</h5>
+        <p style="text-align: center;">Need some help?<br/>Beep us and we’ll do our best to help!</p>
+    </div>
+    <div class="content popup-contactus-content" style="height: 75%;overflow-y: scroll;margin-right: 2px;">
+        <div class="content-contact-us">
+            <div class="container" style="padding: 0px 50px;">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom: 0px;">
+                            <p>Full Name</p>
+                            <input type="text" id="name" style="width: -webkit-fill-available">
+                            <label for="name" class="center-align" style="left: 20px;top: 52px;">Enter full name</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Email Address</p>
+                            <input type="text" id="email" style="width: -webkit-fill-available">
+                            <label for="email" class="center-align" style="left: 20px;top: 52px;">Enter email address</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Title</p>
+                            <input type="text" id="title" style="width: -webkit-fill-available">
+                            <label for="title" class="center-align" style="left: 20px;top: 52px;">Enter title</label>
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom: 0px;width: ">
+                            <p>Description</p>
+                            <textarea id="message"></textarea>
+                            <label for="message" class="center-align" style="left: 20px;top: 52px;">Tell us what you need help with</label>
+                        </div>
+                        <div class = "file-field input-field col s12" style="cursor: pointer;">
+                            <div class = "">
+                                <input type = "file" multiple />
+                                <i class="small material-icons icon"style="display: inline-block;position: absolute;top: 15px;left: 15px;font-size: 20px!important;color: #42a5f5;">attach_file</i>
+                                <p style="display: inline-block;padding-left: 30px!important;color: #42a5f5;border: none!important;">Attach a file <span style="color: #adadad;font-style: italic;">
+                                (Max file size: 5MB)</span></p>
+                            </div>
+                            <div class = "file-path-wrapper" style="padding-left: 0px;cursor: pointer;display: inline-block;position: absolute;top: 0px;right: 160px;">
+                             <input class = "file-path validate" type = "text"
+                             placeholder = "" style="display: inline-block;color: #42a5f5;border: none!important;"/>
+                         </div>
+                     </div>
+                     <!--<div class="g-recaptcha placeholder"><p><img src="/images/reCaptcha-img.png" style="width: 300px;padding-left: 15px;"></p></div>-->
+                     <div class="g-recaptcha col s12" id="recaptcha"  data-sitekey="6Le2Qb4UAAAAACuXQH7R9JMONtEqem0YAQUGwJw0"></div>
+                     
+                    <div class="col s12">
+                    <button class="right waves-effect waves-light btn" style="margin-top: 30px; margin-bottom: 30px;">Submit</button>
+                    <a id="cancel_contact" href="#" class="right blue-text btn-flat" style="margin-top: 30px; margin-bottom: 30px;">Cancel</a>
+                    </div>
+                 </div>
+             </form>
+         </div>
+         
+  </div>
+</div>
+
+</div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<script>
+    $(function() {
+  
+  // contact form animations
+  $('#contact').click(function() {
+    $('#contactForm').fadeToggle();
+    $('#contact').css("display", "none");
+    $('#close_contact').css("display", "block");
+  });
+
+  $('#close_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+
+  $('#cancel_contact').click(function() {
+    var container = $("#contactForm");
+    container.fadeOut();
+    $('#contact').css("display", "block");
+    $('#close_contact').css("display", "none");
+  });
+  $(document).mouseup(function (e) {
+    var container = $("#contactForm");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.fadeOut();
+        $('#contact').css("display", "block");
+        $('#close_contact').css("display", "none");
+    }
+  });
+  
+});
 </script>
 {% endblock %}

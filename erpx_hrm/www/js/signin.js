@@ -21,6 +21,24 @@ $(function () {
 
         e.preventDefault();
 
+
+        fetch('/api/method/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                usr: $("#login-username").val(),
+                pwd: $("#login-password").val()
+            })
+        })
+        .then(r => r.json())
+        .then(r => {
+            console.log(r);
+        })
+
+
         args.cmd = 'login';
 		args.usr = frappe.utils.xss_sanitise(($("#login-username").val() || "").trim());
 		args.pwd = $("#login-password").val();
@@ -34,6 +52,11 @@ $(function () {
 		loading(true);
 		login.call(args);
 		return false;
+    });
+
+    $('.ev_register').on('submit', function (e) {
+        var args = {};
+        e.preventDefault();
     });
 
     $('input').on('change', function (e) {

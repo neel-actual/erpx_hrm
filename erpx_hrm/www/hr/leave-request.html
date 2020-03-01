@@ -8,8 +8,35 @@
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+    @media only screen and (max-width: 330px){
+      .clr-filter{
+        text-align: left;
+        position: unset !important;
+      }
+
+      .tabs{
+        width: 210px !important;
+      }
+
+
+    }
+
+.collapsible-body{
+  padding: 0 !important;
+}
+.file-field .file-path-wrapper{
+    width: 100%;
+    padding-left:0px !important;
+}
+.file-field .file-path-wrapper input[type=text].file-path{
+    border:none !important;
+    border-radius: 0px !important;
+}
+
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -45,114 +72,182 @@
       </div>
     </div>
     <div class="content">
-                <div class="col xl6 l6 m6 s12 balancesummary leave-request">
-                    <div id="card-stats" class="card">
+        <div class="col s12 m12 l12 xl6">
+            <div class="balancesummary leave-request">
+                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
                         <div class="card-content">
                             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Balance Summary</div>
                             <!--<p>Balance left</p>-->
-                            <div class="row">
-                                <!--individual-card-->
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle blue">
-                                        <div class="card-content center">
-                                            <h4 class="card-stats-number white-text">0</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Annual</p>
-                                </div>
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle purple">
-                                        <div class="card-content center">
-                                            <h4 class="card-stats-number white-text">0</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Sick</p>
-                                </div>
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle pink">
-                                        <div class="card-content center">
-                                            <h4 class="card-stats-number white-text">0</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Hospitalisation</p>
-                                </div>
-                                <div class="col s6 m6 l6 xl3">
-                                    <div class="circle red">
-                                        <div class="card-content center">
-                                            <h4 class="card-stats-number white-text">0</h4>
-                                            <p class="card-stats-title white-text">
-                                                <span>available</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style="margin-top: 10px;text-align: center;">Paternity</p>
-                                </div>
+                            <div class="row" id="html_balancesummary">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col xl6 l6 m6 s12 requestleave">
-                    <div class="card">
+                <div class=" calendar">
+                    <div id="card-stats-2" class="card" style="border-radius: 10px!important;">
+                            <div class="card-content">
+                                  <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
+                                <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
+                                <div class="row">
+                                    <div class="col s12 leavetabs" style="margin-bottom: 20px;">
+                                      <ul class="tabs">
+                                        {% if show_menu["leave-balance"] %}
+                                        <li class="tab col s6 m3"><a class="active" href="#calendar-leave-all">All leaves</a></li>
+                                        {% endif %}
+                                        {% if show_menu["leave-approval"] %}
+                                        <li class="tab col s6 m6"><a href="#calendar-leave-department">Department's leaves</a></li>
+                                        {% endif %}    
+                                        {% if show_menu["leave-request"] %}
+                                        <li class="tab col s6 m3"><a href="#calendar-leave-employee">My leaves</a></li>
+                                        {% endif %}
+                                      </ul>
+                                    </div>
+                                
+                                <div id="calendar-leave-all" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-department" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-employee" class="fc fc-unthemed fc-ltr"></div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="requesthistory">
+                    <div id="card-stats-3" class="card" style="border-radius: 10px!important; overflow:visible">
+                        <div class="card-content">
+                            <img style="display: inline; float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
+                            <div class="card-title" style="text-align: left;margin-left: 35px;">Request History</div>
+                            <p class="clr_filter_requesthistory" style="position: absolute;top: 30px;right: 20px;color: #00aeef;">Clear filters</p>
+                            <form>
+                                <div class="input-field col s12 m4">
+                                    <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Type</p>
+                                    <select class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
+                                        <option value="" selected>All Type</option>
+                                        {% set leav_type = frappe.get_all("Leave Type", fields=['*']) %}
+                                        {% for i_leav_type in leav_type %}
+                                            <option value="{{i_leav_type.leave_type_name}}">{{i_leav_type.leave_type_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="input-field col s12 m4">
+                                    <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Start</p>
+                                    <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                    <input id="i_filter_from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"  autocomplete="off" placeholder="" class="textbox-n date-range-filter i_filter_requesthistory" type="date" onfocus="(this.type='date')">
+                                </div>
+                                <div class="input-field col s12 m4">
+                                    <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">End</p>
+                                    <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                    <input id="i_filter_to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"  autocomplete="off" placeholder="" class="textbox-n date-range-filter i_filter_requesthistory" type="date" onfocus="(this.type='date')">
+                                </div>
+                            </form>
+                            <div id="table-scroll" class='form-field col s12' style="padding-right: 0;" id="request_history2">
+                            <table class="table table-striped dataTable display" style="font-size: 14px;" id="request_history">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+                                        <th style="border-right:none!important;">Type</th>
+                                        <th style="border-right:none!important;">From Date</th>
+                                        <th style="border-right:none!important;">To Date</th>
+                                        <th style="border-right:none!important;">Date</th>
+                                        <th style="border-right:none!important;">Total</th>
+                                        <th style="border-right:none!important;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee, 'docstatus':['!=', 2]}, fields=['*']) %}
+                                    {% for i_lev_app_dt in lev_app_li %}
+                                      <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                        <td>{{i_lev_app_dt.leave_type}}</td>
+                                        <td>{{frappe.utils.formatdate(i_lev_app_dt.from_date, format_string="yyyy-mm-dd")}}</td>
+                                        <td>{{frappe.utils.formatdate(i_lev_app_dt.to_date, format_string="yyyy-mm-dd")}}</td>
+                                        <td>{{ frappe.utils.formatdate(i_lev_app_dt.from_date) }}<br>{{ frappe.utils.formatdate(i_lev_app_dt.to_date) }}</td>
+                                        <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
+                                        <td>
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                        </td>
+                                      </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col s12 m12 l12 xl6">
+            <div class="requestleave">
+                    <div class="card" style="border-radius: 10px!important;">
                         <div class="card-content">
                               <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Request Leave</div>
-                            <form>
+                            <form id="form-request-leave">
                             <div class="row margin infodetails">
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Leave type</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <select id="leave_request_leave_type" data-fieldname="leave_type" style="padding-left: 10px;width: -webkit-fill-available;">
                                 <option value="" disabled selected>Select Type</option>
-                                <option value="information technology">Accident</option>
-                                <option value="engineering">Sick</option>
-                                <option value="telecommunication">Vacation</option>
+                                    {% set leave_type = frappe.get_all("Leave Type", fields=['leave_type_name']) %}
+                                    {% for i_leave_type in leave_type %}
+                                        <option value="{{i_leave_type.leave_type_name}}">{{i_leave_type.leave_type_name}}</option>
+                                    {% endfor %}
                                 </select>
-                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                            </div>
+                            <div class="input-field col s12" id="div_emergency" style="display:none">
+                                <p style="margin-bottom: 10px;">
+                                    <label class="container">
+                                    <input data-fieldname="emergency" type="checkbox" class="filled-in" value="1">
+                                    <span class="checkmark" style="vertical-align: -50%;">Emergency</span>
+                                    </label>
+                                </p>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <p style="margin-bottom: 10px;">Start Date</p>
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                <input id="leave_request_from_date" data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
                             <div class="input-field col s12 m6">
-                                <p style="margin-bottom: 10px;">Start Time</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <input id="start" type="text">
-                                <div class="chip">All day<i class="close material-icons">close</i></div>
-                                <div class="chip">am<i class="close material-icons">close</i></div>
-                                <div class="chip">pm<i class="close material-icons">close</i></div>
-                                <!--<label for="signup-name" class="center-align">Company Name</label>-->
+                                <p style="margin-bottom: 10px;">End Date</p>
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                <input id="leave_request_to_date" data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
                             </div>
-                            <div class="input-field col s12 m6">
-                                <p style="margin-bottom: 10px;">End Time</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">email</i>-->
-                                <input id="end" type="text">
-                                <div class="chip">All day<i class="close material-icons">close</i></div>
-                                <div class="chip">am<i class="close material-icons">close</i></div>
-                                <div class="chip">pm<i class="close material-icons">close</i></div>
-                                <!--<label for="signup-email" class="center-align">Email</label>-->
+                            <div class="input-field col s12 m6" id="div_half_day" style="display:none">
+                                <p style="margin-bottom: 10px;">
+                                <label class="container">
+                                <input data-fieldname="half_day" id="half_day" type="checkbox" class="filled-in" value="1">
+                                <span class="checkmark" style="vertical-align: -50%;">Half Day</span>
+                                </label>
+                                </p>
+                            </div>
+                            <div class="input-field col s12 m6" id="div_half_day_shift" style="display:none">
+                                 <select data-fieldname="half_day_shift" style="padding-left: 10px;width: -webkit-fill-available;">
+                                    <option value="" disabled selected>Half Day Shift</option>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Upload File</span>
+                                        <input id="file-request" type="file" autocomplete="off">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" autocomplete="off">
+                                    </div>
+                                </div>
                             </div>
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Reason</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
-                                <textarea id="reason" type="text"></textarea>
-                                <!--<label for="signup-password">Password</label>-->
+                                <textarea data-fieldname="description" type="text"></textarea>
                             </div>
+
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Approver</p>
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                <option value="" disabled selected>Select first approver</option>
-                                <option value="information technology">Information Technology</option>
-                                <option value="engineering">Engineering</option>
-                                <option value="telecommunication">Telecommunication</option>
-                                <option value="electronic">Electronic</option>
+                                <select data-fieldname="leave_approver" style="padding-left: 10px;width: -webkit-fill-available;">
                                 </select>
+                                <!--
                                 <select style="padding-left: 10px;width: -webkit-fill-available;">
                                 <option value="" disabled selected>Select second approver</option>
                                 <option value="information technology">Information Technology</option>
@@ -160,7 +255,9 @@
                                 <option value="telecommunication">Telecommunication</option>
                                 <option value="electronic">Electronic</option>
                                 </select>
+                                -->
                             </div>
+                            <!--
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;display: inline-block;">Send notification</p>
                                 <p style="margin-bottom: 10px;display: inline-block;float: right;color: #00aeef;">Add People</p>
@@ -168,86 +265,103 @@
                                 <p style="margin-bottom: 10px;color: grey;">We send email notifications to people you’ve added once your
 request is approved.</p>
                             </div>
-                                <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right">Request</a>
+                             -->
+                            <div class="col s12">
+                                <button type="button" id="btn-request-leave" class="btn waves-effect waves-light right">Request</button>
+                            </div>
                             </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            
-            <div class="col xl6 l6 m6 s12 calendar">              
-                <div id="card-stats" class="card">
-                        <div class="card-content">
-                              <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
-                            <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
-                             <div class="row">
-    <div class="col s12 leavetabs" style="margin-bottom: 20px;">
-      <ul class="tabs">
-        <li class="tab col s6 m3"><a class="active" href="#">All leaves</a></li>
-        <li class="tab col s6 m6"><a href="#">Department's leaves</a></li>
-        <li class="tab col s6 m3"><a href="#">My leaves</a></li>
-      </ul>
-    </div>
-<div id="basic-calendar" class="fc fc-unthemed fc-ltr">
-    </div></div></div></div></div>
-            <div class="col xl6 l6 m6 s12 requesthistory"> 
-            <div id="card-stats" class="card">
-            <div class="card-content"> 
-            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
-            <div class="card-title" style="text-align: left;margin-left: 35px;">Request History</div>
-            <p style="position: absolute;top: 30px;right: 20px;color: #00aeef;">Clear filters</p>
-            <form>
-            <div class="input-field col s12 m4">
-                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Type</p>
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                <option value="" disabled selected>All Type</option>
-                                <option value="information technology">Accident</option>
-                                <option value="engineering">Sick</option>
-                                <option value="telecommunication">Vacation</option>
-                                </select>
-            </div>
-            <div class="input-field col s12 m4">
-                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Start Time</p>
-                                <input id="start" type="text">
-            </div>
-            <div class="input-field col s12 m4">
-                                <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">End Time</p>
-                                <input id="end" type="text">
-            </div> 
-            </form>
-            <table id="page-length-option-request" class="display dataTable" style="width: 100%;padding: 20px 0px;">
-                                            <thead>
-                                            <tr style="background-color: #eff1f9;">
-                                                <th>Type</th>
-                                                <th>Date</th>
-                                                <th> </th>
-                                                <th>Status</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                    <td>Paternity</td>
-                    <td>22 Aug 2019 - 26 August 2019</td>
-                    <td>3 days</td>
-                    <td><p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;">Approved</p></td>
-                                            </tbody>
-                                        </table>
-            </div>
-            </div>
-            </div>
+        </div>
+
+
+
+
+
+
     </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
-        type="text/javascript"></script>
-<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
-<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
-<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+    var glb_employee = "{{ employee }}";
+    var glb_holiday_list = "{{ holiday_list }}";
+</script>
+
+    <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+    type="text/javascript"></script>  
+    <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+    <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+    <script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+    <script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+    <script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+    <script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            all_leave();
+        });
+
+        function all_leave(){
+            {% if show_menu["leave-balance"] %}
+            $('#calendar-leave-all').fullCalendar({
+                defaultView: 'month',
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type']) %}
+                    {% for i_all_leave in all_leave %}
+                        {
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            start: '{{i_all_leave.from_date}}',
+                            end: '{{i_all_leave.to_date}}'
+                        },
+                    {% endfor %}
+                ],
+            });
+            {% endif %}
+
+            {% if show_menu["leave-approval"] %}
+            $('#calendar-leave-department').fullCalendar({
+                defaultView: 'month',
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department}) %}
+                    {% for i_all_leave in all_leave %}
+                        {
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            start: '{{i_all_leave.from_date}}',
+                            end: '{{i_all_leave.to_date}}'
+                        },
+                    {% endfor %}
+                ],
+            });
+            {% endif %}
+
+            {% if show_menu["leave-request"] %}
+            $('#calendar-leave-employee').fullCalendar({
+                defaultView: 'month',
+                editable: true,
+                eventLimit: true,
+                events: [
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee}) %}
+                    {% for i_all_leave in all_leave %}
+                        {
+                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            start: '{{i_all_leave.from_date}}',
+                            end: '{{i_all_leave.to_date}}'
+                        },
+                    {% endfor %}
+                ],
+            });
+            {% endif %}
+        }
+    </script>
 {% endblock %}

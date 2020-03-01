@@ -1,7 +1,43 @@
 {% extends "www/master.html" %}
 
+
 {% block title %}Claims{% endblock %}
 {% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<style type="text/css">
+.p-purple {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: #9C27B0;
+    color: white;
+}
+.p-grey {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: gray;
+    color: white;
+}
+  @media only screen and (max-width: 1260px){
+  #table-scroll{
+    width: 100%;
+   
+    overflow-x: scroll;
+    
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1015px !important;
+    display: inline-table !important;
+  }
+}
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -17,8 +53,11 @@
 <!--sidenav-->
 {% include "www/claims/sidenav.html" %}
 {% endblock %}
-
+{% block footer %}
+{% include "www/footer.html" %}
+{% endblock %}
 {% block main %}
+<!-- {% set expense = frappe.get_all("Expense Claim", fields=['name','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %} -->
 <div id="main">
  <div class="row">
   <div class="container">
@@ -27,68 +66,125 @@
       <div class="col s12">
         <div class="breadcrumb">
           <a class="breadcrumb">Claims</a>
-          <a href="/claims/index.html" class="breadcrumb active">All Claims</a>
+          <a href="/claims" class="breadcrumb active">All Claims</a>
         </div>
       </div>
-      <div class="col xl20 l20 m18 s12">
-        <div id="card-stats" class="card">
+      <div class="col xl12 l12 m12 s12">
+        <div id="card-stats" class="card" style="overflow: unset!important; border-radius: 10px!important;" >
           <div class="card-content">
             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
             <h4 class="card-title directorytitle" style="text-align: left;">My Claims</h4>
+            
             <div class="row">
               <div style="height: 40px;"></div>
               <div class="row margin infodetails">
-                <div class="input-field col s12 m2">
-                  <i style="position: absolute; padding-top: 12px; right: 10px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+                <div class="input-field col s12 m12 l6 xl2">
+                  <i style="position: absolute; padding-top: 12px; right: 20px;background: #b7aeae; -webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="width: -webkit-fill-available" type="text" name="search" placeholder="  Search Entities" id="search_i">
                 </div>
-                <div class="input-field col s12 m2">
-                  <select style="width: -webkit-fill-available;">
-                    <option value="" disabled selected>All requesters</option>
-                    <option value="information technology">Accident</option>
-                    <option value="engineering">Sick</option>
-                    <option value="telecommunication">Vacation</option>
+                <div class="input-field col s12 m12 l6 xl2">
+                  <select style="width: -webkit-fill-available;" id="req_filter">
+                    <option value="" selected>All Claim Type</option>
+                    {% set Requester =  frappe.get_all("Expense Claim Type", fields=['name']) %}
+                    {% for req in Requester %}
+                    <option value={{req.name}}>{{req.name}}</option>
+                    {% endfor %}
                   </select>
                 </div>
-                <div class="option-date-appr input-field col s12 m2">
-                  <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                  </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
+                <div class="option-date-appr input-field col s12 m12 l6 xl2">
+                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')" data-date-format="dd-mm-yyyy" id="from_date">
                 </div>
-                <div class="option-date-appr input-field col s12 m2">
-                  <i style="position: absolute; padding-top: 12px; right: 16px;" class="material-icons-outlined">date_range
-                  </i><input style="border: 1px solid grey; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n" type="date" onfocus="(this.type='date')">
+                <div class="option-date-appr input-field col s12 m12 l6 xl2">
+                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff to" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')" data-date-format="dd-mm-yyyy" id="to_date">
                 </div>
-                <div class="input-field col s12 m2">
-                  <select style="width: -webkit-fill-available;">
-                    <option value="" disabled selected>All status</option>
-                    <option value="information technology">Accident</option>
-                    <option value="engineering">Sick</option>
-                    <option value="telecommunication">Vacation</option>
+                <div class="input-field col s12 m12 l6 xl2">
+                  <select style="width: -webkit-fill-available;" id="status_filter">
+                    <option value="" selected>All status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Submitted">Submitted</option>
                   </select>
                 </div>
-                <div class="input-field col s12 m2">
-                  <a href="#" style="padding-top: 15px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right">Clear Filter</a>
+                <div class="input-field col s12 m12 l6 xl2">
+                  <a href="#!" style="padding-top: 15px;" class=" modal-trigger waves-effect waves-light right" id="clear_filter">Clear Filter</a>
                 </div>
               </div>
-              <table style="font-size: 14px;">
+              <div class="col s12" id="table-scroll">
+                
+              <table style="font-size: 14px;" class="table table-striped dataTable display" id="table_id">
+              <thead>
                 <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
                   <th style="border-right:none!important;">Title</th>
-                  <th style="border-right:none!important;">Period</th>
+                  <th style="border-right:none!important;">Date</th>
                   <th style="border-right:none!important;">Amount</th>
                   <th style="border-right:none!important;">Requester</th>
                   <th style="border-right:none!important;">Cutoff Date</th>
                   <th style="border-right:none!important;">Status</th>
                 </tr>
+              </thead>
+                {% set expense1 = frappe.get_all("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date']) %}
+              <tbody>
+                {% for ex in expense1 %}
+               
+                
                 <tr>
-                  <td><a style="color: black" href="/claims/claim-title1.html">20190312 - AA</a></td>
-                  <td>26 Jul 2019 - 26 Jul 2019</td>
-                  <td>MYR 200</td>
-                  <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
-                  <td>26 Jul 2019</td>
-                  <td><p class="p-approved">Approved</p></td>  
+                  {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
+                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                    
+                    ({% for e in range(claim_title|length) %}
+                    {% if e < 2 %}
+                    {{claim_title[e].expense_type}}
+                    {% endif %}
+                    {% endfor %}
+                    {% if (claim_title|length) > 2 %}
+                    ...
+                    {% endif %})
+                  </td>
+                  
+                  <td>{{ex.posting_date}}</td>
+                  <td>{{currency}} {{'%0.2f'| format(ex.total_claimed_amount|float)}}</td>
+
+                  
+                  
+                  <td>
+                      {% set employee_pic = frappe.get_all("Employee",filters={'name':ex.employee},fields=['image'])%}
+                      {% for file in employee_pic %}    
+                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% else %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+                  <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
+                  {% set class_color = '' %}
+                  {% if(ex.status == 'Unpaid') %}
+                      {% set class_color = 'p-pending' %}
+                  {% elif(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}
+                      {% set class_color = 'p-grey' %}
+                  {% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}
+                      {% set class_color = 'p-purple' %}
+                  {% elif(ex.status == 'Cancelled') %}
+                      {% set class_color = 'p-declined' %}
+                  {% elif(ex.status == 'Rejected') %}
+                      {% set class_color = 'p-declined' %}
+                  {% elif(ex.status == 'Paid') %}
+                      {% set class_color = 'p-approved' %}
+                  {% elif(ex.status == 'Submitted') %}
+                      {% set class_color = 'p-approved' %}
+                  {% endif %}
+                  <td><p class={{class_color}}>{% if(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}Pending{% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}Verified{% else %}{{ex.status}}{% endif %}</p></td>  
                 </tr>
 
+                {% endfor %}
+              </tbody>
 
-                <tr>
+                
+
+
+                <!-- <tr>
                   <td><a style="color: black" href="/claims/claim-title1.html">20190312 - AA</a></td>
                   <td>26 Jul 2019 - 26 Jul 2019</td>
                   <td>MYR 200</td>
@@ -105,10 +201,9 @@
                   <td><p style="color: white;padding: 10px;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;">A</p></td>
                   <td>26 Jul 2019</td>
                   <td><p class="p-pending">Pending Approval</p></td>
-
-
-                </tr>
+                </tr> -->
               </table>
+              </div>
             </div>
           </div>
         </div>
@@ -122,7 +217,82 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
+
+
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
-</script>
+  var user_table = $('#table_id').DataTable({
+    "order": [[ 1, "desc" ]],
+    columnDefs: [ {
+      targets: 1,
+      render: $.fn.dataTable.render.moment('DD-MM-YYYY')
+    },
+    ],
+    paging: true,
+    searching: true,
+    info: true,
+    lengthChange: true,
+    ordering: true,
+    buttons: true
+  });
+
+
+  $.fn.dataTable.ext.search.push(
+  function(settings, data, dataIndex) {
+    var min = new Date(adjust_date_time(moment($('#from_date').val()).format('DD-MM-YYYY')));
+    var max = new Date(adjust_date_time(moment($('#to_date').val()).format('DD-MM-YYYY')));
+    
+    var createdAt = new Date(adjust_date_time(data[1])); // Our date column in the table
+    console.log("created "+createdAt)
+    console.log("min "+min)
+    console.log("max "+max)
+
+    if ((min == "Invalid Date" || max == "Invalid Date") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) {
+      return true;
+    }
+    return false;
+  }
+);
+
+// Re-draw the table when the a date range filter changes
+$('.date-range-filter').change(function() {
+  user_table.draw();
+});
+
+  $('#search_i').keyup(function(){
+    console.log("onup")
+    user_table.search($(this).val()).draw() ;
+    });
+
+  $('#status_filter').change(function(){
+    
+        var filter_status = $("#status_filter").val();
+        console.log(user_table)
+        user_table.column(5).search(filter_status, true, false, false).draw();
+    });
+    $('#req_filter').change(function(){
+    
+    var filter_status = $("#req_filter").val();
+    console.log(user_table)
+    user_table.column(0).search(filter_status, true, false, false).draw();
+    });
+
+    $('#clear_filter').click(function(){
+      console.log("here")
+      location.reload(true);
+    });
+
+    function adjust_date_time(date){
+      var date_list = date.split("-");
+      return date_list[1]+"-"+date_list[0]+"-"+date_list[2]
+    }
+
+    
+    </script>
 {% endblock %}

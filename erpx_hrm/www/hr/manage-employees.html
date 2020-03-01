@@ -8,6 +8,31 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+    @media only screen and (max-width: 1460px){
+      #table-scroll{
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+
+        white-space: nowrap!important;
+      }
+
+
+    }
+
+    @media only screen and (max-width: 330px){
+      .btn-bulk{
+        padding-right: 0px !important;
+      }
+
+      .btn-clear{
+        width: 100%;
+        text-align: left;
+        margin-top: 20px !important;
+      }
+    }
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -41,70 +66,88 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             <div class="breadcrumb" style="display: inline;">
                                 <a class="breadcrumb">HR Hub</a>
                                 <a class="breadcrumb">People</a>
-                                <a href="/hr/people-dir" class="breadcrumb active">Dictionary</a>
+                                <a href="/hr/people-dir" class="breadcrumb active">Directory</a>
                             </div>
 
                         </div>
                         <div class="content table-section">
                             <div class="list-section">
-                                <div class="card">
+                                <div class="card" style="border-radius: 10px !important">
                                     <div class="card-content">
-                                       <div class="row">
+                                       <div class="row" style="padding-left: 10px; padding-right: 10px;">
                                         <i class="material-icons-outlined" style="display: inline;">person</i>
                                         <h4 class="card-title directorytitle" style="display: inline;">Manage Employees</h4>
                                         <a href=""
-                                        class="modal-trigger waves-effect waves-light right">Clear All</a>
+                                        class="modal-trigger waves-effect waves-light right btn-clear">Clear All</a>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="toggle-options" style="display: inline;">
-                                            <div class="bulkupload" style="display: inline-block;padding-left: 10px;padding-right: 15px;"><p><a href="/">Bulk Upload</a></p></div>
-                                            <div class="waves-effect waves-light btn btn-small active">Add Employee</div>
+                                            <div class="bulkupload btn-bulk" style="display: inline-block;padding-left: 10px;padding-right: 15px;color: #0AAEFF;"><a href=""><p>Bulk Upload</p></a></div>
+                                            <a href="people.html" style="background: transparent;"><div class="waves-effect waves-light btn btn-small active">Add Employee</div></a>
                                         </div>
-                                        <div style="width: 250px;float: right;position: relative;right: 20px;top: 0px;" class="input-field col s12 m3">     
-                  <i style="position: absolute;padding-top: 12px;right: 10px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+                                        <div style="float: right;" class="input-field col s12 m6 l3">
+                  <i style="position: absolute;padding-top: 12px;right: 20px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
                   </div>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col s12">
-                                            <div class="input-field col s12 m2">
+                                            <div class="input-field col s12 m3 l3 xl2">
                                                 <div>Job Title</div>
                                                 <div>
                                                     <select>
                                                         <option>All Job Title</option>
+                                                        {% set job_val = frappe.get_all("Designation", fields=['name']) %}
+                                                        {% for i_job_val in job_val%}
+                                                            <option value="{{i_job_val.name}}">{{i_job_val.name}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="input-field col s12 m2">
+                                            <div class="input-field col s12 m3 l3 xl2">
                                                 <div>Department</div>
                                                 <div>
                                                     <select>
                                                         <option>All Department</option>
+                                                        {% set dep_val = frappe.get_all("Department", fields=['name']) %}
+                                                        {% for i_dep_val in dep_val%}
+                                                            <option value="{{i_dep_val.name}}">{{i_dep_val.name}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="input-field col s12 m2">
+                                            <div class="input-field col s12 m3 l3 xl2">
                                                 <div>Role</div>
                                                 <div>
                                                     <select>
                                                         <option>All Role</option>
+                                                        {% set emp_val = frappe.get_all("Employee", fields=['name']) %}
+                                                        {% for i_emp_val in emp_val%}
+                                                            <option value="{{i_emp_val.name}}">{{i_emp_val.name}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="input-field col s12 m2">
+                                            <div class="input-field col s12 m3 l3 xl2">
                                                 <div>Office</div>
                                                 <div>
                                                     <select>
                                                         <option>All Office</option>
+                                                        {% set cmp_val = frappe.get_all("Company", fields=['name']) %}
+                                                        {% for i_cmp_val in cmp_val%}
+                                                            <option value="{{i_cmp_val.name}}">{{i_cmp_val.name}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="input-field col s12 m2">
+                                            <div class="input-field col s12 m3 l3 xl2">
                                                 <div>Status</div>
                                                 <div>
                                                     <select>
                                                         <option>All Status</option>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Left">Left</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -112,7 +155,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col s12">
+                                        <div id="table-scroll" class="col s12">
                                             <table id="user-table" class="dataTable display">
                                                 <tbody>
                                                     <thead>
@@ -186,5 +229,17 @@ type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script defer src="/hr/js/people_dir.js" type="text/javascript"></script>
-{% endblock %}
+<script type="text/javascript">
+  var directory = document.getElementById('directory');
+  var people_list = document.getElementById('people-list');
+  var people_submodule = document.getElementById('people-submodule');
 
+
+  directory.classList.add("active");
+
+  people_list.style.display = "block";
+  people_submodule.classList.add("open");
+  people_submodule.classList.add("active");
+
+</script>
+{% endblock %}

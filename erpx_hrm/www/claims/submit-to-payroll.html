@@ -18,60 +18,127 @@
 {% include "www/claims/sidenav.html" %}
 {% endblock %}
 
+{% block footer %}
+{% include "www/footer.html" %}
+{% endblock %}
 {% block main %}
+<style type="text/css">
+
+
+@media only screen and (max-width: 360px){
+  .new-sub-btn{
+    position: relative !important;
+    width: 100% !important;
+    margin-top: 80px !important;
+  }
+}
+
+</style>
+
+
 <div id="main">
  <div class="row">
-    <div class="container">
-      <div class="section-data-tables nav-wrapper black-text banner-title3">
-        <!--<div class="content-wrapper-before"></div>-->
-        <div class="col s12">
-          <div class="breadcrumb">
-            <a class="breadcrumb">Claims</a>
-            <a class="breadcrumb">Reimbursement</a>
-            <a href="/claims/submit-to-payroll" class="breadcrumb active">Submit to Payroll</a>
-          </div>
+  <div class="container">
+    <div class="section-data-tables nav-wrapper black-text banner-title3">
+      <!--<div class="content-wrapper-before"></div>-->
+      <div class="col s12">
+        <div class="breadcrumb">
+          <a class="breadcrumb">Claims</a>
+          <a class="breadcrumb">Reimbursement</a>
+          <a href="/claims/submit-to-payroll.html" class="breadcrumb active">Submit to Payroll</a>
         </div>
-        <div class="col xl20 l20 m18 s12">
-          <div class="content">
-          <div id="card-stats" class="card">
+      </div>
+      <div class="col xl20 l20 m18 s12">
+        <div class="content">
+          <div id="card-stats" class="card" style="border-radius: 10px">
             <div class="card-content">
-              <img width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png" style="float: left;">
-              <h4 class="card-title newstitle" style="display: inline;">Pending Submission to Payroll</h4>
-              <a href="/claims/new-submission" class="modal-trigger waves-effect waves-light btn right">New Submission</a>
+              <div class="col s12 m6" style="text-align: left">
+                <img width="22" height="22" class="sidenav-icon" src="/icons/reimbursement.png" style="float: left;margin-top: 5px; margin-right: 10px;">
+                <p class="card-title" style="display: inline;position: absolute;">Pending Submission to Payroll</p>
+              </div>
+              
+              <div class="col s12 m6">
+                <a href="/claims/new-submission" class=" modal-trigger waves-effect waves-light btn right new-sub-btn" style="position: absolute; right: 24px;">New Submission</a>
+              </div>
 
               <br><br>
               <div class="row">
-                <div style="height: 40px;"></div>
+                <div style="height: 30px;"></div>
 
                 <table style="font-size: 14px;">
+                  <thead>
                   <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
                     <th style=" border-right:none!important;">Title</th>
-                    <th style=" border-right:none!important;">Period</th>
+                    <th style=" border-right:none!important;">Date</th>
                     <th style=" border-right:none!important;">Amount</th>
                     <th style=" border-right:none!important;">Requester</th>
                     <th style=" border-right:none!important;">Cutoff Date</th>
                     <th style=" border-right:none!important;">Status</th>
                   </tr>
-<tr>
-  <td colspan="6" style="text-align: center;">No claims report to submit to payroll</td>
-</tr>
+                  </thead>
+                  <tbody>
+                      {% set pending_submission1 = frappe.get_all("Expense Claim",filters={"status":"Unpaid","reimbursement_type":"Submission via Payroll"},fields=['name','approval_status','status','employee','employee_name','cutoff_date','total_claimed_amount','posting_date']) %}
+                      {% for ex in pending_submission1 %}
+                      <tr>
+                        {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
+                        <td>{{ex.name}}<br>
+                          ({% for e in claim_title %}
+                          {{e.expense_type}}
+                          {% endfor %})
+                        </td>
+                        
+                        <td>{{ex.posting_date.strftime('%d-%m-%Y')}}</td>
+                        <td>{{currency}} {{'%0.2f'| format(ex.total_claimed_amount|float)}}</td>
+      
+                        
+                        
+                        <td>
+                            {% set employee_pic = frappe.get_all("Employee",filters={'name':ex.employee},fields=['image'])%}
+                            {% for file in employee_pic %}    
+                            {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
+                            <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                            {% else %}
+                            <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/files/Ankit.png">
+                            {% endif %}
+                            {% endfor %}
+                          </td>
+                        <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
+                        {% set class_color = '' %}
+                        {% if(ex.status == 'Unpaid') %}
+                            {% set class_color = 'p-pending' %}
+                        {% elif(ex.status == 'Draft') %}
+                            {% set class_color = 'p-pending' %}
+                        {% elif(ex.status == 'Cancelled') %}
+                            {% set class_color = 'p-declined' %}
+                        {% elif(ex.status == 'Rejected') %}
+                            {% set class_color = 'p-declined' %}
+                        {% elif(ex.status == 'Paid') %}
+                            {% set class_color = 'p-approved' %}
+                        {% elif(ex.status == 'Submitted') %}
+                            {% set class_color = 'p-approved' %}
+                        {% endif %}
+                        <td><p class={{class_color}}>{{ex.status}}</p></td>  
+                      </tr>
+      
+                      {% endfor %}
+                    </tbody>
                 </table>
+                  
               </div>
             </div>
           </div>
         </div>
-        </div>
-        <br><br><br><br><br><br><br>
-        <div style="height: 40px;"></div>
-        <br>
       </div>
+      
+      <br>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    frappe.csrf_token = "{{ csrf_token }}";
+  frappe.csrf_token = "{{ csrf_token }}";
 </script>
 {% endblock %}

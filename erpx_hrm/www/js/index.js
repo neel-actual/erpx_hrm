@@ -54,6 +54,21 @@ $(document).ready(function () {
 					} catch (e) { reject(e); }
 				});
 			},
+			get_value: function (doctype,fieldname,filters) {
+				return new Promise(function (resolve, reject) {
+					try {
+						frappe.call({
+							method: FRAPPE_CLIENT + '.get_value',
+							args: {
+								doctype: doctype,
+								fieldname: fieldname,
+								filters: filters,
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
 			get: function (opts) {
 				return new Promise(function (resolve, reject) {
 					try {
@@ -87,6 +102,104 @@ $(document).ready(function () {
 							},
 							callback: resolve
 						});
+					} catch (e) { reject(e); }
+				});
+			},
+			get_single_child:function (doctype,fields) {
+				// var name,
+				// 	clone = Object.assign({}, data);
+				// get value of child table from single doctype, Pass value of single doctype and field list from child table and it will return field name and its value as dictionary.
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.get_singles",
+							args: {
+								doctype: doctype,
+								fields_list: fields
+								
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+			update_single_child:function (doctype, data) {
+				// Update child table value under single doctype
+				var parent,
+				clone = Object.assign({}, data);
+
+				return new Promise(function (resolve, reject) {
+					try {
+						parent = clone.name;
+						delete clone.name; //do not update name
+						frappe.call({
+							method: FRAPPE_CLIENT + '.set_value',
+							args: {
+								doctype: doctype,
+								name: name,
+								fieldname: clone
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+			add_child_item:function (args) {
+				// add row into child table of single doctype
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.add_child_item",
+							args: args,
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+			update_child_item:function (args) {
+				// update row into child table of single doctype
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.update_child_item",
+							args: args,
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+
+			get_child_item: function (args) {
+				// update row into child table of single doctype
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.get_child",
+							args: args,
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
+			get_payroll: function (args) {
+				// update row into child table of single doctype
+
+				return new Promise(function (resolve, reject) {
+					try {
+						
+						frappe.call({
+							method: "erpx_hrm.api.get_employee_payroll_info",
+							args: args,
+							callback: resolve
+						  });
 					} catch (e) { reject(e); }
 				});
 			}

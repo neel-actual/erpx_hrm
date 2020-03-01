@@ -8,8 +8,53 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
-<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
+<style type="text/css">
+  @media only screen and (max-width: 1460px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    white-space: nowrap!important;
+  }
+
+  table{
+    width: 1000px !important;
+    display: inline-table !important;
+  }
+  #collapse-table{
+    width: 1000px !important;
+  }
+}
+
+#collapse{
+  padding: 0;
+  padding-top: 10px;
+
+
+}
+
+table{
+  padding: 0 !important;
+}
+
+.collapsible-body{
+  padding: 0 !important;
+}
+
+@media only screen and (max-width: 330px){
+  .circle-margin{
+    margin-left: -25px !important;
+  }
+
+  .btn-bulk{
+    width: 100% !important;
+    margin-top: 15px !important;
+  }
+}
+</style>
 {% endblock %}
 
 {% block nav %}
@@ -44,122 +89,113 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
           <a class="breadcrumb">Leave</a>
           <a href="/hr/leave-balance" class="breadcrumb active">Balance</a>
         </div>
-      </div>  
+      </div>
       <div class="col xl16 l16 m18 s12">
-        <div class="card">
+        <div class="card" style="border-radius: 10px!important;">
          <div class="card-content">
           <form>
            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
            <h4 class="card-title directorytitle" style="text-align: left;">Balance</h4>
 
-           <a href="#" class="btn-bulk-update modal-trigger waves-effect waves-light right">Bulk Update</a>
+           <a href="#!" class="btn-bulk-update modal-trigger waves-effect waves-light right btn-bulk hide">Bulk Update</a>
 
            <div style="height: 40px;"></div>
            <div class="row margin infodetails">
             <div class="input-field col s12 m18 ">
               <p style="margin-bottom: 10px;">Employee</p>
-              <select style="padding-left: 10px; width: 10px;">
+              <select style="padding-left: 10px; width: 10px;" id="filter_employee">
                 <option value="" disabled selected>Select employee</option>
-                <option value="information technology">Accident</option>
-                <option value="engineering">Sick</option>
-                <option value="telecommunication">Vacation</option>
+                {% for employee in list_employee%}
+                    <option value="{{employee.name}}">{{employee.employee_name}}</option>
+                {% endfor %}
               </select>
-            </div>            
-          </div>
-          <br><br>
-          <div class="col xl6 l6 m6 s5">
-
-
-            <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Summary</div>
-            <!--<p>Balance left</p>-->
-            <div style="margin-left: 10px;" class="row">
-              <!--individual-card-->
-              <div class="col s12 m6 l6 xl3">
-                <div style=" width: 50%;height: 50%;  border-radius: 50%" class="circle blue">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">2</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-left: 15%;margin-top: 10px;">Annual</p>
-              </div>
-              <div class="col s12 m10 l6 xl3">
-                <div style=" width: 50%;height: 50%; border-radius: 50%" class="circle purple">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">12</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-left: 19%;margin-top: 10px;">Sick</p>
-              </div>
-              <div class="col s12 m6 l6 xl3">
-                <div style=" width: 50%;height: 50%;  border-radius: 50%" class="circle pink">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">65</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-left: 5%;margin-top: 10px;">Hospitalisation</p>
-              </div>
-              <div class="col s12 m6 l6 xl3">
-                <div style=" width: 50%;height: 50%; border-radius: 50%" class="circle red">
-                  <div class="card-content center">
-                    <h4 class="card-stats-number white-text">10</h4>
-                    <p class="card-stats-title white-text">
-                      <span>available</span>
-                    </p>
-                  </div>
-                </div>
-                <p style="margin-left: 13%;margin-top: 10px;">Paternity</p>
-              </div>
             </div>
           </div>
-          <br><br>
-          <div class="col x2 l6 m6 s5">  
-           <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Summary</div>
-
-           <div style="height: 20px;"></div>
+          <br>
+          <div class="col xl6 l6 m6 s5">
+            <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Summary</div>
+            <div style="margin-left: 10px;" class="row circle-margin" id="html_balancesummary">
+            </div>
+          </div>
+          <br>
+          <div class="card-title hide" style="text-align: left;margin-left: 25px;">Balance Change History</div>
+          <div style="height: 5px"></div>
+          <div class="col x2 l6 m6 s5 hide">
            <div class="row margin infodetails">
-            <div class="input-field col s12 m18 ">
+            <div class="input-field col s12 m4 ">
               <p style="margin-bottom: 10px;">Type</p>
               <select style="padding-left: 10px; width: 10px;">
-                <option value="" disabled selected>All type</option>
-                <option value="information technology">Accident</option>
-                <option value="engineering">Sick</option>
-                <option value="telecommunication">Vacation</option>
+                <option value="" selected>All type</option>
+                {% for i_leavtype_val in list_leave_type%}
+                    <option value="{{i_leavtype_val.name}}">{{i_leavtype_val.name}}</option>
+                {% endfor %}
               </select>
-            </div>            
-          </div> 
+            </div>
+          </div>
         </div>
         <br>
       </form>
+      <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
+      <ul id="collapse-table" class="collapsible hide">
+              <li>
+                <table style="font-size: 14px;" >
+                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
 
-      <div style="height: 50px;"></div>
-      <table style=" font-size: 14px;">
-       <tr border="0" style="border-right:none!important;font-size: 16px; position: relative;background-color: #f9f9f9; width: 100%!important;" >
-        <th style="border-right:none!important;">Name</th>
-        <th style="border-right:none!important;">Type</th>
-        <th style="border-right:none!important;">Date</th>
-        <th style="border-right:none!important;">Status</th>
-        <th style="border-right:none!important;"></th>
-      </tr>
-      <tr>
-        <td>Aznul Abdullah</td>
-        <td>Paternity</td>
-        <td>22 Aug 2019 - 26 Aug 2019 <br>
-        3 days</td>
-        <td>Approved</td>
-        <td><a href="#">Edit</a></td>
-      </tr>
+                    <th style="border-right:none!important;width: 300px;">Type</th>
+                    <th style="border-right:none!important;">Updated Date</th>
+                    <th style="border-right:none!important;">Before</th>
+                    <th style="border-right:none!important;">After</th>
+
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div class="collapsible-header" style="padding: 0 !important;">
+                  <table>
+                    <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                      <td style="width: 300px;">
+                        Sick
+                      </td>
+                      <td>12 May 2019</td>
+                      <td>
+                        14 days
+                      </td>
+                      <td>12 days</td>
 
 
-    </table>
+
+                    </tr>
+                  </table>
+                </div>
+                <div class="collapsible-body" style="padding:0 !important;">
+
+                  <div>
+                    <table>
+                      <tbody style="border:none !important;">
+                      <tr style="font-size: 13px;">
+                        <td style="width: 100px;">
+                          Reason
+                        </td>
+                        <td style="width: 50px;">
+                          :
+                        </td>
+                        <td >
+                          fever
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+
+
+                </div>
+              </li>
+
+              </ul>
+            </div>
+
   </div>
 </div>
 </div>
@@ -170,15 +206,18 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 </div>
 
 {% block scripts %}
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+    var glb_employee = "{{ employee }}";
+</script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
-<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
-<script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
-<script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
+<script src="/app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script defer src="/hr/js/leave_balance.js" type="text/javascript"></script>
 {% endblock %}
