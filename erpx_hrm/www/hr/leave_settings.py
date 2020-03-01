@@ -41,6 +41,8 @@ def get_context(context):
     else:
         context.holiday = frappe.get_doc("Holiday List")
         context.holiday_list_name = ""
+    
+    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
 
     return context
 
