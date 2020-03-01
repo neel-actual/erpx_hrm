@@ -11,6 +11,20 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
 <style type="text/css">
+.p-purple {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: #9C27B0;
+    color: white;
+}
+.p-grey {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: gray;
+    color: white;
+}
   @media only screen and (max-width: 1260px){
   #table-scroll{
     width: 100%;
@@ -149,8 +163,10 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                     {% set class_color = '' %}
                                     {% if(i_exp_list.status == 'Unpaid') %}
                                         {% set class_color = 'p-pending' %}
-                                    {% elif(i_exp_list.status == 'Draft') %}
-                                        {% set class_color = 'p-pending' %}
+                                    {% elif(i_exp_list.status == 'Draft') and (i_exp_list.approval_status != 'Verified') %}
+                                        {% set class_color = 'p-grey' %}
+                                    {% elif(i_exp_list.status == 'Draft') and (i_exp_list.approval_status == 'Verified') %}
+                                        {% set class_color = 'p-purple' %}
                                     {% elif(i_exp_list.status == 'Cancelled') %}
                                         {% set class_color = 'p-declined' %}
                                     {% elif(i_exp_list.status == 'Rejected') %}
@@ -161,7 +177,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                         {% set class_color = 'p-approved' %}
                                     {% endif %}
 
-                                    <td><p class="{{class_color}}">{% if(i_exp_list.status == 'Draft') %}Pending{% else %}{{i_exp_list.status}}{% endif %}</p></td>
+                                    <td><p class="{{class_color}}">{% if(i_exp_list.status == 'Draft') and (i_exp_list.approval_status != 'Verified') %}Pending{% elif(i_exp_list.status == 'Draft') and (i_exp_list.approval_status == 'Verified') %}Verified{% else %}{{i_exp_list.status}}{% endif %}</p></td>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -32,6 +32,8 @@ update_website_context = "erpx_hrm.boot.update_website_context"
 doctype_js = {
     "Branch": "custom_scripts/branch_custom.js"
 }
+
+fixtures = ["Custom Field","Property Setter"]
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}

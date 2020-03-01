@@ -9,6 +9,20 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 <style type="text/css">
+.p-purple {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: #9C27B0;
+    color: white;
+}
+.p-grey {
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    background-color: gray;
+    color: white;
+}
   @media only screen and (max-width: 1260px){
   #table-scroll{
     width: 100%;
@@ -74,9 +88,6 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     {% for req in Requester %}
                     <option value={{req.name}}>{{req.name}}</option>
                     {% endfor %}
-                    <!-- <option value="information technology">Accident</option>
-                    <option value="engineering">Sick</option>
-                    <option value="telecommunication">Vacation</option> -->
                   </select>
                 </div>
                 <div class="option-date-appr input-field col s12 m12 l6 xl2">
@@ -151,8 +162,10 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   {% set class_color = '' %}
                   {% if(ex.status == 'Unpaid') %}
                       {% set class_color = 'p-pending' %}
-                  {% elif(ex.status == 'Draft') %}
-                      {% set class_color = 'p-pending' %}
+                  {% elif(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}
+                      {% set class_color = 'p-grey' %}
+                  {% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}
+                      {% set class_color = 'p-purple' %}
                   {% elif(ex.status == 'Cancelled') %}
                       {% set class_color = 'p-declined' %}
                   {% elif(ex.status == 'Rejected') %}
@@ -162,7 +175,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   {% elif(ex.status == 'Submitted') %}
                       {% set class_color = 'p-approved' %}
                   {% endif %}
-                  <td><p class={{class_color}}>{% if(ex.status == 'Draft') %}Pending{% else %}{{ex.status}}{% endif %}</p></td>  
+                  <td><p class={{class_color}}>{% if(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}Pending{% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}Verified{% else %}{{ex.status}}{% endif %}</p></td>  
                 </tr>
 
                 {% endfor %}

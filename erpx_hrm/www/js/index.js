@@ -54,6 +54,21 @@ $(document).ready(function () {
 					} catch (e) { reject(e); }
 				});
 			},
+			get_value: function (doctype,fieldname,filters) {
+				return new Promise(function (resolve, reject) {
+					try {
+						frappe.call({
+							method: FRAPPE_CLIENT + '.get_value',
+							args: {
+								doctype: doctype,
+								fieldname: fieldname,
+								filters: filters,
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
 			get: function (opts) {
 				return new Promise(function (resolve, reject) {
 					try {
