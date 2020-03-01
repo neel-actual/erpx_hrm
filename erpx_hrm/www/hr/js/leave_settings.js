@@ -119,6 +119,27 @@ $(document).ready(function () {
 		})
 		modal.modal('open');
 	});
+
+	$("#select-leave-type").change(function () {
+		let leave_type = $(this).val();
+		if(leave_type!=""){
+			frappe.call({
+				method: "erpx_hrm.utils.leave_type.show_detail",
+				args : {
+					name : leave_type
+				},
+				callback: function(r) {
+					$("#div-leave-type").html(r.message);
+				}
+			});
+		}else{
+			$("#div-leave-type").empty();
+		}
+
+		
+	});
+
+	
 });
 
 //holiday

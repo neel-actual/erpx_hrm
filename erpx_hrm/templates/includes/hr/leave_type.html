@@ -1,0 +1,103 @@
+
+<div class="switch">
+        <span style="margin-left: 18px; padding-bottom:10px; "><b>{{doc.name}}</b></span>
+        <label class="switch-settings" style="float: right;">
+            <input type="checkbox">
+            <span class=" lever"></span>
+        </label>
+    </div>
+    <br>
+    <div class="input-field col s9 m12 hide">
+        <div class="switch">
+            <label>
+                <input type="checkbox" />
+                <span style="color: black">Adjust employee’s leave balance to an updated
+                    entitlement
+                    immediately<br>
+                    (Any updates made to entitlement, carry forward and custom policy
+                    will be effective from this
+                    cycle)</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="input-field col s9 m9">
+        <p style="margin-bottom: 10px;">Max Leaves Allowed</p>
+        <input value="{{doc.max_leaves_allowed}}" type="text" name="max_leaves_allowed">
+    </div>
+
+    <a id="add-office " href="#create-news.modal"
+        class=" modal-trigger waves-effect waves-light right office-btn">Edit</a>
+
+    <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Carry Forward</p>
+        <p style="width: 30px">
+            <label>
+                <input type="checkbox" class="filled-in" id="is_carry_forward_0" name="is_carry_forward"  value="0" {{"checked" if not doc.is_carry_forward else ""}}/>
+                <span style="margin-left: 15px;padding-left: 22px;">No</span>
+            </label>
+            <label>
+                <input type="checkbox" class="filled-in" id="is_carry_forward_1"  name="is_carry_forward" value="1" {{"checked" if doc.is_carry_forward else ""}}/>
+                <span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+            </label>
+        </p>
+    </div>
+
+    <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Earned Leave</p>
+        <p style="width: 30px">
+            <label>
+                <input type="checkbox" class="filled-in" id="check1" />
+                <span style="margin-left: 15px;padding-left: 22px;"
+                    onclick="checked()">No</span>
+            </label>
+
+            <label>
+                <input onclick="checked1()" class="filled-in" type="checkbox"
+                    id="check2" />
+                <span style="margin-left: 15px;padding-left: 22px;">Yes</span>
+            </label>
+        </p>
+    </div>
+
+    <div class="input-field col s9 m6">
+        <p style="margin-bottom: 10px;">Earned Leaves Frequency</p>
+        <select name="company"
+            style="padding-left: 10px;width: -webkit-fill-available;">
+            <option value="">Select Month</option>
+            {% set ev1 = frappe.get_all("Company", fields=['*']) %}
+            {% for i_ev1 in ev1%}
+            <option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-field col s9 m6">
+        <p style="margin-bottom: 10px;">Earned Leaves Rounding</p>
+        <select name="company"
+            style="padding-left: 10px;width: -webkit-fill-available;">
+            <option value="">Select Rounding</option>
+            {% set ev1 = frappe.get_all("Company", fields=['*']) %}
+            {% for i_ev1 in ev1%}
+            <option value="{{i_ev1.company_name}}">{{i_ev1.company_name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+        <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <a href="#!"><img src="/icons/people-blue.png" width="20"
+                            height="20" /></a>
+
+
+                </li>
+                <li><a href="#!"><img src="/icons/icon-57.png" width="20"
+                            height="20" /></a></li>
+                <li><a href="#!"><img src="/icons/icon-56.png" width="20"
+                            height="20" /></a></li>
+            </ul>
+        </div>
+    </div>
