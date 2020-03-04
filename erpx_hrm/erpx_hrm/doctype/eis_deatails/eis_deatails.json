@@ -1,0 +1,50 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"a656b47456\"}]",
+ "creation": "2019-12-11 18:04:10.426332",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "min_monthly_wages",
+  "max_monthly_wages",
+  "employers_contribution",
+  "employees_contribution"
+ ],
+ "fields": [
+  {
+   "fieldname": "min_monthly_wages",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Min Monthly Wages"
+  },
+  {
+   "fieldname": "max_monthly_wages",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Max Monthly Wages"
+  },
+  {
+   "fieldname": "employers_contribution",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Employers Contribution"
+  },
+  {
+   "fieldname": "employees_contribution",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Employees Contribution"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-03-05 00:01:02.161101",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "EIS Deatails",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

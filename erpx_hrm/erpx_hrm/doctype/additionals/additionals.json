@@ -1,0 +1,90 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"588adda5e3\"}]",
+ "autoname": "hash",
+ "creation": "2019-12-12 18:20:49.935408",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "category",
+  "unit_calculation",
+  "epf",
+  "pcb",
+  "socso",
+  "eis",
+  "default_amount",
+  "ea_form_field"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "\nAllowance\nRemuneration"
+  },
+  {
+   "default": "0",
+   "description": "You can calculate the allowance by unit calculation in Pay Run",
+   "fieldname": "unit_calculation",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Unit calculation"
+  },
+  {
+   "default": "0",
+   "fieldname": "epf",
+   "fieldtype": "Check",
+   "label": "EPF"
+  },
+  {
+   "default": "0",
+   "fieldname": "pcb",
+   "fieldtype": "Check",
+   "label": "PCB"
+  },
+  {
+   "default": "0",
+   "fieldname": "socso",
+   "fieldtype": "Check",
+   "label": "SOCSO"
+  },
+  {
+   "default": "0",
+   "fieldname": "eis",
+   "fieldtype": "Check",
+   "label": "EIS"
+  },
+  {
+   "fieldname": "default_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Default Amount"
+  },
+  {
+   "fieldname": "ea_form_field",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "EA Form Field",
+   "options": "\nB1a\nB1b\nB1c\nB1D\nB1e\nB1f\nB2\nB5\nB6\nC1\nC2\nN/A"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-03-05 00:01:01.668521",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Additionals",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

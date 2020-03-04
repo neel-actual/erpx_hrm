@@ -1,0 +1,36 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"aaed8ba4b7\"}]",
+ "creation": "2019-12-19 17:40:35.816125",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "relief",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "relief",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Relief"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Amount"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-03-05 00:01:01.412730",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Employee Allowance",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

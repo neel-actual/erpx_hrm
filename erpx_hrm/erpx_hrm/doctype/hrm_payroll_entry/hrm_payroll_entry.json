@@ -1,0 +1,146 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"1a1bcd9e1e\"}]",
+ "autoname": "format:payroll-{payroll_month}/{payroll_year}",
+ "creation": "2020-01-07 19:40:26.221873",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "requested_date",
+  "payroll_month",
+  "payroll_year",
+  "column_break_4",
+  "payroll_type",
+  "submitted_by",
+  "status",
+  "section_break_8",
+  "payroll_details",
+  "totals_section",
+  "total_net_pay",
+  "total_epf",
+  "total_pcb",
+  "column_break_13",
+  "total_eis",
+  "total_socso",
+  "total_pay",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "requested_date",
+   "fieldtype": "Date",
+   "label": "Requested Date"
+  },
+  {
+   "fieldname": "payroll_month",
+   "fieldtype": "Data",
+   "label": "Payroll Month"
+  },
+  {
+   "fieldname": "payroll_year",
+   "fieldtype": "Data",
+   "label": "Payroll Year"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payroll_type",
+   "fieldtype": "Data",
+   "label": "Payroll Type"
+  },
+  {
+   "fieldname": "submitted_by",
+   "fieldtype": "Data",
+   "label": "Submitted By"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nApproved\nRejected\nCompleted"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payroll_details",
+   "fieldtype": "Table",
+   "label": "Payroll Details",
+   "options": "Pay Detail"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "total_net_pay",
+   "fieldtype": "Float",
+   "label": "Total Net Pay"
+  },
+  {
+   "fieldname": "total_epf",
+   "fieldtype": "Float",
+   "label": "Total EPF"
+  },
+  {
+   "fieldname": "total_pcb",
+   "fieldtype": "Float",
+   "label": "Total PCB"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_eis",
+   "fieldtype": "Float",
+   "label": "Total EIS"
+  },
+  {
+   "fieldname": "total_socso",
+   "fieldtype": "Float",
+   "label": "Total Socso"
+  },
+  {
+   "fieldname": "total_pay",
+   "fieldtype": "Float",
+   "label": "Total Pay"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "HRM Payroll Entry",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-03-05 00:01:00.181244",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "HRM Payroll Entry",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

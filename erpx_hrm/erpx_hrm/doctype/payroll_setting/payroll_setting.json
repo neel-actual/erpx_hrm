@@ -1,0 +1,100 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"f96e7a337e\"}]",
+ "creation": "2019-12-20 17:37:52.723330",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "payroll_setting_section",
+  "pay_day",
+  "payroll_item_section",
+  "addition_items",
+  "deduction_item",
+  "overtime_item",
+  "employee_relief_details_section",
+  "employee_relief",
+  "tax_table_details_section",
+  "tax_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "payroll_setting_section",
+   "fieldtype": "Section Break",
+   "label": "Payroll Setting"
+  },
+  {
+   "fieldname": "pay_day",
+   "fieldtype": "Int",
+   "label": "Pay Day"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "payroll_item_section",
+   "fieldtype": "Section Break",
+   "label": "Payroll Item"
+  },
+  {
+   "fieldname": "addition_items",
+   "fieldtype": "Table",
+   "label": "Addition Items",
+   "options": "Additionals"
+  },
+  {
+   "fieldname": "deduction_item",
+   "fieldtype": "Table",
+   "label": "Deduction Item",
+   "options": "Additionals"
+  },
+  {
+   "fieldname": "overtime_item",
+   "fieldtype": "Table",
+   "label": "Overtime Item",
+   "options": "Additionals"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "employee_relief_details_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Relief Details"
+  },
+  {
+   "fieldname": "employee_relief",
+   "fieldtype": "Table",
+   "label": "Employee Relief",
+   "options": "Employee Allowance"
+  },
+  {
+   "fieldname": "tax_table_details_section",
+   "fieldtype": "Section Break",
+   "label": "Tax Table Details"
+  },
+  {
+   "fieldname": "tax_table",
+   "fieldtype": "Table",
+   "label": "Tax Table",
+   "options": "Tax Table"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2020-03-05 00:01:00.899318",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Payroll Setting",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

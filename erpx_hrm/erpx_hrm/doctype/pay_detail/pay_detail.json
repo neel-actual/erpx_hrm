@@ -1,0 +1,136 @@
+{
+ "_comments": "[{\"comment\": \"<div><br></div>\", \"by\": \"shivam@erpx.com.my\", \"name\": \"1f3c745c10\"}]",
+ "autoname": "hash",
+ "creation": "2020-01-08 15:36:10.190828",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_id",
+  "employee_name",
+  "employee_image",
+  "employee_designation",
+  "basic_salary",
+  "additions",
+  "column_break_7",
+  "gross_pay",
+  "deductions",
+  "net_pay",
+  "employer_epf",
+  "employer_socso",
+  "pcb",
+  "eis",
+  "epf",
+  "socso",
+  "zakat"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee ID",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "employee_image",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Image"
+  },
+  {
+   "fieldname": "employee_designation",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Designation"
+  },
+  {
+   "fieldname": "basic_salary",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Basic Salary"
+  },
+  {
+   "fieldname": "additions",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Additions"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gross_pay",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Gross Pay"
+  },
+  {
+   "fieldname": "deductions",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Deductions"
+  },
+  {
+   "fieldname": "net_pay",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Net Pay"
+  },
+  {
+   "fieldname": "employer_epf",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employer EPF"
+  },
+  {
+   "fieldname": "employer_socso",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employer Socso"
+  },
+  {
+   "fieldname": "pcb",
+   "fieldtype": "Float",
+   "label": "PCB"
+  },
+  {
+   "fieldname": "eis",
+   "fieldtype": "Float",
+   "label": "EIS"
+  },
+  {
+   "fieldname": "epf",
+   "fieldtype": "Float",
+   "label": "EPF"
+  },
+  {
+   "fieldname": "socso",
+   "fieldtype": "Float",
+   "label": "SOCSO"
+  },
+  {
+   "fieldname": "zakat",
+   "fieldtype": "Float",
+   "label": "Zakat"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-03-05 00:01:00.575615",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Pay Detail",
+ "owner": "shivam@erpx.com.my",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
