@@ -3,6 +3,7 @@ import json
 from frappe import _
 from frappe.utils import nowdate
 from erpnext import get_default_company
+from erpnext.hr.utils import get_employee_leave_policy
 
 def get_context(context):
     if frappe.session.user == 'Guest':
@@ -28,21 +29,28 @@ def get_context(context):
         context.leave_period = leave_period[0]
     else:
         context.leave_period = frappe.get_doc("Leave Period")
-    
-    # context.leave_period = leave_period[0]
+
     context.list_company = frappe.db.get_all("Company",fields=["company_name"])
     context.list_holiday = frappe.db.get_all("Holiday List",fields=["holiday_list_name"])
 
-    holiday_list_name = frappe.get_cached_value('Company',  company,  "default_holiday_list")
+    holiday_list_name = frappe.get_cached_value('Company',  company,  "default_holiday_list") 
 
     if holiday_list_name:
         context.holiday_list_name = holiday_list_name
         context.holiday = frappe.get_doc("Holiday List", holiday_list_name)
     else:
-        context.holiday = frappe.get_doc("Holiday List")
+        context.holiday = frappe.new_doc("Holiday List")
         context.holiday_list_name = ""
     
     context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
+
+    if context.employee:
+        leave_policy = get_employee_leave_policy(context.employee)
+    
+    if leave_policy:
+        context.leave_policy_name = leave_policy.name
+    else:
+        context.leave_policy_name = ""
 
     return context
 
