@@ -3,7 +3,7 @@
     "css"    : "www/css"
   },
   "source": {
-    "sass"         : "sass"
+    "sass": "sass"
   },
   "autoprefixerBrowsers": [
     "Android 2.3",

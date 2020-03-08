@@ -79,7 +79,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 </tr>
                 </thead>
                 <tbody>
-                  {% set expense1 = frappe.get_all("Expense Claim", fields=['name','cutoff_date','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %}
+                  {% set expense1 = frappe.get_all("Expense Claim", filters={"status":"Paid"},fields=['name','cutoff_date','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %}
                 {% for ex in expense1 %}
                 <tr>
                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}

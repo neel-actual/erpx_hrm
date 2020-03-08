@@ -118,12 +118,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
                     <select style="width: -webkit-fill-available;" id="i_filter_status">
                       <option value="" selected>All Status</option>
-                      <option value="Draft">Draft</option>
+                      <option value="Pending">Pending</option>
                       <option value="Unpaid">Unpaid</option>
-                      <option value="Cancelled">Cancelled</option>
+                      <option value="Verified">Verified</option>
                       <option value="Rejected">Rejected</option>
                       <option value="Paid">Paid</option>
-                      <option value="Submitted">Submitted</option>
                     </select>
                   </div>
 
@@ -214,6 +213,7 @@ type="text/javascript"></script>
           bFilter: false,
           "order": [[ 1, "desc" ]],
           paging: true,
+          searching:true
         });
       
         $('#search_i').keyup(function(){
@@ -221,6 +221,7 @@ type="text/javascript"></script>
         })
 
         $('#i_filter_status').change(function(){
+          
             var filter_status = $("#i_filter_status").val();
             user_table.column(4).search(filter_status, true, false, false).draw();
         });

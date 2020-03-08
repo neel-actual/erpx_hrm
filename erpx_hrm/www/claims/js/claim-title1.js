@@ -141,7 +141,7 @@ $(document).ready(function(){
         <link rel="stylesheet" type="text/css" href="/css/style.css" >
         <link rel="stylesheet" type="text/css" href="/css/animate.css">
         <link rel="stylesheet" type="text/css" href="/css/master.css">`+divToPrint.innerHTML+`</body></html>`)
-
+        // window.close();
         newWin.document.close();
     
         

@@ -167,29 +167,27 @@ $("#save_claim").click(async function(){
                             docname =  element['name']
                         }
                     });  
+                    console.log(file)
                     // File Upload and link with Child table Item If File is Exist
                     if(file){
                         var reader = new FileReader();
                         reader.onload = function(){
                             var srcBase64 = reader.result;
-                            frappe.ajax({
-                                type: "POST",
-                                url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
-                                no_stringify: 1,
-                                args: {
-                                    name : "file",
-                                    filename : file.name,
-                                    filedata : srcBase64,
-                                    doctype: "Expense Claim",
-                                    docname: doc.name,
+                            frappe.call({
+                                method:"frappe.client.attach_file",
+                                args:{
+                                    filename:file.name,
+                                    filedata:srcBase64,
+                                    doctype:"Expense Claim",
+                                    docname:doc.name,
                                     folder: "Home/Attachments",
-                                    is_private: 1,
-                                    from_form : 1
+                                    is_private:1
                                 },
+                                
                                 callback: function (r) {
                                     if (!r.exc_type) {
-                                        // console.log(r.message)
-                                        // console.log(doc.file_url)
+                                        console.log(r)
+                                        console.log(doc.file_url)
                                         frappe.call({
                                             method: 'frappe.client.set_value',
                                             args: {
