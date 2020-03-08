@@ -58,6 +58,10 @@ jQuery(document).ready(function() {
   ],
     columnDefs: [ 
       {
+        targets: 0,
+        width: "17%"
+      },
+      {
       targets: 1,
       render: $.fn.dataTable.render.moment('DD-MM-YYYY'),
       width: "10%"
@@ -69,7 +73,7 @@ jQuery(document).ready(function() {
     {
       targets: 2,
       
-      width: "10%"
+      width: "13%"
     },
     {
       targets: 3,

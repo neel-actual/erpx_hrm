@@ -69,7 +69,7 @@ $(document).ready(function(){
                 new_obj : {"company":"BAYO PAY (M) SDN BHD (1191346-P)","default_account":$("form#expense_type :input[name=ex_account]").val()}
             }).then(function(res){
                 M.toast({
-                    html: 'Claim Type {0} Updated Successfully'.format(data_dict['name'])
+                    html: "Claim Type Updated Successfully"
                     })
                 location.reload(true);
             })
