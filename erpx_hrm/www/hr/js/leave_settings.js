@@ -298,3 +298,141 @@ $.extend(list_holiday, {
 		}
 	},
 });
+
+var leave_policy_detail_fields = [
+	"leave_type",
+	"annual_allocation",
+]
+//Leave Policy Detail
+var options = {
+    doctype: "Leave Policy Detail",
+	parent: $('#list_leave_policy_detail'),
+	fields: {
+		'name': 'Name',
+		'leave_type': 'Leave Type',
+		'annual_allocation': 'Annual Allocation'
+	}
+};
+var list_leave_policy_detail = new xhrm.views.ListCRUD(options);
+
+$.extend(list_leave_policy_detail, {
+    get_list: function () {
+		var me = this;
+		frappe.ajax({
+			type: "GET",
+			url: `/api/resource/Leave Policy/${glb_leave_policy_name}`,
+			callback: function (r) {
+				me.items = [];
+				if (!r.exc) {
+					me.items = r.data.leave_policy_details;
+					me.render_list(me.items);
+				}
+			}
+		});
+	},
+	render_list: function (data) {
+		var me = this;
+		let html = '';
+		if (data.length) {
+			html = data.map(me.get_item_html).join('');
+		} else {
+			html = ``;
+		}
+		let th_html = `
+				<tr style="background-color: #eff1f9;">
+				<th style=" border-right:none!important;width: 150px;"><b>Leave Type</b></th>
+				<th style=" border-right:none!important;width: 100px;"><b>Allocation</b></th>
+				<th style=" border-right:none!important;width: 100px;"><b>Action</b></th>
+			</tr>`
+		me.parent.html(th_html + html);
+		me.bind_event();
+	},
+	get_item_html: function (item, item_index) {
+		return `
+			<tr class="list-item">
+				<td>${item.leave_type}</td>
+				<td>${item.annual_allocation}</td>
+				<td>
+					<a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
+						<img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+					</a>
+					<a style="float: right; padding-right: 10px;" href="#modal-leave-policy-detail" class="btn-edit modal-trigger" data-name="${item.name}" data-index="${item_index}" data-modal="modal-leave-policy-detail">Edit</a>
+				</td>
+			</tr>	
+		`;
+	},
+});
+
+$(document).ready(function () {
+	//list leave_policy_details
+	if(glb_leave_policy_name!=""){
+		list_leave_policy_detail.get_list();
+	}
+
+	$("#btn_save_leave_policy_detail").click(function () {
+		let name = $(`#form_leave_policy_detail [data-fieldname="name"]`).val();
+		var args = {}
+        leave_policy_detail_fields.forEach(element => {
+            args[element] = $(`#form_leave_policy_detail [data-fieldname="${element}"]`).val();   
+		});
+		
+		if (!name){
+			frappe.ajax({
+				url: "/api/resource/Leave Policy Detail",
+				args: args,
+				callback: function (r) {
+					M.toast({
+						html: "Added Successfully!"
+					})
+					location.reload();		
+				}
+			})
+		}else{
+			frappe.ajax({
+				type: "PUT",
+				url: `/api/resource/Leave Policy Detail/${name}`,
+				args: args,
+				callback: function (r) {
+					if (!r.exc) {
+						M.toast({
+							html: "Updated Successfully!"
+						})
+						location.reload();
+					}
+				}
+			});
+		}		
+	});	
+
+	$("#save_leave_policy_detail").click(function () {
+        let name = $(`#form_leave_policy_detail_edit [data-fieldname="name"]`).val();
+		var args = {}
+		Object.keys(list_leave_policy_detail.fields).forEach(function (element) {
+			if(element!= "name")
+				args[element] = $(`#form_leave_policy_detail_edit [data-fieldname="${element}"]`).val();   
+		})
+		if(name){
+			list_leave_policy_detail.update_doc(name, args);
+		}else{
+			args["parent"] = glb_leave_policy_name;
+			args["parentfield"] = "leave_policy_details";
+			args["parenttype"] = "leave_policy_detail List";
+			list_leave_policy_detail.create_doc(args);
+		}		
+		$('#modal-leave-policy-detail').modal('close');
+	});
+	
+	$("#btn_add_leave_policy_detail").click(function () {
+		var item = {
+			"name" : "",
+			"leave_policy_detail_date" : "",
+			"description" : "",
+		};
+		var modal = $("#" + $(this).attr("data-modal"));
+		Object.keys(list_leave_policy_detail.fields).forEach(function (element) {
+			modal.find(`[data-fieldname="${element}"]`).val(item[element]);
+		})
+		modal.modal('open');
+	});
+
+})
