@@ -294,6 +294,9 @@ xhrm.views.ListCRUD = Class.extend({
 
 			Object.keys(me.fields).forEach(function (key) {
 				modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+				if (modal.find(`[data-fieldname="${key}"]`).prop("tagName") == "SELECT"){
+					modal.find(`[data-fieldname="${key}"]`).formSelect();
+				}
 			})
 		});
 	}

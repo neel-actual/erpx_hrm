@@ -361,6 +361,52 @@ $.extend(list_leave_policy_detail, {
 			</tr>	
 		`;
 	},
+	bind_event: function () {
+		var me = this;
+		me.parent.find(".btn-delete").click(function () {
+			var name = $(this).attr("data-name");
+			var row = $(this).closest(".list-item");
+			swal({
+				title: "Are you sure you want to delete?",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					delete: 'Yes, Delete It'
+				}
+			}).then(function (result) {
+				if (result) {
+					frappe.ajax({
+						type: "POST",
+						url: `/api/method/erpx_hrm.utils.leave_type_policy.delete`,
+						no_stringify: 1,
+						args:{name:name},
+						callback: function (r) {
+							if (!r.exc_type) {
+								M.toast({
+									html: "Deleted Successfully!"
+								})
+								list_leave_policy_detail.get_list();
+							}
+						}
+					});
+				}
+			})
+			return false;
+		});
+		me.parent.find(".btn-edit").click(function () {
+			var item = me.items[$(this).attr("data-index")];
+
+			var name = $(this).attr("data-name");
+			var modal = $("#" + $(this).attr("data-modal"));
+
+			Object.keys(me.fields).forEach(function (key) {
+				modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+				if (modal.find(`[data-fieldname="${key}"]`).prop("tagName") == "SELECT"){
+					modal.find(`[data-fieldname="${key}"]`).formSelect();
+				}
+			})
+		});
+	}
 });
 
 $(document).ready(function () {
@@ -375,62 +421,67 @@ $(document).ready(function () {
         leave_policy_detail_fields.forEach(element => {
             args[element] = $(`#form_leave_policy_detail [data-fieldname="${element}"]`).val();   
 		});
+
+		if(!args.leave_type){
+			M.toast({
+				html: "Leave Type is required"
+			})
+			return false;
+		}
+
+		if(!args.annual_allocation){
+			args.annual_allocation = 0
+		}
 		
 		if (!name){
+			args["parent"] = glb_leave_policy_name;
 			frappe.ajax({
-				url: "/api/resource/Leave Policy Detail",
-				args: args,
+				type: "POST",
+				url: `/api/method/erpx_hrm.utils.leave_type_policy.add`,
+				no_stringify: 1,
+				args:args,
 				callback: function (r) {
-					M.toast({
-						html: "Added Successfully!"
-					})
-					location.reload();		
+					if (!r.exc_type) {
+						M.toast({
+							html: "Added Successfully!"
+						})
+						$('#modal-leave-policy-detail').modal('close');
+						list_leave_policy_detail.get_list();
+					}
 				}
-			})
+			});
 		}else{
+			args.name = name;
 			frappe.ajax({
-				type: "PUT",
-				url: `/api/resource/Leave Policy Detail/${name}`,
-				args: args,
+				type: "POST",
+				url: `/api/method/erpx_hrm.utils.leave_type_policy.update`,
+				no_stringify: 1,
+				args:args,
 				callback: function (r) {
-					if (!r.exc) {
+					if (!r.exc_type) {
 						M.toast({
 							html: "Updated Successfully!"
 						})
-						location.reload();
+						$('#modal-leave-policy-detail').modal('close');
+						list_leave_policy_detail.get_list();
 					}
 				}
 			});
 		}		
 	});	
-
-	$("#save_leave_policy_detail").click(function () {
-        let name = $(`#form_leave_policy_detail_edit [data-fieldname="name"]`).val();
-		var args = {}
-		Object.keys(list_leave_policy_detail.fields).forEach(function (element) {
-			if(element!= "name")
-				args[element] = $(`#form_leave_policy_detail_edit [data-fieldname="${element}"]`).val();   
-		})
-		if(name){
-			list_leave_policy_detail.update_doc(name, args);
-		}else{
-			args["parent"] = glb_leave_policy_name;
-			args["parentfield"] = "leave_policy_details";
-			args["parenttype"] = "leave_policy_detail List";
-			list_leave_policy_detail.create_doc(args);
-		}		
-		$('#modal-leave-policy-detail').modal('close');
-	});
 	
 	$("#btn_add_leave_policy_detail").click(function () {
 		var item = {
 			"name" : "",
-			"leave_policy_detail_date" : "",
-			"description" : "",
+			"leave_type" : "",
+			"annual_allocation" : ""
 		};
 		var modal = $("#" + $(this).attr("data-modal"));
-		Object.keys(list_leave_policy_detail.fields).forEach(function (element) {
-			modal.find(`[data-fieldname="${element}"]`).val(item[element]);
+		Object.keys(list_leave_policy_detail.fields).forEach(function (key) {
+			modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+			if (modal.find(`[data-fieldname="${key}"]`).prop("tagName") == "SELECT"){
+				modal.find(`[data-fieldname="${key}"]`).formSelect();
+			}
 		})
 		modal.modal('open');
 	});
