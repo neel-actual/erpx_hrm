@@ -337,8 +337,8 @@
 										<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
 										<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
 									</ul>
-									<div class="col s12 hide">
-										<a id="btn_add_leave_policy_detail" href="#" class=" modal-trigger waves-effect waves-light right btn">Add Leave Policy</a>
+									<div class="col s12">
+										<a id="btn_add_leave_policy_detail" data-modal="modal-leave-policy-detail" href="#" class="waves-effect waves-light right btn">Add Leave Policy</a>
 									</div
 									<div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
 										<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
@@ -357,24 +357,28 @@
 						<div id="modal-leave-policy-detail" class="modal modal-fixed-footer" style="padding-right: 50px;">
 							<div class="modal-content" style="padding: 0px !important;">
 								<p class="edit-title">Add Leave Policy</p>
-								<form id="form_leave_policy_detail_edit" class="col s12" style="padding: 24px;">
+								<form id="form_leave_policy_detail" class="col s12" style="padding: 24px;">
 									<input type="hidden" data-fieldname="name"  autocomplete="off">
 									<div class="row">
 										<div class="input-field col s12" style="margin-bottom: 0px;">
 											<p>Leave Type</p>
-											<input autocomplete="off" data-fieldname="leave_type" type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;">
+											<select data-fieldname="leave_type" style="padding-left: 10px; width: 10px;" autocomplete="off">
+												<option value="" selected>Select Leave Type</option>
+												{% for item in list_leave_type: %}
+												<option value="{{item.name}}">{{item.name}}</option>
+												{% endfor %}
+											</select>
 										</div>
-
 										<div class="input-field col s12" style="margin-top: 0px;">
 											<p>Annual Allocation</p>
-											<input autocomplete="off" data-fieldname="annual_allocation" type="text" id="account-code" data-length="50" style="width: -webkit-fill-available !important;">
+											<input autocomplete="off" data-fieldname="annual_allocation" type="text" data-length="50" style="width: -webkit-fill-available !important;">
 										</div>
 
 									</div>
 								</form>
 							</div>
 							<div class="modal-footer">
-								<a href="#!" class="right waves-effect waves-light btn" id="save_leave_policy_detail">Save</a>
+								<a href="#!" class="right waves-effect waves-light btn" id="btn_save_leave_policy_detail">Save</a>
 								<a href="#!" class="right blue-text btn-flat"
 									onclick="$('#modal-leave-policy-detail').modal('close')">Cancel</a>
 							</div>
