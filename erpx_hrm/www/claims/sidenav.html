@@ -5,19 +5,32 @@
           class="navbar-toggler" href="#"><i class="material-icons-outlined">radio_button_checked</i></a></h1>
       </div>
 
-      <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
+<ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
       id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
       style="transform: translateX(0px);">
-      <li class="bold"><a id="all-claim" class="waves-effect waves-cyan" href="/claims">
+    {% if show_menu["claims-all"] %}
+    <li class="bold">
+        <a id="all-claim" class="waves-effect waves-cyan" href="/claims">
         <img class="sidenav-icon" src="/icons/claims.png">
         <img class="sidenav-icon" src="/icons/claims-light.png">
         <span class="menu-title" data-i18n="">All Claims</span></a>
-        <li class="bold"><a class="waves-effect waves-cyan" href="/claims/reports"><img class="sidenav-icon" src="/icons/reports.png"><img class="sidenav-icon" src="/icons/reports-light.png"></i><span class="menu-title" data-i18n="" >Reports</span></a>
-            <li id="reimbursement-submodule" class="bold"><a id="reimbursement" class="collapsible-header waves-effect waves-cyan " href="#"
-              tabindex="0" onclick="reimbursement_open();"><img class="sidenav-icon" src="/icons/reimbursement.png"><img class="sidenav-icon" src="/icons/reimbursement.png"><span class="menu-title"
-              data-i18n="">Reimbursement</span>
-          </a>
-          <div id="reimbursement-list" class="collapsible-body">
+    </li>    
+    {% endif %}
+    {% if show_menu["claims-reports"] %}
+    <li class="bold">
+        <a class="waves-effect waves-cyan" href="/claims/reports">
+        <img class="sidenav-icon" src="/icons/reports.png">
+        <img class="sidenav-icon" src="/icons/reports-light.png">
+        <span class="menu-title" data-i18n="" >Reports</span></a>
+    </li>
+    {% endif %}
+    {% if show_menu["claims-reimbusement"] %}
+    <li id="reimbursement-submodule" class="bold">
+        <a id="reimbursement" class="collapsible-header waves-effect waves-cyan " href="#"
+              tabindex="0" onclick="reimbursement_open();"><img class="sidenav-icon" src="/icons/reimbursement.png">
+              <img class="sidenav-icon" src="/icons/reimbursement.png"><span class="menu-title" data-i18n="">Reimbursement</span>
+        </a>
+        <div id="reimbursement-list" class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
                 <!-- <li class="">
                     <a id="submission" class="collapsible-body" href="/claims/submit-to-payroll.html"
@@ -29,7 +42,10 @@
             </ul>
         </div>
     </li>
-    <li id="settings-submodule" class="bold"><a id="settings" class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0" onclick="settings_open();">  <img class="sidenav-icon" src="/icons/settings.png"><img class="sidenav-icon" src="/icons/settings.png">
+    {% endif %}
+    {% if show_menu["claims-setting"] %}
+    <li id="settings-submodule" class="bold"><a id="settings" class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0" onclick="settings_open();">  
+        <img class="sidenav-icon" src="/icons/settings.png"><img class="sidenav-icon" src="/icons/settings.png">
        <span class="menu-title" data-i18n="">Settings</span></a>
        <div id="setting-list" class="collapsible-body">
         <ul class="collapsible collapsible-sub" data-collapsible="accordion">
@@ -40,8 +56,9 @@
             <!-- <li><a class="collapsible-body" href="/claims/set-reimbursement.html" data-i18n=""><span>Reimbursement</span></a>
             </li> -->
         </ul>
-    </div>
-</li>
+        </div>
+    </li>
+    {% endif %}
 </ul>
 <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
 href="#" data-target="slide-out"><i class="material-icons-outlined" onclick="open_nav();">menu</i></a>
