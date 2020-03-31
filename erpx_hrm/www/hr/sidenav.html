@@ -50,10 +50,12 @@
                 data-i18n="">Claims</span></a>
                 <div class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                        <li class=""><a class="collapsible-body" href="/hr/my-claims" data-i18n=""><span>My Claims</span></a>
-                        </li>
-                        <li><a class="collapsible-body" href="/hr/approval-claims" data-i18n=""><span>Approvals</span></a>
-                        </li>
+                        {% if show_menu["my-claims"] %}
+                        <li class="menu-my-claims"><a class="collapsible-body" href="/hr/my-claims" data-i18n=""><span>My Claims</span></a></li>
+                        {% endif %}
+                        {% if show_menu["approval-claims"] %}
+                        <li class="menu-approval-claims"><a class="collapsible-body" href="/hr/approval-claims" data-i18n=""><span>Approvals</span></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </li>			
@@ -70,20 +72,19 @@
                 <span class="menu-title" data-i18n="">Leave</span></a>
                 <div class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
-                        
-                        {% if show_menu["leave-request"]: %}
+                        {% if show_menu["leave-request"] %}
                         <li class="menu-leave-request"><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
                         </li>
                         {% endif %}
-                        {% if show_menu["leave-approval"]: %}
+                        {% if show_menu["leave-approval"] %}
                         <li class="menu-leave-approval"><a class="collapsible-body" href="/hr/leave-approval" data-i18n=""><span>Approval</span></a>
                         </li>
                         {% endif %}
-                        {% if show_menu["leave-balance"]: %}
+                        {% if show_menu["leave-balance"] %}
                         <li class="menu-leave-balance"><a class="collapsible-body" href="/hr/leave-balance" data-i18n=""><span>Balance</span></a>
                         </li>
                         {% endif %}
-                        {% if show_menu["leave-settings"]: %}
+                        {% if show_menu["leave-settings"] %}
                         <li class="menu-leave-settings"><a class="collapsible-body" href="/hr/leave-settings" data-i18n=""><span>Leave Settings</span></a>
                         </li>
                         {% endif %}
