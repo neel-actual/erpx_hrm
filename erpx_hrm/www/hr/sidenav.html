@@ -12,10 +12,14 @@
         <img class="sidenav-icon" src="/icons/home.png">
         <img class="sidenav-icon" src="/icons/home-light.png">
         <span class="menu-title" data-i18n="">Home</span></a></li>
-        <li class="bold"><a class="waves-effect waves-cyan" href="/hr/news">
-            <img class="sidenav-icon" src="/icons/news.png">
-            <img class="sidenav-icon" src="/icons/news-light.png">
-            <span class="menu-title" data-i18n="">News</span></a></li>
+            {% if show_menu["news"] %}
+            <li class="bold"><a class="waves-effect waves-cyan" href="/hr/news">
+                <img class="sidenav-icon" src="/icons/news.png">
+                <img class="sidenav-icon" src="/icons/news-light.png">
+                <span class="menu-title" data-i18n="">News</span></a>
+            </li>
+            {% endif %}
+            {% if show_menu["people-dir"] or show_menu["people-org-chart"] %}
             <li id="people-submodule" class="bold">
                 <a id="people" class="collapsible-header waves-effect waves-cyan " href="#"
                 tabindex="0">
@@ -26,22 +30,28 @@
                 <!--<span class="badge badge pill orange float-right mr-10">3</span>--></a>
                 <div id="people-list" class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                        {% if show_menu["people-dir"] %}
                         <li class=""><a id="directory" class="collapsible-body" href="/hr/people-dir"
                             data-i18n=""><span>Directory</span></a>
                         </li>
+                        {% endif %}
+                        {% if show_menu["people-org-chart"] %}
                         <li><a class="collapsible-body" href="/hr/people-org-chart" data-i18n=""><span>Org Chart</span></a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
-                <li class="bold"><a href="/hr/payslip" class="waves-effect waves-cyan ">
+            </li>   
+            {% endif %}
+            {% if show_menu["payslip"] %}			 				
+             <li class="bold"><a href="/hr/payslip" class="waves-effect waves-cyan ">
                  <img class="sidenav-icon" src="/icons/payslip.png">
                  <img class="sidenav-icon" src="/icons/payslip-light.png">
                  <span class="menu-title"
                  data-i18n="">Pay Slip</span></a>
-				 
-				
             </li>
-			
+            {% endif %}
+            {% if show_menu["my-claims"] or show_menu["approval-claims"] %}
             <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0">
                 <img class="sidenav-icon" src="/icons/claims.png">
                 <img class="sidenav-icon" src="/icons/claims-light.png">
@@ -59,12 +69,15 @@
                     </ul>
                 </div>
             </li>			
-
+            {% endif %}
+            {% if show_menu["calendar"] %}	
 			<li class="bold"><a class="waves-effect waves-cyan" href="/hr/calendar">
                 <img class="sidenav-icon" src="/icons/calendar.png">
                 <img class="sidenav-icon" src="/icons/calendar-light.png">           
                 <span class="menu-title" data-i18n="">Calendar</span></a>
-	
+            </li>
+            {% endif %}    
+            {% if show_menu["leave-request"] or show_menu["leave-approval"] or show_menu["leave-balance"] or show_menu["leave-settings"] %}
             <li id="leave-submodule"  class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0">
                 <img class="sidenav-icon" src="/icons/leave.png">
                 <img class="sidenav-icon" src="/icons/leave-light.png">
@@ -91,13 +104,15 @@
                     </ul>
                 </div>
             </li>
-
-                    
+            {% endif %}
+                {% if show_menu["hr-reports"] %}   
                  <li class="bold"><a href="/hr/reports" class="waves-effect waves-cyan ">
                     <img class="sidenav-icon" src="/icons/reports.png">
                     <img class="sidenav-icon" src="/icons/reports-light.png">
                     <span class="menu-title" data-i18n="">Reports</span></a>
-
+                 </li>
+                 {% endif %}      
+                 {% if show_menu["company-settings"] or show_menu["org-settings"] or show_menu["grp-settings"] %}                 
                     <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0">
                         <img class="sidenav-icon" src="/icons/settings.png">
                         <img class="sidenav-icon" src="/icons/settings-light.png">
@@ -105,15 +120,22 @@
                         data-i18n="">Settings</span></a>
                         <div class="collapsible-body">
                             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                                {% if show_menu["company-settings"] %}   
                                 <li class=""><a href="/hr/company-settings" class="collapsible-body" href="" data-i18n=""><span>Company Settings</span></a>
                                 </li>
+                                {% endif %} 
+                                {% if show_menu["org-settings"] %}   
                                 <li><a href="/hr/org-settings" class="collapsible-body" href="" data-i18n=""><span>Organization</span></a>
                                 </li>
+                                {% endif %} 
+                                {% if show_menu["grp-settings"] %}   
                                 <li><a href="/hr/grp-settings" class="collapsible-body" href="" data-i18n=""><span>Group</span></a>
                                 </li>
+                                {% endif %} 
                             </ul>
                         </div>
                     </li>
+                    {% endif %}      
                 </ul>
                 <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
                 href="#" data-target="slide-out"><i class="material-icons-outlined">menu</i></a>
