@@ -8,61 +8,90 @@
       <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow ps ps--active-y"
       id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion"
       style="transform: translateX(0px);">
-      <li class="bold"><a class="waves-effect waves-cyan" href="/payroll"><img class="sidenav-icon" src="/icons/home.png"><img class="sidenav-icon" src="/icons/home-light.png"><span class="menu-title" data-i18n="">Home</span></a>
-        <li class="bold"><a class="waves-effect waves-cyan" href="/payroll/people.html"><img class="sidenav-icon" src="/icons/people.png"><img class="sidenav-icon" src="/icons/people-light.png"><span class="menu-title" data-i18n="">People</span></a>
+      {% if show_menu["payroll-all"] %}
+      <li class="bold"><a class="waves-effect waves-cyan" href="/payroll"><img class="sidenav-icon" src="/icons/home.png"><img class="sidenav-icon" src="/icons/home-light.png"><span class="menu-title" data-i18n="">Home</span></a></li>
+      {% endif %}
+      {% if show_menu["payroll-people"] or show_menu["pay-run-approval"] or show_menu["pay-run-payslip"] or show_menu["pay-run-history"] %}
+        <li class="bold"><a class="waves-effect waves-cyan" href="/payroll/people.html"><img class="sidenav-icon" src="/icons/people.png"><img class="sidenav-icon" src="/icons/people-light.png"><span class="menu-title" data-i18n="">People</span></a></li>
+        {% endif %}
+        {% if show_menu["pay-run-payroll"] %}
             <li id="payrun-submodule" class="bold"><a id="payrun" class="collapsible-header waves-effect waves-cyan " href="#"
               tabindex="0" onclick="payrun_open();"><img class="sidenav-icon" src="/icons/pay-run.png"><img class="sidenav-icon" src="/icons/pay-run.png"><span class="menu-title"
               data-i18n="">Pay Run</span>
           </a>
           <div id="payrun-list" class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                {% if show_menu["pay-run-payroll"] %}
                 <li class=""><a class="collapsible-body" href="/payroll/pay-run-payroll.html"
                     data-i18n=""><span>Run Payroll</span></a>
                 </li>
+                {% endif %}
+                {% if show_menu["pay-run-approval"] %}
                 <li class=""><a class="collapsible-body" href="/payroll/pay-run-approval.html"
                     data-i18n=""><span>Approval</span></a>
                 </li>
+                {% endif %}
+                {% if show_menu["pay-run-payslip"] %}
                 <li class=""><a class="collapsible-body" href="/payroll/pay-run-payslip"
                     data-i18n=""><span>Payslip</span></a>
                 </li>
+                {% endif %}
+                {% if show_menu["pay-run-history"] %}
                 <li class=""><a class="collapsible-body" href="/payroll/pay-run-history"
                     data-i18n=""><span>Payroll History</span></a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </li>
+    {% endif %}
+    {% if show_menu["payroll-reports-total"] or show_menu["payroll-reports-form-ea"] or show_menu["payroll-reports-e-form"] %}
     <li id="reports-submodule" class="bold"><a id="reports" class="collapsible-header waves-effect waves-cyan " href="#"
       tabindex="0" onclick="report_open();"><img class="sidenav-icon" src="/icons/reports.png"><img class="sidenav-icon" src="/icons/reports.png"><span class="menu-title"
       data-i18n="">Reports</span>
   </a>
   <div id="report-list" class="collapsible-body">
     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+        {% if show_menu["payroll-reports-total"] %}
         <li class=""><a class="collapsible-body" href="/payroll/reports-total.html"
             data-i18n=""><span>Total Reports</span></a>
         </li>
+        {% endif %}
+        {% if show_menu["payroll-reports-form-ea"] %}
         <li class=""><a class="collapsible-body" href="/payroll/reports-form-ea"
             data-i18n=""><span>EA Form</span></a>
         </li>
+        {% endif %}
+        {% if show_menu["payroll-reports-e-form"] %}
         <li class=""><a class="collapsible-body" href="/payroll/reports-e-form.html"
             data-i18n=""><span>E Form</span></a>
         </li>
+        {% endif %}
     </ul>
 </div>
 </li>
-
+{% endif %}
+{% if show_menu["payroll-comp-details"] or show_menu["payroll-settings"] or show_menu["payroll-items-sett"] %}
 <li id="settings-submodule" class="bold"><a id="settings" class="collapsible-header waves-effect waves-cyan " href="#" tabindex="0" onclick="settings_open();"><img class="sidenav-icon" src="/icons/settings.png"><img class="sidenav-icon" src="/icons/settings.png"><span class="menu-title"
   data-i18n="">Settings</span></a>
   <div id="setting-list" class="collapsible-body">
     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+        {% if show_menu["payroll-comp-details"] %}
         <li class=""><a class="collapsible-body" href="/payroll/payroll-comp-details" data-i18n=""><span>Company Details</span></a>
         </li>
+        {% endif %}
+        {% if show_menu["payroll-settings"] %}
         <li><a class="collapsible-body" href="/payroll/payroll-settings" data-i18n=""><span>Payroll Settings</span></a>
         </li>
+        {% endif %}
+        {% if show_menu["payroll-items-sett"] %}
         <li><a class="collapsible-body" href="/payroll/payroll-items-sett" data-i18n=""><span>Payroll Items</span></a>
         </li>
+        {% endif %}
     </ul>
 </div>
 </li>
+{% endif %}
 </ul>
 <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only"
 href="#" data-target="slide-out" ><i class="material-icons-outlined" onclick="open_nav();">menu</i></a>
