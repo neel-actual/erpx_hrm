@@ -1,6 +1,7 @@
 import frappe
 import json
 from erpnext import get_company_currency, get_default_company
+from frappe import _
 
 def get_context(context):
     if frappe.session.user == 'Guest':

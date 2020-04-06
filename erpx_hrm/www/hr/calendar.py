@@ -1,5 +1,6 @@
 import frappe
 import json
+from frappe import _
 
 def get_context(context):
     if frappe.session.user == 'Guest':

@@ -242,87 +242,49 @@ display: block;
 
         <div style="height: 40px;"></div>
         <div class="row margin infodetails">
-          <div class="input-field col s12 m3">
-            <select style="padding-left: 10px;width: -webkit-fill-available;">
-                <option value="" disabled selected>Main Branch</option>
-                {% set branch_val = frappe.get_all("Branch", fields=['*']) %}
-                {% for i_branch_val in branch_val %}
-                    <option value="{{i_branch_val.name}}" >{{i_branch_val.name}}</option>
-                {% endfor %}
-            </select>
-          </div>
-
-          <div class="input-field col s12 m3">
-            <select style="padding-left: 10px;width: -webkit-fill-available;">
-              <option value="" disabled selected>2019</option>
-            </select>
-          </div>
-
-          <a href="#modal2" style="margin-top: 25px;" class="add-holi-link modal-trigger waves-effect waves-light right">
-          Add Holiday</a>
+          <button data-modal="modal-add-holiday" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday" class="btn waves-effect waves-light">Add Holiday</button>
         </div>
-
         <br>
-        <table style="border-collapse: unset;">
-          <tr style="font-size: 16px; background-color: #e8ebf7; width: 100%!important;">
-            <th style="border-right:none!important;width: 40%">Holiday Name</th>
-            <th style="border-right:none!important;width: 20%">Date</th>
-            <th style="border-right:none!important;width: 20%">Type</th>
-            <th style="border-right:none!important;width: 20%">Action</th>
-          </tr>
-
-            {% set holiday_val = frappe.get_all("Holiday List", fields=['*']) %}
-            {% for i_holiday_val in holiday_val %}
-                <tr>
-                    <td>{{i_holiday_val.holiday_list_name}}</td>
-                    <td>{{ i_holiday_val.from_date  }} - {{ i_holiday_val.to_date }}</td>
-                    <td>public Holiday</td>
-                    <td>
-                        <a style="margin-top: 10px;" href="#modal_edit" class=" modal-trigger">Edit</a>
-                        <img style="margin-left: 20px;" width="21" height="21" src="/icons/icon-58.png" >
-                    </td>
-                </tr>
-            {% endfor %}
+        <table style="border-collapse: unset;" id="list-holiday">          
         </table>
       </div>
     </div>
   </div>
 </div>
 
-<div id="modal_edit" class="modal modal-fixed-footer">
+<div id="modal-edit-holiday" class="modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important;">
     <p class="edit-title">Edit Holiday</p>
 
-    <form class="modal-holi col s12">
+    <form class="modal-holi col s12" id="form-holiday-edit">
       <div class="row">
        <div class="input-field col s12" style="margin-bottom: 0px;">
-        <p>Name</p>
-        <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="Company Under Renovation">
+        <p>Name</p>    
+        <input type="hidden" id="old_name" />                    
+        <input readonly="readonly" type="text" data-fieldname="holiday_list_name" id="name" data-length="50" style="width: -webkit-fill-available !important;" placeholder=""> 
       </div>
 
       <div class="row margin infodetails">
-        <div class="input-field col s12 m6" style="margin-top: 0px;">
-          <p style="margin-bottom: 10px; ">Start</p>
-          <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
-           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
-            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-          <!--<label for="signup-password">Password</label>-->
+        <div class="input-field col s12 m12" style="margin-top: 0px;">
+          <p>From Date</p>
+          <input data-fieldname="from_date"  autocomplete="off"
+          style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+          placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
         </div>
-        <div class="input-field col s12 m6" style="margin-top: 0px;">
-          <p style="margin-bottom: 10px;">End</p>
-          <!--<i class="material-icons-outlined prefix pt-2">lock_outline</i>-->
-           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
-            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-          <!--<label for="signup-password-confirm">Confirm Password</label>-->
+        <div class="input-field col s12 m12" style="margin-top: 0px;">
+          <p>To Date</p>
+          <input data-fieldname="to_date"  autocomplete="off"
+          style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+          placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
         </div>
       </div>
     </div>
   </form>
 </div>
 <div class="modal-footer">
- <a href="#!" class="right waves-effect waves-light btn">Save</a>
+ <a href="#!" id="save_holiday_edit" class="right waves-effect waves-light btn">Save</a>
  <a href="#!" class="right blue-text btn-flat"
- onclick="$('#modal_edit').modal('close')">Cancel</a>
+ onclick="$('#modal-edit-holiday').modal('close')">Cancel</a>
 </div>
 </div>
 
@@ -335,40 +297,42 @@ display: block;
   <div class="modal-footer">
    <a href="#!" class="right waves-effect waves-light btn">Save</a>
    <a href="#!" class="right blue-text btn-flat"
-   onclick="$('#modal_edit').modal('close')">Cancel</a>
+   onclick="$('#modal_delete').modal('close')">Cancel</a>
  </div>
 </div>
 
-<div id="modal2" class="modal modal-fixed-footer">
+<div id="modal-add-holiday" class="modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important;">
     <p class="edit-title">Create New Holiday</p>
 
-    <form class="col s12 modal-holi">
+    <form class="col s12 modal-holi" id="form-holiday-add">
       <div class="row">
        <div class="input-field col s12" style="margin-bottom: 0px;">
         <p>Name</p>
-        <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;" placeholder="Main Branch">
+        <input type="text" data-fieldname="holiday_list_name" id="name" data-length="50" style="width: -webkit-fill-available !important;" placeholder=""> 
       </div>
 
       <div class="row margin infodetails">
-        <div class="option-date-appr input-field col s12 m6" style="margin-top: 0px;">
-          <p style="margin-bottom: 10px; ">Start</p>
-           <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
-            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+        <div class="input-field col s12 m12" style="margin-top: 0px;">
+          <p>From Date</p>
+          <input data-fieldname="from_date"  autocomplete="off"
+          style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+          placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
         </div>
-        <div class="option-date-appr input-field col s12 m6" style="margin-top: 0px;">
-          <p style="margin-bottom: 10px;">End</p>
-          <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px;
-            right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
+        <div class="input-field col s12 m12" style="margin-top: 0px;">
+          <p>To Date</p>
+          <input data-fieldname="to_date"  autocomplete="off"
+          style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+          placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
         </div>
       </div>
     </div>
   </form>
 </div>
 <div class="modal-footer">
- <a href="#!" class="right waves-effect waves-light btn">Create</a>
+ <a href="#!" id="save_holiday_add" class="right waves-effect waves-light btn">Create</a>
  <a href="#!" class="right blue-text btn-flat"
- onclick="$('#modal2').modal('close')">Cancel</a>
+ onclick="$('#modal-add-holiday').modal('close')">Cancel</a>
 </div>
 </div>
 
@@ -641,6 +605,7 @@ type="text/javascript"></script>
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
 type="text/javascript"></script>
+<script src="/app-assets/vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>
