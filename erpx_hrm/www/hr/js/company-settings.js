@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () {	
 	$("#file-change-logo").on('change', function() {
 		var file = this.files[0];
 		var reader = new FileReader();
@@ -27,7 +27,6 @@ $(document).ready(function () {
 
 	//branch
 	list_branch.get_list();
-
     $("#save_branch_add").click(function () {
         var branch_name = $("#branch_title_add").val();
         $("#branch_title_add").val("");
@@ -45,6 +44,37 @@ $(document).ready(function () {
             "old": old_name,
             "new": new_name
         });
+	});
+	
+	//Holiday
+	list_holiday.get_list();
+	$("#btn-add-holiday").click(function () {
+		var item = {
+			"name" : "",
+			"from_date" : "",
+			"to_date" : "",
+		};
+		var modal = $("#" + $(this).attr("data-modal"));
+		Object.keys(list_holiday.fields).forEach(function (element) {
+			modal.find(`[data-fieldname="${element}"]`).val(item[element]);
+		})
+		modal.modal('open');
+	});
+	$("#save_holiday_add").click(function () {				
+        var args = {}
+		Object.keys(list_holiday.fields).forEach(function (element) {			
+			args[element] = $(`#form-holiday-add [data-fieldname="${element}"]`).val();   						
+		});
+		list_holiday.create_doc(args);
+		$("#modal-add-holiday").modal("close");
+    });
+    $("#save_holiday_edit").click(function () {
+        var args = {}
+		Object.keys(list_holiday.fields).forEach(function (element) {			
+			args[element] = $(`#form-holiday-edit [data-fieldname="${element}"]`).val();   
+		})
+        $("#modal-edit-holiday").modal("close");
+        list_holiday.update_doc($(`#form-holiday-edit #old_name`).val(), args);
     });
 });
 var rename_company_name = function(){
@@ -117,4 +147,93 @@ $.extend(list_branch, {
 		</div>
 		`;
     }
+});
+
+//holiday
+var options = {
+    doctype: "Holiday List",
+	parent: $('#list-holiday'),
+	fields: {
+		'holiday_list_name': 'Holiday Name',
+		'from_date': 'From Date',
+		'to_date': 'To Date',		
+	}
+};
+var list_holiday = new xhrm.views.ListCRUD(options);
+$.extend(list_holiday, {
+	render_list: function (data) {
+		var me = this;
+		let html = '';
+		if (data.length) {
+			html = data.map(me.get_item_html).join('');
+		} else {
+			html = ``;
+		}
+		let th_html = `
+			<tr style="font-size: 16px; background-color: #e8ebf7; width: 100%!important;">
+				<th style="border-right:none!important;width: 40%">Holiday Name</th>
+				<th style="border-right:none!important;width: 20%">From Date</th>
+				<th style="border-right:none!important;width: 20%">To Date</th>
+				<th style="border-right:none!important;width: 20%">Action</th>
+			</tr>`;
+		me.parent.html(th_html + html);
+		me.bind_event();
+	},
+    get_item_html: function (item, i) {
+		return `
+		<tr>
+			<td>${item.holiday_list_name}</td>
+			<td>${ item.from_date }</td>
+			<td>${ item.to_date }</td>
+			<td>
+			<a href="#" class="modal-trigger btn-delete" data-name="${item.holiday_list_name}">
+				<img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+			</a>			
+			<a style="float: right; padding-right: 10px;" href="#modal-edit-holiday" class="btn-edit modal-trigger" data-name="${item.holiday_list_name}" data-index="${i}" data-modal="modal-edit-holiday">Edit</a>
+			</td>
+		</tr>		
+		`;
+    },bind_event: function () {
+		var me = this;
+		me.parent.find(".btn-delete").click(function () {
+			var name = $(this).attr("data-name");
+			var row = $(this).closest(".list-item");
+			swal({
+				title: "Are you sure you want to delete?",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					delete: 'Yes, Delete It'
+				}
+			}).then(function (result) {
+				if (result) {
+					frappe.ajax({
+						type: "DELETE",
+						url: `/api/resource/${me.doctype}/${name}`,
+						no_stringify: 1,
+						args:{name:name},
+						callback: function (r) {							
+							M.toast({
+								html: "Deleted Successfully!"
+							})
+							list_holiday.get_list();							
+						}
+					});
+				}
+			})
+			return false;
+		});	
+		me.parent.find(".btn-edit").click(function () {			
+			var item = me.items[$(this).attr("data-index")];			
+			var name = $(this).attr("data-name");
+			var modal = $("#" + $(this).attr("data-modal"));			
+			modal.find("#old_name").val(name);
+			Object.keys(me.fields).forEach(function (key) {
+				modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+				if (modal.find(`[data-fieldname="${key}"]`).prop("tagName") == "SELECT"){
+					modal.find(`[data-fieldname="${key}"]`).formSelect();
+				}
+			})
+		});	
+	}
 });
