@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import frappe, json
 from frappe import _
-from frappe.utils import date_diff, add_months, today, getdate, add_days, flt, get_last_day
+from frappe.utils import date_diff, add_months, today, getdate, add_days, flt, get_last_day, to_timedelta, now
 from erpx_hrm.utils.department_approver import get_approvers
 
 @frappe.whitelist()
@@ -13,7 +13,7 @@ def on_update(doc, method):
 def validate_leave_type(doc):
 	if (doc.leave_type == "Annual Leave") and not doc.emergency:
 		days_before = add_days(today(), 5)
-		if doc.from_date < days_before:
+		if doc.status == "Open" and doc.docstatus < 1 and getdate(doc.from_date) < getdate(days_before):
 			frappe.throw(_("The start date has to be 5 days earlier from the date request"))
 
 @frappe.whitelist()
