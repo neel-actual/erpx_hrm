@@ -222,9 +222,8 @@ display: block;
            <div class="card-content">
               <div>
                   <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/settings.png">
-                  <h4 class="card-title newstitle" style="display: inline;">Company Settings</h4>
-                  <a id="add-office " href="#create-news.modal" class=" modal-trigger waves-effect waves-light right office-btn">
-                  Add Office</a>
+                  <h4 class="card-title newstitle" style="display: inline;">Company Branch</h4>                  
+                  <button data-modal="modal-branch-add" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-branch" class="btn right waves-effect waves-light">Add Branch</button>
                   <span style="margin-left: 14px; margin-top: 40px;float: left; font-size: 14px; color: darkgrey">You can extract a report by selecting approve dates and employees who have submitted the claims</span>
                   <div class="clear"></div>
               </div>
@@ -336,17 +335,135 @@ display: block;
 </div>
 </div>
 
+<div id="modal-branch-add" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important;">
+    <p class="edit-title" >Add Branch</p>
+    <form id="form_branch_add" class="col s12" style="padding: 24px;">
+      <div class="row">
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Branch Name</p>          
+          <input type="text" id="branch" data-fieldname="branch" style="width: -webkit-fill-available !important;">          
+        </div>
 
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Street Address</p>
+          <input type="text" data-fieldname="address_line_1"  style="width: -webkit-fill-available !important;">
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;" >
+            <p>City</p>
+            <input type="text" data-fieldname="city" data-length="100"
+            style="width: -webkit-fill-available !important;">
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Post Code</p>
+            <input type="text" data-fieldname="pincode" data-length="100"
+            style="width: -webkit-fill-available !important;" placeholder="47810">
+          </div>
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Country</p>            
+            <select data-fieldname="country" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
+              <option value="" selected>All</option>
+              {% set country = frappe.get_all("Country", fields=['*']) %}
+              {% for i_country in country %}
+                  <option value="{{i_country.country_name}}">{{i_country.country_name}}</option>
+              {% endfor %}
+          </select>
+          </div>
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>State</p>
+            <input type="text" data-fieldname="state" style="width: -webkit-fill-available !important;">
+          </div>
+        </div>
+
+        <div class="input-field col s12 " style="margin-top: 0px;">
+          <p>Workday</p>
+          <form>
+            <div style="border: 1px solid #c1c1c1; margin: 0;" class=" row button-group">
+              <div class="col seven-cols">
+                <input id="checkbox1_add" type="checkbox" data-fieldname="sunday">
+                <label class="label-pad" for="checkbox1">Sunday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox2_add" type="checkbox" data-fieldname="monday">
+                <label class="label-pad" for="checkbox2">Monday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox3_add" type="checkbox" data-fieldname="tuesday">
+                <label class="label-pad" for="checkbox3">Tuesday</label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox4_add" type="checkbox" data-fieldname="wednesday">
+                <label class="label-pad" for="checkbox4">Wednesday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox5_add" type="checkbox" data-fieldname="thursday">
+                <label class="label-pad" for="checkbox5">Thursday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox6_add" type="checkbox" data-fieldname="friday">
+                <label class="label-pad" for="checkbox6">Friday
+                </label>
+              </div>
+              <div class="col seven-cols">
+                <input id="checkbox7_add" type="checkbox" data-fieldname="saturday">
+                <label class="label-pad" for="checkbox7">Saturday
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="input-field col s12" style="margin-top: 0px;">
+          <p>Timezone</p>          
+          <select data-fieldname="time_zone" id="time_zone" style="padding-left: 10px; width: -webkit-fill-available;">
+          </select>
+        </div>
+
+        <div class="row margin infodetails">
+          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+            <p>Language</p>            
+            <select data-fieldname="language" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
+              <option value="" selected>All</option>
+              {% set language = frappe.get_all("Language", fields=['*']) %}
+              {% for i_language in language %}
+                  <option value="{{i_language.language_code}}">{{i_language.language_name}}</option>
+              {% endfor %}
+          </select>
+          </div>
+          <div class="option-date-appr input-field col s12 m6" style="margin-top: 5px;">
+            <p style="margin-bottom: 10px;">Date Format</p>
+            <select data-fieldname="date_format" id="date_format" style="padding-left: 10px; width: -webkit-fill-available;">
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+   <a href="#!" id="save_branch_add" class="right waves-effect waves-light btn">Save</a>
+   <a href="#!" class="right blue-text btn-flat"
+   onclick="$('#modal-branch-add').modal('close')">Cancel</a>
+ </div>
+</div>
 
 <div id="modal-branch-edit" class="modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important;">
-    <p class="edit-title" >Edit Office</p>
-    <form class="col s12" style="padding: 24px;">
+    <p class="edit-title" >Edit Branch</p>
+    <form id="form_branch_edit" class="col s12" style="padding: 24px;">
       <div class="row">
 
         <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-          <p>Branch Name</p>
-          <input type="text" data-fieldname="branch" style="width: -webkit-fill-available !important;">
+          <p>Branch Name</p>          
+          <input type="text" id="branch" readonly="readonly" data-fieldname="branch" style="width: -webkit-fill-available !important;">
           <!-- <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
         </div>
 
@@ -370,8 +487,14 @@ display: block;
 
         <div class="row margin infodetails">
           <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-            <p>Country</p>
-            <select data-fieldname="country"></select>
+            <p>Country</p>            
+            <select data-fieldname="country" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
+              <option value="" selected>All</option>
+              {% set country = frappe.get_all("Country", fields=['*']) %}
+              {% for i_country in country %}
+                  <option value="{{i_country.country_name}}">{{i_country.country_name}}</option>
+              {% endfor %}
+          </select>
           </div>
           <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
             <p>State</p>
@@ -417,171 +540,42 @@ display: block;
                 <label class="label-pad" for="checkbox7">Saturday
                 </label>
               </div>
-
             </div>
           </form>
-
         </div>
-
-
-
         <div class="input-field col s12" style="margin-top: 0px;">
-          <p>Timezone</p>
-          <input type="text" data-fieldname="time_zone"  style="width: -webkit-fill-available !important;">
+          <p>Timezone</p>          
+          <select data-fieldname="time_zone" id="time_zone" style="padding-left: 10px; width: -webkit-fill-available;">
+          </select>
         </div>
 
         <div class="row margin infodetails">
           <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-            <p>Language</p>
-            <input type="text" id="description" data-length="100" data-fieldname="language" style="width: -webkit-fill-available !important;">
+            <p>Language</p>            
+            <select data-fieldname="language" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
+              <option value="" selected>All</option>
+              {% set language = frappe.get_all("Language", fields=['*']) %}
+              {% for i_language in language %}
+                  <option value="{{i_language.language_code}}">{{i_language.language_name}}</option>
+              {% endfor %}
+          </select>
           </div>
           <div class="option-date-appr input-field col s12 m6" style="margin-top: 5px;">
             <p style="margin-bottom: 10px;">Date Format</p>
-            <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-            <select data-fieldname="date_format"></select>
+            <select data-fieldname="date_format" id="date_format" style="padding-left: 10px; width: -webkit-fill-available;">
+            </select>
           </div>
         </div>
-
-
-
-
       </div>
     </form>
   </div>
 
   <div class="modal-footer">
-   <a href="#!" class="right waves-effect waves-light btn">Save</a>
+   <a href="#!" id="save_branch_edit" class="right waves-effect waves-light btn">Save</a>
    <a href="#!" class="right blue-text btn-flat"
    onclick="$('#modal-branch-edit').modal('close')">Cancel</a>
  </div>
 </div>
-
-
-<!-- add new pop-up -->
-
-<div id="create-news.modal" class="modal modal-fixed-footer" style="padding-right: 50px;">
-  <div class="modal-content" style="padding: 0px !important;">
-    <p class="edit-title" >Add Office</p>
-    <form class="col s12" style="padding: 24px;">
-      <div class="row">
-
-        <div class="input-field col s12" style="margin-bottom: 0px;">
-          <p>Branch Name</p>
-          <input type="text" id="title" data-length="50" style="width: -webkit-fill-available !important;">
-          <!--  <label for="news-subject" class="" style="left: 30px;">Subject</label> -->
-        </div>
-
-        <div class="input-field col s12" style="margin-top: 0px;">
-          <p>Street Address</p>
-          <input type="text" id="account-code"  data-length="50" style="width: -webkit-fill-available !important;">
-        </div>
-
-        <div class="row margin infodetails">
-          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-            <p>City</p>
-            <input type="text" id="description" data-length="100"
-            style="width: -webkit-fill-available !important;">
-          </div>
-          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-            <p>Post Code</p>
-            <input type="text" id="description" data-length="100"
-            style="width: -webkit-fill-available !important;">
-          </div>
-        </div>
-
-        <div class="row margin infodetails">
-          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;position: unset;">
-            <p>Country</p>
-            <select>
-              <option value="" disabled selected>Select country</option>
-            </select>
-          </div>
-          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;position: unset;">
-            <p>State</p>
-            <select>
-              <option value="" disabled selected>Select State</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="input-field col s12" style="margin-top: 0px;">
-          <p>Workday</p>
-
-
-          <form>
-            <div style="border: 1px solid #c1c1c1; margin: 0;" class=" row button-group">
-              <div class="col seven-cols">
-                <input id="checkbox8" type="checkbox">
-                <label  class="label-pad" for="checkbox8">Sunday
-                </label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox9" type="checkbox">
-                <label  class="label-pad" for="checkbox9">Monday
-                </label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox10" type="checkbox">
-                <label  class="label-pad" for="checkbox10">Tuesday</label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox11" type="checkbox">
-                <label class="label-pad" for="checkbox11">Wednesday
-                </label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox12" type="checkbox">
-                <label  class="label-pad" for="checkbox12">Thursday
-                </label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox13" type="checkbox">
-                <label  class="label-pad" for="checkbox13">Friday
-                </label>
-              </div>
-              <div class="col seven-cols">
-                <input id="checkbox14" type="checkbox">
-                <label  class="label-pad" for="checkbox14">Saturday
-                </label>
-              </div>
-
-            </div>
-          </form>
-
-        </div>
-
-        <div class="input-field col s12" style="margin-top: 0px;">
-          <p>Timezone</p>
-          <input type="text" id="account-code"  data-length="50" style="width: -webkit-fill-available !important;"
-          placeholder="+8:00 Asia/Kuala Lumpur">
-        </div>
-
-        <div class="row margin infodetails">
-          <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
-            <p>Language</p>
-            <input type="text" id="description" data-length="100"
-            style="width: -webkit-fill-available !important;" placeholder="EN">
-          </div>
-          <div class="option-date-appr input-field col s12 m6" style="margin-top: 5px;">
-            <p style="margin-bottom: 10px;">Date Format</p>
-            <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
-          </div>
-        </div>
-
-
-
-
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="right waves-effect waves-light btn">Add</a>
-    <a href="#!" class="right blue-text btn-flat"
-    onclick="$('#create-news\\.modal').modal('close')">Cancel</a>
-  </div>
-</div>
-
-
 
 </div>
 
