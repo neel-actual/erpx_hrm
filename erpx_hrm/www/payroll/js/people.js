@@ -12,6 +12,7 @@ function profile(employee){
       fields:personal_field_list,
       limit_page_length: 100000
     }).then(function(res){
+        // console.log(res.message)
       obj = res.message[0];
       $.each( obj, function( key, value ) {
         // console.log( key + ": " + value );
@@ -21,17 +22,18 @@ function profile(employee){
     });  
     $('#modal_email').val(obj.company_email)
     $('#sum_name').text("Here’s quick profile of " + obj.employee_name)
-    hrm.list({
+    if(obj.reports_to){hrm.list({
     doctype:"Employee",
     filters:[{"name":obj.reports_to}],
     fields:["employee_name","image"],
     limit_page_length: 100000
     }).then(function(res){
+        console.log(res.message)
     obj = res.message[0];
     $('#a_report').text(obj.employee_name)
     if(obj.image){
     $('#reportto_pic').attr('src', obj.image);}
-    })
+    })}
     
     
 
@@ -196,27 +198,27 @@ $(document).ready(function () {
         user_table.search($(this).val()).draw() ;
         });
     
-      $('#sel_department').change(function(){
+      $('#sel_department').on( "change", function() {
         
         var filter_status = $("#sel_department").val();
         // console.log(user_table)
         user_table.column(1).search(filter_status, true, false, false).draw();
     });
-    $('#sel_branch').change(function(){
+    $('#sel_branch').on( "change", function() {
     
     var filter_status = $("#sel_branch").val();
     // console.log(user_table)
     user_table.column(2).search(filter_status, true, false, false).draw();
     });
 
-    $('#empt_sel').change(function(){
+    $('#empt_sel').on( "change", function() {
     
     var filter_status = $("#empt_sel").val();
     // console.log(user_table)
     user_table.column(3).search(filter_status, true, false, false).draw();
     });
 
-    $('#sal_mode').change(function(){
+    $('#sal_mode').on( "change", function() {
     
     var filter_status = $("#sal_mode").val();
     // console.log(user_table)
@@ -228,26 +230,29 @@ $(document).ready(function () {
         location.reload(true);
     });
 
-    $("form#bank_form :input[name=epf_contribution]").change(function(){
+    $("form#bank_form :input[name=epf_contribution]").on( "change", function() {
         set_epf_property($("form#bank_form :input[name=epf_contribution]").val(),["employee_epf_rate","additional_epf","employer_epf","additional_employer_epf"]) 
     })
 
-    $("form#bank_form :input[name=sosco_contribution]").change(function(){
+    $("form#bank_form :input[name=sosco_contribution]").on( "change", function() {
+        console.log("change")
         set_socso_contribution()     
          
     })
-    $("form#bank_form :input[name=sosco_catagory]").change(function(){
+    $("form#bank_form :input[name=sosco_catagory]").on( "change", function() {
+        console.log("change")
         set_socso_contribution()     
          
     })
 
-    $("form#bank_form :input[name=eis_contribution]").change(function(){
+    $("form#bank_form :input[name=eis_contribution]").on( "change", function() {
+        console.log("change")
         set_eis_contribution()
     })
 
     
 
-    $(".epf_values").change(function(){
+    $(".epf_values").on( "change", function() {
         calculate_total($("form#bank_form :input[name=employee_epf_rate]").val(),$("form#bank_form :input[name=additional_epf]").val(),"total_employee_rate") 
         calculate_total($("form#bank_form :input[name=employer_epf]").val(),$("form#bank_form :input[name=additional_employer_epf]").val(),"total_employer_rate") 
     })
