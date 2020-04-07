@@ -1,10 +1,18 @@
 <span class="nav-links">
+    {% if show_menu["top-hr"] %}
     <li><a class="left" href="/hr" aria-current="page">HR Hub</a></li>
+    {% endif %}
+    {% if show_menu["top-claims"] %}
     <li><a class="left" href="/claims" aria-current="page">Claims</a></li>
+    {% endif %}
+    {% if show_menu["top-payroll"] %}
     <li><a class="left" href="/payroll" aria-current="page">Payroll</a></li>
+    {% endif %}
+    {% if show_menu["top-benefits"] %}
     <li><a class="left" href="/benefits" aria-current="page">Benefits</a></li>
+    {% endif %}
 </span>
-<span class="nav-plan">
+<span class="nav-plan hide">
                 <i class="large material-icons searchicon hide-icon">search</i>
                 <i class="large material-icons scheduleicon hide-icon">schedule</i>
                 <p class="daysleft">30 days left</p>
