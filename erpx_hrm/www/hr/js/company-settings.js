@@ -26,24 +26,51 @@ $(document).ready(function () {
 	});
 
 	//branch
-	list_branch.get_list();
+	list_branch.get_list();	
+	$("#btn-add-branch").click(function () {		
+		var modal = $("#" + $(this).attr("data-modal"));
+		Object.keys(list_branch.fields).forEach(function (element) {			
+			modal.find(`[data-fieldname="${element}"]`).val('');
+			if(modal.find(`[id="${element}"]`).prop("id") == 'time_zone'){
+				load_timezone_select($('#form_branch_add #time_zone'), '');
+			}else if(modal.find(`[id="${element}"]`).prop("id") == 'date_format'){
+				load_date_format_select($('#form_branch_add #date_format'), '');
+			}else if ($(`#form_branch_add [data-fieldname="${element}"]`).prop("type") == "checkbox"){				
+				modal.find(`[data-fieldname="${element}"]`).prop('checked', false);
+			}	
+		})
+		modal.modal('open');
+	});
     $("#save_branch_add").click(function () {
-        var branch_name = $("#branch_title_add").val();
-        $("#branch_title_add").val("");
-        $("#modal-add").modal("close");
-        list_branch.create_doc({ "designation_name": branch_name });
+        var args = {}
+		Object.keys(list_branch.fields).forEach(function (element) {			
+			if ($(`#form_branch_add [data-fieldname="${element}"]`).prop("type") == "checkbox"){				
+				if($(`#form_branch_add [data-fieldname="${element}"]`).is(":checked"))
+					args[element] = 1;
+				else
+					args[element] = 0;
+			}else{
+				args[element] = $(`#form_branch_add [data-fieldname="${element}"]`).val();   						
+			}			
+		});
+		list_branch.create_doc(args);
+		$("#modal-branch-add").modal("close");
     });
 
     $("#save_branch_edit").click(function () {
-        var old_name = $("#modal-rename-branch").find("#old_name").val();
-        var new_name = $("#modal-rename-branch").find("#new_name").val();
-        $("#modal-rename-branch").modal("close");
-        list_branch.rename_doc({
-            "doctype": list_branch.doctype,
-            "merge": 0,
-            "old": old_name,
-            "new": new_name
-        });
+        var args = {}
+		Object.keys(list_branch.fields).forEach(function (element) {						
+			if ($(`#form_branch_edit [data-fieldname="${element}"]`).prop("type") == "checkbox"){				
+				if($(`#form_branch_edit [data-fieldname="${element}"]`).is(":checked"))
+					args[element] = 1;
+				else
+					args[element] = 0;
+			}else{
+				args[element] = $(`#form_branch_edit [data-fieldname="${element}"]`).val();   
+			}
+		});
+        $("#modal-branch-edit").modal("close");
+        list_branch.update_doc($(`#form_branch_edit #branch`).val(), args);
 	});
 	
 	//Holiday
@@ -109,6 +136,7 @@ var options = {
 	parent: $('#list-branch'),
 	fields: {
 		'branch': 'Branch name',
+		'branch_type': 'Branch Type',
 		'address_line_1': 'Street Address',
 		'city': 'City',
 		'pincode': 'Post Code',
@@ -135,18 +163,71 @@ $.extend(list_branch, {
 			<h4 style="position: absolute;float: left; font-size: 16px;">
 				${item.name}
 				<p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;margin-left: 10px;">
-				HQ</p>
+				${item.country}</p>
 			</h4>
 			<br><br>
 			<span class="col xl10 l10 m6 s6" style="float: left; font-size: 14px; color: darkgrey;padding-left: 0px;">
-				72-3 Jalan PJU 5/22 Encorp Strand,<br> Pusat Perdagangan
-			</span>
-			<img style="margin-right: 4%; font-size: 20px;height: 36px !important;"
-				class="right waves-effect waves-light btn btn-edit modal-trigger" href="#modal-branch-edit" data-modal="modal-branch-edit" data-name="${item.name}" data-index="${i}" src="/icons/icon-65.png">
+				${item.address_line_1} ${item.city},<br> ${item.state} 
+			</span>			
+			<a href="#" class="right modal-trigger btn-delete" data-name="${item.name}">
+			<img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+			</a>			
+			<a style="margin-right: 10px;" href="#modal-branch-edit" class="right btn-edit modal-trigger" data-name="${item.name}" data-index="${i}" data-modal="modal-branch-edit">Edit</a>	
 			</div>
 		</div>
 		`;
-    }
+    },bind_event: function () {
+		var me = this;
+		me.parent.find(".btn-delete").click(function () {
+			var name = $(this).attr("data-name");
+			var row = $(this).closest(".list-item");
+			swal({
+				title: "Are you sure you want to delete?",
+				icon: 'warning',
+				buttons: {
+					cancel: true,
+					delete: 'Yes, Delete It'
+				}
+			}).then(function (result) {
+				if (result) {
+					frappe.ajax({
+						type: "DELETE",
+						url: `/api/resource/${me.doctype}/${name}`,
+						no_stringify: 1,
+						args:{name:name},
+						callback: function (r) {							
+							M.toast({
+								html: "Deleted Successfully!"
+							})
+							list_branch.get_list();							
+						}
+					});
+				}
+			})
+			return false;
+		});	
+		me.parent.find(".btn-edit").click(function () {		
+			var item = me.items[$(this).attr("data-index")];			
+			var name = $(this).attr("data-name");
+			var modal = $("#" + $(this).attr("data-modal"));									
+			Object.keys(me.fields).forEach(function (key) {				
+				modal.find(`[data-fieldname="${key}"]`).val(item[key]);
+				if(modal.find(`[id="${key}"]`).prop("id") == 'time_zone'){
+					load_timezone_select($('#form_branch_edit #time_zone'), item[key]);
+				}else if(modal.find(`[id="${key}"]`).prop("id") == 'date_format'){
+					load_date_format_select($('#form_branch_edit #date_format'), item[key]);
+				}
+				else if (modal.find(`[data-fieldname="${key}"]`).prop("tagName") == "SELECT"){
+					modal.find(`[data-fieldname="${key}"]`).formSelect();
+				}else if (modal.find(`[data-fieldname="${key}"]`).prop("type") == "checkbox"){
+					if(item[key] == 1)
+						modal.find(`[data-fieldname="${key}"]`).prop('checked', 'checked');
+					else
+						modal.find(`[data-fieldname="${key}"]`).prop('checked', false);
+				}
+			});
+		});	
+	}
 });
 
 //holiday
@@ -237,3 +318,39 @@ $.extend(list_holiday, {
 		});	
 	}
 });
+
+
+var load_timezone_select = function (timezone_select_id, selected) {
+    var all = "------";
+    var arr = [{key: all, value: all}];
+
+    frappe.call({
+        method: "frappe.core.doctype.user.user.get_timezones",
+        args: {            
+        },
+        callback: function (r) {    
+			if (!r.exc) {
+                r.message.timezones.forEach((_key, _val) => arr.push({key:_key, value: _key}));
+            }        
+            xhrm.utils.optionArray(timezone_select_id, arr, selected);
+            timezone_select_id.formSelect();
+        }
+    });
+}
+
+var load_date_format_select = function (dateformat_select_id, selected) {
+    var all = "------";
+    var arr = [{key: all, value: all}];
+    var dateFormatArr = [
+		"yyyy-mm-dd",
+		"dd-mm-yyyy",
+		"dd/mm/yyyy",
+		"dd.mm.yyyy",
+		"mm/dd/yyyy",
+		"mm-dd-yyyy"
+	];
+	dateFormatArr.forEach((_key, _val) => arr.push({key:_key, value: _key}));			
+	xhrm.utils.optionArray(dateformat_select_id, arr, selected);
+	dateformat_select_id.formSelect();
+        
+}
