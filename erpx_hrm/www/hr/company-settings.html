@@ -115,6 +115,7 @@ display: block;
 .seven-cols{
   padding: 0 !important;
 }
+.dropdown-content.select-dropdown{ max-height:250px; overflow:auto; }
 </style>
 <div id="main">
   <div class="row">
@@ -288,7 +289,7 @@ display: block;
 </div>
 
 <div id="modal_delete" class="modal modal-fixed-footer">
-  <div class="modal-content" style="padding: 0px !important;">
+  <div class="modal-content" style="padding: 0px !important; overflow:visible">
     <h5 style="background-color: #dcdcdc;text-align: center; font-weight: 600; border-radius: 0px 30px 30px 0px;padding: 10px;">Delete Department</h5>
 
     <p>Are you sure you want to delete the following department?</p>
@@ -301,7 +302,7 @@ display: block;
 </div>
 
 <div id="modal-add-holiday" class="modal modal-fixed-footer">
-  <div class="modal-content" style="padding: 0px !important;">
+  <div class="modal-content" style="padding: 0px !important; overflow:visible">
     <p class="edit-title">Create New Holiday</p>
 
     <form class="col s12 modal-holi" id="form-holiday-add">
@@ -336,7 +337,7 @@ display: block;
 </div>
 
 <div id="modal-branch-add" class="modal modal-fixed-footer">
-  <div class="modal-content" style="padding: 0px !important;">
+  <div class="modal-content" style="padding: 0px !important; overflow:visible">
     <p class="edit-title" >Add Branch</p>
     <form id="form_branch_add" class="col s12" style="padding: 24px;">
       <div class="row">
@@ -455,7 +456,7 @@ display: block;
  </div>
 </div>
 
-<div id="modal-branch-edit" class="modal modal-fixed-footer">
+<div id="modal-branch-edit" class="modal modal-fixed-footer" style="overflow-y:visible !important;">
   <div class="modal-content" style="padding: 0px !important;">
     <p class="edit-title" >Edit Branch</p>
     <form id="form_branch_edit" class="col s12" style="padding: 24px;">
@@ -504,7 +505,6 @@ display: block;
 
         <div class="input-field col s12 " style="margin-top: 0px;">
           <p>Workday</p>
-          <form>
             <div style="border: 1px solid #c1c1c1; margin: 0;" class=" row button-group">
               <div class="col seven-cols">
                 <input id="checkbox1" type="checkbox" data-fieldname="sunday">
@@ -541,7 +541,6 @@ display: block;
                 </label>
               </div>
             </div>
-          </form>
         </div>
         <div class="input-field col s12" style="margin-top: 0px;">
           <p>Timezone</p>          
@@ -566,6 +565,7 @@ display: block;
             </select>
           </div>
         </div>
+        <div class="clear"></div>
       </div>
     </form>
   </div>
