@@ -10,6 +10,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/assets/erpx_hrm/vendors/transfer-list/icon_font/css/icon_font.css" />
 <link rel="stylesheet" type="text/css" href="/assets/erpx_hrm/vendors/transfer-list/css/jquery.transfer.css?v=0.0.3" />
 <style type="text/css">
 .select-wrapper input.select-dropdown{
@@ -90,16 +91,15 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
           </span>
           <br>          
           <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">{{ i_role.total_user}} people</span></p>
-          <p style="margin-left: 6%;font-size: 14px;">{{ i_role.name }} have limited access.
+          <p style="margin-left: 6%;font-size: 14px;height: 80px;">{{ i_role.name }} have limited access.
             <br>You can change their default
           permissions.</p>
 
           <div style="height: 30px"></div>
 
-          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>
-
+          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>          
           <a href="#modal-epml-ppl" class="modal-trigger" style="text-align: center; display: block; padding:5%; 
-          color: #00aeef;">Edit People</a>
+          color: #00aeef;" onclick="openEditPeople('{{i_role.name}}')">Edit People</a>
         </div>
       </div>
       {% endfor %}
@@ -521,32 +521,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 <div id="modal-epml-ppl" class="edit-ppl modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important;">
-    <div id="transfer1" class="transfer-demo"></div>
-
-
-
-   <p class="edit-title">Edit People</p>
+  <p class="edit-title">Edit People</p>
    <div style="padding-left: 1%; padding-right: 1%;" class="row margin infodetails">
-    <div style=" margin-top: 0%" class="input-field col s12 m5">      
-      <p style="margin-top: 2%" id="pRoleName">Admin</p>
-      <div style="overflow-y: scroll;   border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">       
-     </div>
-   </div>
-  <img class="edit-icon" src="/icons/icon-63.png">
-   <div style="float: right;  margin-top: 0%" class="input-field col s12 m5">
-    <p style=" margin-top: 2%">Users</p>
-    <div style=" overflow-y: scroll; border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
-      {% for i_all_user in all_user: %}
-      <p style="font-size: small;">{{ i_all_user }}</p>
-      {% endfor %}      
-   </div>
-
- </div>
-</div>
-
+    <p>&nbsp;</p>
+    <div id="transfer1" class="transfer-demo"></div>
+  </div>
 </div>
 <div class="modal-footer">
- <a href="#" class="right waves-effect waves-light btn">Save</a>
+ <a href="#" onclick="saveEditPeople()" class="right waves-effect waves-light btn">Save</a>
  <a href="#" class="right blue-text btn-flat"
  onclick="$('#modal-epml-ppl').modal('close')">Close</a>
 </div>
@@ -638,6 +620,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
   var user = "{{ user }}";
+  var all_user = {{all_user}};
+  var role_list = {{role_list}};
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
@@ -649,47 +633,5 @@ type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
 <script src="/assets/erpx_hrm/vendors/transfer-list/js/jquery.transfer.js?v=0.0.6"></script>
-<script type="text/javascript">
-  var dataArray1 = [
-      {
-          "city": "Beijing",
-          "value": 132
-      },
-      {
-          "city": "Shanghai",
-          "value": 422
-      },
-      {
-          "city": "Chengdu",
-          "value": 232
-      },
-      {
-          "city": "Wuhan",
-          "value": 765
-      },
-      {
-          "city": "Tianjin",
-          "value": 876
-      },
-      {
-          "city": "Guangzhou",
-          "value": 453
-      },
-      {
-          "city": "Hongkong",
-          "value": 125
-      }
-  ];
-
-  var settings1 = {
-      "dataArray": dataArray1,
-      "itemName": "city",
-      "valueName": "value",
-      "callable": function (items) {
-          console.dir(items)
-      }
-  };
-
-  $("#transfer1").transfer(settings1);
-</script>
+<script defer src="/hr/js/grp_settings.js" type="text/javascript"></script>
 {% endblock %}

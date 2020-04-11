@@ -15,7 +15,7 @@ def get_context(context):
     for i_role in role_arr:                        
         user_list = frappe.db.sql_list("""
 							select u.name from `tabUser` u
-                            left join `tabHas Role` r ON  r.parent = u.name
+                            left join `tabHas Role` r ON  r.parent = u.name and u.name not in ('Administrator', 'Guest')
                             where r.role = %(role_name)s""", {"role_name": i_role})                  
         role_list.append({
             "name": i_role,
@@ -26,7 +26,6 @@ def get_context(context):
 
     #User list
     context.all_user = frappe.db.sql_list("""
-							select u.name from `tabUser` u
-                            left join `tabHas Role` r ON  r.parent = u.name
+							select name from `tabUser` where name not in ('Administrator', 'Guest')                            
                             """)     
     return context
