@@ -2,11 +2,12 @@ import frappe
 import datetime
 from frappe.utils import cstr
 import frappe.handler
+import ast
 
 @frappe.whitelist()
 def upload_user_image():
 
-	doctype = "User";
+	doctype = "User"
 	docname = frappe.session.user
 
 	frappe.form_dict.from_form = 1
@@ -24,3 +25,21 @@ def upload_user_image():
 		frappe.db.set_value(doctype, docname, "user_image", file.file_url)
 
 	return file
+
+@frappe.whitelist()
+def add_role_from_array(arr_user, arr_all_user, role_name):
+	#check arr_user			
+	if arr_user != "":		
+		objUser = ast.literal_eval(arr_user)		
+		for _user in objUser:
+			user = frappe.get_doc("User", _user) 			
+			if not frappe.db.exists("Has Role", {"parent": user.name, "role": role_name}):						
+				user.add_roles(role_name)
+	
+	#check for arr_all_user
+	if arr_all_user != "":		
+		objAllUser = ast.literal_eval(arr_all_user)
+		for _user1 in objAllUser:
+			user1 = frappe.get_doc("User", _user1)  			
+			if frappe.db.exists("Has Role", {"parent": user1.name, "role": role_name}):				
+				user1.remove_roles(role_name)

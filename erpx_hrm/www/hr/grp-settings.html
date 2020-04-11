@@ -10,12 +10,13 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/app-calendar.css">
+<link rel="stylesheet" type="text/css" href="/assets/erpx_hrm/vendors/transfer-list/icon_font/css/icon_font.css" />
+<link rel="stylesheet" type="text/css" href="/assets/erpx_hrm/vendors/transfer-list/css/jquery.transfer.css?v=0.0.3" />
 <style type="text/css">
 .select-wrapper input.select-dropdown{
   position: unset !important;
 
 }
-
 .select-wrapper{
   background-color: white !important;
 }
@@ -27,9 +28,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
       }
       
     }
-
-
-
+.transfer-demo {
+    width: 640px;
+    height: 400px;
+    margin: 0 auto;
+}
 </style>
 {% endblock %}
 
@@ -66,6 +69,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
             <a href="/hr/grp-settings" class="breadcrumb active">Group</a>
           </div>
         </div>
+        <!--
         <div class="col xl20 l20 m18 s12">
           <div id="card-stats" class="card" style="border-radius: 10px!important;">
             <div class="card-content">
@@ -73,66 +77,38 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
              <div class="card-title" style="margin-top: -5px;;text-align: left;margin-left: 35px;">Group</div>
              <div style="padding-left: 1rem;">
              <a href="#modal-add-group" style="margin-top: -37px;" class="modal-trigger waves-effect waves-light btn right btn-new">Add New Group</a>
-             </div>
-             <!--<p>Balance left</p>-->
+             </div>             
              <div class="row">
-              <!--individual-card-->
-
             </div>
           </div>
         </div>
-      </div>
-      
+      </div>-->
+      {% for i_role in role_list: %}      
       <div class="col xl3 l4 m6 s12 profile-card-main">
         <div class="card profile-card">
-
           <span class="card-title">
-            <p style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">EMPLOYEE</p>
+            <p style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">{{ i_role.name }}</p>
           </span>
-          <br>
-          <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">42 people</span></p>
-
-          <p style="margin-left: 6%;font-size: 14px;">Employees have limited access.
+          <br>          
+          <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">{{ i_role.total_user}} people</span></p>
+          <p style="margin-left: 6%;font-size: 14px;height: 80px;">{{ i_role.name }} have limited access.
             <br>You can change their default
           permissions.</p>
 
           <div style="height: 30px"></div>
 
-          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>
-
+          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>          
           <a href="#modal-epml-ppl" class="modal-trigger" style="text-align: center; display: block; padding:5%; 
-          color: #00aeef;">Edit People</a>
+          color: #00aeef;" onclick="openEditPeople('{{i_role.name}}')">Edit People</a>
         </div>
       </div>
-
-      <div class="col xl3 l4 m6 s12 profile-card-main">
-        <div class="card profile-card">
-
-          <span class="card-title">
-            <p style="font-size: 77%; background-color: #dcdcdc;width: 65%;text-align: center; border-radius: 0px 30px 30px 0px;padding: 8px;margin-top: 4%;">ADMIN</p>
-          </span>
-          <br>
-          <p style="margin-left: 6%;font-size: 14px;">includes : <span style="color: #00aeef">1 people</span></p>
-
-          <p style="margin-left: 6%;font-size: 14px;">Employees have limited access.
-            <br>You can change their default
-          permissions.</p>
-
-          <div style="height: 30px"></div>
-
-          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-admin-per">Edit Permission</a>
-
-          <a href="#modal-admin-ppl" class="modal-trigger"  style="text-align: center; display: block; padding:5%; color: #00aeef; ">Edit People</a>
-        </div>
-      </div>
-
-      <!-- Edit admin permission -->
+      {% endfor %}
 
       <div style="width: 60%;" id="modal-admin-per" class="edit-per modal modal-fixed-footer">
         <div class="modal-content" style="padding: 0px !important;">
           <p class="edit-title" style="text-align: left;padding-left: 9%;margin-left: 0px;">Edit Admin Permission</p>
           <div style="margin-left: 9%">
-            <span style="color: gray; text-align: left;">Admin group must maintain full access over company account
+            <span style="color: rgb(119, 112, 112); text-align: left;">Admin group must maintain full access over company account
             </span>
             <p class="card-title" style="font-size: 128%; text-align: left;">Profile</p>
           </div>
@@ -545,50 +521,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 <div id="modal-epml-ppl" class="edit-ppl modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important;">
-   <p class="edit-title">Edit Employee People</p>
-
+  <p class="edit-title">Edit People</p>
    <div style="padding-left: 1%; padding-right: 1%;" class="row margin infodetails">
-    <div style=" margin-top: 0%" class="input-field col s12 m5">
-      <p style="text-align: left;">Selectable</p>
-      <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
-      <p style="margin-top: 2%">Admin</p>
-      <div style="overflow-y: scroll;   border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
-
-
-       <p style="font-size: small;width: -webkit-fill-available;">Aznul Abdullah</p>
-     </div>
-
-   </div>
-
-<img class="edit-icon" src="/icons/icon-63.png">
-
-
-   <div style="float: right;  margin-top: 0%" class="input-field col s12 m5">
-    <p style="text-align: left;">Selection</p>
-    <input type="text" name="selectable" placeholder=" Search by name" style="width: -webkit-fill-available;">
-
-    <p style=" margin-top: 2%">Employee</p>
-    <div style=" overflow-y: scroll; border:1px #c1c1c1 solid;  width: 100%; max-height:300px; padding-left: 5%;">
-
-
-     <p style="font-size: small;">Leanne Ko</p>
-     <p style="font-size: small;">Azizi Nordin</p>
-     <p style="font-size: small;">Mina Mona</p>
-     <p style="font-size: small;">Jason Hu</p>
-     <p style="font-size: small;">Kim Lee</p>
-     <p style="font-size: small;">Yo Ling</p>
-     <p style="font-size: small;">Odin Nio</p>
-     <p style="font-size: small;">Mastun Nizam</p>
-     <p style="font-size: small;">Kina Kuno</p>
-     <p style="font-size: small;">Junita Sito</p>
-   </div>
-
- </div>
-</div>
-
+    <p>&nbsp;</p>
+    <div id="transfer1" class="transfer-demo"></div>
+  </div>
 </div>
 <div class="modal-footer">
- <a href="#" class="right waves-effect waves-light btn">Save</a>
+ <a href="#" onclick="saveEditPeople()" class="right waves-effect waves-light btn">Save</a>
  <a href="#" class="right blue-text btn-flat"
  onclick="$('#modal-epml-ppl').modal('close')">Close</a>
 </div>
@@ -677,15 +617,21 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 {% block scripts %}
 
-
+<script>
+  frappe.csrf_token = "{{ csrf_token }}";
+  var user = "{{ user }}";
+  var all_user = {{all_user}};
+  var role_list = {{role_list}};
+</script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
 <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
 <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
+<script src="/assets/erpx_hrm/vendors/transfer-list/js/jquery.transfer.js?v=0.0.6"></script>
+<script defer src="/hr/js/grp_settings.js" type="text/javascript"></script>
 {% endblock %}
