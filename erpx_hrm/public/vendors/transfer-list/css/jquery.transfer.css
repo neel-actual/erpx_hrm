@@ -1,3 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Microsoft YaHei", "SimSun";
+    border: none;
+    font-size: 14px;
+    color: #333;
+    background: #f5f6fa;
+    padding: 15px 0;
+    line-height: 22px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .selected-hidden {
     display: none;
 }
