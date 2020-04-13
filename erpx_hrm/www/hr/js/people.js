@@ -1,32 +1,41 @@
-$(function () {
-    $('#create_emp').on('submit', function(){
-        event.preventDefault();
-        var form = $(this);
+$("#btn-save-employee").click(function () {
+    var args = {};
+    var fields = [
+        "naming_series",
+        "alternate_staff_id",
+        "first_name",
+        "last_name",
+        "preferred_name",
+        "designation",
+        "personal_email",
+        "cell_number",
+        "reports_to",
+        "department",
+        "employment_type",
+        "gender",
+        "branch",
+        "date_of_joining",
+        "date_of_birth"
+    ]
+    $.each(fields, function (key, element) {			        
+        args[element] = $(`#divBasicInfo [data-fieldname="${element}"]`).val();   						
+    });    
 
-        var obj = {};
-        var fields = form.serializeArray();
-        jQuery.each( fields, function( i, field ) {
-            obj[field.name] = field.value;
-        });
-
-        $.ajax({
-            url: '/api/resource/Employee',
-            data: JSON.stringify(obj),
-            type: form.attr("method"),
-            dataType: 'json',
-            headers: {'X-Frappe-CSRF-Token':frappe.csrf_token},
-            success: function (data) {
-                if (data.form_is_valid) {
-                    console.log(data);
-                    alert("successfully create employee");
-                    window.location.reload();
-                }
-                else {
-                    console.log(data);
-                    alert("Some Data Missing...");
-                }
+    var url = '/api/resource/Employee';    
+    var type = 'POST';
+    var old_name = $('#divBasicInfo #old_name').val();
+    if(old_name != ''){
+        url += '/' + old_name;
+        type = 'PUT';
+    }
+    frappe.ajax({
+        type: type,
+        url: url,
+        args: args,
+        callback: function (r) {
+            if (!r.exc_type) {                
+                //location.reload();
             }
-        });
-        return false;
+        }
     });
 });
