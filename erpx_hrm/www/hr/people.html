@@ -399,7 +399,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
               </div>
             <br>
             <!-- All About Me  -->
-              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+              <div class="card" id="divAboutMe" style="border-radius: 10px;overflow-x: auto !important;">
                 <div class="card-content">
                  <div class="row" style="margin: auto;">
                   <i class="material-icons-outlined" style="display: inline;">person</i>
@@ -408,23 +408,18 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 
                   <div class="col s12 m12 16 x34" style="margin-top: 10px;">
-                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
+                    <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-about-me" class="btn right waves-effect waves-light">Save</button>
                   </div>
 
                   <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Bio</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="bio" style="width: -webkit-fill-available;" value=" ">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                    <p style="margin-bottom: 10px;">Bio</p>                    
+                    <input data-fieldname="bio" type="text" name="bio" style="width: -webkit-fill-available;" value="{{employee.bio or ''}}" />
                   </div>
 
                   <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Favorites</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="favorites" style="width: -webkit-fill-available;" value=" ">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                    <p style="margin-bottom: 10px;">Favorites</p>                    
+                    <input data-fieldname="favorites" type="text" name="favorites" style="width: -webkit-fill-available;" value="{{employee.favorites or ''}}" />                    
                   </div>
-
                 </div>
                 </div>
               </div>
