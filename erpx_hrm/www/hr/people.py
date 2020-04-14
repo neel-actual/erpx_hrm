@@ -20,5 +20,7 @@ def get_context(context):
         employee = frappe.new_doc("Employee")    
     context.employee = employee or None
     context.series = ["BAYO-BOD-.###", "BAYO-DIR-.###", "BAYO-CON-.###", "BAYO-.YY.MM.-.###"]    
+    context.maritalStatus = ["Single", "Married", "Divorced", "Widowed"]
+    context.spouseWorking = ["Working", "Not Working"]
 
     return context

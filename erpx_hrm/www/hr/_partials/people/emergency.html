@@ -1,0 +1,28 @@
+<div id="divEmergency" class="card" style="border-radius: 10px;overflow-x: auto !important;">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+      <i class="material-icons-outlined" style="display: inline;">person</i>
+      <h4 class="card-title directorytitle" style="display: inline;">My Emergency Details </h4>
+      {% if employee.first_name: %}
+      <p style="padding-left: 36px;">Emergency contact’s of {{employee.first_name}}.</p>
+      {% endif %}
+
+      <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+        <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-emergency" class="btn right waves-effect waves-light">Save</button>
+      </div>
+
+      <div class="input-field col s12 m12">					 
+        <p style="margin-bottom: 10px;">Name</p>                    
+        <input data-fieldname="person_to_be_contacted" type="text" name="name" style="width: -webkit-fill-available;" value="{{employee.person_to_be_contacted or ''}}" />
+      </div>
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Relationship</p>                    
+        <input data-fieldname="relation" type="text" name="relationship" style="width: -webkit-fill-available;" value="{{employee.relation or ''}}" />                    
+      </div>
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Phone No.</p>                    
+        <input data-fieldname="emergency_phone_number" type="text" name="phone_no" style="width: -webkit-fill-available;" value="{{employee.emergency_phone_number or ''}}" />                    
+      </div>                      
+    </div>
+  </div>
+</div>
