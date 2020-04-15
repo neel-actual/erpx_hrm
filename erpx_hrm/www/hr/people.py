@@ -22,5 +22,6 @@ def get_context(context):
     context.series = ["BAYO-BOD-.###", "BAYO-DIR-.###", "BAYO-CON-.###", "BAYO-.YY.MM.-.###"]    
     context.maritalStatus = ["Single", "Married", "Divorced", "Widowed"]
     context.spouseWorking = ["Working", "Not Working"]
+    context.qualification_level = ["Graduate", "Post Graduate", "Under Graduate"]
 
     return context
