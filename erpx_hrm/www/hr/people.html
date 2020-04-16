@@ -172,109 +172,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <a href="/HR Hub/people" class="breadcrumb active">Add Employee</a>
               </div>
 
-              <!-- People Profile  -->
-				  <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
-					<div class="card-content">
-					 <div class="row" style="margin: auto;">
-					  <i class="material-icons-outlined" style="display: inline;">person</i>
-            <h4 class="card-title directorytitle" style="display: inline;">Profile Overview</h4>
-            {% if employee.first_name: %}                  
-            <p style="padding-left: 36px;">Here’s quick profile of {{employee.first_name}}.</p>                              
-            {% endif %}                                    					  
-
-					</div>
-					<br>
-					<div class="col s12 m12 l12 xl4 force-center">
-					  <p><img src="/images/profile_icon.png" width="200" height="200"/></p>
-					</div>
-
-					<div class="col s6 m6 l6 xl4" >
-            {% if employee.first_name: %}                  
-            <p style="margin-top: 10px !important;">{{employee.first_name}}</p>                                       
-            {% endif %}                                    					  					  
-					  <p style="margin-top: 10px !important;">
-						<img src="/icons/people.png" width="30" height="30" style="margin-right: 15px;" />
-						<span style="display: inline;position: absolute;margin-top: 5px;">Marketing Manager</p>
-						</p>
-						<p style="margin-top: 10px !important;">
-						  <img src="/icons/email.png" width="30" height="30" style="margin-right: 15px;" />
-						  <span style="display: inline;position: absolute;margin-top: 5px;">leanneko@bayo.my</span>
-						</p>
-						<p style="margin-top: 10px !important;">
-						  <img src="/icons/mobile.png" width="30" height="30" style="margin-right: 15px;" />
-						  <span style="display: inline;position: absolute;margin-top: 5px;">+60 11 2345 6789</span>
-						</p>
-					  </div>
-
-					  <div class="col s6 m6 l6 xl4" style="margin-top: 10px;">
-						<a href="#" style="float: right;color: #00aeef;"><b>Send Email</b></a>
-					  </div>
-
-					  <br>
-					  <div style="width: 100%; display: inline-block;"><hr /></div>
-
-					  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
-						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-						  <div class="row">
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>DEPARTMENT</b></p>
-							</div>
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <p style="color: #00aeef;"><b>Marketing</b></p>
-							  <p>Member</p>
-							</div>
-						  </div>
-						</div>
-
-						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-						  <div class="row">
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>JOIN DATE</b></p>
-							</div>
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <p>20 Mar 2016</p>
-							  <p>3 years, 4 months, 13 days</p>
-							</div>
-						  </div>
-
-
-						</div>
-
-						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-						  <div class="row">
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>Reports To</b></p>
-							</div>
-							<div class="col s6 m6 l6 xl12 full-width">
-							  <div class="row">
-								<div class="col s3 m3 l3 xl3 padd-zero">
-								  <img width="50" height="50" src="/images/org-chart-profile.png" style="vertical-align: middle; float: left;">
-								</div>
-								<div class="col s9 m9 l9 xl9">
-								  <p style="margin-left: 15px;display: inline-block;vertical-align: middle; float: left;">
-								  <a href="#" class="dropdown-trigger" style="margin-top: 5px;display: block;color: #00aeef;" data-target="dropdown1"><b>Mina Mona</b></a>
-								  <span>Department Head</span>
-								</div>
-							  </div>
-
-
-						  </p>
-							</div>
-						  </div>
-
-						  <ul id="dropdown1" class="dropdown-content" >
-							<li>
-							  <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
-
-
-							</li>
-							<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
-							<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
-						  </ul>
-						</div>
-					  </div>
-					</div>
-				  </div>
+      <!-- People Profile  -->
+			{% include "www/hr/_partials/people/profile.html" %}   	  
 			<br>
       <!-- Basic Information   -->
       {% include "www/hr/_partials/people/basic-info.html" %}              
@@ -295,195 +194,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
         {% include "www/hr/_partials/people/certificate.html" %} 
         <br>
         <!-- My Family Information   -->
-        {% include "www/hr/_partials/people/family.html" %}           
-              
-
+        {% include "www/hr/_partials/people/family.html" %}
 			<br>
 			<!-- Compensation & Bank Information  -->
-
-              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
-                <div class="card-content">
-                 <div class="row" style="margin: auto;">
-                  <i class="material-icons-outlined" style="display: inline;">person</i>
-                  <h4 class="card-title directorytitle" style="display: inline;">Compensation & Bank Information </h4>
-                  {% if employee.first_name: %}                                    
-                  <p style="padding-left: 36px;">Personal details of {{employee.first_name}}.</p>
-                  {% endif %}                                    
-
-                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
-                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
-                  </div>
-
-                  <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Salary Basis</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="no_of_children" style="padding-left: 10px;width: -webkit-fill-available;">
-                      <option value="0 " selected>Monthly</option>
-                    </select>
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-                  <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Salary Amount</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="label" disabled value="MYR" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
-                    <input type="text" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Type your salary amount">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                  <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Bank Name</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="EIS_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
-                      <option value="" disabled selected>Maybank</option>
-
-                    </select>
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-                  <div class="input-field col s12 m12">
-                    <p style="margin-bottom: 10px;">Bank Account No.</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <select name="EIS_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
-                      <option value="" disabled selected>1234567890</option>
-
-                    </select>
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                  <div class="input-field col s12 m6">
-                    <p style="margin-bottom: 10px;">EPF No</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="EPF_no" style="width: -webkit-fill-available;" value=" ">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                  <div class="input-field col s12 m6">
-                    <p style="margin-bottom: 10px;">Tax No</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="tax_no" style="width: -webkit-fill-available;" value=" ">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                  <div class="input-field col s12 m6">
-                    <p style="margin-bottom: 10px;">Zakat No</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <input type="text" name="zakat_no" style="width: -webkit-fill-available;" value=" ">
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-                </div>
-                <br>
-
-
-                </div>
-              </div>
-                  <br>
-			<!-- Compensation History -->
-
-              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
-                <div class="card-content">
-                 <div class="row" style="margin: auto;">
-                  <i class="material-icons-outlined" style="display: inline;">person</i>
-                  <h4 class="card-title directorytitle" style="display: inline;">Compensation History </h4>
-
-                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
-                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
-                  </div>
-
-					<div class="col s12" id="table-scroll">
-						<table class="table table-striped dataTable display" style="font-size: 14px;" id="table_id">
-							<thead>
-								<tr style="border-bottom: 2px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;">
-									<th style="border-right:none!important;">DATE</th>
-									<th style="border-right:none!important;">AMOUNT</th>
-									<th style="border-right:none!important;">TYPE</th>
-									<th style="border-right:none!important;">REASON.</th>
-							</thead>
-
-						</table>
-					</div>
-
-				  <div class="input-field col s9 m12">
-                    <p style="text-align: center;">No information added</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                </div>
-                <br>
-
-                  <br>
-
-                  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
-                    <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-
-                      <ul id="dropdown1" class="dropdown-content" >
-                        <li>
-                          <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
-
-
-                        </li>
-                        <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
-                        <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+      {% include "www/hr/_partials/people/compensate.html" %} 
+      <br>
+			<!-- Compensation History -->             
+      {% include "www/hr/_partials/people/compensate-history.html" %}         
 			<br>
 			<!-- Disciplinary Action -->
-
-              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
-                <div class="card-content">
-                 <div class="row" style="margin: auto;">
-                  <i class="material-icons-outlined" style="display: inline;">person</i>
-                  <h4 class="card-title directorytitle" style="display: inline;">Disciplinary Action </h4>
-
-                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
-                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
-                  </div>
-
- 					<div class="col s12" id="table-scroll">
-						<table class="table table-striped dataTable display" style="font-size: 14px;" id="table_id">
-							<thead>
-								<tr style="border-bottom: 2px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;">
-									<th style="border-right:none!important;">DATE</th>
-									<th style="border-right:none!important;">TYPE</th>
-									<th style="border-right:none!important;">REASON.</th>
-							</thead>
-
-						</table>
-					</div>
-
-				  <div class="input-field col s9 m12">
-                    <p style="text-align: center;">No information added</p>
-                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
-                  </div>
-
-                </div>
-                <br>
-
-                  <br>
-
-                  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
-                    <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
-
-                      <ul id="dropdown1" class="dropdown-content" >
-                        <li>
-                          <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
-
-
-                        </li>
-                        <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
-                        <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
+      {% include "www/hr/_partials/people/disciplinary.html" %} 
 
 
             <div class="content table-section">
@@ -563,6 +283,9 @@ type="text/javascript"></script>
 <script defer src="/hr/_partials/people/qualification.js" type="text/javascript"></script>
 <script defer src="/hr/_partials/people/certificate.js" type="text/javascript"></script>
 <script defer src="/hr/_partials/people/family.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/compensate.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/compensate_history.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/disciplinary.js" type="text/javascript"></script>
 <script type="text/javascript">
   function list(){
     var list = document.getElementById('list');
