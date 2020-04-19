@@ -27,5 +27,12 @@ def get_context(context):
     #User list
     context.all_user = frappe.db.sql_list("""
 							select name from `tabUser` where name not in ('Administrator', 'Guest')                            
-                            """)     
+                            """)  
+
+    #Permission list
+    context.permission_list = ["No Permission", "All Employees view only", "All Employees view and edit", "My view only", "My view and edit"]
+    context.permission_section_list = [
+        "Basic Information", "All About Me", "Certificate and License", "Compensation and Bank Information", "Compensation History",
+        "Disciplinary Action", "Emergency Contact", "Family Information", "Personal Information", "Qualifications"
+    ]
     return context

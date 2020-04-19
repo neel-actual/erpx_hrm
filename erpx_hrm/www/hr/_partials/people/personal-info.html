@@ -1,0 +1,68 @@
+<div id="divPersonalInfo" class="card" style="border-radius: 10px;overflow-x: auto !important;">
+<div class="card-content">
+    <div class="row" style="margin: auto;">
+    <i class="material-icons-outlined" style="display: inline;">person</i>
+    <h4 class="card-title directorytitle" style="display: inline;">Personal Information </h4>
+    {% if employee.first_name: %}                  
+    <p style="padding-left: 36px;">Personal details of {{employee.first_name}}.</p>
+    {% endif %}                                              
+
+    <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+    <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-personal-info" class="btn right waves-effect waves-light">Save</button>
+    </div>
+
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">NRIC No.</p>                    
+    <input data-fieldname="nric_no" type="text" name="nric_no" style="width: -webkit-fill-available;" value="{{employee.nric_no or ''}}" />                    
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">Passport No.</p>                    
+    <input data-fieldname="passport_number" type="text" name="passport_no" style="width: -webkit-fill-available;" value="{{employee.passport_number or ''}}" />                    
+    </div>                  
+    <div class="input-field col s12 m12">
+    <p style="margin-bottom: 10px;">Address</p>                    
+    <input data-fieldname="current_address" type="text" name="address" style="width: -webkit-fill-available;" value="{{employee.current_address or ''}}" />
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">Postal Code</p>                    
+    <input data-fieldname="postal_code" type="text" name="postal_code" style="width: -webkit-fill-available;" value="{{employee.postal_code or ''}}" />                    
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">State</p>                    
+    <input data-fieldname="state" type="text" name="postal_code" style="width: -webkit-fill-available;" value="{{employee.state or ''}}" />                    
+    </div>
+
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">Nationality</p>
+    <input data-fieldname="nationality" type="text" name="postal_code" style="width: -webkit-fill-available;" value="{{employee.nationality or ''}}" />                    
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">Religion</p>
+    <input data-fieldname="religion" type="text" name="postal_code" style="width: -webkit-fill-available;" value="{{employee.religion or ''}}" />                    
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">Marital Status</p>                                        
+    <select data-fieldname="marital_status" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
+        {% for i_marital_status in maritalStatus %}
+            <option value="{{i_marital_status}}" {{"selected='selected'" if i_marital_status == employee.marital_status else false}}>{{i_marital_status}}</option>
+        {% endfor %}
+    </select>
+    </div>
+    <div class="input-field col s12 m6">
+    <p style="margin-bottom: 10px;">No. of Children</p>                    
+    <input data-fieldname="number_of_children" type="text" name="postal_code" style="width: -webkit-fill-available;" value="{{employee.number_of_children or ''}}" />                    
+    </div>
+    <div class="input-field col s12 m12">
+    <p style="margin-bottom: 10px;">Employment of Spouse</p>
+    <select data-fieldname="spouse_working" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
+        {% for i_spouse_working in spouseWorking %}
+            <option value="{{i_spouse_working}}" {{"selected='selected'" if i_spouse_working == employee.spouse_working else false}}>{{i_spouse_working}}</option>
+        {% endfor %}
+    </select>
+    </div>
+
+</div>
+<br>
+
+</div>
+</div>

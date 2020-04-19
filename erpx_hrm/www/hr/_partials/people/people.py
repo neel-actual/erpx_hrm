@@ -1,7 +1,6 @@
 import frappe
 import json
 from frappe import _
-import datetime
 
 def get_context(context):    
     if frappe.session.user == 'Guest':
@@ -30,5 +29,5 @@ def get_context(context):
     if employee.reports_to:
         reportToDepartment = frappe.get_value("Employee", employee.reports_to, "department") or None
     context.reportToDepartment = reportToDepartment
-    
+
     return context

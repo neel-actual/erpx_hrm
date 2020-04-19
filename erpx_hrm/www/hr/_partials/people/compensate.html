@@ -1,0 +1,54 @@
+<div class="card" id="divCompensate" style="border-radius: 10px;overflow-x: auto !important;">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+      <i class="material-icons-outlined" style="display: inline;">person</i>
+      <h4 class="card-title directorytitle" style="display: inline;">Compensation & Bank Information </h4>
+      {% if employee.first_name: %}                                    
+      <p style="padding-left: 36px;">Personal details of {{employee.first_name}}.</p>
+      {% endif %}                 
+
+
+      <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+        <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-compensate" class="btn right waves-effect waves-light">Save</button>
+      </div>
+
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Salary Basis</p>        
+        <select data-fieldname="salary_basis" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
+          {% for i_salaryBasic in salaryBasic %}
+              <option value="{{i_salaryBasic}}" {{"selected='selected'" if i_salaryBasic == employee.salary_basis else false}}>{{i_salaryBasic}}</option>
+          {% endfor %}
+      </select>       
+      </div>
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Salary Amount</p>        
+        <input type="label" disabled value="MYR" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+        <input type="text" data-fieldname="salary_amount" value="{{employee.salary_amount or ''}}" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Type your salary amount" />        
+      </div>
+
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Bank Name</p>        
+        <input type="text" data-fieldname="bank_name" value="{{employee.bank_name or ''}}" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" />        
+      </div>
+      <div class="input-field col s12 m12">
+        <p style="margin-bottom: 10px;">Bank Account No.</p>        
+        <input type="text" data-fieldname="bank_ac_no" value="{{employee.bank_ac_no or ''}}" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" />        
+      </div>
+
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">EPF No</p>        
+        <input data-fieldname="epf_no" type="text" name="EPF_no" style="width: -webkit-fill-available;" value="{{employee.epf_no or ''}}" />        
+      </div>
+
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Tax No</p>        
+        <input data-fieldname="tax_no" type="text" name="tax_no" style="width: -webkit-fill-available;" value="{{employee.tax_no or ''}}" />        
+      </div>
+
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Zakat No</p>        
+        <input data-fieldname="zakat_no" type="text" name="zakat_no" style="width: -webkit-fill-available;" value="{{employee.zakat_no or ''}}" />        
+      </div>
+    </div>
+    </div>
+  </div>
