@@ -7,11 +7,11 @@
       <p style="padding-left: 36px;">Get to know {{employee.first_name}}’s Story and interest.</p>                  
       {% endif %}                  
 
-
+      {% if permission_list["All About Me"]["canEdit"] %}  
       <div class="col s12 m12 16 x34" style="margin-top: 10px;">
         <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-about-me" class="btn right waves-effect waves-light">Save</button>
       </div>
-
+      {% endif %}
       <div class="input-field col s12 m12">
         <p style="margin-bottom: 10px;">Bio</p>                    
         <input data-fieldname="bio" type="text" name="bio" style="width: -webkit-fill-available;" value="{{employee.bio or ''}}" />

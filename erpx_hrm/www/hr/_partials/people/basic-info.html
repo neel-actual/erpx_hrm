@@ -9,11 +9,12 @@
       <p style="padding-left: 36px;">Make sure to keep the basic information up to date for other collegues.</p>                  
       {% endif %}                            
 
+      {% if permission_list["Basic Information"]["canEdit"] %}  
       <div class="col s12 m12 16 x34" style="margin-top: 10px;">
         <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-employee" class="btn right waves-effect waves-light">Save</button>
       </div>
-      <div class="input-field col s12 m6">
-        <input type="hidden" data-fieldname="name" id="old_name" value="{{employee.name or ''}}" />
+      {% endif %}
+      <div class="input-field col s12 m6">        
         <p style="margin-bottom: 10px;">Series</p>                    
         <select {{'disabled="disabled"' if employee.naming_series else ""}} data-fieldname="naming_series" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
           {% for i_sery in series %}

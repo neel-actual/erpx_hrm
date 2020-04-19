@@ -3,7 +3,7 @@
      <div class="row" style="margin: auto;">
         <i class="material-icons-outlined" style="display: inline;">person</i>
         <h4 class="card-title directorytitle" style="display: inline;">My Family Information </h4>
-
+      
       <div class="col s12 m12 16 x34" style="margin-top: 10px;text-align: right;">
         <button data-modal="modal-family" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-family" class="btn waves-effect waves-light">Add family</button>
       </div>
@@ -45,7 +45,9 @@
         </form>
     </div>
     <div class="modal-footer">
+        {% if permission_list["Family Information"]["canEdit"] %}
         <a href="#!" class="right waves-effect waves-light btn" id="save_family">Save</a>
+        {% endif %}
         <a href="#" class="right blue-text btn-flat"
         onclick="$('#modal-family').modal('close')">Cancel</a>
     </div>

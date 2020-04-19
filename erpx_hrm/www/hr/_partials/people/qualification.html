@@ -2,12 +2,10 @@
     <div class="card-content">
      <div class="row" style="margin: auto;">
       <i class="material-icons-outlined" style="display: inline;">person</i>
-      <h4 class="card-title directorytitle" style="display: inline;">My Qualifications </h4>
-
+      <h4 class="card-title directorytitle" style="display: inline;">My Qualifications </h4>      
       <div class="col s12 m12 16 x34" style="margin-top: 10px;text-align: right;">
         <button data-modal="modal-qualification" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-qualification" class="btn waves-effect waves-light">Add Qualification</button>
-      </div>
-
+      </div>      
       <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">            
             <table id="list-qualifications" style="margin-top: 15px; display: inline-table !important;">
 																													
@@ -44,7 +42,9 @@
         </form>
     </div>
     <div class="modal-footer">
+        {% if permission_list["Qualifications"]["canEdit"] %}
         <a href="#!" class="right waves-effect waves-light btn" id="save_qualification">Save</a>
+        {% endif %}
         <a href="#" class="right blue-text btn-flat"
         onclick="$('#modal-qualification').modal('close')">Cancel</a>
     </div>
