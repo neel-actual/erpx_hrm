@@ -59,3 +59,75 @@ var update_role_users = function(arr_user, arr_all_user, role_name){
 		}
 	});
 }
+
+//Edit permission
+var permission_fields = [
+	"Basic Information",
+	"All About Me",
+	"Certificate and License",
+	"Compensation and Bank Information",
+	"Compensation History",
+	"Disciplinary Action",
+	"Emergency Contact",
+	"Family Information",
+	"Personal Information",
+	"Qualifications"
+];
+function openEditPermission(role_name){
+	$('#modal-empl-per #sRoleName').html(role_name);
+	$('#modal-empl-per #per_role_name').val(role_name);		
+
+	$.each(permission_fields, function (key, element) {	
+		$(`#modal-empl-per [data-fieldvalue="${element}"]`).attr('old_name', '');
+		$(`#modal-empl-per [data-fieldvalue="${element}"]`).val('').formSelect();
+	});
+	frappe.call({
+		method: "frappe.client.get_list",
+		args: {
+			doctype: "Section Permission",
+			fields: ["*"],
+			filters: [["role", "=", role_name]],
+			limit_page_length: 0
+		},
+		callback: function (r) {
+			r.message.forEach(function(element, index){
+				$(`#modal-empl-per [data-fieldvalue="${element.section}"]`).attr('old_name', element.name);
+				$(`#modal-empl-per [data-fieldvalue="${element.section}"]`).val(element.permission).formSelect();
+			});	
+		}
+	});	
+}
+
+$(document).ready(function(){	
+	$('#modal-empl-per #btn_save_permission').click(function(){				
+		var per_role_name = $('#modal-empl-per #per_role_name').val();		
+		
+        $.each(permission_fields, function (key, element) {			   		
+			var url = '/api/resource/Section Permission';    
+			var type = 'POST';		
+			var old_name = $(`#modal-empl-per [data-fieldvalue="${element}"]`).attr('old_name');
+			if(old_name != ''){
+				url += '/' + old_name;
+				type = 'PUT';
+			}	
+			var permission = $(`#modal-empl-per [data-fieldvalue="${element}"]`).val();  			
+			var args = {
+				section: element,
+				role: per_role_name,
+				permission: permission
+			};     
+			frappe.ajax({
+				type: type,
+				url: url,
+				args: args,
+				callback: function (r) {
+					if (!r.exc_type) {                
+						
+					}
+				}
+			}); 		
+			//location.reload();				
+			$('#modal-empl-per').modal('close');
+        });    
+	});
+});

@@ -1,0 +1,629 @@
+{% extends "www/master.html" %}
+
+{% block title %}Payroll{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/tinymce/skins/lightgray/skin.min.css">
+<style type="text/css">
+#dropdown1 li > a{
+  padding: unset;
+  float: left;
+}
+
+#dropdown1{
+  height: auto !important;
+  width: fit-content !important;
+
+  border-radius: 10px;
+
+  padding-left: 3px !important;
+}
+
+
+
+#dropdown1 li {
+  float: left;
+  min-height: 0px !important;
+}
+
+#dropdown1 li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+}
+
+
+
+.dropdown-content li{
+  clear: unset !important;
+  width: unset !important;
+  padding-left: 0px !important;
+}
+
+.default-indicator{
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #b0b8e0;
+  will-change: left, right;
+  left: 1% !important;
+  right: 50% !important;
+}
+
+.indicator{
+  display: none;
+}
+
+.btn-link {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: #0000EE;
+  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+@media only screen and (max-width: 601px){
+  #remove-padding{
+    padding:0 !important;
+  }
+}
+
+@media only screen and (max-width: 1460px){
+  #table-scroll{
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    white-space: nowrap!important;    
+  }
+
+  table{
+    width: 1100px !important;
+  }
+}
+
+@media only screen and (max-width: 480px){
+  .padd-zero{
+    padding: 0 !important;
+  }
+
+
+}
+
+@media only screen and (max-width: 1200px){
+  .tabs{
+    width: 410px !important;
+  }
+
+  .tabs-scroll{
+    overflow-x: auto !important;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  .search-input{
+    width: 190px !important;
+  }
+
+  .search-icon{
+    left: 190px !important;
+  }
+
+  .full-width{
+    width: 100% !important;
+  }
+}
+
+.toggle-options a.active, .toggle-options a:hover{
+    background-color: #00AEEF !important;
+}
+
+@media only screen and (max-width: 993px){
+  .force-center{
+    text-align: center !important;
+  }
+}
+</style>
+{% endblock %}
+
+{% block nav %}
+{% if user == 'Guest' %}
+<li class=""><a href="/signin" aria-current="page">Sign in</a></li>
+{% endif %}
+{% if user != 'Guest' %}
+{% include "www/nav.html" %}
+{% endif %}
+{% endblock %}
+
+{% block sidenav %}
+<!--sidenav-->
+{% include "www/hr/sidenav.html" %}
+{% endblock %}
+
+{% block footer %}
+<!--footer-->
+{% include "www/footer.html" %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="main">
+  <div class="row">
+    <div class="content-wrapper-before"></div>
+    <div class="col-12">
+      <div class="container">
+        <div class="row section-data-tables">
+          <div class="col s12">
+            <div class="nav-wrapper black-text banner-title3">
+              <div class="breadcrumb" style="display: inline;">
+
+                <a class="breadcrumb">HR Hub</a>
+				<a class="breadcrumb">People</a>
+                <a href="/HR Hub/people" class="breadcrumb active">Add Employee</a>
+              </div>
+
+              <!-- People Profile  -->
+				  <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+					<div class="card-content">
+					 <div class="row" style="margin: auto;">
+					  <i class="material-icons-outlined" style="display: inline;">person</i>
+            <h4 class="card-title directorytitle" style="display: inline;">Profile Overview</h4>
+            {% if employee.first_name: %}                  
+            <p style="padding-left: 36px;">Here’s quick profile of {{employee.first_name}}.</p>                              
+            {% endif %}                                    					  
+
+					</div>
+					<br>
+					<div class="col s12 m12 l12 xl4 force-center">
+					  <p><img src="/images/profile_icon.png" width="200" height="200"/></p>
+					</div>
+
+					<div class="col s6 m6 l6 xl4" >
+            {% if employee.first_name: %}                  
+            <p style="margin-top: 10px !important;">{{employee.first_name}}</p>                                       
+            {% endif %}                                    					  					  
+					  <p style="margin-top: 10px !important;">
+						<img src="/icons/people.png" width="30" height="30" style="margin-right: 15px;" />
+						<span style="display: inline;position: absolute;margin-top: 5px;">Marketing Manager</p>
+						</p>
+						<p style="margin-top: 10px !important;">
+						  <img src="/icons/email.png" width="30" height="30" style="margin-right: 15px;" />
+						  <span style="display: inline;position: absolute;margin-top: 5px;">leanneko@bayo.my</span>
+						</p>
+						<p style="margin-top: 10px !important;">
+						  <img src="/icons/mobile.png" width="30" height="30" style="margin-right: 15px;" />
+						  <span style="display: inline;position: absolute;margin-top: 5px;">+60 11 2345 6789</span>
+						</p>
+					  </div>
+
+					  <div class="col s6 m6 l6 xl4" style="margin-top: 10px;">
+						<a href="#" style="float: right;color: #00aeef;"><b>Send Email</b></a>
+					  </div>
+
+					  <br>
+					  <div style="width: 100%; display: inline-block;"><hr /></div>
+
+					  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+						  <div class="row">
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>DEPARTMENT</b></p>
+							</div>
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <p style="color: #00aeef;"><b>Marketing</b></p>
+							  <p>Member</p>
+							</div>
+						  </div>
+						</div>
+
+						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+						  <div class="row">
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>JOIN DATE</b></p>
+							</div>
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <p>20 Mar 2016</p>
+							  <p>3 years, 4 months, 13 days</p>
+							</div>
+						  </div>
+
+
+						</div>
+
+						<div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+						  <div class="row">
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <p style="padding-top: 10px;padding-bottom: 10px; "><b>Reports To</b></p>
+							</div>
+							<div class="col s6 m6 l6 xl12 full-width">
+							  <div class="row">
+								<div class="col s3 m3 l3 xl3 padd-zero">
+								  <img width="50" height="50" src="/images/org-chart-profile.png" style="vertical-align: middle; float: left;">
+								</div>
+								<div class="col s9 m9 l9 xl9">
+								  <p style="margin-left: 15px;display: inline-block;vertical-align: middle; float: left;">
+								  <a href="#" class="dropdown-trigger" style="margin-top: 5px;display: block;color: #00aeef;" data-target="dropdown1"><b>Mina Mona</b></a>
+								  <span>Department Head</span>
+								</div>
+							  </div>
+
+
+						  </p>
+							</div>
+						  </div>
+
+						  <ul id="dropdown1" class="dropdown-content" >
+							<li>
+							  <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
+
+
+							</li>
+							<li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+							<li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+						  </ul>
+						</div>
+					  </div>
+					</div>
+				  </div>
+			<br>
+      <!-- Basic Information   -->
+      {% include "www/hr/_partials/people/basic-info.html" %}              
+      <br>
+      <!-- All About Me  -->
+      {% include "www/hr/_partials/people/about-me.html" %}   
+      <br>
+			<!-- My Emergency Details   -->
+      {% include "www/hr/_partials/people/emergency.html" %}   
+			<br>
+			<!-- Personal Information   -->
+      {% include "www/hr/_partials/people/personal-info.html" %} 
+			<br>
+      <!-- My Qualifications   -->
+      {% include "www/hr/_partials/people/qualification.html" %} 
+        <br>
+        <!-- My Certificates & License   -->
+        {% include "www/hr/_partials/people/certificate.html" %} 
+        <br>
+        <!-- My Family Information   -->
+        {% include "www/hr/_partials/people/family.html" %}           
+              
+
+			<br>
+			<!-- Compensation & Bank Information  -->
+
+              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+                <div class="card-content">
+                 <div class="row" style="margin: auto;">
+                  <i class="material-icons-outlined" style="display: inline;">person</i>
+                  <h4 class="card-title directorytitle" style="display: inline;">Compensation & Bank Information </h4>
+                  {% if employee.first_name: %}                                    
+                  <p style="padding-left: 36px;">Personal details of {{employee.first_name}}.</p>
+                  {% endif %}                                    
+
+                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
+                  </div>
+
+                  <div class="input-field col s12 m12">
+                    <p style="margin-bottom: 10px;">Salary Basis</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <select name="no_of_children" style="padding-left: 10px;width: -webkit-fill-available;">
+                      <option value="0 " selected>Monthly</option>
+                    </select>
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+                  <div class="input-field col s12 m12">
+                    <p style="margin-bottom: 10px;">Salary Amount</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <input type="label" disabled value="MYR" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 32px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;">
+                    <input type="text" name="salary_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Type your salary amount">
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                  <div class="input-field col s12 m12">
+                    <p style="margin-bottom: 10px;">Bank Name</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <select name="EIS_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
+                      <option value="" disabled selected>Maybank</option>
+
+                    </select>
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+                  <div class="input-field col s12 m12">
+                    <p style="margin-bottom: 10px;">Bank Account No.</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <select name="EIS_contribution" style="padding-left: 10px;width: -webkit-fill-available;">
+                      <option value="" disabled selected>1234567890</option>
+
+                    </select>
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                  <div class="input-field col s12 m6">
+                    <p style="margin-bottom: 10px;">EPF No</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <input type="text" name="EPF_no" style="width: -webkit-fill-available;" value=" ">
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                  <div class="input-field col s12 m6">
+                    <p style="margin-bottom: 10px;">Tax No</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <input type="text" name="tax_no" style="width: -webkit-fill-available;" value=" ">
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                  <div class="input-field col s12 m6">
+                    <p style="margin-bottom: 10px;">Zakat No</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <input type="text" name="zakat_no" style="width: -webkit-fill-available;" value=" ">
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+                </div>
+                <br>
+
+
+                </div>
+              </div>
+                  <br>
+			<!-- Compensation History -->
+
+              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+                <div class="card-content">
+                 <div class="row" style="margin: auto;">
+                  <i class="material-icons-outlined" style="display: inline;">person</i>
+                  <h4 class="card-title directorytitle" style="display: inline;">Compensation History </h4>
+
+                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
+                  </div>
+
+					<div class="col s12" id="table-scroll">
+						<table class="table table-striped dataTable display" style="font-size: 14px;" id="table_id">
+							<thead>
+								<tr style="border-bottom: 2px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;">
+									<th style="border-right:none!important;">DATE</th>
+									<th style="border-right:none!important;">AMOUNT</th>
+									<th style="border-right:none!important;">TYPE</th>
+									<th style="border-right:none!important;">REASON.</th>
+							</thead>
+
+						</table>
+					</div>
+
+				  <div class="input-field col s9 m12">
+                    <p style="text-align: center;">No information added</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                </div>
+                <br>
+
+                  <br>
+
+                  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+                    <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+                      <ul id="dropdown1" class="dropdown-content" >
+                        <li>
+                          <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
+
+
+                        </li>
+                        <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+                        <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+			<br>
+			<!-- Disciplinary Action -->
+
+              <div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+                <div class="card-content">
+                 <div class="row" style="margin: auto;">
+                  <i class="material-icons-outlined" style="display: inline;">person</i>
+                  <h4 class="card-title directorytitle" style="display: inline;">Disciplinary Action </h4>
+
+                  <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+                    <a href="#" style="float: right;color: #00aeef;"><b>Edit</b></a>
+                  </div>
+
+ 					<div class="col s12" id="table-scroll">
+						<table class="table table-striped dataTable display" style="font-size: 14px;" id="table_id">
+							<thead>
+								<tr style="border-bottom: 2px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;">
+									<th style="border-right:none!important;">DATE</th>
+									<th style="border-right:none!important;">TYPE</th>
+									<th style="border-right:none!important;">REASON.</th>
+							</thead>
+
+						</table>
+					</div>
+
+				  <div class="input-field col s9 m12">
+                    <p style="text-align: center;">No information added</p>
+                    <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+                    <!--<label for="signup-name" class="center-align">Full Name</label>-->
+                  </div>
+
+                </div>
+                <br>
+
+                  <br>
+
+                  <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+                    <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+
+                      <ul id="dropdown1" class="dropdown-content" >
+                        <li>
+                          <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
+
+
+                        </li>
+                        <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+                        <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+            <div class="content table-section">
+              <!-- People List -->
+
+            <!-- Card List -->
+
+            <!-- Profile Overview -->
+
+            <div id="profile" class="col xl8 l8 m12 s12" style="display: none;padding: 0 !important">
+
+
+              <div class="content">
+                <div class="card" style="margin-bottom: 0px;margin-top: 4em;border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                  <div class="card-content">
+                   <div class="col s12 padd-zero" >
+                    <div class="tabs-scroll" style="width: 85%; float: left">
+                      <ul class="tabs">
+                        <li class="tab col s6 m6" onclick="removeDefault(); employee_edit();"><a href="#employee" class="active" style="text-overflow: initial !important;">Employee & Personal</a></li>
+                        <li class="tab col s6 m6" onclick="removeDefault(); bank_edit();"><a href="#bank" style="text-overflow: initial !important;">Bank & Statutory</a></li>
+							<li class="default-indicator" style="display: block"></li>
+                      </ul>
+                    </div>
+                    <div id="employee_btn" style="width: 15%; float: left;margin-top: 5px;display: block">
+                      <button type="submit" name="edit_employee" class="btn-link" style="float: right;background-color: white;color: #00aeef;"><b>Edit</b></button>
+
+                    </div>
+                    <div id="bank_btn" style="width: 15%; float: left;margin-top: 5px;display: none">
+                      <button type="submit" name="edit_bank" class="btn-link" style="float: right;background-color: white;color: #00aeef;"><b>Edit</b></button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+			<br>
+
+
+            </div>
+
+            <div id="update-user.modal" class="modal modal-fixed-footer">
+              <div class="modal-content">
+                <h5></h5>
+                <form class="col s12">
+                </form>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="accept-btn right waves-effect waves-light btn">Update</a>
+                <a href="#" class="cancel-btn right blue-text btn-flat"
+                onclick="$(this).closest('.modal').modal('close')">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+		</div>
+      </div>
+    </div>
+	</div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js"
+type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/about_me.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/basic_info.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/emergency.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/personal_info.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/qualification.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/certificate.js" type="text/javascript"></script>
+<script defer src="/hr/_partials/people/family.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function list(){
+    var list = document.getElementById('list');
+    var card = document.getElementById('card');
+    var btn_list = document.getElementById('btn_list');
+    var btn_card = document.getElementById('btn_card');
+    list.style.display = "block";
+    card.style.display = "none";
+    btn_list.classList.add('active');
+    btn_card.classList.remove('active');
+  }
+
+  function card(){
+    var list = document.getElementById('list');
+    var card = document.getElementById('card');
+    var btn_list = document.getElementById('btn_list');
+    var btn_card = document.getElementById('btn_card');
+    list.style.display = "none";
+    card.style.display = "block";
+    btn_list.classList.remove('active');
+    btn_card.classList.add('active');
+  }
+
+  function profile(){
+    var people_list = document.getElementById('peoplelist');
+    var profile = document.getElementById('profile');
+    people_list.style.display = "none";
+    profile.style.display = "block";
+  }
+
+  function removeDefault(){
+    var default_indicator = document.getElementsByClassName('default-indicator')[0];
+    var indicator = document.getElementsByClassName('indicator')[0];
+    default_indicator.style.display = "none";
+    indicator.style.display = "block";
+  }
+
+  function employee_edit(){
+    var emp_edit = document.getElementById('employee_btn');
+    var bank_edit = document.getElementById('bank_btn');
+    emp_edit.style.display = "block";
+    bank_edit.style.display = "none";
+
+  }
+
+  function bank_edit(){
+    var emp_edit = document.getElementById('employee_btn');
+    var bank_edit = document.getElementById('bank_btn');
+    emp_edit.style.display = "none";
+    bank_edit.style.display = "block";
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    //var instances = M.Dropdown.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $('.dropdown-trigger').dropdown();
+</script>
+<!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+{% endblock %}

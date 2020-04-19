@@ -34,14 +34,16 @@ def get_context(context):
     context.list_holiday = frappe.db.get_all("Holiday List",fields=["holiday_list_name"])
 
     holiday_list_name = frappe.get_cached_value('Company',  company,  "default_holiday_list") 
+    holiday_list_name_param = frappe.form_dict.holiday_list_name
+    if holiday_list_name_param:
+        holiday_list_name = holiday_list_name_param
 
     if holiday_list_name:
         context.holiday_list_name = holiday_list_name
         context.holiday = frappe.get_doc("Holiday List", holiday_list_name)
     else:
         context.holiday = frappe.new_doc("Holiday List")
-        context.holiday_list_name = ""
-    
+        context.holiday_list_name = ""    
     context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
 
     if context.employee:
