@@ -7,9 +7,11 @@
       <p style="padding-left: 36px;">Emergency contact’s of {{employee.first_name}}.</p>
       {% endif %}
 
+      {% if permission_list["Emergency Contact"]["canEdit"] %}
       <div class="col s12 m12 16 x34" style="margin-top: 10px;">
         <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-emergency" class="btn right waves-effect waves-light">Save</button>
       </div>
+      {% endif %}
 
       <div class="input-field col s12 m12">					 
         <p style="margin-bottom: 10px;">Name</p>                    

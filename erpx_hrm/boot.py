@@ -7,6 +7,7 @@ def update_website_context(context):
 		"top-claims" : 0,
 		"top-payroll" : 0,
 		"top-benefits" : 0,
+		"top-desk" : 0,
 
 		"leave-request" : 0,
 		"leave-approval" : 0,
@@ -66,6 +67,7 @@ def update_website_context(context):
 		show_menu["top-claims"] = 1
 		show_menu["top-payroll"] = 1
 		show_menu["top-benefits"] = 1
+		show_menu["top-desk"] = 1
 
 		show_menu["leave-approval"] = 1
 		show_menu["leave-request"] = 1

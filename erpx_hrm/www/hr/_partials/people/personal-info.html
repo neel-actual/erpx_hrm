@@ -7,10 +7,11 @@
     <p style="padding-left: 36px;">Personal details of {{employee.first_name}}.</p>
     {% endif %}                                              
 
+    {% if permission_list["Personal Information"]["canEdit"] %}
     <div class="col s12 m12 16 x34" style="margin-top: 10px;">
     <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-personal-info" class="btn right waves-effect waves-light">Save</button>
     </div>
-
+    {% endif %}                                              
     <div class="input-field col s12 m6">
     <p style="margin-bottom: 10px;">NRIC No.</p>                    
     <input data-fieldname="nric_no" type="text" name="nric_no" style="width: -webkit-fill-available;" value="{{employee.nric_no or ''}}" />                    

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var old_name = $('#divBasicInfo #old_name').val();     
+    var old_name = $('#old_name').val();     
     $("#btn-save-emergency").click(function () {
         var args = {};
         var fields = [
@@ -13,7 +13,7 @@ $(document).ready(function(){
     
         var url = '/api/resource/Employee';    
         var type = 'POST';
-        var old_name = $('#divBasicInfo #old_name').val();
+        var old_name = $('#old_name').val();
         if(old_name != ''){
             url += '/' + old_name;
             type = 'PUT';

@@ -3,11 +3,11 @@
      <div class="row" style="margin: auto;">
         <i class="material-icons-outlined" style="display: inline;">person</i>
         <h4 class="card-title directorytitle" style="display: inline;">My Certificates & Liscence </h4>
-
+      
       <div class="col s12 m12 16 x34" style="margin-top: 10px;text-align: right;">
         <button data-modal="modal-certificate" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-certificate" class="btn waves-effect waves-light">Add certificate</button>
       </div>
-
+      
       <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">            
             <table id="list-certificates" style="margin-top: 15px; display: inline-table !important;">
 																													
@@ -37,7 +37,9 @@
         </form>
     </div>
     <div class="modal-footer">
+        {% if permission_list["Certificate and License"]["canEdit"] %}  
         <a href="#!" class="right waves-effect waves-light btn" id="save_certificate">Save</a>
+        {% endif %}
         <a href="#" class="right blue-text btn-flat"
         onclick="$('#modal-certificate').modal('close')">Cancel</a>
     </div>

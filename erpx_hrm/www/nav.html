@@ -31,8 +31,10 @@
         </span>
         <li class="divider" tabindex="0"></li>
         <li tabindex="0"><a href="/acc-settings.html" class="grey-text text-darken-1" style="line-height: 50px;"><i class="material-icons-outlined">settings</i>Account Setting</a>
-            <li class="divider" tabindex="0"></li>
+        {% if show_menu["top-desk"] %} 
+        <li class="divider" tabindex="0"></li>
         <li tabindex="0"><a href="/desk" class="grey-text text-darken-1" style="line-height: 50px;"><i class="material-icons-outlined">free_breakfast</i>Switch to desk</a>
+        {% endif %}
         </li>
 <!--        <li tabindex="0"><a class="grey-text text-darken-1"><i class="material-icons-outlined">chat_bubble_outline</i> Chat</a>-->
 <!--        </li>-->
