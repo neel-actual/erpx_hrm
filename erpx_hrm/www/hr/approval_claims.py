@@ -11,5 +11,6 @@ def get_context(context):
     if not ("Expense Approver" in frappe.get_roles() or "Expense Verified" in frappe.get_roles()):
         frappe.throw(_('Only users with {0} role can access').format(', '.join(valid_roles)),
 			frappe.PermissionError)
-
+    context.user = frappe.session.user
+    context.csrf_token = frappe.sessions.get_csrf_token()
     context.currency = frappe.db.get_value("HRM Setting",None,"currency")
