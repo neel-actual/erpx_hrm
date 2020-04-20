@@ -141,55 +141,71 @@
 						<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
 							<div class="card-content">
 								<div class="row" style="margin: auto;">
-									<img style="display: inline;float: left;" width="22" height="22"
+									<div class="s12 m8">
+										<img style="display: inline;float: left;" width="22" height="22"
 										class="sidenav-icon" src="/icons/leave.png">
-									<h4 class="card-title directorytitle" style="display: inline;">Holidays </h4>
+										<h4 class="card-title directorytitle" style="display: inline;">Holidays </h4>
+									</div>
+									<div class="s12 m4">
+										<button style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday-list" class="btn waves-effect waves-light right">Add Holiday List</button>
+										<button style="display: none; border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday-cancel" class="btn waves-effect waves-light right">Cancel</button>
+									</div>									
 									<div style="height: 40px;"></div>
 									<div class="row margin infodetails" id="form-holiday">
-										<input data-fieldname="name"  value="{{holiday.name}}" type="hidden" autocomplete="off">
+										<input id="old_name" value="{{holiday.holiday_list_name}}" type="hidden" autocomplete="off">
+										<div class="input-field col s12 m12" id="dHolidayListNameSelect">
+											<p style="margin-bottom: 10px;">Holiday List</p>
+											<select id="sHolidayList" data-fieldname="holiday_list_name" style="padding-left: 10px; width: 10px;" autocomplete="off">
+												<option value="">Select Holiday List</option>
+												{% for row in list_holiday %}											
+												<option {% if row.holiday_list_name == holiday.holiday_list_name %} selected {% endif %} value="{{row.holiday_list_name}}">{{row.holiday_list_name}}</option>
+												{% endfor %}
+											</select>
+											<input type="text" style="display: none" value="" id="holidayListName" />
+										</div>
+										<div class="input-field col s12 m12" style="display: none" id="dHolidayListNameInput">
+											<p style="margin-bottom: 10px;">Holiday List Name</p>											
+											<input type="text" value="" id="holidayListName" />
+										</div>
 										<div class="input-field col s12 m6">
 											<p style="margin-bottom: 10px;">Start</p>
 											<img src="/icons/calendar-blue.png" width="20" height="20"
 												style="position: absolute; margin-top: 12px; right: 35px;">
-											<input data-fieldname="from_date" value="{{holiday.from_date}}"  autocomplete="off"
+											<input id="holiday_list_from_date" data-fieldname="from_date" value="{{holiday.from_date}}"  autocomplete="off"
 												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
 												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
 										</div>
-
 										<div class="input-field col s12 m6">
 											<p style="margin-bottom: 10px;">End</p>
 											<img src="/icons/calendar-blue.png" width="20" height="20"
 												style="position: absolute; margin-top: 12px; right: 35px;">
-											<input data-fieldname="to_date" value="{{holiday.to_date}}"  autocomplete="off"
+											<input id="holiday_list_to_date" data-fieldname="to_date" value="{{holiday.to_date}}"  autocomplete="off"
 												style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
 												placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')">
 										</div>
 										<div class="col s12 m6">
-											<p style="margin-bottom: 10px;">Total Holidays: {{holiday.total_holidays}} include Saturdays and Sundays</p>
+											<p style="margin-bottom: 10px;">Total Holidays: <span id="sTotalHolidays">{{holiday.total_holidays}}</span> include Saturdays and Sundays</p>
 										</div>
 										<div class="col s12 m6">
 											<button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-holiday" class="btn waves-effect waves-light right">Save</button>
 										</div>
 										<br>
-										<div class="col s12 m12">
-											<button data-modal="modal-holiday" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday" class="btn waves-effect waves-light">Add Holiday</button>
-										</div>
-										<br>
-										<div class="step-content">
-											<div class="row">
-												<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
-													<table id="list-holiday" style="margin-top: 15px; display: inline-table !important;">
-														
-														{% for row in holiday.holidays %}
-														{% if row.description != "Saturday" and row.description != "Sunday" %}
-														
-														{% endif %}
-														{% endfor %}
-													</table>
+										<p>&nbsp;</p>
+										<div id="dListHoliday">
+											<div class="col s12 m12">
+												<button data-modal="modal-holiday" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-holiday" class="btn waves-effect waves-light">Add Holiday</button>
+											</div>
+											<br>
+											<div class="step-content">
+												<div class="row">
+													<div id="table-scroll" class='form-field col s12' style="padding-right: 0;">
+														<table id="list-holiday" style="margin-top: 15px; display: inline-table !important;">
+																													
+														</table>
+													</div>
 												</div>
 											</div>
-										</div>
-											
+										</div>	
 									</div>
 								</div>
 							</div>

@@ -1,0 +1,46 @@
+<div class="card" style="border-radius: 10px;" id="divcertificate">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+        <i class="material-icons-outlined" style="display: inline;">person</i>
+        <h4 class="card-title directorytitle" style="display: inline;">My Certificates & Liscence </h4>
+      
+      <div class="col s12 m12 16 x34" style="margin-top: 10px;text-align: right;">
+        <button data-modal="modal-certificate" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-certificate" class="btn waves-effect waves-light">Add certificate</button>
+      </div>
+      
+      <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">            
+            <table id="list-certificates" style="margin-top: 15px; display: inline-table !important;">
+																													
+            </table>
+        </div>
+    </div>    
+    </div>
+  </div>
+
+  <div id="modal-certificate" class="modal modal-fixed-footer">
+    <div class="modal-content" style="padding: 0px !important; ">
+    <p class="edit-title">Certificate</p>
+        <form class="col s12" style="padding: 24px;" id="form-certificate">
+            <input type="hidden" data-fieldname="name"  autocomplete="off">
+            <div class="row">                
+                <div class="input-field col s12 m12" style="margin-top: 0px;">
+                    <p>CERTIFICATE & LISCENSE</p>
+                    <input type="text" data-fieldname="certificate" autocomplete="off">
+                </div>
+                <div class="input-field col s12 m12" style="margin-top: 0px;">
+                    <p>EXPIRATION DATE</p>
+                    <input data-fieldname="expiry_date"  autocomplete="off"
+        style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+        placeholder="" class="textbox-n" type="date" /> 
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        {% if permission_list["Certificate and License"]["canEdit"] %}  
+        <a href="#!" class="right waves-effect waves-light btn" id="save_certificate">Save</a>
+        {% endif %}
+        <a href="#" class="right blue-text btn-flat"
+        onclick="$('#modal-certificate').modal('close')">Cancel</a>
+    </div>
+</div>

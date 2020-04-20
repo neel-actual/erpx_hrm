@@ -97,7 +97,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
           <div style="height: 30px"></div>
 
-          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per">Edit Permission</a>          
+          <a style="text-align: center; display: block; padding:5%; background-color: #00aeef; color: white;" class="modal-trigger" href="#modal-empl-per" onclick="openEditPermission('{{i_role.name}}')">Edit Permission</a>          
           <a href="#modal-epml-ppl" class="modal-trigger" style="text-align: center; display: block; padding:5%; 
           color: #00aeef;" onclick="openEditPeople('{{i_role.name}}')">Edit People</a>
         </div>
@@ -311,181 +311,35 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 <!-- Edit Employee permission -->
 
-<div id="modal-empl-per" class="edit-per modal modal-fixed-footer">
+<div id="modal-empl-per" class="edit-per modal modal-fixed-footer">  
   <div class="modal-content" style="padding: 0px !important;">
-    <p class="edit-title" style="text-align: left;padding-left: 9%;margin-left: 0px;">Edit Employee Permission</p>
+    <input type="hidden" id="per_role_name" value="" />    
+    <p class="edit-title" style="text-align: left;padding-left: 9%;margin-left: 0px;min-width: 50%;">Edit <span id="sRoleName"></span> Permission</p>
 
 <!-- <span style="color: gray; text-align: left;margin-left: 83px;">Admin group must maintain full access over company account
 </span> -->
 <p class="card-title" style="font-size: 128%; text-align: left;margin-left: 9%;">Profile</p>
 <hr>
 <br>
-
+{% for i_permission_section in permission_section_list %}
 <div class="row margin infodetails">
   <div style="width: 50%; float: left; ">
     <div class="input-field col s12 m12" style="padding-left:18%;">
-      <p>Basic Information</p>
+      <p>{{i_permission_section}}</p>
     </div>
   </div>
 
   <div style="width: 50%; float: left">
     <div class="input-field col s12 m12">
-      <select width=" -webkit-fill-available;">
-       <option value="" disabled selected>All employees view only</option>
-     </select>
+      <select old_name="" data-fieldvalue="{{i_permission_section}}" class="section" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
+        {% for i_permission_list in permission_list %}
+            <option value="{{i_permission_list}}">{{i_permission_list}}</option>
+        {% endfor %}
+      </select>
    </div>
  </div>
 </div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>All About Me</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width=" -webkit-fill-available;">
-       <option value="" disabled selected>All employees view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Certificate and License</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width="-webkit-fill-available;">
-       <option value="" disabled selected>My view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Compensation and Bank Information</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width: -webkit-fill-available;">
-       <option value="" disabled selected>All employees view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Compensation History</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width: -webkit-fill-available;">
-       <option value="" disabled selected>No permission</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Disciplinary Action</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width= "-webkit-fill-available;">
-       <option value="" disabled selected>My view only</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Emergency Contact</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width=" -webkit-fill-available;">
-       <option value="" disabled selected>My view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Family Information</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width=" -webkit-fill-available;">
-       <option value="" disabled selected>My view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Personal Information</p>
-    </div>
-  </div>
-
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width=" -webkit-fill-available;">
-       <option value="" disabled selected>My view and edit</option>
-     </select>
-   </div>
- </div>
-</div>
-
-<div class="row margin infodetails">
-  <div style="width: 50%; float: left; ">
-    <div style="padding-left:18%;" class="input-field col s12 m12">
-      <p>Qualifications</p>
-    </div>
-  </div>
-
-  
-  <div style="width: 50%; float: left">
-    <div class="input-field col s12 m12">
-      <select width: -webkit-fill-available;">
-       <option value="" disabled selected>My view only</option>
-     </select>
-   </div>
- </div>
- 
-</div>
-
-
-
-
+{% endfor %}
 <div style="background-color: #e8ebf7;">
   <p class="card-title" style="padding-top: 2%; font-size: 128%; text-align: left;margin-left: 9%;">Leave</p>
 
@@ -500,7 +354,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
     <div style="width: 50%; float: left">
       <div class="input-field col s12 m12">
-        <select width: -webkit-fill-available;">
+        <select>
          <option value="" disabled selected>All leaves</option>
        </select>
      </div>
@@ -510,7 +364,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 </div>
 <div class="modal-footer">
-  <a href="#" class="right waves-effect waves-light btn">Okay</a>
+  <a href="#" class="right waves-effect waves-light btn" id="btn_save_permission">Okay</a>
   <a href="#" class="right blue-text btn-flat"
   onclick="$('#modal-empl-per').modal('close')">Cancel</a>
 </div>
