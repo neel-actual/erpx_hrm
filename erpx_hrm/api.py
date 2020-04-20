@@ -305,7 +305,11 @@ def get_child(doctype,filters,fields):
 
 @frappe.whitelist()
 def get_employee_payroll_info(employee = None):
-    object = frappe.get_all("Employee",filters={"status":"Active","name":employee},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    if not employee:
+        object = frappe.get_all("Employee",filters={"status":"Active"},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    else:
+        object = frappe.get_all("Employee",filters={"status":"Active","name":employee},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    # frappe.throw(str(object))
 
     for obj in object:
         add=0.00
