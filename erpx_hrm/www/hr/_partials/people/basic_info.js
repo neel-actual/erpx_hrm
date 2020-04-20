@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    var old_name = $('#divBasicInfo #old_name').val();     
+    var old_name = $('#old_name').val();     
     $("#btn-save-employee").click(function () {
-        var old_name = $('#divBasicInfo #old_name').val();    
+        var old_name = $('#old_name').val();    
     
         var args = {};
         var fields = [

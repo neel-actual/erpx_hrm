@@ -41,7 +41,9 @@
         </form>
     </div>
     <div class="modal-footer">
+        {% if permission_list["Disciplinary Action"]["canEdit"] %}
         <a href="#!" class="right waves-effect waves-light btn" id="save_disciplinary">Save</a>
+        {% endif %}
         <a href="#" class="right blue-text btn-flat"
         onclick="$('#modal-disciplinary').modal('close')">Cancel</a>
     </div>

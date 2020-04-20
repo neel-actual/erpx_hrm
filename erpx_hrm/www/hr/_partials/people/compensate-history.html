@@ -45,7 +45,9 @@
         </form>
     </div>
     <div class="modal-footer">
+        {% if permission_list["Compensation History"]["canEdit"] %}
         <a href="#!" class="right waves-effect waves-light btn" id="save_compensate_history">Save</a>
+        {% endif %}
         <a href="#" class="right blue-text btn-flat"
         onclick="$('#modal-compensate-history').modal('close')">Cancel</a>
     </div>

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var old_name = $('#divBasicInfo #old_name').val();    
+    var old_name = $('#old_name').val();    
     if(old_name != ''){
         list_disciplinary.get_list();
     }
@@ -52,7 +52,7 @@ var options = {
 var list_disciplinary = new xhrm.views.ListCRUD(options);
 $.extend(list_disciplinary, {
     get_list: function () {
-        var old_name = $('#divBasicInfo #old_name').val();
+        var old_name = $('#old_name').val();
         if(old_name == '')  return false;
 		var me = this;
 		frappe.ajax({
