@@ -11,12 +11,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
 <style type="text/css">
-  @media only screen and (max-width: 1460px){
-  #table-scroll{
-    width: 100%;
+@media only screen and (max-width: 1460px){
+  .table-scroll{
+    width: 100% !important;
     overflow-y: hidden;
     overflow-x: scroll;
-
     white-space: nowrap!important;
   }
 
@@ -234,8 +233,8 @@ table{
           </form>
           <div style="height: 40px;"></div>
           <div>
-            <div style="padding: 0 !important;"> 
-              <table class="table table-striped dataTable display" style="font-size: 14px;" id="request_history">
+            <div class="table-scroll" style="padding: 0 !important;"> 
+              <table class="dataTable display" style="font-size: 14px;" id="request_history">
                 <thead>  
                 <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
                   <th style="border-right:none!important;width: 250px;">Name</th>
