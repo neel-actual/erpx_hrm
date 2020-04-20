@@ -33,16 +33,18 @@
   {
    "fieldname": "birth_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Birth Date"
   },
   {
    "fieldname": "phone_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Phone No"
   }
  ],
  "istable": 1,
- "modified": "2020-04-15 22:08:58.097828",
+ "modified": "2020-04-20 15:12:03.078057",
  "modified_by": "Administrator",
  "module": "ERPX-HRM",
  "name": "Employee Family",

@@ -27,16 +27,18 @@
   {
    "fieldname": "type",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Type"
   },
   {
    "fieldname": "reason",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Reason"
   }
  ],
  "istable": 1,
- "modified": "2020-04-16 17:52:32.022964",
+ "modified": "2020-04-20 15:10:20.975293",
  "modified_by": "Administrator",
  "module": "ERPX-HRM",
  "name": "Employee Compensate",
