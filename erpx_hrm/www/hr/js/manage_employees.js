@@ -24,3 +24,7 @@ $(document).ready(function () {
 		employee_list.column(6).search(i_filter_status, true, false, false).draw();
 	});
 });
+
+function gotoUrl(empName){
+	window.location = 'people.html?name=' + empName;
+}
