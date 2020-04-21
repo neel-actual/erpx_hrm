@@ -36,8 +36,11 @@ $(document).ready(function(){
             url: url,
             args: args,
             callback: function (r) {
-                if (!r.exc_type) {                
-                    location.reload();
+                if (!r.exc_type) {  
+                    if(old_name != '')              
+                        location.reload();
+                    else
+                        window.location = 'people.html?name=' + r.data.name;
                 }
             }
         });

@@ -41,7 +41,7 @@
       <div class="input-field col s12 m6">
         <p style="margin-bottom: 10px;">Job Title</p>                    
         <select data-fieldname="designation" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
-          <option>---------------</option>
+          <option value="">---------------</option>
           {% set job_val = frappe.get_all("Designation", fields=['name']) %}
           {% for i_job_val in job_val%}
               <option value="{{i_job_val.name}}" {{"selected='selected'" if i_job_val.name == employee.designation else false}}>{{i_job_val.name}}</option>
@@ -68,7 +68,7 @@
       <div class="input-field col s12 m6">
         <p style="margin-bottom: 10px;">Department</p>
         <select data-fieldname="department" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
-          <option>---------------</option>
+          <option value="">---------------</option>
           {% set department_val = frappe.get_all("Department", fields=['name']) %}
           {% for i_department_val in department_val%}
               <option value="{{i_department_val.name}}" {{"selected='selected'" if i_department_val.name == employee.department else false}}>{{i_department_val.name}}</option>
@@ -78,7 +78,7 @@
       <div class="input-field col s12 m6">
         <p style="margin-bottom: 10px;">Employment Type</p>
         <select data-fieldname="employment_type" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
-          <option>---------------</option>
+          <option value="">---------------</option>
           {% set employment_type_val = frappe.get_all("Employment Type", fields=['name']) %}
           {% for i_employment_type_val in employment_type_val%}
               <option value="{{i_employment_type_val.name}}" {{"selected='selected'" if i_employment_type_val.name == employee.employment_type else false}}>{{i_employment_type_val.name}}</option>
@@ -88,7 +88,7 @@
       <div class="input-field col s12 m6">
         <p style="margin-bottom: 10px;">Gender</p>
         <select data-fieldname="gender" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
-          <option>---------------</option>
+          <option value="">---------------</option>
           {% set gender_val = frappe.get_all("Gender", fields=['name']) %}
           {% for i_gender_val in gender_val%}
               <option value="{{i_gender_val.name}}" {{"selected='selected'" if i_gender_val.name == employee.gender else false}}>{{i_gender_val.name}}</option>
@@ -98,7 +98,7 @@
       <div class="input-field col s12 m6">
         <p style="margin-bottom: 10px;">Office</p>
         <select data-fieldname="branch" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
-          <option>---------------</option>
+          <option value="">---------------</option>
           {% set branch_val = frappe.get_all("Branch", fields=['name']) %}
           {% for i_branch_val in branch_val%}
               <option value="{{i_branch_val.name}}" {{"selected='selected'" if i_branch_val.name == employee.branch else false}}>{{i_branch_val.name}}</option>
