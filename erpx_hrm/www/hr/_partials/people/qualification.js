@@ -92,9 +92,9 @@ $.extend(list_qualification, {
 	get_item_html: function (item, item_index) {		
         return `
             <tr class="list-item">
-                <td>${item.level}</td>
-                <td>${item.year_of_passing}</td>
-                <td>${item.school_univ}</td>                                
+                <td>${item.level || ''}</td>
+                <td>${item.year_of_passing || ''}</td>
+                <td>${item.school_univ || ''}</td>                                
                 <td>
                     <a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
                         <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
