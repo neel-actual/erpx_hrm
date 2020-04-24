@@ -88,8 +88,8 @@ $.extend(list_certificate, {
 	get_item_html: function (item, item_index) {		
         return `
             <tr class="list-item">
-                <td>${item.certificate}</td>
-                <td>${item.expiry_date}</td>                
+                <td>${item.certificate || ''}</td>
+                <td>${item.expiry_date || ''}</td>                
                 <td>
                     <a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
                         <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
