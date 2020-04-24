@@ -90,9 +90,9 @@ $.extend(list_disciplinary, {
 	get_item_html: function (item, item_index) {		
         return `
             <tr class="list-item">
-                <td>${item.date}</td>				              
-				<td>${item.type}</td>
-				<td>${item.reason}</td>
+                <td>${item.date || ''}</td>				              
+				<td>${item.type || ''}</td>
+				<td>${item.reason || ''}</td>
                 <td>
                     <a href="#" class="modal-trigger btn-delete" data-name="${item.name}">
                         <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">

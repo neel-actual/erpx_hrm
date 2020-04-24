@@ -23,6 +23,14 @@ $(document).ready(function () {
 		var i_filter_status = $("#i_filter_status").val(); 
 		employee_list.column(6).search(i_filter_status, true, false, false).draw();
 	});
+	$('#search').change(function(){ 
+		var search = $("#search").val(); 
+		employee_list.search(search, true, false, false).draw();
+	});
+	$('#iSearch').change(function(){ 
+		var search = $("#search").val(); 
+		employee_list.search(search, true, false, false).draw();
+	});	
 });
 
 function gotoUrl(empName){
