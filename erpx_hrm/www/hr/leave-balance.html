@@ -201,6 +201,59 @@ table{
 </div>
 </div>
 </div>
+
+<!-- Update Leave balance popup -->
+<div id="modal-update" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important; ">
+    <p class="edit-title">Update Leave Balance</p>
+
+    <form class="col s12" style="padding: 24px;" id="frmUpdateLeaveBalance">
+      <input type="hidden" id="hCurrentEmployeeName" value="" />
+      <input type="hidden" id="hLeave_allocation_name" value="" />      
+      <div class="row">
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Employee Name</p>          
+          <input type="text" id="employee_name" readonly="readonly" data-fieldname="employee_name" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Leave Type</p>          
+          <input type="text" id="leave_type" readonly="readonly" data-fieldname="leave_type" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>From date</p>          
+          <input type="text" id="from_date" readonly="readonly" data-fieldname="from_date" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>To date</p>          
+          <input type="text" id="to_date" readonly="readonly" data-fieldname="to_date" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Current Cycle</p>          
+          <input type="text" id="current_cycle" readonly="readonly" data-fieldname="current_cycle" style="width: -webkit-fill-available !important;">          
+        </div>        
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Total balance</p>          
+          <input type="text" id="total_balance" readonly="readonly" data-fieldname="total_balance" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l12 xl12" style="margin-top: 0px;">
+          <p>New balance</p>          
+          <input type="text" id="new_balance" data-fieldname="new_balance" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l12 xl12" style="margin-top: 0px;">
+          <p>Reason</p>          
+          <textarea id="reason" data-fieldname="reason" rows="6" cols="60"></textarea>         
+        </div>
+        <p></p>        
+      </div>    
+  </form>
+</div>
+<div class="modal-footer">
+ <a onclick="saveLeaveBalance()" href="#" class="right waves-effect waves-light btn">Save</a>
+ <a href="#" class="right blue-text btn-flat"
+ onclick="$('#modal-update').modal('close')">Cancel</a>
+</div>
+</div>
+
 {% endblock %}
 
 </div>
