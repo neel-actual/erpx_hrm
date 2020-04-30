@@ -13,11 +13,10 @@ def get_context(context):
     employees = frappe.db.sql("""
         select e.name, e.first_name, e.designation, e.department, e.reports_to, e.branch, e.status, group_concat(' ', r.role) as 'role' from `tabEmployee` e
         left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest')
-        left join `tabHas Role` r ON  r.parent = u.name
-        where r.role in ('Employee', 'Expense Verified', 'Expense Approver', 'HR Manager', 'Leave Approver')        
-        group by u.name
+        left join `tabHas Role` r ON  r.parent = u.name        
+        group by e.name
         """, as_dict=True, debug=1)      
-    employeeList = []
+    employeeList = []    
     for emp in employees:
         emp.role = getHighestRole(emp.role)
         employeeList.append(emp)    

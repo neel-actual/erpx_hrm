@@ -87,7 +87,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                             <a href="people.html" style="background: transparent;"><div class="waves-effect waves-light btn btn-small active">Add Employee</div></a>
                                         </div>
                                         <div style="float: right;" class="input-field col s12 m6 l3">
-                  <i style="position: absolute;padding-top: 12px;right: 20px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined">search</i><input style="border-radius: 50px!important;" type="text" name="search" placeholder="  Search Entities">
+                  <i style="cursor: pointer; position: absolute;padding-top: 12px;right: 20px;background: #b7aeae;-webkit-background-clip: text;" class="material-icons-outlined" id="iSearch">search</i><input style="border-radius: 50px!important;" type="text" name="search" id="search" placeholder="  Search Entities">
                   </div>
                                     </div>
                                     <br>
@@ -97,7 +97,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <div>Job Title</div>
                                                 <div>
                                                     <select id="i_filter_job_title">
-                                                        <option selected>All Job Title</option>
+                                                        <option selected value="">All Job Title</option>
                                                         {% set job_val = frappe.get_all("Designation", fields=['name']) %}
                                                         {% for i_job_val in job_val%}
                                                             <option value="{{i_job_val.name}}">{{i_job_val.name}}</option>
@@ -109,7 +109,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <div>Department</div>
                                                 <div>
                                                     <select id="i_filter_department">
-                                                        <option selected>All Department</option>
+                                                        <option value="" selected>All Department</option>
                                                         {% set dep_val = frappe.get_all("Department", fields=['name']) %}
                                                         {% for i_dep_val in dep_val%}
                                                             <option value="{{i_dep_val.name}}">{{i_dep_val.name}}</option>
@@ -121,7 +121,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <div>Role</div>
                                                 <div>
                                                     <select id="i_filter_role">
-                                                        <option selected>All Role</option>                                                        
+                                                        <option value="" selected>All Role</option>                                                        
                                                         {% for i_role_list in roleList %}
                                                             <option value="{{i_role_list}}">{{i_role_list}}</option>
                                                         {% endfor %}
@@ -132,7 +132,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <div>Office</div>
                                                 <div>
                                                     <select id="i_filter_office">
-                                                        <option selected>All Office</option>
+                                                        <option value="" selected>All Office</option>
                                                         {% set cmp_val = frappe.get_all("Branch", fields=['name']) %}
                                                         {% for i_cmp_val in cmp_val%}
                                                             <option value="{{i_cmp_val.name}}">{{i_cmp_val.name}}</option>
@@ -144,7 +144,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <div>Status</div>
                                                 <div>
                                                     <select id="i_filter_status">
-                                                        <option selected>All Status</option>
+                                                        <option value="" selected>All Status</option>
                                                         <option value="Active">Active</option>
                                                         <option value="Left">Left</option>
                                                     </select>
@@ -170,7 +170,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 </thead>                                                    
                                                 <tbody>    
                                                 {% for i_employee in employeeList %}
-                                                <tr>
+                                                <tr onclick="gotoUrl('{{i_employee.name or ''}}')">
                                                     <td>{{i_employee.first_name or ''}}</td>
                                                     <td>{{i_employee.designation or ''}}</td>
                                                     <td>{{i_employee.department or ''}}</td>
@@ -178,7 +178,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                     <td>{{i_employee.role or ''}}</td>
                                                     <td>{{i_employee.branch or ''}}</td>
                                                     <td style="width: 30px;">{{i_employee.status or ''}}</td>
-                                                    <td style="width: 30px;"><a target="_blank" href="people.html?name={{i_employee.name or ''}}">Edit</a></td>
+                                                    <td style="width: 30px;"><a href="people.html?name={{i_employee.name or ''}}">Edit</a></td>
                                                 </tr>
                                                 {% endfor %}                                            
                                                 </tbody>    
