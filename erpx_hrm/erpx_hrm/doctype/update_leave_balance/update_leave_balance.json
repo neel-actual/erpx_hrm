@@ -1,59 +1,72 @@
 {
+ "allow_import": 1,
+ "autoname": "ULB-.YYYY..MM.###",
  "creation": "2020-04-29 11:35:34.832270",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "employee",
   "employee_name",
-  "leave_allocation",
   "leave_type",
-  "from_date",
-  "to_date",
-  "current_cycle",
   "total_balance",
   "new_balance",
-  "reason"
+  "reason",
+  "col_1",
+  "posting_date",
+  "leave_allocation",
+  "from_date",
+  "to_date",
+  "current_cycle"
  ],
  "fields": [
   {
+   "fetch_from": "employee.employee_name",
    "fieldname": "employee_name",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Employee Name",
-   "reqd": 1
+   "read_only": 1
   },
   {
+   "fetch_from": "leave_allocation.leave_type",
    "fieldname": "leave_type",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Leave Type",
+   "options": "Leave Type",
    "reqd": 1
   },
   {
+   "fetch_from": "leave_allocation.from_date",
    "fieldname": "from_date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "in_list_view": 1,
    "label": "From Date",
-   "reqd": 1
+   "read_only": 1
   },
   {
+   "fetch_from": "leave_allocation.to_date",
    "fieldname": "to_date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "in_list_view": 1,
    "label": "To Date",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "new_balance",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "New Balance",
+   "precision": "1",
    "reqd": 1
   },
   {
    "fieldname": "total_balance",
    "fieldtype": "Float",
-   "label": "Total Balance"
+   "label": "Total Balance",
+   "precision": "1",
+   "read_only": 1
   },
   {
    "fieldname": "reason",
@@ -61,19 +74,40 @@
    "label": "Reason"
   },
   {
+   "fetch_from": "leave_allocation.total_leaves_allocated",
    "fieldname": "current_cycle",
    "fieldtype": "Float",
-   "label": "Current Cycle"
+   "label": "Current Cycle",
+   "precision": "1",
+   "read_only": 1
   },
   {
    "fieldname": "leave_allocation",
    "fieldtype": "Link",
    "label": "Leave Allocation",
-   "options": "Leave Allocation",
+   "options": "Leave Allocation"
+  },
+  {
+   "fieldname": "col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "leave_allocation.employee",
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
    "reqd": 1
   }
  ],
- "modified": "2020-04-29 14:43:26.380317",
+ "modified": "2020-04-30 12:38:57.822336",
  "modified_by": "Administrator",
  "module": "ERPX-HRM",
  "name": "Update Leave Balance",
@@ -81,18 +115,32 @@
  "permissions": [
   {
    "create": 1,
+   "delete": 1,
    "email": 1,
    "export": 1,
+   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "System Manager",
-   "share": 1
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "leave_allocation",
- "track_changes": 1
+ "title_field": "leave_allocation"
 }
