@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import frappe, json
 from frappe import _
-from frappe.utils import date_diff, add_months, today, getdate, add_days, flt, get_last_day, to_timedelta, now
+from frappe.utils import date_diff, add_months, today, getdate, add_days, flt, get_last_day, to_timedelta, now, nowdate
 from erpx_hrm.utils.department_approver import get_approvers
 #from erpnext.hr.doctype.leave_application.leave_application import get_leave_allocation_records
 
@@ -46,7 +46,9 @@ def notify_leave_approver(doc):
 			})
 
 @frappe.whitelist()
-def get_leave_allocation(employee, date, leave_type):
+def get_leave_allocation(employee, leave_type, date=None):
+	if not date:
+		date = today()
 	return get_leave_allocation_for_period(employee, leave_type, date, date)
 
 @frappe.whitelist()
