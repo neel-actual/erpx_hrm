@@ -73,7 +73,7 @@ function saveLeaveBalance(){
 					new_balance: new_balance,
 					total_balance: total_balance,
 					formData: {
-						employee_name: $(`#modal-update #frmUpdateLeaveBalance #employee_name`).val(),
+						employee: employee,
 						leave_type: $(`#modal-update #frmUpdateLeaveBalance #leave_type`).val(),
 						from_date: $(`#modal-update #frmUpdateLeaveBalance #from_date`).val(),
 						to_date: $(`#modal-update #frmUpdateLeaveBalance #to_date`).val(),

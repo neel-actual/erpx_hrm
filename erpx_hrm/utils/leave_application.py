@@ -81,7 +81,7 @@ def update_leave_allocation(employee, leave_allocation_name, new_balance, total_
 def get_leave_allocation_for_period(employee, leave_type, from_date, to_date):
 	leave_allocated = 0
 	leave_allocations = frappe.db.sql("""
-		select name
+		select name, from_date, to_date, total_leaves_allocated
 		from `tabLeave Allocation`
 		where employee=%(employee)s and leave_type=%(leave_type)s
 			and docstatus=1
