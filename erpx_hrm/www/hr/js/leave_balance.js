@@ -1,5 +1,4 @@
-$(document).ready(function () {
-	console.log(glb_employee);
+$(document).ready(function () {	
 	if(glb_employee!=""){
 		$('#frmUpdateLeaveBalance #hCurrentEmployeeName').val(glb_employee);
 		$("#filter_employee").val(glb_employee);
@@ -8,8 +7,83 @@ $(document).ready(function () {
 	$("#filter_employee").change(function(){
 		get_balance_summary($(this).val());	
 	});
-});
 
+	$('#file-request').change(function(){
+		if($(this).val() != ''){
+			$('#btn_import').show();
+		}else
+			$('#btn_import').hide();
+	});
+
+	//Import leave balance
+	$('#btn_import').click(function(){
+		var file = $("#file-request").get(0).files[0];
+		if (file){
+			var reader = new FileReader();
+			reader.readAsText(file, "UTF-8");
+			reader.onload = function (evt) {
+				var csv = evt.target.result;
+				if(csv){
+					var lines = csv.split(/\r\n|\n/);
+					var data = [];
+					var employee = '', leave_type = '', new_balance = '';
+					for (var j=1; j<lines.length; j++) {
+						var values = lines[j].split(','); 						
+						if(values.length != 3) continue;
+
+						employee = values[0] ? values[0] : '';
+						leave_type = values[1] ? values[1] : '';
+						new_balance = values[2] ? values[2] : '';
+
+						if(employee != '' && leave_type != '' && new_balance != ''){
+							data.push({
+								employee: employee,
+								leave_type: leave_type,
+								new_balance: new_balance
+							});
+						}
+					}					
+
+					frappe.call({
+						method: "erpx_hrm.utils.leave_application.import_update_leave_balance",
+						args: {
+							data: data													
+						},
+						callback: function (r) {
+							location.reload();	
+						}
+					});
+				}
+			}
+			reader.onerror = function (evt) {
+				M.toast({
+					html: "Error on read file content!"
+				});	
+			}
+		}else{
+			M.toast({
+				html: "Please upload file to import!"
+			});		
+		}
+	});
+});
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
 
 var get_balance_summary = function(employee){
 	$("#html_balancesummary").empty();
@@ -25,8 +99,7 @@ var get_balance_summary = function(employee){
 			let i = 0;
 			if(Object.keys(r.message.leave_allocation).length >0){
 				$.each( r.message.leave_allocation, function( key, val ) {
-					let j = i%4;
-					console.log(key);
+					let j = i%4;					
 					$(`
 						<div onclick="openUpdateLeaveBalance('${key}', '${val.total_leaves}', '${val.remaining_leaves}')" class="col s12 m6 l6 xl3 pt-2" style="min-height:200px; text-align: center;cursor: pointer;">
 							<div class="circle ${arrColor[j]}" style="width: 120px; height: 120px;">

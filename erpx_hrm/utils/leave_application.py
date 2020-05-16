@@ -97,3 +97,12 @@ def get_leave_allocation_for_period(employee, leave_type, from_date, to_date):
 	if not leave_allocations:
 		return None
 	return leave_allocations[0]
+
+@frappe.whitelist()
+def import_update_leave_balance(data):		
+	data = json.loads(data)
+	for _data in data:		
+		update_leave_balance_doc = frappe.new_doc('Update Leave Balance')
+		update_leave_balance_doc.update(_data)		
+		update_leave_balance_doc.insert(ignore_permissions=True)
+	return True

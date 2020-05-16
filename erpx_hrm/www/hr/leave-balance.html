@@ -11,6 +11,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
 <style type="text/css">
+  .file-field .file-path-wrapper{
+    width: 100%;
+    padding-left:0px !important;
+}
+.file-field .file-path-wrapper input[type=text].file-path{
+    border:none !important;
+    border-radius: 0px !important;
+}
   @media only screen and (max-width: 1460px){
   #table-scroll{
     width: 100%;
@@ -96,8 +104,23 @@ table{
           <form>
            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
            <h4 class="card-title directorytitle" style="text-align: left;">Balance</h4>
-
+           <div style="padding: 12px;float: right; cursor: pointer;"><a href="/assets/erpx_hrm/template_update_leave_balance.csv" target="_blank">Download Template to import</a></div>
            <a href="#!" class="btn-bulk-update modal-trigger waves-effect waves-light right btn-bulk hide">Bulk Update</a>
+           <p>&nbsp;</p>
+           <div class="input-field col">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Bulk Update</span>                    
+                    <input id="file-request" type="file" accept=".csv" autocomplete="off">
+                </div>                
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" autocomplete="off">
+                </div>
+                <div>
+                  <button id="btn_import" style="display: none; border-radius: 25px; width: 150px;" type="button" id="btn-add-compensate-history" class="btn waves-effect waves-light">Import</button>                  
+                </div>
+            </div>
+        </div>
 
            <div style="height: 40px;"></div>
            <div class="row margin infodetails">
@@ -120,9 +143,9 @@ table{
           <br>
           <div class="card-title hide" style="text-align: left;margin-left: 25px;">Balance Change History</div>
           <div style="height: 5px"></div>
-          <div class="col x2 l6 m6 s5 hide">
+          <div class="col x2 l6 m6 s5">
            <div class="row margin infodetails">
-            <div class="input-field col s12 m4 ">
+            <div class="input-field col s12 m4 hide">
               <p style="margin-bottom: 10px;">Type</p>
               <select style="padding-left: 10px; width: 10px;">
                 <option value="" selected>All type</option>
@@ -135,8 +158,8 @@ table{
         </div>
         <br>
       </form>
-      <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
-      <ul id="collapse-table" class="collapsible hide">
+      <div id="table-scroll" class="form-field col s12 hide" style="padding-right: 0;">
+      <ul id="collapse-table" class="collapsible">
               <li>
                 <table style="font-size: 14px;" >
                   <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
@@ -206,7 +229,7 @@ table{
 <div id="modal-update" class="modal modal-fixed-footer">
   <div class="modal-content" style="padding: 0px !important; ">
     <p class="edit-title">Update Leave Balance</p>
-
+    
     <form class="col s12" style="padding: 24px;" id="frmUpdateLeaveBalance">
       <input type="hidden" id="hCurrentEmployeeName" value="" />
       <input type="hidden" id="hLeave_allocation_name" value="" />      
