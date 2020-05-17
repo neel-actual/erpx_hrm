@@ -141,7 +141,7 @@ table{
             </div>
           </div>
           <br>
-          <div class="card-title hide" style="text-align: left;margin-left: 25px;">Balance Change History</div>
+          <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Change History</div>
           <div style="height: 5px"></div>
           <div class="col x2 l6 m6 s5">
            <div class="row margin infodetails">
@@ -158,7 +158,7 @@ table{
         </div>
         <br>
       </form>
-      <div id="table-scroll" class="form-field col s12 hide" style="padding-right: 0;">
+      <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
       <ul id="collapse-table" class="collapsible">
               <li>
                 <table style="font-size: 14px;" >
@@ -172,26 +172,23 @@ table{
                   </tr>
                 </table>
               </li>
+              {% for update_leave_balance in list_update_leave_balance%}
               <li>
                 <div class="collapsible-header" style="padding: 0 !important;">
                   <table>
                     <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                       <td style="width: 300px;">
-                        Sick
+                        {{update_leave_balance.leave_type}}
                       </td>
-                      <td>12 May 2019</td>
+                      <td>{{update_leave_balance.posting_date}}</td>
                       <td>
-                        14 days
+                        {{update_leave_balance.current_cycle}} days
                       </td>
-                      <td>12 days</td>
-
-
-
+                      <td>{{update_leave_balance.new_balance}} days</td>
                     </tr>
                   </table>
                 </div>
                 <div class="collapsible-body" style="padding:0 !important;">
-
                   <div>
                     <table>
                       <tbody style="border:none !important;">
@@ -203,22 +200,17 @@ table{
                           :
                         </td>
                         <td >
-                          fever
+                          {{update_leave_balance.reason or ''}}
                         </td>
                       </tr>
-
                       </tbody>
                     </table>
-
                   </div>
-
-
                 </div>
               </li>
-
+              {% endfor %}
               </ul>
             </div>
-
   </div>
 </div>
 </div>
