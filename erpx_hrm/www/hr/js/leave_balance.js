@@ -1,11 +1,13 @@
 $(document).ready(function () {	
 	if(glb_employee!=""){
 		$('#frmUpdateLeaveBalance #hCurrentEmployeeName').val(glb_employee);
-		$("#filter_employee").val(glb_employee);
+		$("#filter_employee").val(glb_employee).formSelect();
 		get_balance_summary(glb_employee);
+		get_balance_history_change(glb_employee);
 	}
 	$("#filter_employee").change(function(){
 		get_balance_summary($(this).val());	
+		get_balance_history_change($(this).val());
 	});
 
 	$('#file-request').change(function(){
@@ -158,7 +160,8 @@ function saveLeaveBalance(){
 				},
 				callback: function (r) {
 					$('#modal-update').modal('close');
-					get_balance_summary(employee);										
+					get_balance_summary(employee);
+					get_balance_history_change(employee);										
 				}
 			});			
 		}
@@ -201,4 +204,76 @@ function openUpdateLeaveBalance(leave_type, currentBalance, remainBalance){
 		$('#modal-update').modal('open');
 	}
 	
+}
+
+var get_balance_history_change = function(employee){
+	if(!employee || employee == '')	return;
+	
+	$("#collapse-table").html(`
+		<li>
+                <table style="font-size: 14px;" >
+                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
+
+                    <th style="border-right:none!important;width: 300px;">Type</th>
+                    <th style="border-right:none!important;">Updated Date</th>
+                    <th style="border-right:none!important;">Before</th>
+                    <th style="border-right:none!important;">After</th>
+
+                  </tr>
+                </table>
+              </li>  
+	`);
+	frappe.call({
+        method: "erpx_hrm.utils.leave_application.get_balance_history",
+        args: {
+			employee: employee			
+        },
+        callback: function (r) {			
+			let i = 0;
+			if(r.message)
+				if(Object.keys(r.message).length >0){
+					$.each( r.message, function( key, val ) {					
+						$(`
+						<li>
+						<div class="collapsible-header" style="padding: 0 !important;">
+						<table>
+							<tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+							<td style="width: 300px;">
+							${val.leave_type || ''}
+							</td>
+							<td>${val.posting_date || ''}</td>
+							<td>
+							${val.current_cycle || ''} days
+							</td>
+							<td>${val.new_balance || ''} days</td>
+							</tr>
+						</table>
+						</div>
+						<div class="collapsible-body" style="padding:0 !important;">
+						<div>
+							<table>
+							<tbody style="border:none !important;">
+							<tr style="font-size: 13px;">
+								<td style="width: 100px;">
+								Reason
+								</td>
+								<td style="width: 50px;">
+								:
+								</td>
+								<td >
+								${val.reason || ''}
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+						</div>
+					</li>
+						`).appendTo($("#collapse-table"));
+					});
+				}else{
+					$("#collapse-table").empty();
+				}		
+        }
+    });
 }

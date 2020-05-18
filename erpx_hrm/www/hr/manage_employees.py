@@ -9,7 +9,7 @@ def get_context(context):
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
     
-    context.roleList = ["HR Manager", "Expense Approver", "Expense Verified", "Leave Approver", "Employee"]
+    context.roleList = ["HR Manager", "Expense Approver", "Expense Verified", "Leave Approver", "Employee", "Payroll Approval"]
     employees = frappe.db.sql("""
         select e.name, e.first_name, e.designation, e.department, e.reports_to, e.branch, e.status, group_concat(' ', r.role) as 'role' from `tabEmployee` e
         left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest')
@@ -36,5 +36,7 @@ def getHighestRole(roles):
         return "Expense Verified"        
     elif roles.find("Leave Approver") > -1:
         return "Leave Approver"        
+    elif roles.find("Payroll Approval") > -1:
+        return "Payroll Approval"        
     elif roles.find("Employee") > -1:
         return "Employee"        
