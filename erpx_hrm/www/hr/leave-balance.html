@@ -11,6 +11,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/fullcalendar/css/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/app-calendar.css">
 <style type="text/css">
+  .file-field .file-path-wrapper{
+    width: 100%;
+    padding-left:0px !important;
+}
+.file-field .file-path-wrapper input[type=text].file-path{
+    border:none !important;
+    border-radius: 0px !important;
+}
   @media only screen and (max-width: 1460px){
   #table-scroll{
     width: 100%;
@@ -96,14 +104,29 @@ table{
           <form>
            <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
            <h4 class="card-title directorytitle" style="text-align: left;">Balance</h4>
-
+           <div style="padding: 12px;float: right; cursor: pointer;"><a href="/assets/erpx_hrm/template_update_leave_balance.csv" target="_blank">Download Template to import</a></div>
            <a href="#!" class="btn-bulk-update modal-trigger waves-effect waves-light right btn-bulk hide">Bulk Update</a>
+           <p>&nbsp;</p>
+           <div class="input-field col">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Bulk Update</span>                    
+                    <input id="file-request" type="file" accept=".csv" autocomplete="off">
+                </div>                
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" autocomplete="off">
+                </div>
+                <div>
+                  <button id="btn_import" style="display: none; border-radius: 25px; width: 150px;" type="button" id="btn-add-compensate-history" class="btn waves-effect waves-light">Import</button>                  
+                </div>
+            </div>
+        </div>
 
            <div style="height: 40px;"></div>
            <div class="row margin infodetails">
             <div class="input-field col s12 m18 ">
               <p style="margin-bottom: 10px;">Employee</p>
-              <select style="padding-left: 10px; width: 10px;" id="filter_employee">
+              <select style="padding-left: 10px; width: 10px;" id="filter_employee" autocomplete="off">
                 <option value="" disabled selected>Select employee</option>
                 {% for employee in list_employee%}
                     <option value="{{employee.name}}">{{employee.employee_name}}</option>
@@ -118,11 +141,11 @@ table{
             </div>
           </div>
           <br>
-          <div class="card-title hide" style="text-align: left;margin-left: 25px;">Balance Change History</div>
+          <div class="card-title" style="text-align: left;margin-left: 25px;">Balance Change History</div>
           <div style="height: 5px"></div>
-          <div class="col x2 l6 m6 s5 hide">
+          <div class="col x2 l6 m6 s5">
            <div class="row margin infodetails">
-            <div class="input-field col s12 m4 ">
+            <div class="input-field col s12 m4 hide">
               <p style="margin-bottom: 10px;">Type</p>
               <select style="padding-left: 10px; width: 10px;">
                 <option value="" selected>All type</option>
@@ -136,7 +159,7 @@ table{
         <br>
       </form>
       <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
-      <ul id="collapse-table" class="collapsible hide">
+      <ul id="collapse-table" class="collapsible">
               <li>
                 <table style="font-size: 14px;" >
                   <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
@@ -149,26 +172,23 @@ table{
                   </tr>
                 </table>
               </li>
+              {% for update_leave_balance in list_update_leave_balance%}
               <li>
                 <div class="collapsible-header" style="padding: 0 !important;">
                   <table>
                     <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                       <td style="width: 300px;">
-                        Sick
+                        {{update_leave_balance.leave_type}}
                       </td>
-                      <td>12 May 2019</td>
+                      <td>{{update_leave_balance.posting_date}}</td>
                       <td>
-                        14 days
+                        {{update_leave_balance.current_cycle}} days
                       </td>
-                      <td>12 days</td>
-
-
-
+                      <td>{{update_leave_balance.new_balance}} days</td>
                     </tr>
                   </table>
                 </div>
                 <div class="collapsible-body" style="padding:0 !important;">
-
                   <div>
                     <table>
                       <tbody style="border:none !important;">
@@ -180,27 +200,75 @@ table{
                           :
                         </td>
                         <td >
-                          fever
+                          {{update_leave_balance.reason or ''}}
                         </td>
                       </tr>
-
                       </tbody>
                     </table>
-
                   </div>
-
-
                 </div>
               </li>
-
+              {% endfor %}
               </ul>
             </div>
-
   </div>
 </div>
 </div>
 </div>
 </div>
+
+<!-- Update Leave balance popup -->
+<div id="modal-update" class="modal modal-fixed-footer">
+  <div class="modal-content" style="padding: 0px !important; ">
+    <p class="edit-title">Update Leave Balance</p>
+    
+    <form class="col s12" style="padding: 24px;" id="frmUpdateLeaveBalance">
+      <input type="hidden" id="hCurrentEmployeeName" value="" />
+      <input type="hidden" id="hLeave_allocation_name" value="" />      
+      <div class="row">
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Employee Name</p>          
+          <input type="text" id="employee_name" readonly="readonly" data-fieldname="employee_name" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Leave Type</p>          
+          <input type="text" id="leave_type" readonly="readonly" data-fieldname="leave_type" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>From date</p>          
+          <input type="text" id="from_date" readonly="readonly" data-fieldname="from_date" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>To date</p>          
+          <input type="text" id="to_date" readonly="readonly" data-fieldname="to_date" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Current Cycle</p>          
+          <input type="text" id="current_cycle" readonly="readonly" data-fieldname="current_cycle" style="width: -webkit-fill-available !important;">          
+        </div>        
+        <div class="input-field col s12 m12 l6 xl6" style="margin-top: 0px;">
+          <p>Total balance</p>          
+          <input type="text" id="total_balance" readonly="readonly" data-fieldname="total_balance" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l12 xl12" style="margin-top: 0px;">
+          <p>New balance</p>          
+          <input type="text" id="new_balance" data-fieldname="new_balance" style="width: -webkit-fill-available !important;">          
+        </div>
+        <div class="input-field col s12 m12 l12 xl12" style="margin-top: 0px;">
+          <p>Reason</p>          
+          <textarea id="reason" data-fieldname="reason" rows="6" cols="60"></textarea>         
+        </div>
+        <p></p>        
+      </div>    
+  </form>
+</div>
+<div class="modal-footer">
+ <a onclick="saveLeaveBalance()" href="#" class="right waves-effect waves-light btn">Save</a>
+ <a href="#" class="right blue-text btn-flat"
+ onclick="$('#modal-update').modal('close')">Cancel</a>
+</div>
+</div>
+
 {% endblock %}
 
 </div>
