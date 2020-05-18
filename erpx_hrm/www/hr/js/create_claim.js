@@ -73,7 +73,7 @@ $("#add_claim").click(function(){
         }else{
             index = parseInt(dt.row(':last').data()[0]) + 1 
         }
-        var row = $('<tr><td class="index">'+index+'</td><td>'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td>'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td></tr>')
+        var row = $('<tr><td class="index">'+index+'</td><td>'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td></tr>')
         dt.row.add(row).draw();
         var data = dt.rows().data();
         var total = 0
@@ -86,7 +86,8 @@ $("#add_claim").click(function(){
         M.toast({
         html: 'Expense Added Successfuly!'
         })
-        $('#claim_form').trigger("reset");        
+        $('#claim_form').trigger("reset");   
+        document.getElementById("sel_date").value = today;     
     } else {
         // do stuff if form is not valid
         alert("Please Fill Form Data Properly")
@@ -203,7 +204,7 @@ $("#save_claim").click(async function(){
                                         M.toast({
                                             html: "File Attached Successfully!"
                                         })
-                                        location.reload();
+                                        window.location.replace("/hr/my-claims")
                                     }
                                 }
                             });
@@ -215,6 +216,7 @@ $("#save_claim").click(async function(){
                 M.toast({
                     html: 'Claim '+doc.name+' Created Successfully!'
                 })
+                window.location.replace("/hr/my-claims")
             }
         }
     });

@@ -141,7 +141,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             </tr>
                         </thead>
                         <tbody>
-                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*']) %}
+                            {% set exp_list = frappe.get_list("Expense Claim", fields=['*']) %}
                             {% for i_exp_list in exp_list %}
                                 <tr>
                                     <!-- <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td> -->

@@ -123,7 +123,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <th style="border-right:none!important;">Status</th>
                 </tr>
               </thead>
-                {% set expense1 = frappe.get_all("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date']) %}
+                {% set expense1 = frappe.get_list("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date'],) %}
               <tbody>
                 {% for ex in expense1 %}
                
