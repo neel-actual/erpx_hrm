@@ -20,12 +20,7 @@ def get_context(context):
 			frappe.PermissionError)
     
     context.list_employee = frappe.db.get_all("Employee", filters={"status":"Active"}, fields=['name','employee_name','employment_type','image','reports_to'])
-    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
-
-    #Get list of Update Leave Balance
-    list_update_leave_balance = ""
-    if employee:
-        list_update_leave_balance = frappe.db.get_all("Update Leave Balance", filters={"employee": employee}, fields=['leave_type','posting_date','current_cycle','new_balance','reason'])
-    context.list_update_leave_balance = list_update_leave_balance
+    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])    
 
     return context
+
