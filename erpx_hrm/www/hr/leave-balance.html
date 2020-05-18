@@ -126,7 +126,7 @@ table{
            <div class="row margin infodetails">
             <div class="input-field col s12 m18 ">
               <p style="margin-bottom: 10px;">Employee</p>
-              <select style="padding-left: 10px; width: 10px;" id="filter_employee">
+              <select style="padding-left: 10px; width: 10px;" id="filter_employee" autocomplete="off">
                 <option value="" disabled selected>Select employee</option>
                 {% for employee in list_employee%}
                     <option value="{{employee.name}}">{{employee.employee_name}}</option>
