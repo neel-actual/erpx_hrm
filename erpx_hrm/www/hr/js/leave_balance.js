@@ -1,7 +1,7 @@
 $(document).ready(function () {	
 	if(glb_employee!=""){
 		$('#frmUpdateLeaveBalance #hCurrentEmployeeName').val(glb_employee);
-		$("#filter_employee").val(glb_employee);
+		$("#filter_employee").val(glb_employee).formSelect();
 		get_balance_summary(glb_employee);
 		get_balance_history_change(glb_employee);
 	}
