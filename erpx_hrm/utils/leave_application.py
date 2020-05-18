@@ -106,3 +106,10 @@ def import_update_leave_balance(data):
 		update_leave_balance_doc.update(_data)		
 		update_leave_balance_doc.insert(ignore_permissions=True)
 	return True
+
+@frappe.whitelist()
+def get_balance_history(employee):	
+    list_update_leave_balance = ""
+    if employee:
+        list_update_leave_balance = frappe.db.get_all("Update Leave Balance", filters={"employee": employee}, fields=['leave_type','posting_date','current_cycle','new_balance','reason'])
+    return list_update_leave_balance or None

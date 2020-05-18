@@ -159,56 +159,9 @@ table{
         <br>
       </form>
       <div id="table-scroll" class="form-field col s12" style="padding-right: 0;">
-      <ul id="collapse-table" class="collapsible">
-              <li>
-                <table style="font-size: 14px;" >
-                  <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
-
-                    <th style="border-right:none!important;width: 300px;">Type</th>
-                    <th style="border-right:none!important;">Updated Date</th>
-                    <th style="border-right:none!important;">Before</th>
-                    <th style="border-right:none!important;">After</th>
-
-                  </tr>
-                </table>
-              </li>
-              {% for update_leave_balance in list_update_leave_balance%}
-              <li>
-                <div class="collapsible-header" style="padding: 0 !important;">
-                  <table>
-                    <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
-                      <td style="width: 300px;">
-                        {{update_leave_balance.leave_type}}
-                      </td>
-                      <td>{{update_leave_balance.posting_date}}</td>
-                      <td>
-                        {{update_leave_balance.current_cycle}} days
-                      </td>
-                      <td>{{update_leave_balance.new_balance}} days</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="collapsible-body" style="padding:0 !important;">
-                  <div>
-                    <table>
-                      <tbody style="border:none !important;">
-                      <tr style="font-size: 13px;">
-                        <td style="width: 100px;">
-                          Reason
-                        </td>
-                        <td style="width: 50px;">
-                          :
-                        </td>
-                        <td >
-                          {{update_leave_balance.reason or ''}}
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </li>
-              {% endfor %}
+      <ul id="collapse-table" class="collapsible">                          
+              
+              
               </ul>
             </div>
   </div>
