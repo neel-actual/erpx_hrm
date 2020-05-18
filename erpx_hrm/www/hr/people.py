@@ -38,7 +38,7 @@ def get_context(context):
     context.reportToImage = reportToImage
 
     #Check permission   
-    beep_roles = ["HR Manager", "Expense Approver", "Expense Verified", "Leave Approver","Employee"]
+    beep_roles = ["HR Manager", "Expense Approver", "Expense Verified", "Leave Approver","Employee", "Payroll Approval"]
     user_role_list = frappe.db.sql_list("""
 							select r.role from `tabUser` u
                             left join `tabHas Role` r ON  r.parent = u.name
