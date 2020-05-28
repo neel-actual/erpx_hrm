@@ -315,7 +315,7 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type']) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
                             title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
@@ -333,7 +333,7 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department,"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
                             title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
@@ -351,7 +351,7 @@ request is approved.</p>
                 editable: true,
                 eventLimit: true,
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee, "status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
                             title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',

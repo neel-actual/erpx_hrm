@@ -18,7 +18,7 @@ def on_update(doc, method):
 
 def employee_add_user_permission(doc, user_id):
 
-	if not has_permission('User Permission', ptype='write', raise_exception=False): return
+	# if not has_permission('User Permission', ptype='write', raise_exception=False): return
 
 	employee_user_permission_exists = frappe.db.exists('User Permission', {
 		'allow': 'Employee',
