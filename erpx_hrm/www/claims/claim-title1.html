@@ -105,10 +105,11 @@
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
                     <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['employee_name'])%}<a href="#">Verifier : {{employee_name[0].employee_name}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['image'])%}
+                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
+                      
                       {% for file in employee_pic %}    
-                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.user_image}}">
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
@@ -126,10 +127,10 @@
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
                     <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_approver},fields=['employee_name'])%}<a href="#">Approver : {{employee_name[0].employee_name}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'user_id':exp.expense_approver},fields=['image'])%}
+                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_approver},fields=['user_image'])%}
                       {% for file in employee_pic %}    
-                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.user_image}}">
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
