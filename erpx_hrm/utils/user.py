@@ -23,6 +23,9 @@ def upload_user_image():
 	file = frappe.handler.uploadfile()
 	if file:
 		frappe.db.set_value(doctype, docname, "user_image", file.file_url)
+		if frappe.db.get_value("Employee",{'user_id':docname},"name"):
+			frappe.db.set_value("Employee", frappe.db.get_value("Employee",{'user_id':docname},"name"), "image", file.file_url)
+
 
 	return file
 

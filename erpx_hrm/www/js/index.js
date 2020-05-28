@@ -105,6 +105,26 @@ $(document).ready(function () {
 					} catch (e) { reject(e); }
 				});
 			},
+			custom_update: function (doctype, data) {
+				var name,
+					clone = Object.assign({}, data);
+
+				return new Promise(function (resolve, reject) {
+					try {
+						name = clone.name;
+						delete clone.name; //do not update name
+						frappe.call({
+							method: 'erpx_hrm.api.set_value_custom',
+							args: {
+								doctype: doctype,
+								name: name,
+								fieldname: clone
+							},
+							callback: resolve
+						});
+					} catch (e) { reject(e); }
+				});
+			},
 			get_single_child:function (doctype,fields) {
 				// var name,
 				// 	clone = Object.assign({}, data);

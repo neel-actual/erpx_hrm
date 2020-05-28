@@ -42,9 +42,21 @@
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
-{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type']) %}
+{% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type','remark']) %}
 {% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document"])%}
 {% endif %}
+<script>
+  window.frappe = {};
+  frappe.ready_events = [];
+  frappe.ready = function (fn) {
+      frappe.ready_events.push(fn);
+  };
+  window.dev_server = 1;
+  window.socketio_port = 9000;
+  frappe.user = "{{ user }}"
+  frappe.csrf_token = "{{ csrf_token }}";
+  frappe.roles = {{ roles }};
+</script>
 <div id="main">
  <div class="row" id="DivIdToPrint">
   <div class="container">
@@ -92,11 +104,12 @@
                 
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
-                    <td><a href="#">Verifier : {{exp.expense_verifier}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['image'])%}
+                    <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['employee_name'])%}<a href="#">Verifier : {{employee_name[0].employee_name}}</a></td>
+                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
+                      
                       {% for file in employee_pic %}    
-                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.user_image}}">
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
@@ -113,11 +126,11 @@
                 
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
-                    <td><a href="#">Approver : {{exp.expense_approver}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'user_id':exp.expense_approver},fields=['image'])%}
+                    <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_approver},fields=['employee_name'])%}<a href="#">Approver : {{employee_name[0].employee_name}}</a></td>
+                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_approver},fields=['user_image'])%}
                       {% for file in employee_pic %}    
-                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                      {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
+                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.user_image}}">
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
@@ -169,8 +182,17 @@
                 {% endfor %}</p>
               <span style="font-size: 12px;text-align: right;">Total claim amount</span>
             </div>
+            
 
           </div>
+          {% for ap in expense_claim %}
+            {% if ap.status == 'Rejected'%}
+            <hr>
+            <div class="center" style="color: #EB048C;">
+              {{ap.remark}}
+            </div>
+            {% endif %}
+            {% endfor %}
           
         </div>
       </div>
@@ -239,20 +261,31 @@
 
 {% for ap in expense_claim %}
 
-{% if ap.approval_status == "Draft" %}
+{% if ((ap.approval_status == "Draft") and ('Expense Verified' in roles)) %}
 <a href="#add-approver" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="modal-trigger waves-effect waves-light right btn-approve" id="add_approver">Verify</a>
-{% elif ap.approval_status == "Verified" %}
+  class="modal-trigger waves-effect waves-light right btn-approve" id="" >Verify</a>
+  <a href="#reject_veri" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+  class="modal-trigger waves-effect waves-light right btn-approve" id="" >Decline</a>
+  {% endif %}
+  
+{% if ((ap.approval_status == "Verified") and ('Expense Approver' in roles))  %}
 <div class="row margin infodetails" style="display: block;">
   <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
   class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
-  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
   class="modal-trigger waves-effect waves-light right btn-approve" id="approve">Approve</a>
-  <a href="#" style=" background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="modal-trigger waves-effect waves-dark right" id="decline">Decline</a></div>
+  <a href="#decline_approve" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+  class="modal-trigger waves-effect waves-dark right" id="decline_modal">Decline</a>
+   </div>
 </div>
+{% endif %}
 
-{% elif ap.status == "Unpaid" and ap.reimbursement_type == "Direct Payment" %}
+{% if ((ap.approval_status != "Draft") and (('Expense Verified' in roles)))  %}
+  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+  class="waves-effect waves-light right btn-approve" id="print_page">Print</a> 
+{% endif %}
+
+{% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('HR Manager' in roles)) %}
 <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
   class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
 {% endif %}
@@ -290,6 +323,51 @@
  <a href="#!" class="right waves-effect waves-light btn" id = "assign_appeover">Save</a>
  <a href="#!" class="right blue-text btn-flat"
  onclick="$('#add-approver').modal('close')">Cancel</a>
+</div>
+</div>
+
+
+<div id="reject_veri" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+  <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+   <p class="edit-title">Add Remark</p>
+   <form class="col s12" style="padding: 24px; padding-top: 0px;" id = "reject_pop">
+     <div class="row">
+
+      <div class="input-field col s12">
+        <p style="margin-bottom: 10px;">Remark Note</p>
+        
+        <textarea type="text" id="reject_remark"></textarea>
+        
+      </div>
+  </div>
+</form>
+</div>
+<div class="modal-footer" style="background-color: #fff !important;">
+ <a href="#!" class="right waves-effect waves-light btn" id = "reject_verification">Save</a>
+ <a href="#!" class="right blue-text btn-flat"
+ onclick="$('#reject_veri').modal('close')">Cancel</a>
+</div>
+</div>
+
+<div id="decline_approve" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+  <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+   <p class="edit-title">Add Remark</p>
+   <form class="col s12" style="padding: 24px; padding-top: 0px;" id = "reject_pop">
+     <div class="row">
+
+      <div class="input-field col s12">
+        <p style="margin-bottom: 10px;">Remark Note</p>
+        
+        <textarea type="text" id="decline_remark"></textarea>
+        
+      </div>
+  </div>
+</form>
+</div>
+<div class="modal-footer" style="background-color: #fff !important;">
+ <a href="#!" class="right waves-effect waves-light btn" id = "decline">Save</a>
+ <a href="#!" class="right blue-text btn-flat"
+ onclick="$('#decline_approve').modal('close')">Cancel</a>
 </div>
 </div>
 {% endblock %}
