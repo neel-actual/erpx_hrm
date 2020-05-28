@@ -3,6 +3,27 @@ import frappe, json
 from frappe import _
 from frappe.permissions import add_user_permission, remove_user_permission, \
 	set_user_permission_if_allowed, has_permission
+	
+@frappe.whitelist()
+def upload_employee_image():
+
+	doctype = "Employee"
+	docname = frappe.form_dict.docname
+
+	frappe.form_dict.from_form = 1
+	frappe.form_dict.doctype = doctype
+	frappe.form_dict.folder = "Home"
+
+	#Delete all files
+	for fid in [ d.name for d in frappe.get_all("File", fields=["name"], filters={"attached_to_doctype": doctype, "attached_to_name": docname})]:
+		frappe.delete_doc('File', fid)
+
+	# Upload file
+	file = frappe.handler.uploadfile()
+	if file:
+		frappe.db.set_value(doctype, docname, "image", file.file_url)
+
+	return file
 
 @frappe.whitelist()
 def on_update(doc, method):
@@ -18,7 +39,7 @@ def on_update(doc, method):
 
 def employee_add_user_permission(doc, user_id):
 
-	if not has_permission('User Permission', ptype='write', raise_exception=False): return
+	# if not has_permission('User Permission', ptype='write', raise_exception=False): return
 
 	employee_user_permission_exists = frappe.db.exists('User Permission', {
 		'allow': 'Employee',

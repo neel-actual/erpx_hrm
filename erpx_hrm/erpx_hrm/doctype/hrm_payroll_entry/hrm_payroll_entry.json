@@ -15,6 +15,7 @@
   "status",
   "section_break_8",
   "payroll_details",
+  "remark",
   "totals_section",
   "total_net_pay",
   "total_epf",
@@ -72,6 +73,11 @@
    "label": "Payroll Details",
    "options": "Pay Detail"
   },
+  {
+    "fieldname": "remark",
+    "fieldtype": "Small Text",
+    "label": "Remark"
+   },
   {
    "fieldname": "totals_section",
    "fieldtype": "Section Break",
