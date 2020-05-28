@@ -304,7 +304,8 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 
 {% block scripts %}
 <script>
-  frappe.csrf_token = "{{ csrf_token }}";  
+  frappe.csrf_token = "{{ csrf_token }}"; 
+  var glb_employee_name = "{{ employee_name }}"; 
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"
 type="text/javascript"></script>
@@ -315,67 +316,5 @@ type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script type="text/javascript">
-  function list(){
-    var list = document.getElementById('list');
-    var card = document.getElementById('card');
-    var btn_list = document.getElementById('btn_list');
-    var btn_card = document.getElementById('btn_card');
-    list.style.display = "block";
-    card.style.display = "none";
-    btn_list.classList.add('active');
-    btn_card.classList.remove('active');
-  }
-
-  function card(){
-    var list = document.getElementById('list');
-    var card = document.getElementById('card');
-    var btn_list = document.getElementById('btn_list');
-    var btn_card = document.getElementById('btn_card');
-    list.style.display = "none";
-    card.style.display = "block";
-    btn_list.classList.remove('active');
-    btn_card.classList.add('active');
-  }
-
-  function profile(){
-    var people_list = document.getElementById('peoplelist');
-    var profile = document.getElementById('profile');
-    people_list.style.display = "none";
-    profile.style.display = "block";
-  }
-
-  function removeDefault(){
-    var default_indicator = document.getElementsByClassName('default-indicator')[0];
-    var indicator = document.getElementsByClassName('indicator')[0];
-    default_indicator.style.display = "none";
-    indicator.style.display = "block";
-  }
-
-  function employee_edit(){
-    var emp_edit = document.getElementById('employee_btn');
-    var bank_edit = document.getElementById('bank_btn');
-    emp_edit.style.display = "block";
-    bank_edit.style.display = "none";
-
-  }
-
-  function bank_edit(){
-    var emp_edit = document.getElementById('employee_btn');
-    var bank_edit = document.getElementById('bank_btn');
-    emp_edit.style.display = "none";
-    bank_edit.style.display = "block";
-  }
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    //var instances = M.Dropdown.init(elems, options);
-  });
-
-  // Or with jQuery
-
-  $('.dropdown-trigger').dropdown();
-</script>
-<!-- <script defer src="/hr/js/people_dir.js" type="text/javascript"></script> -->
+<script defer src="/hr/js/people.js" type="text/javascript"></script>
 {% endblock %}

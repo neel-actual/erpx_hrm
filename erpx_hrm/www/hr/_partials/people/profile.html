@@ -10,7 +10,16 @@
     </div>
     <br>
     <div class="col s12 m12 l12 xl4 force-center">
-      <p><img src="{{employeeImage or '/images/profile_icon.png'}}" width="200" height="200"/></p>
+      <p><img src="{{employeeImage or '/images/profile_icon.png'}}" width="200"/></p>
+      <div class="btn file-field input-field waves-effect waves-light" style="">
+          <div class="">
+              <span>Upload Photo</span>
+              <input id="file-acc" type='file' accept='image/*'>
+          </div>
+          <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+          </div>
+      </div>
     </div>
 
     <div class="col s6 m6 l6 xl4" >
