@@ -18,7 +18,8 @@ def get_context(context):
         if not employee:
             frappe.throw(_('{0} not exist').format(', '.join(name)))
     else:    
-        employee = frappe.new_doc("Employee")    
+        employee = frappe.new_doc("Employee")  
+    context.employee_name = name
     context.employee = employee or None
     context.series = ["BAYO-BOD-.###", "BAYO-DIR-.###", "BAYO-CON-.###", "BAYO-.YY.MM.-.###"]    
     context.maritalStatus = ["Single", "Married", "Divorced", "Widowed"]
@@ -98,7 +99,7 @@ def get_context(context):
     #Employee's image
     employeeImage = ""
     if employee:
-        employeeImage = frappe.get_value("User", employee.user_id, "user_image") 
+        employeeImage = employee.image
     context.employeeImage = employeeImage
 
     return context
