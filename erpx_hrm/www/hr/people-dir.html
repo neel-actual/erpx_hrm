@@ -85,20 +85,60 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                     <img width="22" height="22" class="sidenav-icon" src="/icons/people.png">
 
                                     <h4 class="card-title directorytitle" style="display: inline;">Directory</h4>
+                                    {% if isHRManagerRole %}
                                     <a href="/hr/manage-employees"
                                     class="modal-trigger waves-effect waves-light right mn-emp">Manage Employees</a>
+                                    {% endif %}
                                     <div class="row">
                                         <div class="col s12">
-                                            <div class="col s12 m6 l2 xl2">
+                                            <!--<div class="col s12 m6 l2 xl2">
                                                 <a href="#create-filter.modal" class="modal-trigger waves-effect waves-light btn btn-small " style="margin: 10px 0px;float: left;width: -webkit-fill-available">Filter Option</a>
-                                            </div>
-                                            <div id="page-length-option_filter" class="dataTables_filter col s12 m6 l4 xl4" style="left: 160px;top: unset;margin-top: 10px;position: unset;margin-left: 0px;"><label style="display: flex; font-size: 15px;">Search:<input type="search" class="" id="search_i" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 10px;"></label></div>
+                                            </div>-->
+                                            <div id="page-length-option_filter" class="dataTables_filter col s12 m6 l4 xl4" style="left: 260px;top: unset;margin-top: 10px;position: unset;margin-left: 16px;">
+                                                <label style="display: flex; font-size: 15px;">Search:<input type="search" class="" id="search_i" placeholder="" aria-controls="page-length-option" style="height: 20px;margin-left: 5px;"></label></div>
                                             <div class="toggle-options col s12 m6 l3 xl3 switch_btn" style="display: inline;float: right;margin-top: 10px;padding: 0;">
-
                                                 <a class="waves-effect waves-light btn btn-small" style="border-radius: unset;float: right;height: 40px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;"><i class="material-icons" style="vertical-align: -10px;font-size: 20px;">view_module</i></a>
                                                 <a class="waves-effect waves-light btn btn-small active" style="border-radius: unset;float: right;height: 40px;border-bottom-left-radius: 10px;border-top-left-radius: 10px;"><i class="material-icons" style="vertical-align: -10px;font-size: 20px;">format_list_bulleted</i></a>
                                             </div>
-                                            
+                                            <div class="row">
+                                                    <div class="col s12">                                                        
+                                                        <div class="input-field col s12 m3 l3 xl2">
+                                                            <div>Department</div>
+                                                            <div>
+                                                                <select id="i_filter_department">
+                                                                    <option value="" selected>All Department</option>
+                                                                    {% set dep_val = frappe.get_all("Department", fields=['name']) %}
+                                                                    {% for i_dep_val in dep_val%}
+                                                                        <option value="{{i_dep_val.name}}">{{i_dep_val.name}}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>                                                        
+                                                        <div class="input-field col s12 m3 l3 xl2">
+                                                            <div>Office</div>
+                                                            <div>
+                                                                <select id="i_filter_office">
+                                                                    <option value="" selected>All Office</option>
+                                                                    {% set cmp_val = frappe.get_all("Branch", fields=['name']) %}
+                                                                    {% for i_cmp_val in cmp_val%}
+                                                                        <option value="{{i_cmp_val.name}}">{{i_cmp_val.name}}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-field col s12 m3 l3 xl2">
+                                                            <div>Status</div>
+                                                            <div>
+                                                                <select id="i_filter_status">
+                                                                    <option value="" selected>All Status</option>
+                                                                    <option value="Active">Active</option>
+                                                                    <option value="Left">Left</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-field col s12 m2"></div>
+                                                    </div>
+                                                </div>
 
                                             <div class="list-section">
                                                 <table id="user-table" class="dataTable display">
@@ -186,13 +226,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                 <p>Marketing manager</p>
                                             </span>
                                         </div>
-                                        <div class="card-content">
+                                        <div class="card-content">                                            
                                             <div class="dictionary-info1" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/position_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;"></span></div>
                                             <div class="dictionary-info2" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/location_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;"></span></div>
                                             <div class="dictionary-info3" style="margin: 10px 0px;"><p style="display: inline;position: absolute;"><img style="width: 20px;" src="/images/phone_icon.png"/></p><span style="display: inline-flex;left: 30px;margin-left: 30px;margin-bottom: 5px;">+60 13 4567 8901</span></div>
                                         </div>
                                         <div class="card-action">
-                                            <a href="#send-email.modal" class="blue-text">Send Email</a>
+                                            <input type="hidden" class="personal_email" value="" />
+                                            <a onclick="setRecipientEmail(this)" href="#modal-send-mail" class="modal-trigger blue-text">Send Email</a>
                                         </div>
 
                                     </div>
@@ -214,6 +255,27 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="modal-send-mail" class="add-job-title modal modal-fixed-footer">
+        <div class="modal-content" style="padding: 0px !important; ">
+            <p class="edit-title">SEND MAIL</p>
+            <form class="col s12" style="padding: 24px;" id="frmSendMail">
+                <input type="hidden" id="recipient" value="" />
+                <div class="row">
+                    <div class="input-field col s12" style="margin-bottom: 0px;">
+                    <p>Subject</p>
+                    <input type="text" id="subject" data-length="50" style="width: -webkit-fill-available !important;" placeholder="">
+                    <p>Message</p>
+                    <textarea id="message" style="width: -webkit-fill-available !important;"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="right waves-effect waves-light btn" id="send_mail">SEND</a>
+            <a href="javascript:void(0)" class="right blue-text btn-flat"
+            onclick="$('#modal-send-mail').modal('close')">Cancel</a>
         </div>
     </div>
 </div>

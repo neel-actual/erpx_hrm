@@ -7,7 +7,7 @@ $(function () {
             'last_name': 'Last name',
             'department': 'Department',
             'branch': 'Branch',
-            'company_email': 'Email',
+            'personal_email': 'Email',
             'cell_number': 'Mobile',
             'status': 'Status'
         },
@@ -30,7 +30,46 @@ $(function () {
 
 
     //list down employees
-    hrm.list({
+    frappe.ajax({
+        type: "GET",
+        url: `/api/method/erpx_hrm.utils.employee.get_employee_list`,
+        callback: function (res) {
+            if (res && res.message) {
+                emps = res.message || [];
+                emps.forEach(function (emp) {
+                    var $card,
+                        name = [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' ');
+    
+                    //populate table
+                    user_table.row.add([
+                        name,
+                        emp.department || '',
+                        emp.branch || '',
+                        emp.personal_email || '',
+                        emp.cell_number || '',
+                        emp.status || ''
+                    ]);
+    
+                    //populate cards
+                    $card = $profile_card_main.clone().removeClass('hide profile-card-main');
+                    if (emp.image) {
+                        $card.find('.card-image img').attr('src', emp.image);
+                    }
+                    $card.find('.card-title h6').text(name);
+                    $card.find('.card-title p').text(emp.designation);
+                    $card.find('.card-content div').eq(0).find('span').text(emp.department);
+                    $card.find('.card-content div').eq(1).find('span').text(emp.branch);
+                    $card.find('.card-content div').eq(2).find('span').text(emp.cell_number);
+                    $card.find('.card-action .personal_email').val(emp.personal_email);                
+                    $profile_cards.append($card);
+                });
+                user_table.draw();
+            }
+        }
+    });
+
+    
+    /*hrm.list({
         doctype: 'Employee',
         fields: ['name'].concat(Object.keys(FIELDS)).concat(['designation', 'image']),
         limit_page_length: 100000
@@ -46,7 +85,7 @@ $(function () {
                     name,
                     emp.department || '',
                     emp.branch || '',
-                    emp.company_email || '',
+                    emp.personal_email || '',
                     emp.cell_number || '',
                     emp.status || ''
                 ]);
@@ -61,11 +100,12 @@ $(function () {
                 $card.find('.card-content div').eq(0).find('span').text(emp.department);
                 $card.find('.card-content div').eq(1).find('span').text(emp.branch);
                 $card.find('.card-content div').eq(2).find('span').text(emp.cell_number);
+                $card.find('.card-action .personal_email').val(emp.personal_email);                
                 $profile_cards.append($card);
             });
             user_table.draw();
         }
-    });
+    });*/
 
     //user select table
     user_table.on('select', function (e, dt, type, index) {
@@ -143,7 +183,7 @@ $(function () {
                     [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' '),
                     emp.department || '',
                     emp.branch || '',
-                    emp.company_email || '',
+                    emp.personal_email || '',
                     emp.cell_number || '',
                     emp.status || ''
                 ]).draw();
@@ -172,9 +212,51 @@ $(function () {
         var filter_status = $("#i_filter_status").val();
         user_table.column(5).search(filter_status).draw();
         $('#create-filter\\.modal').modal('close');
-
-        
-
     });
 
+    //Send mail
+    $('#modal-send-mail #send_mail').click(function () {
+        var subject = $('#frmSendMail #subject').val();
+        var message = $('#frmSendMail #message').val(); 
+        var recipient = $('#frmSendMail #recipient').val();       
+        if(recipient == '' || subject == '' || message == ''){            
+            M.toast({
+                html: "Employee's email is empty or Subject is empty or Message is empty. Please correct them!"
+            })
+            return false;
+        }  
+		
+		frappe.ajax({
+			type: "POST",
+            url: `/api/method/erpx_hrm.utils.frappe.send_mail`,
+            no_stringify: 1,
+            args: {
+                recipient: recipient, 
+                subject: subject, 
+                message: message
+            },
+			callback: function (r) {
+				$('#modal-send-mail').modal('close');
+			}
+		});
+    });
+
+    //Filter    
+    $('#i_filter_department').change(function(){ 
+		var i_filter_department = $("#i_filter_department").val(); 
+		user_table.column(1).search(i_filter_department, true, false, false).draw();
+    });    
+    $('#i_filter_office').change(function(){ 
+		var i_filter_office = $("#i_filter_office").val(); 
+		user_table.column(2).search(i_filter_office, true, false, false).draw();
+    });
+    $('#i_filter_status').change(function(){ 
+		var i_filter_status = $("#i_filter_status").val(); 
+		user_table.column(5).search(i_filter_status, true, false, false).draw();
+	});	
 });
+
+function setRecipientEmail(self){
+    var personal_email = $(self).parent().find('.personal_email').val();
+    $('#frmSendMail #recipient').val(personal_email);
+}

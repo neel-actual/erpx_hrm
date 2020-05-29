@@ -50,3 +50,11 @@ def employee_add_user_permission(doc, user_id):
 
 	result = add_user_permission("Employee", doc.name, user_id)
 	set_user_permission_if_allowed("Company", doc.company, user_id)	
+
+@frappe.whitelist()
+def get_employee_list():
+	employees = frappe.db.sql("""
+        select e.* from `tabEmployee` e
+        left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest')                
+        """, as_dict=True) 
+	return employees or None
