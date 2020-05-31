@@ -225,6 +225,7 @@ td {
 							  
 							  <th style=" border-right:none!important;"><b>Amount</b></th>
 							  <th style=" border-right:none!important;"><b>Attachment</b></th>
+							  <th style=" border-right:none!important;"></th>
 							  
 							</tr>
 						</thead>
@@ -247,6 +248,12 @@ td {
 
 							  <div class="input-field col s12 m2">
 								<a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
+								<!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
+								
+							  </div>
+
+							  <div class="input-field col s12 m2">
+								<a class="modal-trigger waves-effect btn right" id="test_upload">Check</a>
 								<!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
 								
 							  </div>
@@ -339,7 +346,7 @@ td {
 
 			<!-- <div class="card" style="border-radius: 10px!important;"> -->
 			<div id="add_claim_modal" class="modal" style="max-height:110% !important; top: 2% !important; ">
-			  <div class="modal-content" style="padding-bottom: 60px !important;">
+			  <div class="modal-content" style="padding-bottom: 10px !important;">
 					  <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
 					  <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
 				  <form id="claim_form">
@@ -377,6 +384,7 @@ td {
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Amount</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+							<input type="text" class="index" name="index" id="index" readonly hidden>
 							<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 40px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
 							<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
 							<label class='claim_amount_error'></label>
@@ -386,9 +394,20 @@ td {
 							<div class="input-field col s12">
 								<p style="margin-bottom: 10px;">Description</p>
 								
-								<textarea type="text" id="sel_desc"></textarea>
+								<textarea type="text" name="desc" id="sel_desc"></textarea>
 								
 							</div>
+							<div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Upload File</span>
+                                        <input id="file-request" type="file" autocomplete="off">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
 
 							
 							
@@ -397,6 +416,7 @@ td {
 			  </div>
 			  <div class="modal-footer" style="background-color: #fff !important;">
 				<a href="#!" class="right waves-effect waves-light btn" id="add_claim">Add Claim</a>
+				<a href="#!" class="right waves-effect waves-light btn" id="update_claim" style="display: none;">Update Claim</a>
 				<a href="#!" class="right blue-text btn-flat"
 				onclick="$('#add_claim_modal').modal('close')">Cancel</a>
 			  </div>
