@@ -36,6 +36,27 @@ $(document).ready(function(){
         });   
 
     });
+    $("#update").click(function(){
+        sessionStorage.claim_name = location.search.split("=")[1];
+        window.location.replace("/hr/create-claim");
+        // frappe.call({
+        //     method: 'erpx_hrm.api.set_value_custom',
+        //     args: {
+        //         'doctype': 'Expense Claim',
+        //         'name':location.search.split("=")[1],
+        //         'fieldname': 'approval_status',
+        //         'value':'Verified'
+        //     },
+        //     callback: function(r) {
+        //         if (!r.exc) { 
+        //             console.log(r.message)
+        //             window.location.replace("/hr/approval-claims");
+        //             // location.reload()
+        //         }
+        //     }
+        // });   
+
+    });
 
     $("#approve").click(function(){
         
