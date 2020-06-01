@@ -99,6 +99,9 @@ doc_events = {
 	},
 	"Employee": {
 		"on_update": "erpx_hrm.utils.employee.on_update"
+	},
+	"Expense Claim": {
+		# "validate": "erpx_hrm.erpx_hrm.expense_claim.validate"
 	}
 }
 

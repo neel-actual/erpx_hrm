@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    console.log(frappe)
     console.log(frappe.roles)
     /* Role permission Setup*/
 

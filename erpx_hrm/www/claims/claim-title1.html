@@ -290,10 +290,12 @@
   class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
 {% endif %}
 
-<!-- {% if ((ap.approval_status != "Rejected"))  %} -->
+{% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
+
+{% if ((ap.approval_status == "Rejected")) and(user_id[0].user_id == user)  %}
   <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
   class="waves-effect waves-light right btn-approve" id="update">Re-Submit</a> 
-<!-- {% endif %} -->
+{% endif %}
 
 {% endfor %}
 
