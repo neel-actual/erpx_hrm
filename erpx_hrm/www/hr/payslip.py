@@ -7,8 +7,8 @@ def get_context(context):
         frappe.local.flags.redirect_location = '/'
         raise frappe.Redirect
     
-    valid_roles = ['Employee','HR Manager','Expense Approver', 'Expense Verified']
-    if not ("Employee" in frappe.get_roles() or "HR Manager" in frappe.get_roles() 
+    valid_roles = ['Employee','HR Manager','Expense Approver', 'Expense Verified', 'Finance Manager']
+    if not ("Employee" in frappe.get_roles() or "HR Manager" in frappe.get_roles() or "Finance Manager" in frappe.get_roles()
             or "Expense Approver" in frappe.get_roles() or "Expense Verified" in frappe.get_roles()):
         frappe.throw(_('Only users with {0} role can access').format(', '.join(valid_roles)),
 			frappe.PermissionError)

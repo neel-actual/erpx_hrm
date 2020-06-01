@@ -34,7 +34,7 @@
    "reqd": 1
   }
  ],
- "modified": "2020-04-20 15:10:51.717686",
+ "modified": "2020-06-01 11:16:03.503398",
  "modified_by": "Administrator",
  "module": "ERPX-HRM",
  "name": "Section Permission",
@@ -49,6 +49,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
    "share": 1,
    "write": 1
   }

@@ -39,8 +39,14 @@ def on_update(doc, method):
 
 def employee_add_user_permission(doc, user_id):
 
-	# if not has_permission('User Permission', ptype='write', raise_exception=False): return
-
+	# If not set any Employee no need to set
+	employee_user_permission_exists = frappe.db.exists('User Permission', {
+		'allow': 'Employee',
+		'user': user_id
+	})
+	if not employee_user_permission_exists: return
+	
+	# If set 1 employee need to add
 	employee_user_permission_exists = frappe.db.exists('User Permission', {
 		'allow': 'Employee',
 		'for_value': doc.name,
@@ -48,5 +54,13 @@ def employee_add_user_permission(doc, user_id):
 	})
 	if employee_user_permission_exists: return
 
-	result = add_user_permission("Employee", doc.name, user_id)
+	result = add_user_permission("Employee", doc.name, user_id, ignore_permissions=True)
 	set_user_permission_if_allowed("Company", doc.company, user_id)	
+
+@frappe.whitelist()
+def get_employee_list():
+	employees = frappe.db.sql("""
+        select e.* from `tabEmployee` e
+        left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest')                
+        """, as_dict=True) 
+	return employees or None

@@ -3,6 +3,7 @@ import datetime
 from frappe.utils import cstr
 import frappe.handler
 import ast
+from frappe.permissions import clear_user_permissions_for_doctype
 
 @frappe.whitelist()
 def upload_user_image():
@@ -38,6 +39,8 @@ def add_role_from_array(arr_user, arr_all_user, role_name):
 			user = frappe.get_doc("User", _user) 			
 			if not frappe.db.exists("Has Role", {"parent": user.name, "role": role_name}):						
 				user.add_roles(role_name)
+			if (role_name=="HR Manager"):
+				clear_user_permissions_for_doctype("Employee", user.name)
 	
 	#check for arr_all_user
 	if arr_all_user != "":		

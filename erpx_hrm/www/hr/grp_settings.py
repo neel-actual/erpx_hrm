@@ -10,7 +10,7 @@ def get_context(context):
     context.csrf_token = frappe.sessions.get_csrf_token()
 
     #Role list
-    role_arr = ["Employee", "Expense Verified", "Expense Approver", "HR Manager", "Leave Approver", "Payroll Approval"]
+    role_arr = ["Employee", "Expense Verified", "Expense Approver", "HR Manager", "Leave Approver", "Payroll Approval", "Finance Manager"]
     role_list = []    
     for i_role in role_arr:                        
         user_list = frappe.db.sql_list("""

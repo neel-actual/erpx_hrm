@@ -38,5 +38,7 @@ def getHighestRole(roles):
         return "Leave Approver"        
     elif roles.find("Payroll Approval") > -1:
         return "Payroll Approval"        
+    elif roles.find("Finance Manager") > -1:
+        return "Finance Manager"  
     elif roles.find("Employee") > -1:
         return "Employee"        
