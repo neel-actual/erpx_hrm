@@ -1,5 +1,6 @@
 $(document).ready(async function(){
-    var param = sessionStorage.getItem("claim_name");
+let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+var param = sessionStorage.getItem("claim_name");
 if(param){
     frappe.call({
         method:"frappe.client.get",
@@ -12,10 +13,20 @@ if(param){
             res.message.expenses.forEach(element => {
                 
                 var row = $('<tr><td class="index">'+element['idx']+'</td><td class = "date">'+element['expense_date']+'</td><td class="claimtype">'+element['expense_type']+'</td><td class="merchant">'+element['merchant']+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+element['description']+'</td><td class="claimamount">'+currency+parseFloat(element['amount']).toFixed(2)+'</td><td><input class="fileinput custom-file-input" value='+element['attach_document']+' id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>')
-                console.log(('<tr><td class="index">'+element['idx']+'</td><td class = "date">'+element['expense_date']+'</td><td class="claimtype">'+element['expense_type']+'</td><td class="merchant">'+element['merchant']+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+element['description']+'</td><td class="claimamount">'+currency+parseFloat(element['amount']).toFixed(2)+'</td><td><input class="fileinput custom-file-input" value="'+element['attach_document']+'" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>'))
                 dt.row.add(row).draw();
                 
+                
             });
+            var data = dt.rows().data();
+            var total = 0
+            data.each(function (value, index) {
+                total = total + parseFloat(value[5].split(" ")[1])
+                // console.log(parseFloat(value[5].split(" ")[1]))
+            });
+            $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
+            $('#total_amount').text(parseFloat(total).toFixed(2))
+            sessionStorage.clear()
+            localStorage.clear()
         }
 
     })
@@ -24,7 +35,7 @@ if(param){
 
 var today = moment().format('YYYY-MM-DD');
 document.getElementById("sel_date").value = today;
-let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+// let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
 
 var dt = $('#claim_table').DataTable({
     bFilter: false,
@@ -118,35 +129,41 @@ $("#add_claim").click(function(){
         }
 
     }else{
-        console.log($('#file-request').val())
-        console.log($('.file-path .validate').val())
-        // data = dt.row(parseInt($('#index').val())-1).data()
+       
+        data = dt.row(parseInt($('#index').val())-1).data()
         
-        // console.log(data)
-        // data[2]=$('#sel_claim_type').val()
-        // data[3]=$('#sel_merchant').val()
-        // data[4]=$('#sel_desc').val()
-        // data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2)
-        // dt.row(parseInt($('#index').val())-1).data(data).draw();
-        // console.log("update")
+        console.log(data)
+        data[1]=$('#sel_date').val()
+        data[2]=$('#sel_claim_type').val()
+        data[3]=$('#sel_merchant').val()
+        data[4]=$('#sel_desc').val()
+        data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2)
+        dt.row(parseInt($('#index').val())-1).data(data).draw();
+        var table_data = dt.rows().data();
+        var total = 0
+        table_data.each(function (value, index) {
+            total = total + parseFloat(value[5].split(" ")[1])
+            // console.log(parseFloat(value[5].split(" ")[1]))
+        });
+        $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
+        $('#total_amount').text(parseFloat(total).toFixed(2))
+        M.toast({
+        html: 'Expense Updated Successfuly!'
+        })
+        $('#add_claim_modal').modal('close')
+        console.log("update")
     }
     
    
 });
 
-// $('#claim_table tbody').on( 'click', 'td.index', function () {
-//     $(this).toggleClass('selected');
-//     // $(this).toggleClass('ideal')
-//   } );
+$('#claim_table tbody').on( 'click', 'td.index', function () {
+    console.log($(this).parent())
+    $(this).parent().toggleClass('selected');
+    // $(this).toggleClass('ideal')
+  } );
 
-$("#test_upload").click(function(){
-    
-    $('#claim_table').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-        var data = this.nodes().to$();
-        var file = $(data.find('.fileinput'))[0].files[0]
-        console.log(file)
-    })
-})
+
 $('#claim_table tbody').on( 'click', 'a.edit', function () {
     $('#add_claim').css("dispaly","none");
     $('#update_claim').css("dispaly","block");
@@ -178,6 +195,14 @@ $("#remove_claim").click(function(){
     // });
     
   dt.rows('.selected').remove().draw(false);
+  var table_data = dt.rows().data();
+    var total = 0
+    table_data.each(function (value, index) {
+        total = total + parseFloat(value[5].split(" ")[1])
+        // console.log(parseFloat(value[5].split(" ")[1]))
+    });
+    $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
+    $('#total_amount').text(parseFloat(total).toFixed(2))
 })
 
 // $("#file_upload").change(function(){
@@ -211,7 +236,7 @@ $("#save_claim").click(async function(){
         
         
     }
-    console.log(exp_list)
+    // console.log(exp_list)
     
     let cutoff = await get_cutoff()
     console.log(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate()))
@@ -241,6 +266,7 @@ $("#save_claim").click(async function(){
                     console.log(file)
                     // File Upload and link with Child table Item If File is Exist
                     if(file){
+
                         var reader = new FileReader();
                         reader.onload = function(){
                             var srcBase64 = reader.result;
@@ -274,7 +300,7 @@ $("#save_claim").click(async function(){
                                         M.toast({
                                             html: "File Attached Successfully!"
                                         })
-                                        window.location.replace("/hr/my-claims")
+                                        
                                     }
                                 }
                             });
@@ -286,10 +312,15 @@ $("#save_claim").click(async function(){
                 M.toast({
                     html: 'Claim '+doc.name+' Created Successfully!'
                 })
-                window.location.replace("/hr/my-claims")
+                setTimeout(function() {
+                    window.location.replace("/hr/my-claims");
+                }, 3000);
+                
             }
+            
         }
     });
+    // window.location.replace("/hr/my-claims")
 
 });
 
