@@ -79,9 +79,9 @@
                <div class="input-field col s12 m3">
                 <p style="text-align: left;margin-bottom: 10px;">Cutoff Date</p>
                 <select style="padding-left: 10px;width: -webkit-fill-available;" id="cutday">
-                  
+                  <option value="{{cuttoff}}" selected disabled>{{cuttoff}}</option>
                     {% for i in range(1,32) %}
-                    <option value="{{i}}" selected>{{i}}</option>
+                    <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
 
@@ -106,8 +106,8 @@
               <div class="input-field col s12 m3">
                 <p style="text-align: left;margin-bottom: 10px;">Main Currency</p>
                 <select style="padding-left: 10px;width: -webkit-fill-available;" id="currval">
-                  <option value="myr" selected>MYR</option>
-                  <option value="usd">USD</option>
+                  <option value="myr" selected disabled>MYR</option>
+                  <!-- <option value="usd">USD</option> -->
                   
                 </select>
 
@@ -124,17 +124,17 @@
 
 
 
-              <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="curr">Save</a>
+              <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="curr">Save</a> -->
 
               
             </div>
             <br>
-            <hr>
-            <br>
-            <h4 class="card-title" style="margin-left: 11px;text-align: left;">Approver Settings</h4> 
-            <span style="margin-left: 11px;float: left; font-size: 14px; color: #6c6868;text-align: justify;">You can set approver for your Claims. To update an Employee's Reports, go to the Employee's Profile page.To update head of department, go to  Manage People Page.</span>
+            <!-- <hr> -->
+            <!-- <br> -->
+            <!-- <h4 class="card-title" style="margin-left: 11px;text-align: left;">Approver Settings</h4>  -->
+            <!-- <span style="margin-left: 11px;float: left; font-size: 14px; color: #6c6868;text-align: justify;">You can set approver for your Claims. To update an Employee's Reports, go to the Employee's Profile page.To update head of department, go to  Manage People Page.</span> -->
 
-            <div style="height: 40px;"></div>
+            <!-- <div style="height: 40px;"></div>
             <div class="row margin infodetails">
              <div style="margin-top: 61px;text-align: left" class="input-field col s12 m3">Department</div>
              <div class="input-field col s12 m5">
@@ -146,33 +146,33 @@
                 <option value="{{dep.name}}">{{dep.department_name}}</option>
                 {% endfor %}
               </select>
-              <!-- <p style="text-align: left">Approver List</p> -->
-              <!-- <table id="apptable"></table><br> -->
-              <!-- {% set user = frappe.get_all("User",filters={'user_type':'System User'},fields=['name']) %}
+              <p style="text-align: left">Approver List</p>
+              <table id="apptable"></table><br>
+              {% set user = frappe.get_all("User",filters={'user_type':'System User'},fields=['name']) %}
               <select style="padding-left: 10px;width: -webkit-fill-available;" id="appval">
                 <option value="" selected disabled>Approver</option>
                 {% for us in user %}
                 <option value={{us.name}}>{{us.name}}</option>
                 {% endfor %}
-              </select> -->
+              </select>
 
             </div>
 
-            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Add Approver</a>
-            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="delapp">Delete Approver</a> -->
-            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
-          </div>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Add Approver</a>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="delapp">Delete Approver</a>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a>
+          </div> -->
 
-          <div class="row margin infodetails">
+          <!-- <div class="row margin infodetails">
             <div style="margin-top: 61px;text-align: left" class="input-field col s12 m3">Approver List</div>
             <div class="input-field col s12 m5">
               <table border="0" id="apptable" style="color: fuchsia;">
               </table>
             </div>
-            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
-          </div>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a>
+          </div> -->
 
-          <div class="row margin infodetails">
+          <!-- <div class="row margin infodetails">
             <div style="margin-top: 61px;text-align: left" class="input-field col s12 m3">Approver</div>
             <div class="input-field col s12 m5" style="margin-top: 46px;">
               {% set user = frappe.get_all("User",filters={'user_type':'System User'},fields=['name']) %}
@@ -186,10 +186,10 @@
             </div>
             <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Add Approver</a>
             <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="delapp">Delete Approver</a>
-            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
-          </div>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a>
+          </div> -->
 
-          <div class="row margin infodetails">
+          <!-- <div class="row margin infodetails">
             <div style="margin-top: 61px;text-align: left" class="input-field col s12 m3">Verifier</div>
             <div class="input-field col s12 m5" style="margin-top: 46px;">
               {% set user = frappe.get_all("User",filters={'user_type':'System User'},fields=['name']) %}
@@ -202,8 +202,8 @@
               
             </div>
             <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="verifier_update">Update Verifier</a>
-            <!-- <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a> -->
-          </div>
+            <a href="#!" style="margin-top: 31px;" class="clr-fil-myclaims modal-trigger waves-effect waves-light right" id="app">Delete Approver</a>
+          </div> -->
 
 
         </div>

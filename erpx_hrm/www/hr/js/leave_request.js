@@ -5,6 +5,7 @@ var request_leave_fields = [
 	"to_date",
 	"half_day",
 	"half_day_shift",
+	"half_day_date",
 	"description",
 	"leave_approver"
 ]
@@ -51,11 +52,7 @@ $(document).ready(function () {
 	});
 
 	$('#half_day').change(function(){
-		if($(this).is(":checked")){
-			$('#div_half_day_shift').show();
-		}else{
-			$('#div_half_day_shift').hide();
-		}		
+		toggle_div_half_day();
 	});
 
 	$('#leave_request_leave_type').change(function(){
@@ -161,14 +158,28 @@ var toggle_div_emergency = function(){
 
 
 var toggle_div_half_day = function(){
-	
-	if($('#leave_request_from_date').val() && $('#leave_request_to_date').val() && $('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
-		$("#div_half_day").show();
+	if($("#half_day").is(":checked")){
+		$('#div_half_day_shift').show();
+	}else{
+		$('#div_half_day_shift').hide();
+		$("#div_half_day_date").hide();
+		$("#leave_request_half_day_date")[0].value="";
 		return;
 	}
-	$("#half_day").prop("checked", false);
-	$("#div_half_day").hide();
-	
+	if(!($('#leave_request_from_date').val() && $('#leave_request_to_date').val())){
+		$("#leave_request_half_day_date")[0].value="";
+		$("#div_half_day_date").hide();
+		return;
+	}
+	if($('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
+		$("#leave_request_half_day_date")[0].value="";
+		$("#div_half_day_date").hide();
+		return;
+	}
+	if($("#leave_request_half_day_date").val() == ""){
+		$("#leave_request_half_day_date")[0].value= $('#leave_request_from_date').val();
+	}
+	$("#div_half_day_date").show();	
 }
 
 var upload_file_request = function(r){

@@ -1,4 +1,9 @@
 $(document).ready(function () {
+	if ( $('[type="date"]').prop('type') != 'date' ) {
+		$('[type="date"]').datepicker({
+			format: "yyyy-mm-dd"
+	   });
+	}
 	var FRAPPE_CLIENT = 'frappe.client',
 		CURRENT_URL = location.href
 			.replace('http://', '')
