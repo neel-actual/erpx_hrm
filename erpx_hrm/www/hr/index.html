@@ -132,14 +132,15 @@
                                                 </div>
                                                 <div class="col s6 m6 l6" style="padding: 0px;">
                                                     <div class="col s12 m2 l12 xl4" style="padding: 0px;">
-                                                        <img src="/images/profile_placeholder.png" style="width: 45px;"/>
+                                                        <img src="{{employee.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
                                                     </div>
                                                     <div class="col s12 m10 l12 xl8" style="padding-left: 0px;">
-                                                        <p class="medium-small" style="color: black;">Datin Minlamin</p>
+                                                        <p class="medium-small" style="color: black;">{{employee.employee_name or ''}}</p>
                                                         <p class="medium-small"
-                                                        style="font-size: 11px!important;font-style: italic;">4th August
-                                                    2019, Sunday</p>
-                                                </div>
+                                                        style="font-size: 11px!important;font-style: italic;">
+                                                        {{ employee.date_of_birth.strftime("%d %b %Y, %a ") or ''}}
+                                                        </p>
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
@@ -155,16 +156,34 @@
                                                 </a>
                                             </div>
                                             <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                                <p class="medium-small">No leaves this week.</p>
+                                                <div class="col s12 m2 l12 xl4" style="padding: 0px;">
+                                                    <img src="{{employee.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
+                                                </div>
+                                                <div class="col s12 m10 l12 xl8" style="padding-left: 0px;">
+                                                    <p class="medium-small" style="color: black;">{{employee.employee_name or ''}}</p>
+                                                    <p class="medium-small"
+                                                    style="font-size: 11px!important;font-style: italic;">                                                    
+                                                    {% if leave_application_list %}
+                                                        {% for i_leave_application in leave_application_list %} 
+                                                            {{i_leave_application.from_date.strftime("%d %b %Y, %a ")}}
+                                                            {% if i_leave_application.from_date != i_leave_application.to_date %}
+                                                                - {{i_leave_application.to_date.strftime("%d %b %Y, %a ")}}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        No leaves this week.
+                                                    {% endif %}
+                                                    </p>
+                                                </div>                                                
                                             </div>
                                         </div>
+                                        <!--
                                         <div class="col s12 m12 l12 upcoming-contents" style="padding: 0px;">
                                             <div class="col s6 m6 l6" style="padding-left: 0px;">
                                                 <a class="waves-effect waves-cyan" href="#">
                                                     <div class="col s12 m3 l3" style="padding-left: 0px;">
                                                         <i class="material-icons-outlined">person</i>
-                                                    </div>
-                                                    <!--<span class="menu-title" data-i18n="">BIRTHDAY</span>-->
+                                                    </div>                                                   
                                                     <div class="col s12 m9 l9" style="padding: 0px;">
                                                         <p style="color: black;">NEW ARRIVAL</p>
                                                     </div>
@@ -173,7 +192,7 @@
                                             <div class="col s6 m6 l6" style="padding-left: 0px;">
                                                 <p class="medium-small">No arrival this week.</p>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -182,16 +201,18 @@
                                     <div class="card-content">
                                         <h4 class="card-title">My Company</h4>
                                         <br>
-                                        <p style="color: black;">BAYO PAY M SDN BHD</p>
-                                        <p style="color: #969696;">Joined since 1 Jul 2013</p>
+                                        <p style="color: black;">{{ employee.company or ''}}</p>
+                                        <p style="color: #969696;">Joined since {{ employee.date_of_joining.strftime(" %d %b %Y ") or ''}}</p>
                                         <br>
                                         <p style="color: black;">OFFICE</p>
-                                        <p style="color: black;display: inline-block;">MAIN BRANCH</p>
+                                        <p style="color: black;display: inline-block;">{{ employee.branch or ''}}</p>
                                         <p style="display: inline-block;background-color: #00aeef;color: white;padding: 0px 10px;border-radius: 10px;font-size: 11px;">
-                                        HQ</p>
-                                        <p style="color: #969696;font-size: 13px;">72-3 JALAN PJU 5/22 ENCORP STRAND,
-                                            PUSAT PERDAGANGAN KOTA DAMANSARA, 47810 KOTA DAMANSARA PJU 5, PETALING JAYA
-                                        SELANGOR</p>
+                                            {{ branch.branch_type or ''}}</p>
+                                        <p style="color: #969696;font-size: 13px;">
+                                            {% if branch %}
+                                                {{branch.address_line_1}} {{branch.city}}, {{branch.state}}, {{branch.country}}
+                                            {% endif %}                                            
+                                        </p>
                                     </div>
                                 </div>
                             </div>
