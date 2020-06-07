@@ -118,6 +118,14 @@ $('#emp_filter').change(function(){
     console.log(user_table)
     user_table.column(3).search(filter_status, true, false, false).draw();
 });
+
+$('#status_filter').change(function(){
+    
+  var filter_status = $("#status_filter").val();
+  console.log(user_table)
+  user_table.column(5).search(filter_status, true, false, false).draw();
+});
+
 function adjust_date_time(date){
       var date_list = date.split("-");
       return date_list[1]+"-"+date_list[0]+"-"+date_list[2]

@@ -227,7 +227,7 @@ type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
   var user_table = $('#table_id').DataTable({
-    "order": [[ 1, "desc" ]],
+    "order": [[ 0, "desc" ]],
     columnDefs: [ {
       targets: 1,
       render: $.fn.dataTable.render.moment('DD-MM-YYYY')
