@@ -22,7 +22,7 @@ $(function () {
         e.preventDefault();
 
 
-        fetch('/api/method/login', {
+        /*fetch('/api/method/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -36,7 +36,7 @@ $(function () {
         .then(r => r.json())
         .then(r => {
             console.log(r);
-        })
+        })*/
 
 
         args.cmd = 'login';
@@ -92,6 +92,9 @@ $(function () {
         console.log(msg, color);
         // $('section:visible .indicator')
         //     .removeClass().addClass('indicator').addClass(color).text(message)
+        M.toast({ 
+            html: msg 
+        }) 
     }
 
     login.login_handlers = (function() {
@@ -115,6 +118,7 @@ $(function () {
 
                 if(message===default_message) {
                     login.set_indicator(message, 'red');
+                    loading(false);
                 } else {
                     $(window).trigger('hashchange');
                 }

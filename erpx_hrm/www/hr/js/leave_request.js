@@ -139,6 +139,13 @@ $(document).ready(function () {
 			}
 		})
 	});
+
+	$("#file-request").change(function(){
+		if($("#file-request").val() != '')
+			$('#btn-view-file').show();
+		else
+			$('#btn-view-file').hide();
+	});
 });
 
 var toggle_div_emergency = function(){
@@ -168,7 +175,7 @@ var upload_file_request = function(r){
 	if (!r.exc) {
 		var doc = r.data;
 		var file = $("#file-request").get(0).files[0];
-		console.log(file);
+		
 		if (file){
 			var reader = new FileReader();
 			reader.onload = function(){
@@ -253,3 +260,9 @@ $.fn.dataTable.ext.search.push(
 		return true;
 	}
 );
+
+function openUploadFile(){	
+	if($("#file-request").val() != ''){						
+		window.open((window.URL || window.webkitURL).createObjectURL($("#file-request").get(0).files[0]), '_blank');
+	}		
+}
