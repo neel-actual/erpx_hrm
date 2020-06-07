@@ -39,6 +39,7 @@ document.getElementById("sel_date").value = today;
 
 var dt = $('#claim_table').DataTable({
     bFilter: false,
+    "order": [[ 0, "asc" ]],
     columnDefs: [ {
         targets: 0,
         width: "5%"

@@ -1,6 +1,20 @@
 $(document).ready(function(){
     console.log(frappe)
     console.log(frappe.roles)
+    var dt = $('#claim_table').DataTable({
+        bFilter: false,
+        columnDefs: [ {
+            targets: 0,
+            width: "5%"
+          },
+          {targets: 1,width: "10%",render: $.fn.dataTable.render.moment('DD-MM-YYYY')},
+          {targets: 2,width: "10%"},
+          {targets: 3,width: "10%"},
+          {targets: 4,width: "15%"},
+          {targets: 5,width: "15%"},
+          {targets: 6,width: "10%"},
+          {targets: 7,width: "5%"}]
+    })
     /* Role permission Setup*/
 
     // if(frappe.roles.includes("Expense Verified")){
@@ -143,7 +157,28 @@ $(document).ready(function(){
         
       });
 
-
+      $('#claim_table tbody').on( 'click', 'a.edit', function () {
+        $('#add_claim').css("dispaly","none");
+        $('#update_claim').css("dispaly","block");
+        console.log("here")
+        fill_form_from_table($(this),"claim_form")
+        
+    })
+    
+    
+    function fill_form_from_table(thisobj,form_id){
+         
+        
+        $("form#{0} :input[name=claim_type]".format(form_id)).val(thisobj.closest('tr').find('td.claimtype').text())
+        $("form#{0} :input[name=claim_type]".format(form_id)).formSelect()
+        $("form#{0} :input[name=merchant]".format(form_id)).val(thisobj.closest('tr').find('td.merchant').text())
+        $("form#{0} :input[name=index]".format(form_id)).val(thisobj.closest('tr').find('td.index').text())
+        console.log(thisobj.closest('tr').find('td.claimamount').text())
+        $("form#{0} :input[name=claim_amount]".format(form_id)).val(thisobj.closest('tr').find('td.claimamount').text().split(" ")[1])
+        $("form#{0} :input[name=desc]".format(form_id)).val(thisobj.closest('tr').find('td.desc').text())
+        // $("form#{0} :input[name=ea_form_field]".format(form_id)).formSelect()
+    
+    }
 
 
       $("#assign_appeover").click(function(){
