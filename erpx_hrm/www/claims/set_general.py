@@ -14,5 +14,6 @@ def get_context(context):
 
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
+    context.cuttoff = frappe.db.get_value("HRM Setting",None,"cutoff_day")
 
     return context
