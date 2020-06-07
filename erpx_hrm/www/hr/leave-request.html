@@ -323,7 +323,7 @@ request is approved.</p>
                 eventMouseover: function (data, event, view) {
                     tooltip = `<div class="tooltiptopicevent" 
                         style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
-                        ${data.title.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
                     $("body").append(tooltip);
                     $(this).mouseover(function (e) {
                         $(this).css('z-index', 10000);
@@ -342,7 +342,8 @@ request is approved.</p>
                     {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -359,7 +360,7 @@ request is approved.</p>
                 eventMouseover: function (data, event, view) {
                     tooltip = `<div class="tooltiptopicevent" 
                         style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
-                        ${data.title.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
                     $("body").append(tooltip);
                     $(this).mouseover(function (e) {
                         $(this).css('z-index', 10000);
@@ -378,7 +379,8 @@ request is approved.</p>
                     {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department,"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -395,7 +397,7 @@ request is approved.</p>
                 eventMouseover: function (data, event, view) {
                     tooltip = `<div class="tooltiptopicevent" 
                         style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
-                        ${data.title.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
                     $("body").append(tooltip);
                     $(this).mouseover(function (e) {
                         $(this).css('z-index', 10000);
@@ -414,7 +416,8 @@ request is approved.</p>
                     {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee, "status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
