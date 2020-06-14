@@ -27,18 +27,20 @@ def get_context(context):
     context.branch = branch or None
 
     #Get Lis of Leave Application info
-    leave_application_list = ""    
     from_date = date.today().strftime("%Y-%m-%d")
     to_date = date.today() + timedelta(days=7)
-    leave_application_list = frappe.db.sql("""select e.image, l.employee, l.employee_name, group_concat(l.from_date, '->', l.to_date SEPARATOR '\n') as leave_date from `tabLeave Application` as l
-    inner join `tabEmployee` as e on l.employee = e.name where from_date >= %s
+
+    leave_application_list = frappe.db.sql("""select e.image, l.employee, l.employee_name, from_date, to_date, group_concat(IF(l.from_date != l.to_date, CONCAT_WS('->',l.from_date,l.to_date), l.to_date)  SEPARATOR '<br>') as leave_date 
+        from `tabLeave Application` as l
+        inner join `tabEmployee` as e on l.employee = e.name where from_date >= %s
         and to_date <= %s group by l.employee
-        """, (from_date, to_date.strftime("%Y-%m-%d") + ""), as_dict = True)        
+        """, (from_date, to_date.strftime("%Y-%m-%d") + ""), as_dict = True)
+    
     context.leave_application_list = leave_application_list or None    
 
     #Get list of employee info
-    employee_list = ""        
-    employee_list = frappe.db.sql("""select image, employee_name, date_of_birth from `tabEmployee` 
+    employee_list = frappe.db.sql("""select image, employee_name, date_of_birth 
+        from `tabEmployee` 
         where DayOfYear(date_of_birth) between DayOfYear(%s) and DayOfYear(%s)
         """, (from_date, to_date.strftime("%Y-%m-%d") + ""), as_dict = True)        
     context.employee_list = employee_list or None 
