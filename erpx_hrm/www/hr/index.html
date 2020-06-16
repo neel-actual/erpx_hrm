@@ -92,13 +92,15 @@
                     </div>
                 </div>
                 <!--<h5>HR Hub<span style="color: #00aeef;"> > Home</span></h5>-->
-                {% if user_doc.full_name == 'None' %}
+                {% if employee.employee_name %}
+                <h5 class="pink-text banner-title">Hey {{ employee.employee_name }}</h5>
+                {% elif user_doc.full_name == 'None' %}
                 <h5 class="pink-text banner-title">Hey {{ user_doc.full_name }}</h5>
                 {% else %}
                 <h5 class="pink-text banner-title">Hey {{ user }}</h5>
                 {% endif %}
-                {% if emp_doc|length != 0 %}
-                <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ emp_doc[0].company }} today.</h5>
+                {% if employee.company %}
+                <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ employee.company }} today.</h5>
                 {% else %}
                 <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
                 {% endif %}
@@ -119,7 +121,7 @@
                                         <div class="card-content">
                                             <h4 class="card-title">Upcoming Events</h4>
                                             <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
-                                                <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                                <div class="col s12 m12 l12" style="padding-left: 0px;">
                                                     <a class="waves-effect waves-cyan" href="#">
                                                         <div class="col s12 m3 l3" style="padding-left: 0px;">
                                                             <i class="material-icons-outlined">cake</i>
@@ -130,21 +132,27 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                                <div class="col s6 m6 l6" style="padding: 0px;">
-                                                    <div class="col s12 m2 l12 xl4" style="padding: 0px;">
-                                                        <img src="{{employee.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
+                                                {% if employee_list %}
+                                                {% for i_employee in employee_list %} 
+                                                <div class="col s12 m12 l12" style="padding-left: 0px;">                                                                                                        
+                                                    <div class="col s12 m2 l12 xl3" style="padding: 0px;">
+                                                        <img src="{{i_employee.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
                                                     </div>
-                                                    <div class="col s12 m10 l12 xl8" style="padding-left: 0px;">
-                                                        <p class="medium-small" style="color: black;">{{employee.employee_name or ''}}</p>
+                                                    <div class="col s12 m10 l12 xl9" style="padding-left: 0px;">
+                                                        <p class="medium-small" style="color: black;">{{i_employee.employee_name or ''}}</p>
                                                         <p class="medium-small"
                                                         style="font-size: 11px!important;font-style: italic;">
-                                                        {{ employee.date_of_birth.strftime("%d %b %Y, %a ") or ''}}
+                                                                {{i_employee.date_of_birth.strftime("%d %b %Y, %a ") or ''}}                                                            
                                                         </p>
-                                                    </div>
-                                            </div>
+                                                    </div>                                                      
+                                                </div>      
+                                                {% endfor %}            
+                                                    {% else %}
+                                                            <div>No Birthday this week.</div>                                                                                                         
+                                                {% endif %}               
                                         </div>
                                         <div class="col s12 m12 l12 upcoming-content" style="padding: 0px;">
-                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
+                                            <div class="col s12 m12 l12" style="padding-left: 0px;">
                                                 <a class="waves-effect waves-cyan" href="#">
                                                     <div class="col s3 m3 l3" style="padding-left: 0px;">
                                                         <i class="material-icons-outlined">work</i>
@@ -155,27 +163,24 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                            <div class="col s6 m6 l6" style="padding-left: 0px;">
-                                                <div class="col s12 m2 l12 xl4" style="padding: 0px;">
-                                                    <img src="{{employee.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
+                                            {% if leave_application_list %}
+                                            {% for i_leave_application in leave_application_list %} 
+                                            <div class="col s12 m12 l12" style="padding-left: 0px;">                                                
+                                                <div class="col s12 m2 l12 xl3" style="padding: 0px;">
+                                                    <img src="{{i_leave_application.image or '/images/profile_icon.png'}}" style="width: 45px;"/>
                                                 </div>
-                                                <div class="col s12 m10 l12 xl8" style="padding-left: 0px;">
-                                                    <p class="medium-small" style="color: black;">{{employee.employee_name or ''}}</p>
+                                                <div class="col s12 m10 l12 xl9" style="padding-left: 0px;">
+                                                    <p class="medium-small" style="color: black;">{{i_leave_application.employee_name or ''}}</p>
                                                     <p class="medium-small"
-                                                    style="font-size: 11px!important;font-style: italic;">                                                    
-                                                    {% if leave_application_list %}
-                                                        {% for i_leave_application in leave_application_list %} 
-                                                            {{i_leave_application.from_date.strftime("%d %b %Y, %a ")}}
-                                                            {% if i_leave_application.from_date != i_leave_application.to_date %}
-                                                                - {{i_leave_application.to_date.strftime("%d %b %Y, %a ")}}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    {% else %}
-                                                        No leaves this week.
-                                                    {% endif %}
+                                                    style="font-size: 11px!important;font-style: italic;">
+                                                            {{i_leave_application.leave_date}}                                                            
                                                     </p>
-                                                </div>                                                
+                                                </div>                                                  
                                             </div>
+                                            {% endfor %}            
+                                            {% else %}
+                                                <div>No leaves this week.</div>
+                                            {% endif %}                          
                                         </div>
                                         <!--
                                         <div class="col s12 m12 l12 upcoming-contents" style="padding: 0px;">
@@ -210,34 +215,13 @@
                                             {{ branch.branch_type or ''}}</p>
                                         <p style="color: #969696;font-size: 13px;">
                                             {% if branch %}
-                                                {{branch.address_line_1}} {{branch.city}}, {{branch.state}}, {{branch.country}}
+                                                {{branch.address_line_1 or ''}} {{branch.city or ''}}, {{branch.state or ''}}, {{branch.country or ''}}                                            
                                             {% endif %}                                            
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col s12 m12 l12 xl8">
-                                <div class="card animate fadeLeft" style="border-radius: 10px">
-                                    <div class="card-content">
-                                        <h4 class="card-title">My Beep</h4>
-                                        <p class="medium-small">No details Available</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% if emp_doc|length != 0 %}
-                        <div class="col s12 m6 l4">
-                            <div class="card animate fadeLeft" style="border-radius: 10px">
-                                <div class="card-content">
-                                    <h4 class="card-title">My Company</h4>
-                                    <p>{{ emp_doc[0].company }}</p>
-                                    <span>Joined since {{ emp_doc[0].date_of_joining }}</span>
-                                    <h4 class="card-title">Office</h4>
-                                    <p>{{ emp_doc[0].branch }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
+                            </div>                            
+                        </div>                        
                     </div>
                 </div>
             </div>
