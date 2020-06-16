@@ -130,7 +130,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 
                 <tr>
                   {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
-                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                  <td><a style="color:#00AEEF" href="/hr/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
                     
                     ({% for e in range(claim_title|length) %}
                     {% if e < 2 %}
