@@ -117,83 +117,86 @@ $(function () {
         if (emps === undefined) { return; }
 
         emp = emps[index];
+        
         dt.deselect();
-        $update_modal.modal('open').find('.modal-content > h5').text(emp.name);
-        //clear previous
-        $update_modal.find('form').empty();
+        window.location = 'people.html?name=' + emp.name;
 
-        Object.keys(FIELDS).forEach(function (key) {
-            var label = FIELDS[key],
-                $input = $('<div class="row"><div class="input-field col s12">' +
-                    '<input class="autocomplete" autocomplete="off" type="text" data-id="' + key + '"' +
-                        'id="user-update-' + key + '" value="' + (emp[key] || '') + '">' +
-                    '<label for="user-update-' + key + '" class="' + (emp[key] ? 'active' :'') + '">' + label + '</label>' +
-                '</div></div>');
+        // $update_modal.modal('open').find('.modal-content > h5').text(emp.name);
+        // //clear previous
+        // $update_modal.find('form').empty();
 
-            //add autocomplete
-            if (key === 'status') {
-                setTimeout(function () {
-                    $input.find('#user-update-' + key).autocomplete({
-                        data: {
-                            'Active': null,
-                            'Left': null
-                        }
-                    });
-                });
-            }
-            else if(key === 'branch' || key === 'department'){
-                hrm.list({
-                    'doctype': FIELDS[key]
-                }).then(function(res){
-                    var data = {};
+        // Object.keys(FIELDS).forEach(function (key) {
+        //     var label = FIELDS[key],
+        //         $input = $('<div class="row"><div class="input-field col s12">' +
+        //             '<input class="autocomplete" autocomplete="off" type="text" data-id="' + key + '"' +
+        //                 'id="user-update-' + key + '" value="' + (emp[key] || '') + '">' +
+        //             '<label for="user-update-' + key + '" class="' + (emp[key] ? 'active' :'') + '">' + label + '</label>' +
+        //         '</div></div>');
 
-                    if (res && res.message) {
-                        res.message.forEach(function (branch) {
-                            data[branch.name] = null;
-                        });
-                        $input.find('#user-update-' + key).autocomplete({
-                            data: data
-                        });
-                    }
-                })
-            }
+        //     //add autocomplete
+        //     if (key === 'status') {
+        //         setTimeout(function () {
+        //             $input.find('#user-update-' + key).autocomplete({
+        //                 data: {
+        //                     'Active': null,
+        //                     'Left': null
+        //                 }
+        //             });
+        //         });
+        //     }
+        //     else if(key === 'branch' || key === 'department'){
+        //         hrm.list({
+        //             'doctype': FIELDS[key]
+        //         }).then(function(res){
+        //             var data = {};
 
-            $update_modal.find('form').append($input);
-        });
+        //             if (res && res.message) {
+        //                 res.message.forEach(function (branch) {
+        //                     data[branch.name] = null;
+        //                 });
+        //                 $input.find('#user-update-' + key).autocomplete({
+        //                     data: data
+        //                 });
+        //             }
+        //         })
+        //     }
+
+        //     $update_modal.find('form').append($input);
+        // });
 
 
         //update functionality
-        $update_modal.find('.modal-footer .accept-btn').on('click', function (e) {
-            //obtain data
-            Object.keys(emp).forEach(function (key) {
-                if (key === 'name') { return; }
+        // $update_modal.find('.modal-footer .accept-btn').on('click', function (e) {
+        //     //obtain data
+        //     Object.keys(emp).forEach(function (key) {
+        //         if (key === 'name') { return; }
 
-                emp[key] = $update_modal.find('[data-id="' + key + '"]').val();
-            });
+        //         emp[key] = $update_modal.find('[data-id="' + key + '"]').val();
+        //     });
 
-            //close modal
-            $update_modal.modal('close');
+        //     //close modal
+        //     $update_modal.modal('close');
 
-            //update frappe
-            hrm.update('Employee', emp).then(function () {
+        //     //update frappe
+        //     hrm.update('Employee', emp).then(function () {
 
-                //update table
-                emps[index] = emp;
-                user_table.row(index).data([
-                    [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' '),
-                    emp.department || '',
-                    emp.branch || '',
-                    emp.personal_email || '',
-                    emp.cell_number || '',
-                    emp.status || ''
-                ]).draw();
+        //         //update table
+        //         emps[index] = emp;
+        //         user_table.row(index).data([
+        //             [emp.first_name || '', emp.middle_name || '', emp.last_name || ''].join(' '),
+        //             emp.department || '',
+        //             emp.branch || '',
+        //             emp.personal_email || '',
+        //             emp.cell_number || '',
+        //             emp.status || ''
+        //         ]).draw();
 
-                //notify
-                M.toast({
-                    html: 'Update successful!'
-                })
-            });
-        });
+        //         //notify
+        //         M.toast({
+        //             html: 'Update successful!'
+        //         })
+        //     });
+        // });
     });
 
     //toggle views
