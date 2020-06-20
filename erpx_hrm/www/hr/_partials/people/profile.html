@@ -11,6 +11,7 @@
     <br>
     <div class="col s12 m12 l12 xl4 force-center">
       <p><img src="{{employeeImage or '/images/profile_icon.png'}}" width="200"/></p>
+      {% if permission_upload_photo %}
       <div class="btn file-field input-field waves-effect waves-light" style="">
           <div class="">
               <span>Upload Photo</span>
@@ -20,6 +21,7 @@
               <input class="file-path validate" type="text">
           </div>
       </div>
+      {% endif %}
     </div>
 
     <div class="col s6 m6 l6 xl4" >
@@ -86,7 +88,7 @@
                 </div>
                 <div class="col s9 m9 l9 xl9">
                   <p style="margin-left: 15px;display: inline-block;vertical-align: middle; float: left;">
-                  <a href="#" class="dropdown-trigger" style="margin-top: 5px;display: block;color: #00aeef;" data-target="dropdown1"><b>{{employee.reports_to or ''}}</b></a>
+                  <a href="{% if employee.reports_to %}/hr/people.html?name={{employee.reports_to or ''}}{%else%}#{%endif%}" style="margin-top: 5px;display: block;color: #00aeef;"><b>{{reportToName or ''}}</b></a>
                   <span>{{reportToDepartment or ''}}</span>
                 </div>
               </div>
