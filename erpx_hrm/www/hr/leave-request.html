@@ -74,7 +74,7 @@
     <div class="content">
         <div class="col s12 m12 l12 xl6">
             <div class="balancesummary leave-request">
-                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
+                    <div id="card-stats" class="card" style="border-radius: 10px!important; overflow:visible">
                         <div class="card-content">
                             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Balance Summary</div>
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class=" calendar">
-                    <div id="card-stats-2" class="card" style="border-radius: 10px!important;">
+                    <div id="card-stats-2" class="card" style="border-radius: 10px!important; overflow:visible">
                             <div class="card-content">
                                   <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                                 <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
@@ -163,7 +163,11 @@
                                         <td>{{ frappe.utils.formatdate(i_lev_app_dt.from_date) }}<br>{{ frappe.utils.formatdate(i_lev_app_dt.to_date) }}</td>
                                         <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
                                         <td>
+                                          {% if i_lev_app_dt.status == "Approved"%}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% else %}
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% endif %}
                                         </td>
                                       </tr>
                                     {% endfor %}

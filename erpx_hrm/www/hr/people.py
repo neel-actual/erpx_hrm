@@ -10,8 +10,9 @@ def get_context(context):
     
 
     context.user = frappe.session.user
-    context.csrf_token = frappe.sessions.get_csrf_token()    
-    # get employee        
+    context.csrf_token = frappe.sessions.get_csrf_token()
+
+    # get employee
     name = frappe.form_dict.name
     if name:
         employee = frappe.get_doc("Employee", name)
@@ -29,14 +30,18 @@ def get_context(context):
 
     reportToDepartment = ''
     reportToImage = ''
+    reportToName = ''
+    owner = False
     if employee.reports_to:
-        report_to_info = frappe.get_doc("Employee", employee.reports_to, ("department", "user_id")) or None        
+        report_to_info = frappe.get_doc("Employee", employee.reports_to, ("department", "user_id", "employee_name")) or None        
         if report_to_info:
+            reportToName = report_to_info.employee_name
             reportToDepartment = report_to_info.department
-            reportToImage = frappe.get_value("User", report_to_info.user_id, "user_image")            
+            reportToImage = frappe.get_value("User", report_to_info.user_id, "user_image")
 
     context.reportToDepartment = reportToDepartment    
     context.reportToImage = reportToImage
+    context.reportToName = reportToName
 
     #Check permission   
     beep_roles = ["HR Manager", "Expense Approver", "Expense Verified", "Leave Approver","Employee", "Payroll Approval", "Finance Manager"]
@@ -50,6 +55,17 @@ def get_context(context):
     for i_user_role in user_role_list:
         if i_user_role in beep_roles:
             beep_user_role_list.append(i_user_role)
+    
+    #Check permission upload photo
+    permission_upload_photo = False
+
+    if employee.user_id == context.user:
+        permission_upload_photo = True
+    
+    if "HR Manager" in beep_user_role_list:
+        permission_upload_photo = True
+    
+    context.permission_upload_photo = permission_upload_photo
 
     #Get permissions for user on beep's role
     permission_list = {
