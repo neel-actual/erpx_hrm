@@ -57,6 +57,7 @@
   frappe.user = "{{ user }}"
   frappe.csrf_token = "{{ csrf_token }}";
   frappe.roles = {{ roles }};
+  frappe.site_url = "{{site_url}}";
 </script>
 <div id="main">
  <div class="row" id="DivIdToPrint">
@@ -331,9 +332,9 @@
 
 {% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
 
-{% if ((ap.approval_status == "Rejected")) and(user_id[0].user_id == user)  %}
+{% if (user_id[0].user_id == user)  %}
   <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="waves-effect waves-light right btn-approve" id="update">Re-Submit</a> 
+  class="waves-effect waves-light right btn-approve" id="update">Update</a> 
 {% endif %}
 
 {% endfor %}
@@ -524,6 +525,7 @@
 <script defer src="/hr/js/claim-title1.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
 
 <script>
