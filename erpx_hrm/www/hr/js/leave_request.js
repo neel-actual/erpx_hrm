@@ -277,3 +277,36 @@ function openUploadFile(){
 		window.open((window.URL || window.webkitURL).createObjectURL($("#file-request").get(0).files[0]), '_blank');
 	}		
 }
+
+function copyLeaveRequest(name){
+	let doctype = "Leave Application";
+	frappe.ajax({
+		type: "GET",
+		url: `/api/resource/${doctype}/${name}`,
+		callback: function (r) {
+			if (!r.exc) {
+				M.toast({
+					html: "Copied this leave. Please review and submit it.!"
+				})
+				let data = r.data;
+				request_leave_fields.forEach(element => {
+					$(`#form-request-leave [data-fieldname="${element}"]`).val(data[element]);
+
+					if ($(`#form-request-leave [data-fieldname="${element}"]`).prop("tagName") == "SELECT"){
+						$(`#form-request-leave [data-fieldname="${element}"]`).formSelect();
+					}
+					if(data[element]==1 && (element=="half_day" || element=="emergency")){
+						$(`#form-request-leave [data-fieldname="${element}"]`).prop( "checked", true);
+						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
+					}else{
+						$(`#form-request-leave [data-fieldname="${element}"]`).prop( "checked", false);
+						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
+					}    
+				});
+				$('html, body').animate({
+					scrollTop: $("#div-requestleave").offset().top
+				}, 1000);
+			}
+		}
+	});
+}

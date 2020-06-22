@@ -156,7 +156,7 @@
                                 <tbody>
                                     {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee, 'docstatus':['!=', 2]}, fields=['*']) %}
                                     {% for i_lev_app_dt in lev_app_li %}
-                                      <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                      <tr onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                                         <td>{{i_lev_app_dt.leave_type}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.from_date, format_string="yyyy-mm-dd")}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.to_date, format_string="yyyy-mm-dd")}}</td>
@@ -180,7 +180,7 @@
                 </div>
         </div>
         <div class="col s12 m12 l12 xl6">
-            <div class="requestleave">
+            <div class="requestleave" id="div-requestleave">
                     <div class="card" style="border-radius: 10px!important; overflow:visible">
                         <div class="card-content">
                               <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
