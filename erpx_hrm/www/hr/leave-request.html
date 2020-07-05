@@ -165,6 +165,8 @@
                                         <td>
                                           {% if i_lev_app_dt.status == "Approved"%}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% elif i_lev_app_dt.status == "Open"%}
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:grey; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% else %}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% endif %}
