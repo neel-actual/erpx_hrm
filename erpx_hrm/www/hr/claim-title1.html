@@ -3,6 +3,9 @@
 {% block title %}Claims{% endblock %}
 {% block styles %}
 <style type="text/css">
+      .hide{
+        display: none;
+      }
   @media only screen and (max-width: 360px){
       .border-request{
         margin-left: 0px !important;
@@ -12,16 +15,20 @@
         margin-right: 0px !important;
       }
       
+      
     }
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
   <link rel="stylesheet" type="text/css" href="/app-assets/vendors/vendors.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/materialize.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/materialize.css"> -->
   <link rel="stylesheet" type="text/css" href="/css/style.css" >
-  <link rel="stylesheet" type="text/css" href="/css/animate.css">
-  <link rel="stylesheet" type="text/css" href="/css/master.css">
-  <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/animate.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/css/master.css"> -->
+  <link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pages/data-tables.css">
 {% endblock %}
 
 {% block nav %}
@@ -85,14 +92,14 @@
                 <table style="table-layout: auto; display: contents !important;">
                   <tr>
                     <td><a href="#">Requester : {{exp.employee_name}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("Employee",filters={'name':exp.employee},fields=['image'])%}
+                    <!-- <td>{% set employee_pic = frappe.get_all("Employee",filters={'name':exp.employee},fields=['image'])%}
                       {% for file in employee_pic %}    
                       {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
-                      {% endfor %}</td>
+                      {% endfor %}</td> -->
                   </tr>
                 </table>
                 {% endfor %}
@@ -107,7 +114,7 @@
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
                     <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['employee_name'])%}<a href="#">Verifier : {{employee_name[0].employee_name}}</a></td>
-                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
+                    <!-- <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
                       
                       {% for file in employee_pic %}    
                       {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
@@ -115,7 +122,7 @@
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
-                      {% endfor %}</td>
+                      {% endfor %}</td> -->
                   </tr>
                 </table>
                 {% endfor %}
@@ -177,7 +184,7 @@
               
               
               {% endfor %}
-              <p style="font-size: 19px;text-align: right;">
+              <p style="font-size: 19px;text-align: right;" id="p_total_claim_amount">
                 
                 {% for ap in expense_claim %}
                 {{currency}} {{'%0.2f'| format(ap.total_claimed_amount|float)}}
@@ -199,9 +206,7 @@
         </div>
       </div>
     </div>
-
-
-  </div>
+    </div>
   <div class="col xl20 l20 m18 s12">
     <div id="card-stats" class="card" style="border-radius: 10px!important;">
       <div class="card-content">  
@@ -245,7 +250,7 @@
             <td style="text-align: center;">No Attachment</td>
             {% endif %}
             <!-- <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td> -->
-            <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>
+            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>
             {% endfor %}
         </tbody>
           </table>
@@ -293,51 +298,94 @@
 
       
 </div>
+<div class="input-field col s12 m12" >
+							
+  <!-- <div class="input-field col s12 m6" style="margin-left: 530px;">
+    <p style="margin-bottom: 10px; color: #87c1f1;">Total Amount</p>
+    <input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 47px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
+    <input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
 
-{% for ap in expense_claim %}
+    </div> -->
+    <div class="input-field col s12 m2">
+    <a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
+    
+    </div>
 
-{% if ((ap.approval_status == "Draft") and ('Expense Verified' in roles)) %}
-<a href="#add-approver" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="modal-trigger waves-effect waves-light right btn-approve" id="" >Verify</a>
-  <a href="#reject_veri" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
-  class="modal-trigger waves-effect waves-light right btn-approve" id="" >Decline</a>
-  {% endif %}
-  
-
-<div class="row margin infodetails" style="display: block;">
-  {% if ((ap.approval_status == "Verified") and ('Expense Approver' in roles))  %}
-  <!-- <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="waves-effect waves-light right btn-approve" id="print_page">Print</a> -->
-  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
-  class="modal-trigger waves-effect waves-light right btn-approve" id="approve">Approve</a>
-  <a href="#decline_approve" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
-  class="modal-trigger waves-effect waves-dark right" id="decline_modal">Decline</a>
-  {% endif %}
-  {% if ((ap.approval_status != "Draft") and (('Expense Verified' in roles) or ('Expense Approver' in roles)))  %}
-  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="waves-effect waves-light right btn-approve" id="print_page">Print</a> 
-  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 135px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="waves-effect waves-light right btn-approve" id="get_attach">Get Attachment</a> 
-{% endif %}
-</div>
-</div>
+    <div class="input-field col s12 m2">
+      <a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
+      <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
+      
+      </div>
+    
+  </div>
 
 
+      
+
+      <div class="row margin infodetails" style="display: block;">
+      {% for ap in expense_claim %}
+
+      {% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
+
+      {% if (user_id[0].user_id == user) or ('Expense Verified' in roles) %}
+        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="update">Update</a> 
+
+        <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+        class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
+
+        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="print_page">Print</a> 
+      {% endif %}
+
+      {% if ((ap.approval_status == "Draft") and ('Expense Verified' in roles)) %}
+
+      <a href="#add-approver" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+      class="modal-trigger waves-effect waves-light right btn-approve" id="" >Verify</a>
 
 
-{% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('HR Manager' in roles)) %}
-<a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
-{% endif %}
+      <a href="#reject_veri" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+      class="modal-trigger waves-effect waves-light right btn-approve" id="" >Decline</a>
 
-{% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
+      {% endif %}
 
-{% if (user_id[0].user_id == user)  %}
-  <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-  class="waves-effect waves-light right btn-approve" id="update">Update</a> 
-{% endif %}
+      {% if ((ap.approval_status == "Verified") and ('Expense Approver' in roles))  %}
 
-{% endfor %}
+      
+
+      <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+      class="waves-effect waves-light right btn-approve" id="update">Update</a> 
+      
+      <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+      class="modal-trigger waves-effect waves-light right btn-approve" id="approve">Approve</a>
+
+      <a href="#decline_approve" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+      class="modal-trigger waves-effect waves-dark right" id="decline_modal">Decline</a>
+
+      {% endif %}  
+
+     
+      
+      <!-- <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 135px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+      class="waves-effect waves-light right btn-approve" id="get_attach">Get Attachment</a>  -->
+
+      {% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('HR Manager' in roles)) %}
+      <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+      class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
+      {% endif %}
+      
+      {% endfor %}
+     
+      </div>
+
+      </div>
+
+
+
+
+     
+      
+
 
 </div>
 </div>
@@ -419,7 +467,8 @@
 </div>
 </div>
 
-<div id="add_claim_modal" class="modal" style="max-height:110% !important; top: 0% !important; ">
+<!-- <div id="add_claim_modal" class="modal" style="max-height:110% !important; top: 0% !important; "> -->
+<div id="add_claim_modal" class="modal">
   <div class="modal-content" style="padding-bottom: 10px !important;">
       <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
       <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
@@ -443,7 +492,7 @@
         <div class="input-field col s6">
         <p style="margin-bottom: 10px;">Claim Date</p>
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-        <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="sel_date" name="claim_date">
+        <input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="sel_date" name="claim_date">
         <!-- <label class='error'>Error</label> -->
         <!--<label for="signup-name" class="center-align">Full Name</label>-->
         </div>
@@ -461,7 +510,7 @@
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
         <input type="text" class="index" name="index" id="index" readonly hidden>
         <input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 40px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
-        <input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
+        <input type="text" name="claim_amount" style="width: 82%; display: block;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
         <label class='claim_amount_error'></label>
         
         </div>
@@ -472,23 +521,31 @@
           <textarea type="text" name="desc" id="sel_desc"></textarea>
           
         </div>
-        <div class="input-field col s3">
+        
+        
+        <div class="input-field col s12">
           <p style="margin-bottom: 10px;">Attachment
           </p>
           
-          <input type="text" name="attachment" id="attachment">
+          <input type="text" name="attachment" id="attachment" readonly>
           
           
           <!-- <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 152px;  text-align: center;  color: white;  line-height: 50px;line-height: 21px;margin-right: 28px;margin-bottom: 13px; " class="waves-effect waves-light right btn-approve" id="new_attach" >New Attachment</a>  -->
          
           
         </div>
-        <div class="input-field col s3"><a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 152px;  text-align: center;  color: white;  line-height: 50px;line-height: 21px;margin-right: 28px;margin-bottom: 13px; " class="waves-effect waves-light right btn-approve" id="clear_attach">Remove Attachment</a> </div>
-        <div class="input-field col s3"><a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 152px;  text-align: center;  color: white;  line-height: 50px;line-height: 21px;margin-right: 28px;margin-bottom: 13px; " class="waves-effect waves-light right btn-approve" id="upload_attach">upload Attachment</a> </div>
+
+        <div class="input-field col s3"><a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="clear_attach">Remove Attachment</a> </div>
+        <div class="input-field col s3"><a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="upload_attach">Upload Attachment</a> </div>
 
         <div class="input-field col s3">
-          <input type="file" name="new_attach" id="new_attach">
+          <input type="file" name="new_attach" class="custom-file-input" id="new_attach">
         </div>
+
+        <div class="input-field col s3">
+          <span id="file_attach_name"><i></i></span>
+        </div>
+
 
         <!-- <div class="input-field col s12">
                           <div class="file-field input-field">
