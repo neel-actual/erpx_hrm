@@ -20,9 +20,6 @@ $(document).ready(async function(){
           {targets: 6,width: "10%"},
           {targets: 7,width: "5%"}]
     })
-
-    dt.order( [ 0, 'asc' ] )
-    .draw();
     /* Role permission Setup*/
 
     // if(frappe.roles.includes("Expense Verified")){
@@ -37,6 +34,45 @@ $(document).ready(async function(){
     // }
     /* Role permission Setup*/
     
+    $('#edit_claim_btn').on('click', function(){
+        $('#claim_table').find('.hide').removeClass('hide');
+        
+        $('#claim_table').dataTable().fnDraw();
+         
+        return false  
+    })
+
+    $('#new_attach').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('#file_attach_name i').text('');
+        $('#file_attach_name i').text(fileName);
+    });
+
+    $('#claim_table tbody').on( 'click', 'td.index', function () {
+        // console.log($(this).parent())
+        $(this).parent().toggleClass('selected');
+        // $(this).toggleClass('ideal')
+      } );
+
+    $("#remove_claim").click(function(){
+    
+        // dt.rows().nodes().to$()
+        // array.forEach(element => {
+            
+        // });
+        
+    $('#claim_table').DataTable().rows('.selected').remove().draw(false);
+      var table_data = $('#claim_table').DataTable().rows().data();
+      console.log(table_data)
+        var total = 0
+        table_data.each(function (value, index) {
+            total = total + parseFloat(value[5].split(" ")[1])
+            console.log(parseFloat(value[5].split(" ")[1]))
+        });
+        console.log(total)
+        // $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
+        $('#p_total_claim_amount').text(currency +" "+ parseFloat(total).toFixed(2))
+    })
 
     $("#verify").click(function(){
 
@@ -409,7 +445,36 @@ $(document).ready(async function(){
 
     $("#add_claim").click(function(){
         console.log()
-           
+        if(!$('#index').val()){
+            if($("#claim_form").valid()){   // test for validity
+                var index = 0
+                if(dt.row(':last').data() == null){
+                    index = 1
+                }else{
+                    index = parseInt(dt.row(':last').data()[0]) + 1 
+                }
+                var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>')
+                dt.row.add(row).draw();
+                var data = dt.rows().data();
+                var total = 0
+                data.each(function (value, index) {
+                    total = total + parseFloat(value[5].split(" ")[1])
+                    // console.log(parseFloat(value[5].split(" ")[1]))
+                });
+                $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
+                $('#total_amount').text(parseFloat(total).toFixed(2))
+                M.toast({
+                html: 'Expense Added Successfuly!'
+                })
+                $('#claim_form').trigger("reset");   
+                document.getElementById("sel_date").value = today;     
+            } else {
+                // do stuff if form is not valid
+                alert("Please Fill Form Data Properly")
+            }
+    
+        }else{
+
             data = dt.row(parseInt($('#index').val())-1).data()
             
             console.log(data)
@@ -438,6 +503,10 @@ $(document).ready(async function(){
             })
             $('#add_claim_modal').modal('close')
             // console.log("update")
+
+        }
+           
+            
         
         
        
