@@ -103,6 +103,13 @@ $(document).ready(function () {
 		});		
 		return false;
 	});
+
+	$('.edit_leave').click(function(){
+		var name = $(this).attr("data-name");
+		var modal = $("#" + $(this).attr("data-modal"));
+		modal.modal('open');
+		editLeaveRequest(name);
+	});
 });
 
 var delete_leave = function(name){

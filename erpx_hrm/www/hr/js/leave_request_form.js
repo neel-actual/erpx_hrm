@@ -7,39 +7,13 @@ var request_leave_fields = [
 	"half_day_shift",
 	"half_day_date",
 	"description",
-	"leave_approver"
+	"leave_approver",
+	"employee",
+	"name",
 ]
 
 $(document).ready(function () {
-
-	var request_history = $('#request_history').DataTable({
-		"columnDefs": [
-            {
-                "targets": [ 1 ],
-                "visible": false,
-            },
-            {
-                "targets": [ 2 ],
-                "visible": false
-            }
-        ]
-	});
-
-	$('#i_filter_leave_type').change(function(){ 
-		var filter_leave_type = $("#i_filter_leave_type").val(); 
-		request_history.column(0).search(filter_leave_type, true, false, false).draw();
-	});
 	
-	$('.date-range-filter').change( function() {
-		request_history.draw();
-	});
-
-	$('.clr_filter_requesthistory').click(function(){		
-		$('.i_filter_requesthistory').val("");
-		$("#i_filter_leave_type").formSelect();
-		request_history.search('').columns().search('').draw();
-	});
-
 	$("#half_day").prop("checked", false);
 	toggle_div_half_day();
 	toggle_div_emergency();
@@ -58,38 +32,6 @@ $(document).ready(function () {
 	$('#leave_request_leave_type').change(function(){
 		toggle_div_emergency();
 	});
-	
-	
-	// Summay
-	frappe.call({
-        method: "erpnext.hr.doctype.leave_application.leave_application.get_leave_details",
-        args: {
-			employee: glb_employee,
-			date: moment().format("YYYY-MM-DD")
-        },
-        callback: function (r) {
-			let arrColor = ["blue", "purple", "pink", "red"];
-			let i = 0;
-			$.each( r.message.leave_allocation, function( key, val ) {
-				let j = i%4;
-				$(`
-					<div class="col s6 m6 l6 xl4 pt-2" style="min-height:180px">
-						<div class="circle ${arrColor[j]}">
-							<div class="card-content center">
-								<h4 class="card-stats-number white-text">${val.remaining_leaves}</h4>
-								<p class="card-stats-title white-text">
-									<span>available</span>
-								</p>
-							</div>
-						</div>
-						<p style="margin-top: 10px;text-align: center;">${key}</p>
-					</div>
-				`).appendTo($("#html_balancesummary"));
-				i++;
-
-			});			
-        }
-    });
 
 	//Request Leave
 
@@ -105,7 +47,8 @@ $(document).ready(function () {
 				}
             }     
 		});
-		args.employee = glb_employee;
+
+		let name = $(`#form-request-leave [data-fieldname="name"]`).val();
 
 		if(!args.employee){
 			M.toast({
@@ -118,8 +61,7 @@ $(document).ready(function () {
 				html: "This employee is not set Holiday List"
 			})
 			return false;
-		}
-		
+		}	
 		if(!args["half_day"]){
 			args["half_day_shift"] = "";
 		}else if(!args["half_day_shift"]){
@@ -130,12 +72,18 @@ $(document).ready(function () {
 		}
 
 		frappe.ajax({
-			url: "/api/resource/Leave Application",
+			type: "PUT",
+			url: `/api/resource/Leave Application/${name}`,
 			args: args,
 			callback: function (r) {
-				upload_file_request(r);				
+				if (!r.exc) {
+					M.toast({
+						html: "Updated Successfully!"
+					})
+					location.reload();
+				}
 			}
-		})
+		});
 	});
 
 	$("#file-request").change(function(){
@@ -183,49 +131,6 @@ var toggle_div_half_day = function(){
 	$("#div_half_day_date").show();	
 }
 
-var upload_file_request = function(r){
-	if (!r.exc) {
-		var doc = r.data;
-		var file = $("#file-request").get(0).files[0];
-		
-		if (file){
-			var reader = new FileReader();
-			reader.onload = function(){
-				var srcBase64 = reader.result;
-				frappe.ajax({
-					type: "POST",
-					url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
-					no_stringify: 1,
-					args: {
-						name : "file",
-						filename : file.name,
-						filedata : srcBase64,
-						doctype: "Leave Application",
-						docname: doc.name,
-						folder: "Home/Attachments",
-						is_private: 1,
-						from_form : 1
-					},
-					callback: function (r) {
-						if (!r.exc_type) {
-							M.toast({
-								html: "Added Successfully!"
-							})
-							location.reload();
-						}
-					}
-				});
-			};
-			reader.readAsDataURL(file);
-		}else{
-			M.toast({
-				html: "Added Successfully!"
-			})
-			location.reload();
-		}
-	}
-}
-
 var load_leave_approver_select = function (select_id, employee) {
 
     var arr = [];
@@ -255,40 +160,13 @@ var load_leave_approver_select = function (select_id, employee) {
     });
 }
 
-// Extend dataTables search
-$.fn.dataTable.ext.search.push(
-	function (settings, data, dataIndex) {
-		let min = $('#i_filter_from_date').val();
-		let max = $('#i_filter_to_date').val();
-		let from_date = data[1];
-		let to_date = data[2];
-		
-		if( min!="" && moment(from_date).isBefore(min)	){
-			return false;
-		}
-		if( max!="" && moment(to_date).isAfter(max)	){
-			return false;
-		}
-		return true;
-	}
-);
-
-function openUploadFile(){	
-	if($("#file-request").val() != ''){						
-		window.open((window.URL || window.webkitURL).createObjectURL($("#file-request").get(0).files[0]), '_blank');
-	}		
-}
-
-function copyLeaveRequest(name){
+function editLeaveRequest(name){
 	let doctype = "Leave Application";
 	frappe.ajax({
 		type: "GET",
 		url: `/api/resource/${doctype}/${name}`,
 		callback: function (r) {
 			if (!r.exc) {
-				M.toast({
-					html: "Copied this leave. Please review and submit it.!"
-				})
 				let data = r.data;
 				request_leave_fields.forEach(element => {
 					$(`#form-request-leave [data-fieldname="${element}"]`).val(data[element]);
@@ -304,9 +182,7 @@ function copyLeaveRequest(name){
 						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
 					}    
 				});
-				$('html, body').animate({
-					scrollTop: $("#div-requestleave").offset().top
-				}, 1000);
+				load_leave_approver_select($(`#form-request-leave [data-fieldname="leave_approver"]`), $(`#form-request-leave [data-fieldname="employee"]`).val());
 			}
 		}
 	});

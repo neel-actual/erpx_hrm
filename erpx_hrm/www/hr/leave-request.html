@@ -23,7 +23,17 @@
 
 
     }
+#table-scroll {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
 
+    white-space: nowrap !important;
+}
+
+table {
+    display: inline-table !important;
+}
 .collapsible-body{
   padding: 0 !important;
 }
@@ -151,12 +161,13 @@
                                         <th style="border-right:none!important;">Date</th>
                                         <th style="border-right:none!important;">Total</th>
                                         <th style="border-right:none!important;">Status</th>
+                                        <th style="border-right:none!important;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee, 'docstatus':['!=', 2]}, fields=['*']) %}
                                     {% for i_lev_app_dt in lev_app_li %}
-                                      <tr onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
+                                      <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                                         <td>{{i_lev_app_dt.leave_type}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.from_date, format_string="yyyy-mm-dd")}}</td>
                                         <td>{{frappe.utils.formatdate(i_lev_app_dt.to_date, format_string="yyyy-mm-dd")}}</td>
@@ -165,10 +176,13 @@
                                         <td>
                                           {% if i_lev_app_dt.status == "Approved"%}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% elif i_lev_app_dt.status == "Open"%}
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:grey; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% else %}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% endif %}
                                         </td>
+                                        <td><a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a></td>
                                       </tr>
                                     {% endfor %}
                                 </tbody>
