@@ -121,9 +121,10 @@ table{
                                <p>{{ i_leave_detail.total_leave_days }} Days</p>
                              </td>
                              <td>{{i_leave_detail.status}}</td>
-                             <td style="width: 200px;">
+                             <td style="width: 300px;">
                                 <a href="#" class="waves-effect waves-dark btn green btn-small mr-5 approve_leave" data-name="{{i_leave_detail.name}}">Approve</a>
-                                <a href="#" class="waves-effect waves-dark red btn btn-small reject_leave" data-name="{{i_leave_detail.name}}">Reject</a>
+                                <a href="#" class="waves-effect waves-dark red btn btn-small mr-5 reject_leave" data-name="{{i_leave_detail.name}}">Reject</a>
+                                <a href="#" class="waves-effect waves-dark grey btn btn-small mr-5 edit_leave" data-modal="modal-edit-leave" data-name="{{i_leave_detail.name}}">Edit</a>
                              </td>
                            </tr>
                          </table>
@@ -278,9 +279,9 @@ table{
       </div>
     </div>
   </div>
-      {% endblock %}
-    </div>
-  </div>
+  {% include "www/hr/_partials/leave-request-modal.html" %}
+{% endblock %}
+
 
 {% block scripts %}
   <script>
@@ -298,4 +299,5 @@ table{
   <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
   <script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
   <script defer src="/hr/js/leave_approval.js" type="text/javascript"></script>
+  <script defer src="/hr/js/leave_request_form.js" type="text/javascript"></script>
 {% endblock %}
