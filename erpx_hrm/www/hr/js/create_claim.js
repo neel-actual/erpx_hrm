@@ -50,7 +50,10 @@ var dt = $('#claim_table').DataTable({
       {targets: 4,width: "15%"},
       {targets: 5,width: "15%"},
       {targets: 6,width: "10%"},
-      {targets: 7,width: "5%"}]
+      {targets: 7,width: "5%"},
+      {targets: 8,visible: false},
+      {targets: 9,visible: false}
+    ]
 })
 
 $("#claim_requester").change(function(){
@@ -109,7 +112,7 @@ $("#add_claim").click(function(){
             }else{
                 index = parseInt(dt.row(':last').data()[0]) + 1 
             }
-            var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>')
+            var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td><td>'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td><td>'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td></tr>')
             dt.row.add(row).draw();
             var data = dt.rows().data();
             var total = 0
@@ -225,19 +228,17 @@ $("#save_claim").click(async function(){
     console.log(dt.column(0).data().length)
     for (let i = 0; i < dt.column().data().length; i++) {
         const element = dt.rows(i).data()[0];
-
         exp_list.push({
             "expense_date":element[1],
             "expense_type":element[2].toString(),
             "merchant":element[3].toString(),
             "description":element[4].toString(),
             "amount":parseFloat(element[5].split(" ")[1]),
-            "sanctioned_amount":parseFloat(element[5].split(" ")[1])
+            "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
+            "distance":parseFloat(element[8]),
+            "distance_rate":parseFloat(element[9]),
         })
-        
-        
     }
-    // console.log(exp_list)
     
     let cutoff = await get_cutoff()
     console.log(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate()))
@@ -429,3 +430,32 @@ function appendLeadingZeroes(n){
     }
     return n
   }
+
+
+$(document).ready(function () {
+    $('#sel_claim_type').change(function(){ 
+		toggle_div_distance();
+    });
+    $('#sel_distance').change(function(){ 
+        count_amount_by_distance();
+    });
+    $('#sel_distance_rate').change(function(){ 
+		count_amount_by_distance();
+	});
+});
+
+function toggle_div_distance(){
+	
+	if($("#sel_claim_type").val() == "Mileage Charges"){
+		$(".div_distance").show();
+	}else{
+        $(".div_distance").hide();
+    }	
+}
+
+function count_amount_by_distance(frm, cdt, cdn){
+    let distance = $('#sel_distance').val() || 0;
+    let distance_rate = $('#sel_distance_rate').val() || 0;
+    let amount = flt(distance) * flt(distance_rate);
+    $('#sel_amount').val(amount);
+}

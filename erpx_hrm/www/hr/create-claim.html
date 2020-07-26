@@ -225,8 +225,9 @@ td {
 							  
 							  <th style=" border-right:none!important;"><b>Amount</b></th>
 							  <th style=" border-right:none!important;"><b>Attachment</b></th>
-							  <th style=" border-right:none!important;"></th>
-							  
+								<th style=" border-right:none!important;"></th>
+								<th style=" border-right:none!important;"><b>Distance</b></th>
+								<th style=" border-right:none!important;"><b>Distance Rate</b></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -355,7 +356,7 @@ td {
 								<p style="margin-bottom: 10px;">Claim type</p>
 								<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 								
-								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type">
+								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type" autocomplete="off">
 								<option value="" disabled selected>Select Type</option>
 									{% set leave_type = frappe.get_all("Expense Claim Type", fields=['name']) %}
 									{% for i_leave_type in leave_type %}
@@ -366,6 +367,8 @@ td {
 
 								<!--<label for="signup-name" class="center-align">Full Name</label>-->
 							</div>
+							
+
 						  <div class="input-field col s6">
 							<p style="margin-bottom: 10px;">Claim Date</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
@@ -374,6 +377,15 @@ td {
 							<!-- <label class='error'>Error</label> -->
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
+
+							<div class="input-field col s6 div_distance" style="display:none">
+									<p style="margin-bottom: 10px;">Distance (KM)</p>
+									<input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
+							</div>
+							<div class="input-field col s6 div_distance" style="display:none">
+									<p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
+									<input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
+							</div>
 		  
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Merchant</p>
