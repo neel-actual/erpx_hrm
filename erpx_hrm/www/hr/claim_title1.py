@@ -1,5 +1,6 @@
 import frappe
 import json
+from erpx_hrm.utils.user import get_users_by_role
 
 def get_context(context):
     if frappe.session.user == 'Guest':
@@ -12,7 +13,8 @@ def get_context(context):
     context.csrf_token = frappe.sessions.get_csrf_token()
     context.currency = frappe.db.get_value("Global Defaults",None,"default_currency")   
     context.site_url = frappe.utils.get_url()
-     
+
+    context.user_approvers = get_users_by_role("Expense Verified")     
 
     return context
 

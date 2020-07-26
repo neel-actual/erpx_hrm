@@ -411,11 +411,8 @@
          <p>Approver</p>
          <select name="category" id="assigned_approver">
            <option value="" selected>Select Approver</option>
-          {% for ap in expense_claim %}
-          {% set approver = frappe.get_all("Department Approver",filters={'parent':ap.department,'parentfield':'expense_approvers'},fields=['approver'])  %}
-          {% for app in approver %}
-           <option value="{{app.approver}}" >{{app.approver}}</option>
-           {% endfor %}
+           {% for item in user_approvers %}
+           <option value="{{item}}" >{{item}}</option>
            {% endfor %}
          </select>
        </div>

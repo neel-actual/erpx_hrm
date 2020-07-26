@@ -49,3 +49,8 @@ def add_role_from_array(arr_user, arr_all_user, role_name):
 			user1 = frappe.get_doc("User", _user1)  			
 			if frappe.db.exists("Has Role", {"parent": user1.name, "role": role_name}):				
 				user1.remove_roles(role_name)
+
+@frappe.whitelist()
+def get_users_by_role(role_name):
+	users =  frappe.get_all("Has Role", filters={"role": role_name, "parenttype": "User", "parent": ["!=", "Administrator"]}, fields=["parent"])
+	return  [user.parent for user in users]
