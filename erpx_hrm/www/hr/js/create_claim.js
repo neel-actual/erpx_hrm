@@ -44,13 +44,13 @@ var dt = $('#claim_table').DataTable({
         targets: 0,
         width: "5%"
       },
-      {targets: 1,width: "10%",render: $.fn.dataTable.render.moment('DD-MM-YYYY')},
-      {targets: 2,width: "10%"},
-      {targets: 3,width: "10%"},
-      {targets: 4,width: "15%"},
-      {targets: 5,width: "15%"},
-      {targets: 6,width: "10%"},
-      {targets: 7,width: "5%"},
+      {targets: 1,render: $.fn.dataTable.render.moment('DD-MM-YYYY')},
+      {targets: 2},
+      {targets: 3},
+      {targets: 4},
+      {targets: 5},
+      {targets: 6},
+      {targets: 7},
       {targets: 8,visible: false},
       {targets: 9,visible: false}
     ]

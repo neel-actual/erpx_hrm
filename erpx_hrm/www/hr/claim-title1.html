@@ -17,6 +17,13 @@
       
       
     }
+.table-scroll {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap !important;
+}
+
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
@@ -209,7 +216,7 @@
     </div>
   <div class="col xl20 l20 m18 s12">
     <div id="card-stats" class="card" style="border-radius: 10px!important;">
-      <div class="card-content">  
+      <div class="card-content table-scroll">  
         <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
         {% for claim in expense_claim %}
         {% if claim.reimbursement_type == "Submission via Payroll" %}
@@ -223,15 +230,15 @@
         <table class ="table" id="claim_table" style="margin-top: 15px; display: inline-table!important;">
           <thead>
           <tr style="background-color: #eff1f9;">
-            <th style=" border-right:none!important;"><b>No.</b></th>
-            <th style=" border-right:none!important;"><b>Expenses Date</b></th>
-            <th style=" border-right:none!important;"><b>Claim Type</b></th>
-            <th style=" border-right:none!important;"><b>Mechant</b></th>
-            <th style=" border-right:none!important;"><b>Description</b></th>
+            <th style=" border-right:none!important;" width="100"><b>No.</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Expenses Date</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Claim Type</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Mechant</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Description</b></th>
             
-            <th style=" border-right:none!important;"><b>Amount</b></th>
-            <th style=" border-right:none!important;"><b>Attachment</b></th>
-            <th style=" border-right:none!important;"></th>
+            <th style=" border-right:none!important;" width="150"><b>Amount</b></th>
+            <th style=" border-right:none!important;" width="100"><b>Attachment</b></th>
+            <th style=" border-right:none!important;" width="100"></th>
             
           </tr>
         </thead>
