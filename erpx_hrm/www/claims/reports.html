@@ -82,8 +82,21 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                  <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
                  <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="to_date">
                </div>
+               <div class="input-field col s12 m4 l4 xl3">
+                <p style="text-align: left;margin-bottom: 10px;">Select Status</p>
+                <select style="width: -webkit-fill-available;" id="status_filter">
+                  <option value="" selected>All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Verified">Verified</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Paid">Paid</option>
+                </select>
+              </div>
 
-               <div style="margin-left: 20px;" class="right input-field col s12 m3">
+               
+
+               <div class="right input-field col s12 m3">
                 <p style="text-align: left;margin-bottom: 10px;">Submitted By</p>
                 <select style="width: -webkit-fill-available;" id="emp_filter">
                   <option value="" selected>All Employees</option>

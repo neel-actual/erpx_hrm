@@ -30,7 +30,8 @@ update_website_context = "erpx_hrm.boot.update_website_context"
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 doctype_js = {
-    "Branch": "custom_scripts/branch_custom.js"
+    "Branch": "custom_scripts/branch_custom.js",
+	"Expense Claim": "custom_scripts/expense_claim_custom.js",
 }
 
 fixtures = ["Custom Field","Property Setter"]
@@ -96,6 +97,12 @@ home_page = "index"
 doc_events = {
 	"Leave Application": {
 		"on_update": "erpx_hrm.utils.leave_application.on_update"
+	},
+	"Employee": {
+		"on_update": "erpx_hrm.utils.employee.on_update"
+	},
+	"Expense Claim": {
+		# "validate": "erpx_hrm.erpx_hrm.expense_claim.validate"
 	}
 }
 

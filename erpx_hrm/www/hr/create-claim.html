@@ -26,7 +26,18 @@
     .collapsible-body{
   padding: 0 !important;
 }
-
+.table-scroll {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap !important;
+}
+td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .custom-file-input {
   color:transparent;
   font-size: 5px;
@@ -204,50 +215,39 @@
 					<div id="list" class="list-section" style="display: block; ">
 							
 					  <div class="row" >
-						<div id="table-scroll" class="col s12" >
+						<div class="col s12" >
 							<img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
 			  				<h4 class="card-title" style="display: inline; margin-left: 10px;">Claim Details</h4>
 						</div>
-						<div id="table-scroll" class="col s12" style="outline:1px solid #dbdbdb;">
+						<div class="col s12 table-scroll" style="outline:1px solid #dbdbdb;">
 						  <table class ="table" id="claim_table" style="margin-top: 15px; display: inline-table!important;">
 							<thead>
-							<tr style="background-color: #eff1f9;">
-							  <th style=" border-right:none!important;"><b>No.</b></th>
-							  <th style=" border-right:none!important;"><b>Expenses Date</b></th>
-							  <th style=" border-right:none!important;"><b>Claim Type</b></th>
-							  <th style=" border-right:none!important;"><b>Mechant</b></th>
-							  <th style=" border-right:none!important;"><b>Description</b></th>
-							  
-							  <th style=" border-right:none!important;"><b>Amount</b></th>
-							  <th style=" border-right:none!important;"><b>Attachment</b></th>
-							  
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-						  </table>
+								<tr style="background-color: #eff1f9;">
+									<th style=" border-right:none!important;" width="100"><b>No.</b></th>
+									<th style=" border-right:none!important;" width="200"><b>Expenses Date</b></th>
+									<th style=" border-right:none!important;" width="200"><b>Claim Type</b></th>
+									<th style=" border-right:none!important;" width="200"><b>Mechant</b></th>
+									<th style=" border-right:none!important;" width="200"><b>Description</b></th>
+									<th style=" border-right:none!important;" width="150"><b>Amount</b></th>
+									<th style=" border-right:none!important;" width="100"><b>Attachment</b></th>
+									<th style=" border-right:none!important;" width="100"></th>
+									<th style=" border-right:none!important;"><b>Distance</b></th>
+									<th style=" border-right:none!important;"><b>Distance Rate</b></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						</div>
 						  
 						  <div class="input-field col s12 m12" >
-							
-							<!-- <div class="input-field col s12 m6" style="margin-left: 530px;">
-								<p style="margin-bottom: 10px; color: #87c1f1;">Total Amount</p>
-								<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 47px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
-								<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
-
-							  </div> -->
 							  <div class="input-field col s12 m2">
 								<a class="modal-trigger waves-effect btn right" id="remove_claim">Remove Claim</a>
-								
 							  </div>
 
 							  <div class="input-field col s12 m2">
-								<a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
-								<!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
-								
+								<a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>								
 							  </div>
-
-							  
-							  
 							</div>
 						</div>
 					  </div>
@@ -267,7 +267,7 @@
 					<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #ef32a1">{{currency}} </p>
 					<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #ef32a1" id="total_amount"></p>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
-					<a href="#create-news.modal" class="modal-trigger waves-effect btn right" id="save_claim">Save Claim</a>
+					<a href="#create-news.modal" class="modal-trigger waves-effect btn right" id="save_claim">Submit Claim</a>
 						<br><br><br><br>
 				  </div>
 
@@ -333,8 +333,8 @@
 <!-- Claim Detail-->
 
 			<!-- <div class="card" style="border-radius: 10px!important;"> -->
-			<div id="add_claim_modal" class="modal" style="max-height:110% !important; ">
-			  <div class="modal-content">
+			<div id="add_claim_modal" class="modal" style="max-height:110% !important; top: 2% !important; ">
+			  <div class="modal-content" style="padding-bottom: 10px !important;">
 					  <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
 					  <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
 				  <form id="claim_form">
@@ -343,7 +343,7 @@
 								<p style="margin-bottom: 10px;">Claim type</p>
 								<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 								
-								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type">
+								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type" autocomplete="off">
 								<option value="" disabled selected>Select Type</option>
 									{% set leave_type = frappe.get_all("Expense Claim Type", fields=['name']) %}
 									{% for i_leave_type in leave_type %}
@@ -354,13 +354,25 @@
 
 								<!--<label for="signup-name" class="center-align">Full Name</label>-->
 							</div>
+							
+
 						  <div class="input-field col s6">
 							<p style="margin-bottom: 10px;">Claim Date</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-							<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="sel_date" value="2013-01-08" name="claim_date">
+							<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+								<input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" id="sel_date" name="claim_date" min="{{min_claim_date}}" max="{{max_claim_date}}">
 							<!-- <label class='error'>Error</label> -->
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
+
+							<div class="input-field col s6 div_distance" style="display:none">
+									<p style="margin-bottom: 10px;">Distance (KM)</p>
+									<input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
+							</div>
+							<div class="input-field col s6 div_distance" style="display:none">
+									<p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
+									<input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
+							</div>
 		  
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Merchant</p>
@@ -372,6 +384,7 @@
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Amount</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
+							<input type="text" class="index" name="index" id="index" readonly hidden>
 							<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 40px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
 							<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
 							<label class='claim_amount_error'></label>
@@ -381,9 +394,20 @@
 							<div class="input-field col s12">
 								<p style="margin-bottom: 10px;">Description</p>
 								
-								<textarea type="text" id="sel_desc"></textarea>
+								<textarea type="text" name="desc" id="sel_desc"></textarea>
 								
 							</div>
+							<!-- <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Upload File</span>
+                                        <input id="file-request" type="file" autocomplete="off">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
 
 							
 							
@@ -391,7 +415,8 @@
 				  </form>
 			  </div>
 			  <div class="modal-footer" style="background-color: #fff !important;">
-				<a href="#!" class="right waves-effect waves-light btn" id="add_claim">Add Claim</a>
+				<a href="#!" class="right waves-effect waves-light btn" id="add_claim">Add/Update Claim</a>
+				<a href="#!" class="right waves-effect waves-light btn" id="update_claim" style="display: none;">Update Claim</a>
 				<a href="#!" class="right blue-text btn-flat"
 				onclick="$('#add_claim_modal').modal('close')">Cancel</a>
 			  </div>
@@ -417,7 +442,7 @@
     type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
     <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-    <script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+    <!-- <script defer src="/hr/js/leave_request.js" type="text/javascript"></script> -->
     <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
     <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
     <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>

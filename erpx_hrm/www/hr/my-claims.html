@@ -141,12 +141,12 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             </tr>
                         </thead>
                         <tbody>
-                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*']) %}
+                            {% set exp_list = frappe.get_list("Expense Claim", fields=['*']) %}
                             {% for i_exp_list in exp_list %}
                                 <tr>
                                     <!-- <td><a style="color: black" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a></td> -->
                                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': i_exp_list.name},fields=["expense_type"])%}               
-                                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a><br>
+                                  <td style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><a style="color:#00AEEF" href="/hr/claim-title1.html/?expense_claim={{i_exp_list.name}} ">{{i_exp_list.name}}</a><br>
                                     ({% for e in range(claim_title|length) %}
                                     {% if e < 2 %}
                                     {{claim_title[e].expense_type}}
@@ -202,7 +202,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<!-- <script defer src="/hr/js/leave_request.js" type="text/javascript"></script> -->
 <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
 <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>

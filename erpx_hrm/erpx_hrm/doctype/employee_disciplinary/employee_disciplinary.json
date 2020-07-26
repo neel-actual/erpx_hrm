@@ -1,0 +1,41 @@
+{
+ "creation": "2020-04-16 17:53:04.854821",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "type",
+  "reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Type"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Reason"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-04-20 15:10:31.353531",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Employee Disciplinary",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

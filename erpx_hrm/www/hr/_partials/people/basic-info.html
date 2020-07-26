@@ -1,0 +1,126 @@
+<div class="card" id="divBasicInfo" style="border-radius: 10px;overflow-x: auto !important;">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+
+      <i class="material-icons-outlined" style="display: inline;">person</i>
+      <h4 class="card-title directorytitle" style="display: inline;">Basic Information </h4>
+      {% if employee.first_name: %}
+      <p style="padding-left: 36px;">Need to know more? Here are some details of {{employee.first_name}}.</p>
+      <p style="padding-left: 36px;">Make sure to keep the basic information up to date for other collegues.</p>                  
+      {% endif %}                            
+
+      {% if permission_list["Basic Information"]["canEdit"] %}  
+      <div class="col s12 m12 16 x34" style="margin-top: 10px;">
+        <button style="border-radius: 25px; width: 150px;" type="button" id="btn-save-employee" class="btn right waves-effect waves-light">Save</button>
+      </div>
+      {% endif %}
+      <div class="input-field col s12 m6">        
+        <p style="margin-bottom: 10px;">Series</p>                    
+        <select {{'disabled="disabled"' if employee.naming_series else ""}} data-fieldname="naming_series" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                            
+          {% for i_sery in series %}
+              <option value="{{i_sery}}" {{"selected='selected'" if i_sery == employee.naming_series else false}}>{{i_sery}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Staff ID</p>                    
+        <input {{'disabled="disabled"' if employee.alternate_staff_id else ""}} data-fieldname="alternate_staff_id" type="text" name="alternate_staff_id" style="width: -webkit-fill-available;" value="{{employee.alternate_staff_id or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">First Name</p>                    
+        <input data-fieldname="first_name" type="text" name="first_name" style="width: -webkit-fill-available;" value="{{employee.first_name or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Last Name</p>                    
+        <input data-fieldname="last_name" type="text" name="last_name" style="width: -webkit-fill-available;" value="{{employee.last_name or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Preferred Name</p>                    
+        <input data-fieldname="preferred_name" type="text" name="preferred_name" style="width: -webkit-fill-available;" value="{{employee.preferred_name or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Job Title</p>                    
+        <select data-fieldname="designation" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
+          <option value="">---------------</option>
+          {% set job_val = frappe.get_all("Designation", fields=['name']) %}
+          {% for i_job_val in job_val%}
+              <option value="{{i_job_val.name}}" {{"selected='selected'" if i_job_val.name == employee.designation else false}}>{{i_job_val.name}}</option>
+          {% endfor %}
+        </select>                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Email Address</p>                    
+        <input type="text" data-fieldname="personal_email" name="personal_email" style="width: -webkit-fill-available;" value="{{employee.personal_email or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Mobile No.</p>                    
+        <input type="text" data-fieldname="cell_number" name="cell_number" style="width: -webkit-fill-available;" value="{{employee.cell_number or ''}}">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Report to</p>
+        <select data-fieldname="reports_to" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                         
+          {% set employee_val = frappe.get_all("Employee", fields=['name', 'first_name'], filters=[dict(name = ('!=', employee.name))]) %}
+          {% for i_employee_val in employee_val%}
+              <option value="{{i_employee_val.name}}" {{"selected='selected'" if i_employee_val.name == employee.reports_to else false}}>{{i_employee_val.first_name}}</option>
+          {% endfor %}
+        </select> 
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Department</p>
+        <select data-fieldname="department" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
+          <option value="">---------------</option>
+          {% set department_val = frappe.get_all("Department", fields=['name']) %}
+          {% for i_department_val in department_val%}
+              <option value="{{i_department_val.name}}" {{"selected='selected'" if i_department_val.name == employee.department else false}}>{{i_department_val.name}}</option>
+          {% endfor %}
+        </select> 
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Employment Type</p>
+        <select data-fieldname="employment_type" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
+          <option value="">---------------</option>
+          {% set employment_type_val = frappe.get_all("Employment Type", fields=['name']) %}
+          {% for i_employment_type_val in employment_type_val%}
+              <option value="{{i_employment_type_val.name}}" {{"selected='selected'" if i_employment_type_val.name == employee.employment_type else false}}>{{i_employment_type_val.name}}</option>
+          {% endfor %}
+        </select> 
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Gender</p>
+        <select data-fieldname="gender" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
+          <option value="">---------------</option>
+          {% set gender_val = frappe.get_all("Gender", fields=['name']) %}
+          {% for i_gender_val in gender_val%}
+              <option value="{{i_gender_val.name}}" {{"selected='selected'" if i_gender_val.name == employee.gender else false}}>{{i_gender_val.name}}</option>
+          {% endfor %}
+        </select> 
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Office</p>
+        <select data-fieldname="branch" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                   
+          <option value="">---------------</option>
+          {% set branch_val = frappe.get_all("Branch", fields=['name']) %}
+          {% for i_branch_val in branch_val%}
+              <option value="{{i_branch_val.name}}" {{"selected='selected'" if i_branch_val.name == employee.branch else false}}>{{i_branch_val.name}}</option>
+          {% endfor %}
+        </select> 
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Employee No.</p>                    
+        <input type="text" name="employee_no" style="width: -webkit-fill-available;" value="{{employee.employee_number or ''}}" data-fieldname="employee_number">                    
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Join Date</p>
+        <input data-fieldname="date_of_joining"  autocomplete="off"
+        style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+        placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" value="{{employee.date_of_joining or ''}}" />
+      </div>
+      <div class="input-field col s12 m6">
+        <p style="margin-bottom: 10px;">Date of Birth</p>
+        <input data-fieldname="date_of_birth"  autocomplete="off"
+        style="border: 1px solid #c1c1c1; border-radius: 5px; padding-left: 10px;"
+        placeholder="" class="textbox-n" type="date" onfocus="(this.type='date')" value="{{employee.date_of_birth or ''}}" />
+      </div> 
+    </div>
+    </div>
+  </div>

@@ -123,14 +123,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   <th style="border-right:none!important;">Status</th>
                 </tr>
               </thead>
-                {% set expense1 = frappe.get_all("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date']) %}
+                {% set expense1 = frappe.get_list("Expense Claim", fields=['name','approval_status','cutoff_date','status','employee','employee_name','total_claimed_amount','posting_date'],) %}
               <tbody>
                 {% for ex in expense1 %}
                
                 
                 <tr>
                   {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%}               
-                  <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                  <td style="overflow:hidden;"><a style="color:#00AEEF" href="/hr/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
                     
                     ({% for e in range(claim_title|length) %}
                     {% if e < 2 %}
@@ -227,7 +227,7 @@ type="text/javascript"></script>
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
   var user_table = $('#table_id').DataTable({
-    "order": [[ 1, "desc" ]],
+    "order": [[ 0, "desc" ]],
     columnDefs: [ {
       targets: 1,
       render: $.fn.dataTable.render.moment('DD-MM-YYYY')

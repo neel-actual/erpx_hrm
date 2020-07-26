@@ -1,0 +1,65 @@
+<form id="form-request-leave">
+	<input type="hidden" data-fieldname="name"  autocomplete="off">
+	<input type="hidden" data-fieldname="employee"  autocomplete="off">
+	<div>
+		<div class="input-field col s12">
+			<p style="margin-bottom: 10px;">Leave type</p>
+			<select id="leave_request_leave_type" data-fieldname="leave_type" style="padding-left: 10px;width: -webkit-fill-available;">
+			<option value="" disabled selected>Select Type</option>
+				{% set leave_type = frappe.get_all("Leave Type", fields=['leave_type_name']) %}
+				{% for i_leave_type in leave_type %}
+					<option value="{{i_leave_type.leave_type_name}}">{{i_leave_type.leave_type_name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="input-field col s12" id="div_emergency" style="display:none">
+			<p style="margin-bottom: 10px;">
+				<label class="container">
+				<input data-fieldname="emergency" type="checkbox" class="filled-in" value="1">
+				<span class="checkmark" style="vertical-align: -50%;">Emergency</span>
+				</label>
+			</p>
+		</div>
+
+		<div class="input-field col s12 m6">
+			<p style="margin-bottom: 10px;">Start Date</p>
+			<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+			<input id="leave_request_from_date" data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
+		</div>
+		<div class="input-field col s12 m6">
+			<p style="margin-bottom: 10px;">End Date</p>
+			<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+			<input id="leave_request_to_date" data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
+		</div>
+		<div class="input-field col s12 m6" id="div_half_day">
+			<p style="margin-bottom: 10px;">
+			<label class="container">
+			<input data-fieldname="half_day" id="half_day" type="checkbox" class="filled-in" value="1">
+			<span class="checkmark" style="vertical-align: -50%;">Half Day</span>
+			</label>
+			</p>
+		</div>
+		<div class="input-field col s12 m6" id="div_half_day_shift" style="display:none">
+				<select data-fieldname="half_day_shift" style="padding-left: 10px;width: -webkit-fill-available;">
+				<option value="" disabled selected>Half Day Shift</option>
+				<option value="AM">AM</option>
+				<option value="PM">PM</option>
+			</select>
+		</div>
+		<div class="input-field col s12 m6" id="div_half_day_date" style="display:none">
+			<p style="margin-bottom: 10px;">Half Day Date</p>
+			<img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+			<input id="leave_request_half_day_date" data-fieldname="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
+		</div>
+		<div class="input-field col s12">
+			<p style="margin-bottom: 10px;">Reason</p>
+			<textarea data-fieldname="description" type="text"></textarea>
+		</div>
+		<div class="input-field col s12">
+			<p style="margin-bottom: 10px;">Approver</p>
+			<select data-fieldname="leave_approver" style="padding-left: 10px;width: -webkit-fill-available;">
+			</select>
+		</div>
+	</div>
+</form>
+

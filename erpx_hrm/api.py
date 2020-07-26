@@ -4,6 +4,8 @@ import frappe.desk.reportview
 from frappe.utils.xlsxutils import make_xlsx
 import json
 from frappe import utils
+from six import string_types
+from frappe import _
 
 
 
@@ -305,7 +307,11 @@ def get_child(doctype,filters,fields):
 
 @frappe.whitelist()
 def get_employee_payroll_info(employee = None):
-    object = frappe.get_all("Employee",filters={"status":"Active","name":employee},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    if not employee:
+        object = frappe.get_all("Employee",filters={"status":"Active"},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    else:
+        object = frappe.get_all("Employee",filters={"status":"Active","name":employee},fields = ['name','employee_name','department','branch','employment_type','salary_mode','designation','image',"salary_amount","employee_epf_rate","additional_epf","employee_socso_rate","employee_eis_rate","total_socso_rate","total_eis_rate","zakat_amount","employer_socso_rate","employer_epf","residence_status","marital_status","number_of_children","spouse_working","accumulated_salary","accumulated_epf","additional_employer_epf","employer_eis_rate","is_disabled","spouse_disable","past_deduction","accumulated_socso","accumulated_mtd","accumulated_zakat","accumulated_eis"])
+    # frappe.throw(str(object))
 
     for obj in object:
         add=0.00
@@ -398,5 +404,63 @@ def make_payslip(pay_list):
     frappe.db.set_value("HRM Payroll Entry",pay['payname'],"docstatus",1)
 
 
+@frappe.whitelist()
+def set_value_custom(doctype, name, fieldname, value=None):
 
+	'''Set a value using get_doc, group of values
+
+	:param doctype: DocType of the document
+	:param name: name of the document
+	:param fieldname: fieldname string or JSON / dict with key value pair
+	:param value: value if fieldname is JSON / dict'''
+
+	if fieldname!="idx" and fieldname in frappe.model.default_fields:
+		frappe.throw(_("Cannot edit standard fields"))
+
+	if not value:
+		values = fieldname
+		if isinstance(fieldname, string_types):
+			try:
+				values = json.loads(fieldname)
+			except ValueError:
+				values = {fieldname: ''}
+	else:
+		values = {fieldname: value}
+
+	doc = frappe.db.get_value(doctype, name, ["parenttype", "parent"], as_dict=True)
+	if doc and doc.parent and doc.parenttype:
+		doc = frappe.get_doc(doc.parenttype, doc.parent)
+		child = doc.getone({"doctype": doctype, "name": name})
+		child.update(values)
+	else:
+		doc = frappe.get_doc(doctype, name)
+		doc.update(values)
+
+	doc.save(ignore_permissions = True)
+
+	return doc.as_dict()
+
+
+
+@frappe.whitelist()
+def custom_submit(doc):
+    '''Submit a document
+
+    :param doc: JSON or dict object to be submitted remotely'''
+    if isinstance(doc, string_types):
+        doc = json.loads(doc)
+
+    doc = frappe.get_doc(doc)
+    doc.flags.ignore_permissions = 1
+    doc.submit()
+
+    return doc.as_dict()
+
+
+@frappe.whitelist()
+def remove_claim(parent,index):
+    # frappe.throw(str(opts))
+    
+    child = frappe.db.get_value("Expense Claim Detail",{"parent":parent,"idx":index},"name")
+    return frappe.db.set_value("Expense Claim Detail",child,"attach_document","")
 

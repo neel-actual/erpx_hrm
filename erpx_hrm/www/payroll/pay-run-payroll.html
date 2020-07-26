@@ -454,6 +454,22 @@ ul.stepper.horizontal:before{
 
                         </div>
                         <div id="summary" class="col s12 m12 l6 xl6" style="margin-left: 50%;margin-top: 3rem;padding-right: 0;">
+                          <div id="remark-scroll" class="card" style="border-radius: 10px; display: none;">
+                            <div class="card-content" style="text-align: unset !important;padding: 0;">
+                              <div style="padding:20px;border-bottom: 1px solid #e1e1e1">
+                                
+                                <h4 class="card-title" style="text-align: left; line-height: 22px;margin-bottom: 0;">Rejected Payroll</h4>
+                              </div>
+                              <div class="row" style="margin: 0;">
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: left;">Remark Note</p>
+                                </div>
+                                <div class="col s6" style="padding: 20px;">
+                                  <p style="float: right;" id="remark_note"></p>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
                           <div id="summary-scroll" class="card" style="border-radius: 10px;">
                             <div id="summary-width" class="card-content" style="text-align: unset !important;padding: 0;">
                               <div style="padding:20px;border-bottom: 1px solid #e1e1e1">
@@ -527,14 +543,16 @@ ul.stepper.horizontal:before{
 
                             </div>
                           </div>
-                        </div>
+                          
                       </div>
                       <div class="step-actions" style="position: relative;padding: 0;float: right;flex-direction: row-reverse;background-color: #f9f9f9;">
                         <a href="#modal-confirm" class="waves-effect waves-dark btn modal-trigger" id="continue">Continue</a>
                         <!-- <button class="waves-effect waves-dark btn-flat" style="color: green;">Approved</button> -->
                         <a href="#" class="waves-effect waves-dark btn" id="send_for_approval">Send For Approval</a>
                         <a href="#" class="waves-effect waves-dark btn" id="approve_pay">Approve Payroll</a>
-                        <a href="#" class="waves-effect waves-dark btn" id="reject_pay">Reject Payroll</a>
+                        <a href="#decline_approve" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 150px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
+                        class="modal-trigger waves-effect waves-dark right" id="decline_modal">Reject Payroll</a>
+                        <!-- <a href="#" class="waves-effect waves-dark btn" id="reject_pay">Reject Payroll</a> -->
                         <!-- <button class="waves-effect waves-dark btn-flat" style="color: green;" href="#" id="send_for_approval">Send For Approval</button> -->
 
                         <div id="modal-confirm" class="modal modal-fixed-footer" style="border-radius: 10px;height: 300px !important;">
@@ -801,6 +819,27 @@ ul.stepper.horizontal:before{
         <p class="mob-font1" style="font-size: 30px;padding-bottom: 20px"><b>Tengku Bruce, you don’t have any pendinng payroll to run.</b></p>
         <p class="mob-font2" style="padding-bottom: 20px; font-size: 20px">You’ve completed all payroll so far. Your next payroll will be open on the 1st day of next month. Please go to payroll history menu to check your past payroll.</p>
         <p><a href="/payroll/pay-run-history" class="waves-effect waves-light btn">View Payroll History</a></p>
+      </div>
+      <div id="decline_approve" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+        <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+         <p class="edit-title">Add Remark</p>
+         <form class="col s12" style="padding: 24px; padding-top: 0px;" id = "reject_pop">
+           <div class="row">
+      
+            <div class="input-field col s12">
+              <p style="margin-bottom: 10px;">Remark Note</p>
+              
+              <textarea type="text" id="decline_remark"></textarea>
+              
+            </div>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer" style="background-color: #fff !important;">
+       <a href="#!" class="right waves-effect waves-light btn" id = "reject_pay">Save</a>
+       <a href="#!" class="right blue-text btn-flat"
+       onclick="$('#decline_approve').modal('close')">Cancel</a>
+      </div>
       </div>
       </div>
     </div>

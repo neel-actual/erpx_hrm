@@ -6859,3 +6859,92 @@ tr.group {
   position: fixed;
   top: 40%;
   right: -2px; }
+
+  
+#add_claim_modal .input-field {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.site-blue-btn{
+    background-color: #00aeef;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    line-height: 25px;
+    padding: 0 10px;
+}
+.site-blue-btn:hover{
+  background-color: #333333;
+}
+
+.custom-file-input:focus {
+  outline:0
+}
+.custom-file-input {
+  color:transparent;
+  width: 100%;
+  font-size: 5px;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  line-height: 25px;
+  content: 'Attach File';
+  color: white;
+  display: block;
+  background: #00aeef;
+  border-radius: 50px;
+  padding: 0;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  text-align: center;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 5px;
+}
+.custom-file-input:active::before {
+	background:  #5ab1f6;
+}
+
+
+
+.custom-file-input-after {
+  color:transparent;
+  font-size: 6px;
+}
+.custom-file-input-after::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input-after::before {
+  content: 'File Attached';
+  color:black;
+  display: inline-block;
+  background:  rgb(204, 201, 201);
+  border-radius: 50px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 10pt;
+}
+.custom-file-input-after:hover::before {
+  border-color: black;
+}
+.custom-file-input-after:active {
+  outline: 5px;
+}
+.custom-file-input-after:active::before {
+	background:  #5ab1f6;
+}

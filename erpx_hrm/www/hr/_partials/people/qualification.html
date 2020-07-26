@@ -1,0 +1,51 @@
+<div class="card" style="border-radius: 10px;" id="divQualification">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+      <i class="material-icons-outlined" style="display: inline;">person</i>
+      <h4 class="card-title directorytitle" style="display: inline;">My Qualifications </h4>      
+      <div class="col s12 m12 16 x34" style="margin-top: 10px;text-align: right;">
+        <button data-modal="modal-qualification" style="border-radius: 25px; width: 150px;" type="button" id="btn-add-qualification" class="btn waves-effect waves-light">Add Qualification</button>
+      </div>      
+      <div id="table-scroll" class='form-field col s12' style="padding-right: 0;">            
+            <table id="list-qualifications" style="margin-top: 15px; display: inline-table !important;">
+																													
+            </table>
+        </div>
+    </div>    
+    </div>
+  </div>
+
+  <div id="modal-qualification" class="modal modal-fixed-footer">
+    <div class="modal-content" style="padding: 0px !important; ">
+    <p class="edit-title">Qualification</p>
+        <form class="col s12" style="padding: 24px;" id="form-qualification">
+            <input type="hidden" data-fieldname="name"  autocomplete="off">
+            <div class="row">
+                <div class="input-field col s12 m12" style="margin-top: 0px;">
+                    <p>QUALIFICATION TYPE / LEVEL</p>
+                    <select data-fieldname="level" class="" style="padding-left: 10px;width: -webkit-fill-available;"  autocomplete="off">                                           
+                        {% set job_val = frappe.get_all("Designation", fields=['name']) %}
+                        {% for i_qualification_level in qualification_level%}
+                            <option value="{{i_qualification_level}}">{{i_qualification_level}}</option>
+                        {% endfor %}
+                      </select> 
+                </div>
+                <div class="input-field col s12 m12" style="margin-top: 0px;">
+                    <p>YEAR COMPLETED</p>
+                    <input type="text" data-fieldname="year_of_passing" autocomplete="off">
+                </div>
+                <div class="input-field col s12 m12" style="margin-top: 0px;">
+                    <p>INSTITUTION</p>
+                    <input type="text" data-fieldname="school_univ" autocomplete="off">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        {% if permission_list["Qualifications"]["canEdit"] %}
+        <a href="#!" class="right waves-effect waves-light btn" id="save_qualification">Save</a>
+        {% endif %}
+        <a href="#" class="right blue-text btn-flat"
+        onclick="$('#modal-qualification').modal('close')">Cancel</a>
+    </div>
+</div>

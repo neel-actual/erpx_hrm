@@ -1,0 +1,41 @@
+{
+ "creation": "2020-04-15 21:47:46.314887",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "certificate",
+  "expiry_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "certificate",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Certificate",
+   "oldfieldname": "qualification",
+   "oldfieldtype": "Data",
+   "print_width": "100px",
+   "reqd": 1,
+   "width": "100px"
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expiry Date",
+   "oldfieldname": "class_per",
+   "oldfieldtype": "Data",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-04-15 21:47:46.314887",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Employee Certificates",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

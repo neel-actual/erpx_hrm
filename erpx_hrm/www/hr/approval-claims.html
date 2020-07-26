@@ -142,11 +142,19 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'status':'Draft'}) %}
+                                            {% if 'Expense Verified' in roles %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_verifier': user } ) %}
+                                            {% endif %}
+                                            {% if 'Expense Approver' in roles %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_approver': user } ) %}
+                                            {% endif %}
+                                            {% if 'HR Manager' in roles %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'] ) %}
+                                            {% endif %}
                                             {% for ex in exp_list %}
                                                 <tr>
                                                     {% set claim_title = frappe.get_all("Expense Claim Detail",filters={'parent': ex.name},fields=["expense_type"])%} 
-                                                    <td><a style="color:#00AEEF" href="/claims/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
+                                                    <td style="overflow: hidden;"><a style="color:#00AEEF" href="/hr/claim-title1.html/?expense_claim={{ex.name}} ">{{ex.name}}</a><br>
                     
                                                         ({% for e in range(claim_title|length) %}
                                                         {% if e < 2 %}
@@ -214,7 +222,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
 type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/leave_request.js" type="text/javascript"></script>
+<!-- <script defer src="/hr/js/leave_request.js" type="text/javascript"></script> -->
 <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
 <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
 <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>

@@ -5,6 +5,7 @@ var request_leave_fields = [
 	"to_date",
 	"half_day",
 	"half_day_shift",
+	"half_day_date",
 	"description",
 	"leave_approver"
 ]
@@ -51,11 +52,7 @@ $(document).ready(function () {
 	});
 
 	$('#half_day').change(function(){
-		if($(this).is(":checked")){
-			$('#div_half_day_shift').show();
-		}else{
-			$('#div_half_day_shift').hide();
-		}		
+		toggle_div_half_day();
 	});
 
 	$('#leave_request_leave_type').change(function(){
@@ -104,7 +101,7 @@ $(document).ready(function () {
             if($(`#form-request-leave [data-fieldname="${element}"]`).val()){
 				args[element] = $(`#form-request-leave [data-fieldname="${element}"]`).val();
 				if(element=="half_day" || element=="emergency"){
-					args[element] = $(`#form-request-leave [data-fieldname="${element}"]:checked`).val() || 0;
+					args[element] = $(`#form-request-leave [data-fieldname="${element}"]:checked`).length ? 1 : 0;
 				}
             }     
 		});
@@ -121,7 +118,8 @@ $(document).ready(function () {
 				html: "This employee is not set Holiday List"
 			})
 			return false;
-		}	
+		}
+		
 		if(!args["half_day"]){
 			args["half_day_shift"] = "";
 		}else if(!args["half_day_shift"]){
@@ -139,6 +137,13 @@ $(document).ready(function () {
 			}
 		})
 	});
+
+	$("#file-request").change(function(){
+		if($("#file-request").val() != '')
+			$('#btn-view-file').show();
+		else
+			$('#btn-view-file').hide();
+	});
 });
 
 var toggle_div_emergency = function(){
@@ -154,21 +159,35 @@ var toggle_div_emergency = function(){
 
 
 var toggle_div_half_day = function(){
-	
-	if($('#leave_request_from_date').val() && $('#leave_request_to_date').val() && $('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
-		$("#div_half_day").show();
+	if($("#half_day").is(":checked")){
+		$('#div_half_day_shift').show();
+	}else{
+		$('#div_half_day_shift').hide();
+		$("#div_half_day_date").hide();
+		$("#leave_request_half_day_date")[0].value="";
 		return;
 	}
-	$("#half_day").prop("checked", false);
-	$("#div_half_day").hide();
-	
+	if(!($('#leave_request_from_date').val() && $('#leave_request_to_date').val())){
+		$("#leave_request_half_day_date")[0].value="";
+		$("#div_half_day_date").hide();
+		return;
+	}
+	if($('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
+		$("#leave_request_half_day_date")[0].value="";
+		$("#div_half_day_date").hide();
+		return;
+	}
+	if($("#leave_request_half_day_date").val() == ""){
+		$("#leave_request_half_day_date")[0].value= $('#leave_request_from_date').val();
+	}
+	$("#div_half_day_date").show();	
 }
 
 var upload_file_request = function(r){
 	if (!r.exc) {
 		var doc = r.data;
 		var file = $("#file-request").get(0).files[0];
-		console.log(file);
+		
 		if (file){
 			var reader = new FileReader();
 			reader.onload = function(){
@@ -253,3 +272,42 @@ $.fn.dataTable.ext.search.push(
 		return true;
 	}
 );
+
+function openUploadFile(){	
+	if($("#file-request").val() != ''){						
+		window.open((window.URL || window.webkitURL).createObjectURL($("#file-request").get(0).files[0]), '_blank');
+	}		
+}
+
+function copyLeaveRequest(name){
+	let doctype = "Leave Application";
+	frappe.ajax({
+		type: "GET",
+		url: `/api/resource/${doctype}/${name}`,
+		callback: function (r) {
+			if (!r.exc) {
+				M.toast({
+					html: "Copied this leave. Please review and submit it.!"
+				})
+				let data = r.data;
+				request_leave_fields.forEach(element => {
+					$(`#form-request-leave [data-fieldname="${element}"]`).val(data[element]);
+
+					if ($(`#form-request-leave [data-fieldname="${element}"]`).prop("tagName") == "SELECT"){
+						$(`#form-request-leave [data-fieldname="${element}"]`).formSelect();
+					}
+					if(data[element]==1 && (element=="half_day" || element=="emergency")){
+						$(`#form-request-leave [data-fieldname="${element}"]`).prop( "checked", true);
+						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
+					}else{
+						$(`#form-request-leave [data-fieldname="${element}"]`).prop( "checked", false);
+						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
+					}    
+				});
+				$('html, body').animate({
+					scrollTop: $("#div-requestleave").offset().top
+				}, 1000);
+			}
+		}
+	});
+}

@@ -9,8 +9,9 @@ def get_context(context):
 
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
-
-    context.employee = frappe.db.get_value("Employee", {"user_id": context.user}, "name") or ""
+    
+    employee = frappe.db.get_value("Employee", {"user_id": context.user}, "name") or ""
+    context.employee = employee
 
     valid_roles = ['HR Manager']
     
@@ -19,6 +20,7 @@ def get_context(context):
 			frappe.PermissionError)
     
     context.list_employee = frappe.db.get_all("Employee", filters={"status":"Active"}, fields=['name','employee_name','employment_type','image','reports_to'])
-    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
-    
+    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])    
+
     return context
+

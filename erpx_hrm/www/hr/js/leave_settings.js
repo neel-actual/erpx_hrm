@@ -59,13 +59,14 @@ $(document).ready(function () {
 	});
 
 	$("#btn-save-holiday").click(function () {
-		let name = $(`#form-holiday [data-fieldname="name"]`).val();
+		let name = $(`#form-holiday #old_name`).val();
 		var args = {}
         holiday_fields.forEach(element => {
             args[element] = $(`#form-holiday [data-fieldname="${element}"]`).val();   
 		});
 		
 		if (!name){
+			args.holiday_list_name = $(`#form-holiday #dHolidayListNameInput #holidayListName`).val();
 			frappe.ajax({
 				url: "/api/resource/Holiday List",
 				args: args,
@@ -73,7 +74,7 @@ $(document).ready(function () {
 					M.toast({
 						html: "Added Successfully!"
 					})
-					location.reload();		
+					location.reload();
 				}
 			})
 		}else{
@@ -486,4 +487,42 @@ $(document).ready(function () {
 		modal.modal('open');
 	});
 
-})
+	$('#form-holiday #sHolidayList').change(function() {
+		var val = $(this).val();	
+		$('#dListHoliday').show();	
+		$('#btn-add-holiday-cancel').hide();
+		$('#btn-add-holiday-list').show();
+		$(`#form-holiday #dHolidayListNameInput`).hide();
+		$(`#form-holiday #dHolidayListNameSelect`).show();		
+
+		if(val != ''){
+			$(`#form-holiday #old_name`).val(val);
+			glb_holiday_list_name = val;
+			list_holiday.get_list();
+			frappe.ajax({
+				type: "GET",
+				url: `/api/resource/Holiday List/${val}`,	
+				callback: function (r) {									
+					$(`#form-holiday #holiday_list_from_date`).val(r.data.from_date);
+					$(`#form-holiday #holiday_list_to_date`).val(r.data.to_date);
+					$(`#form-holiday #sTotalHolidays`).html(r.data.total_holidays);					
+				}
+			});
+		}
+	});
+
+	$('#btn-add-holiday-list').click(function(){
+		$('#form-holiday #dListHoliday').hide();
+		$('#btn-add-holiday-list').hide();
+		$('#btn-add-holiday-cancel').show();
+
+		//$(`#form-holiday #holiday_list_to_date`).val();
+		//$(`#form-holiday #sTotalHolidays`).val();
+		$(`#form-holiday #dHolidayListNameInput`).show();
+		$(`#form-holiday #dHolidayListNameSelect`).hide();
+		$(`#form-holiday #old_name`).val('');
+	});
+	$('#btn-add-holiday-cancel').click(function(){
+		location.reload();	
+	});
+});

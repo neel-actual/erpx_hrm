@@ -1,0 +1,113 @@
+<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
+    <div class="card-content">
+     <div class="row" style="margin: auto;">
+      <i class="material-icons-outlined" style="display: inline;">person</i>
+<h4 class="card-title directorytitle" style="display: inline;">Profile Overview</h4>
+{% if employee.first_name: %}                  
+<p style="padding-left: 36px;">Here’s quick profile of {{employee.first_name}}.</p>                              
+{% endif %}                                    					  
+
+    </div>
+    <br>
+    <div class="col s12 m12 l12 xl4 force-center">
+      <p><img src="{{employeeImage or '/images/profile_icon.png'}}" width="200"/></p>
+      {% if permission_upload_photo %}
+      <div class="btn file-field input-field waves-effect waves-light" style="">
+          <div class="">
+              <span>Upload Photo</span>
+              <input id="file-acc" type='file' accept='image/*'>
+          </div>
+          <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+          </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col s6 m6 l6 xl4" >
+{% if employee.first_name: %}                  
+<p style="margin-top: 10px !important;">{{employee.first_name}}</p>                                       
+{% endif %}                                    					  					  
+      <p style="margin-top: 10px !important;">
+        <img src="/icons/people.png" width="30" height="30" style="margin-right: 15px;" />
+        <span style="display: inline;position: absolute;margin-top: 5px;">{{employee.designation or ''}}</p>
+        </p>
+        <p style="margin-top: 10px !important;">
+          <img src="/icons/email.png" width="30" height="30" style="margin-right: 15px;" />
+          <span style="display: inline;position: absolute;margin-top: 5px;">{{employee.personal_email or ''}}</span>
+        </p>
+        <p style="margin-top: 10px !important;">
+          <img src="/icons/mobile.png" width="30" height="30" style="margin-right: 15px;" />
+          <span style="display: inline;position: absolute;margin-top: 5px;">{{employee.cell_number or ''}}</span>
+        </p>
+      </div>
+
+      <!--<div class="col s6 m6 l6 xl4" style="margin-top: 10px;">
+        <a href="#" style="float: right;color: #00aeef;"><b>Send Email</b></a>
+      </div>-->
+
+      <br>
+      <div style="width: 100%; display: inline-block;"><hr /></div>
+
+      <div id="remove-padding" style="width: 100%; padding-bottom: 90px;">
+        <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+          <div class="row">
+            <div class="col s6 m6 l6 xl12 full-width">
+              <p style="padding-top: 10px;padding-bottom: 10px; "><b>DEPARTMENT</b></p>
+            </div>
+            <div class="col s6 m6 l6 xl12 full-width">
+              <p style="color: #00aeef;"><b>{{employee.department or ''}}</b></p>
+              <p>{{employee.employment_type or ''}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+          <div class="row">
+            <div class="col s6 m6 l6 xl12 full-width">
+              <p style="padding-top: 10px;padding-bottom: 10px; "><b>JOIN DATE</b></p>
+            </div>
+            <div class="col s6 m6 l6 xl12 full-width">
+              <p>{{employee.date_of_joining or ''}}</p>
+              <!--<p>3 years, 4 months, 13 days</p>-->
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="col s12 m12 l12 xl4" style="margin-bottom: 15px;">
+          <div class="row">
+            <div class="col s6 m6 l6 xl12 full-width">
+              <p style="padding-top: 10px;padding-bottom: 10px; "><b>Reports To</b></p>
+            </div>
+            <div class="col s6 m6 l6 xl12 full-width">
+              <div class="row">
+                <div class="col s3 m3 l3 xl3 padd-zero">                  
+                  <img width="50" height="50" src="{{reportToImage or '/images/profile_icon.png'}}" style="vertical-align: middle; float: left;">
+                </div>
+                <div class="col s9 m9 l9 xl9">
+                  <p style="margin-left: 15px;display: inline-block;vertical-align: middle; float: left;">
+                  <a href="{% if employee.reports_to %}/hr/people.html?name={{employee.reports_to or ''}}{%else%}#{%endif%}" style="margin-top: 5px;display: block;color: #00aeef;"><b>{{reportToName or ''}}</b></a>
+                  <span>{{reportToDepartment or ''}}</span>
+                </div>
+              </div>
+
+
+          </p>
+            </div>
+          </div>
+
+          <ul id="dropdown1" class="dropdown-content" >
+            <li>
+              <a href="#!"><img src="/icons/people-blue.png" width="20" height="20" /></a>
+
+
+            </li>
+            <li><a href="#!"><img src="/icons/icon-57.png" width="20" height="20" /></a></li>
+            <li><a href="#!"><img src="/icons/icon-56.png" width="20" height="20" /></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

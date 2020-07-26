@@ -58,6 +58,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
   }
 }
 </style>
+<script>
+  window.frappe = {};
+  frappe.ready_events = [];
+  frappe.ready = function (fn) {
+      frappe.ready_events.push(fn);
+  };
+  window.dev_server = 1;
+  window.socketio_port = 9000;
+  frappe.roles = {{ roles }};
+</script>
 <div id="main">
   <div class="row">
     <div class="content-wrapper-before"></div>
@@ -94,7 +104,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   </tr>
                   </thead>
                   <tbody>
-                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters=[["status","!=","Completed"]],fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
+                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters=[["status","in",["Pending","Approved"]]],fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
                   
                   {% for pay in pay_approval %}
                   <tr>
@@ -105,7 +115,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td class="pay_year">{{pay.payroll_year}}</td>
                     <td class = "status" style="color: green">{{pay.status}}</td>
                     <td><a style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;" class="modal-trigger waves-effect waves-light right review">
-                    {% if pay.status == "Pending" or pay.status == "Rejected" %}Review{% elif pay.status == "Approved" %}Run Payroll{% endif %}</a></td>
+                    {% if pay.status == "Pending" %}Review{% elif pay.status == "Approved" %}Run Payroll{% endif %}</a></td>
                   </tr>
                   {% endfor %}
                   </tbody>
@@ -152,8 +162,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                   </div>
 
 
-                  <a href="#!" style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 45px;" class="modal-trigger waves-effect waves-light right">
-                  Refresh</a>
+                  
                   <!-- <a id="review" style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;margin-top: 45px;" class="modal-trigger waves-effect waves-light right">
                     Review</a> -->
 
@@ -169,10 +178,11 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <th style="border-right:none!important;">Payroll Month</th>
                     <th style="border-right:none!important;">Payroll Year</th>
                     <th style="border-right:none!important;">Status</th>
+                    <th style="border-right:none!important;"></th>
                   </tr>
                   </thead>
                   <tbody>
-                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters={"status":"Completed"},fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
+                  {% set pay_approval = frappe.get_all("HRM Payroll Entry",filters=[["status","in",["Completed","Rejected"]]],fields=["name","status","requested_date","payroll_month","payroll_year","submitted_by","payroll_type"]) %}
                   
                   {% for pay in pay_approval %}
                   <tr>
@@ -182,8 +192,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td class="pay_month">{{pay.payroll_month}}</td>
                     <td class="pay_year">{{pay.payroll_year}}</td>
                     <td class = "status" style="color: green">{{pay.status}}</td>
-                    <td><a style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;" class="modal-trigger waves-effect waves-light right review">
-                    {% if pay.status == "Pending"  %}Review{% elif pay.status == "Approved" %}Run Payroll{% endif %}</a></td>
+                    <td><a style="background-color: #00aeef;border-radius: 25px;width: 150px;text-align: center;color: white;line-height: 40px;margin: 0px;" class="modal-trigger waves-effect waves-light right review">View</a></td>
                   </tr>
                   {% endfor %}
                   </tbody>

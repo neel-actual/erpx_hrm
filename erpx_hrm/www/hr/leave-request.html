@@ -23,7 +23,17 @@
 
 
     }
+#table-scroll {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
 
+    white-space: nowrap !important;
+}
+
+table {
+    display: inline-table !important;
+}
 .collapsible-body{
   padding: 0 !important;
 }
@@ -74,7 +84,7 @@
     <div class="content">
         <div class="col s12 m12 l12 xl6">
             <div class="balancesummary leave-request">
-                    <div id="card-stats" class="card" style="border-radius: 10px!important;">
+                    <div id="card-stats" class="card" style="border-radius: 10px!important; overflow:visible">
                         <div class="card-content">
                             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                             <div class="card-title" style="text-align: left;margin-left: 35px;">Balance Summary</div>
@@ -86,7 +96,7 @@
                 </div>
 
                 <div class=" calendar">
-                    <div id="card-stats-2" class="card" style="border-radius: 10px!important;">
+                    <div id="card-stats-2" class="card" style="border-radius: 10px!important; overflow:visible">
                             <div class="card-content">
                                   <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
                                 <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
@@ -151,6 +161,7 @@
                                         <th style="border-right:none!important;">Date</th>
                                         <th style="border-right:none!important;">Total</th>
                                         <th style="border-right:none!important;">Status</th>
+                                        <th style="border-right:none!important;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,8 +174,15 @@
                                         <td>{{ frappe.utils.formatdate(i_lev_app_dt.from_date) }}<br>{{ frappe.utils.formatdate(i_lev_app_dt.to_date) }}</td>
                                         <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
                                         <td>
+                                          {% if i_lev_app_dt.status == "Approved"%}
                                           <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% elif i_lev_app_dt.status == "Open"%}
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:grey; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% else %}
+                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          {% endif %}
                                         </td>
+                                        <td><a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a></td>
                                       </tr>
                                     {% endfor %}
                                 </tbody>
@@ -176,7 +194,7 @@
                 </div>
         </div>
         <div class="col s12 m12 l12 xl6">
-            <div class="requestleave">
+            <div class="requestleave" id="div-requestleave">
                     <div class="card" style="border-radius: 10px!important; overflow:visible">
                         <div class="card-content">
                               <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
@@ -205,14 +223,14 @@
                             <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">Start Date</p>
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input id="leave_request_from_date" data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                                <input id="leave_request_from_date" data-fieldname="from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
                             </div>
                             <div class="input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">End Date</p>
                                 <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
-                                <input id="leave_request_to_date" data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')"  id="from_date">
+                                <input id="leave_request_to_date" data-fieldname="to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
                             </div>
-                            <div class="input-field col s12 m6" id="div_half_day" style="display:none">
+                            <div class="input-field col s12 m6" id="div_half_day">
                                 <p style="margin-bottom: 10px;">
                                 <label class="container">
                                 <input data-fieldname="half_day" id="half_day" type="checkbox" class="filled-in" value="1">
@@ -227,6 +245,12 @@
                                     <option value="PM">PM</option>
                                 </select>
                             </div>
+                            <div class="input-field col s12 m6" id="div_half_day_date" style="display:none">
+                                <p style="margin-bottom: 10px;">Half Day Date</p>
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 35px;" >
+                                <input id="leave_request_half_day_date" data-fieldname="half_day_date" style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter" type="date" onfocus="(this.type='date')">
+                            </div>
+                            
                             <div class="input-field col s12">
                                 <div class="file-field input-field">
                                     <div class="btn">
@@ -237,6 +261,7 @@
                                         <input class="file-path validate" type="text" autocomplete="off">
                                     </div>
                                 </div>
+                                <button onclick="openUploadFile()" type="button" id="btn-view-file" class="btn waves-effect" style="display: none;">View File</button>
                             </div>
                             <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Reason</p>
@@ -290,7 +315,6 @@ request is approved.</p>
     var glb_employee = "{{ employee }}";
     var glb_holiday_list = "{{ holiday_list }}";
 </script>
-
     <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
     type="text/javascript"></script>  
@@ -314,16 +338,35 @@ request is approved.</p>
                 defaultView: 'month',
                 editable: true,
                 eventLimit: true,
+                eventMouseover: function (data, event, view) {
+                    tooltip = `<div class="tooltiptopicevent" 
+                        style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                    $("body").append(tooltip);
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                    });
+                },
+                eventMouseout: function (data, event, view) {
+                    $(this).css('z-index', 8);
+                    $('.tooltiptopicevent').remove();
+                },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type']) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
                     {% endfor %}
-                ],
+                ],                
             });
             {% endif %}
 
@@ -332,11 +375,30 @@ request is approved.</p>
                 defaultView: 'month',
                 editable: true,
                 eventLimit: true,
+                eventMouseover: function (data, event, view) {
+                    tooltip = `<div class="tooltiptopicevent" 
+                        style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                    $("body").append(tooltip);
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                    });
+                },
+                eventMouseout: function (data, event, view) {
+                    $(this).css('z-index', 8);
+                    $('.tooltiptopicevent').remove();
+                },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department,"status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -350,11 +412,30 @@ request is approved.</p>
                 defaultView: 'month',
                 editable: true,
                 eventLimit: true,
+                eventMouseover: function (data, event, view) {
+                    tooltip = `<div class="tooltiptopicevent" 
+                        style="width:auto; height:auto; background:#FFC107; position:absolute; z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">
+                        ${data.desc.replace(/(?:\r\n|\r|\n)/g, '<br>')}</div>`;
+                    $("body").append(tooltip);
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                    });
+                },
+                eventMouseout: function (data, event, view) {
+                    $(this).css('z-index', 8);
+                    $('.tooltiptopicevent').remove();
+                },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee}) %}
+                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee, "status": "Approved", "docstatus": 1}) %}
                     {% for i_all_leave in all_leave %}
                         {
-                            title: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.employee_name}}',
+                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
