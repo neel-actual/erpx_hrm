@@ -74,6 +74,24 @@ $(document).ready(async function(){
         $('#p_total_claim_amount').text(currency +" "+ parseFloat(total).toFixed(2))
     })
 
+    $("#submit_claim_btn").click(function(){
+        frappe.call({
+            method: 'erpx_hrm.api.set_value_custom',
+            args: {
+                'doctype': 'Expense Claim',
+                'name': glb_expense_voucher,
+                'fieldname': 'approval_status',
+                'value':'Pending'
+            },
+            callback: function(r) {
+                if (!r.exc) { 
+                    window.location.replace("/hr/my-claims");
+                }
+            }
+        });   
+
+    });
+
     $("#verify").click(function(){
 
         frappe.call({

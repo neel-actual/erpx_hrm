@@ -218,7 +218,19 @@ $('#claim_table tbody').on( 'change', '#file_upload', function () {
     }
   } );
 
-$("#save_claim").click(async function(){
+var glb_approval_status = "Pending";
+
+$("#draft_claim").click(function(){
+    glb_approval_status = "Draft";
+    saveClaim();
+})
+
+$("#save_claim").click(function(){
+    glb_approval_status = "Pending";
+    saveClaim();
+})
+
+var saveClaim = async function(){
     // var dt = $('#claim_table').DataTable()
     var exp_list = []
     // console.log($("#employee_id").val())
@@ -250,7 +262,8 @@ $("#save_claim").click(async function(){
             'requester':$("#employee_id").val(),
             'claim_type':$("#sel_payment").val(),
             'cutoff_date':(cutoff.getFullYear() + "-" + appendLeadingZeroes(cutoff.getMonth() + 1) + "-" + appendLeadingZeroes(cutoff.getDate())).toString(),
-            'expenses':exp_list
+            'expenses':exp_list,
+            'approval_status': glb_approval_status
         },
         callback: function(r) {
             if (!r.exc) {
@@ -324,7 +337,7 @@ $("#save_claim").click(async function(){
     });
     // window.location.replace("/hr/my-claims")
 
-});
+};
 
 $("#claim_form").validate({
     rules: {
