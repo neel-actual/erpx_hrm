@@ -312,6 +312,7 @@
     <input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
 
     </div> -->
+    {% if edit_mode %}
     <div class="input-field col s12 m2">
     <a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
     
@@ -322,6 +323,7 @@
       <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
       
       </div>
+    {% endif %}
     
   </div>
 
@@ -339,7 +341,7 @@
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
 
-        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
         class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
 
         {% if ap.approval_status == "Draft" %}
