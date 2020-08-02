@@ -56,7 +56,6 @@
 {% endblock %}
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
-{% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
 {% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type','remark']) %}
 {% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx"])%}
 {% endif %}
@@ -135,7 +134,7 @@
                 {% endfor %}
               </div>
               {% for exp in expense_claim %}
-              {% if exp.approval_status != "Draft" %}
+              {% if exp.approval_status != "Pending" %}
               <div class=" border-request requester" style="margin-left: 35px; float: left;">
                 
                 <!-- <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg"> -->
@@ -161,7 +160,7 @@
               {% for ap in expense_claim %}
               {% if (ap.status == 'Draft') and (ap.approval_status != 'Verified') %}
               <p style="border-radius: 20px;text-align: center;width: 100%;background-color: grey;color: white;font-size: 20px;">
-                  Pending
+                  {{ap.approval_status}}
               </p>
               {% elif (ap.status == 'Draft') and (ap.approval_status == 'Verified') %}
               <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #9C27B0;color: white;font-size: 20px;">
@@ -313,6 +312,7 @@
     <input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
 
     </div> -->
+    {% if edit_mode %}
     <div class="input-field col s12 m2">
     <a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
     
@@ -323,6 +323,7 @@
       <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
       
       </div>
+    {% endif %}
     
   </div>
 
@@ -332,20 +333,27 @@
       <div class="row margin infodetails" style="display: block;">
       {% for ap in expense_claim %}
 
-      {% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
+      {% if edit_mode %}
 
-      {% if (user_id[0].user_id == user) or ('Expense Verified' in roles) %}
         <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="update">Update</a> 
+        class="waves-effect waves-light right btn-approve" id="update">Update</a>        
 
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
 
-        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="print_page">Print</a> 
+        <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
+
+        {% if ap.approval_status == "Draft" %}
+        <a href="#"
+        class="waves-effect waves-light right" id="submit_claim_btn" 
+        style=" background-color: #00aeef;  border-radius: 25px; width: 150px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " >
+        Submit Claim</a>
+        {% endif %}
+
       {% endif %}
 
-      {% if ((ap.approval_status == "Draft") and ('Expense Verified' in roles)) %}
+      {% if ((ap.approval_status == "Pending") and ('Expense Verified' in roles)) %}
 
       <a href="#add-approver" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
       class="modal-trigger waves-effect waves-light right btn-approve" id="" >Verify</a>
@@ -591,6 +599,7 @@
 
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
+  glb_expense_voucher = "{{expense_voucher}}";
 </script>
 <!-- <script type="text/javascript">
   var all_claim = document.getElementById("all-claim");

@@ -143,13 +143,13 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                         </thead>
                                         <tbody>
                                             {% if 'Expense Verified' in roles %}
-                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_verifier': user } ) %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_verifier': user, 'approval_status': ['!=','Draft'] } ) %}
                                             {% endif %}
                                             {% if 'Expense Approver' in roles %}
-                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_approver': user } ) %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'expense_approver': user, 'approval_status': ['!=','Draft'] } ) %}
                                             {% endif %}
                                             {% if 'HR Manager' in roles %}
-                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'] ) %}
+                                            {% set exp_list = frappe.get_all("Expense Claim", fields=['*'], filters={'approval_status': ['!=','Draft']} ) %}
                                             {% endif %}
                                             {% for ex in exp_list %}
                                                 <tr>
@@ -194,7 +194,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                     {% elif(ex.status == 'Submitted') %}
                                                         {% set class_color = 'p-approved' %}
                                                     {% endif %}
-                                                    <td><p class={{class_color}}>{% if(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}Pending{% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}Verified{% else %}{{ex.status}}{% endif %}</p></td>
+                                                    <td><p class={{class_color}}>{% if(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}{{ex.approval_status}}{% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}Verified{% else %}{{ex.status}}{% endif %}</p></td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
