@@ -238,6 +238,18 @@ def create_claim(expense_approver,expense_verifier,requester,claim_type,cutoff_d
     return object
 
 @frappe.whitelist()
+def udpate_claim(name, expenses):
+    object = frappe.get_doc("Expense Claim", name)
+
+    object.expenses = []
+    for expense in json.loads(expenses):
+        object.append("expenses", expense)
+    object.flags.ignore_permissions = True
+    object.save()
+
+    return object
+
+@frappe.whitelist()
 def upload_file():
     ret = frappe.get_doc({
     "doctype": "File",

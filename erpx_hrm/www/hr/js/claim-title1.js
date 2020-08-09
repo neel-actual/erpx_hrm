@@ -18,7 +18,10 @@ $(document).ready(async function(){
           {targets: 4},
           {targets: 5},
           {targets: 6},
-          {targets: 7}]
+          {targets: 7},
+          {targets: 8,visible: false},
+          {targets: 9,visible: false}
+        ]
     })
     /* Role permission Setup*/
 
@@ -113,24 +116,36 @@ $(document).ready(async function(){
 
     });
     $("#update").click(function(){
-        window.location.replace("/hr/create-claim");
-        // frappe.call({
-        //     method: 'erpx_hrm.api.set_value_custom',
-        //     args: {
-        //         'doctype': 'Expense Claim',
-        //         'name':location.search.split("=")[1],
-        //         'fieldname': 'approval_status',
-        //         'value':'Verified'
-        //     },
-        //     callback: function(r) {
-        //         if (!r.exc) { 
-        //             console.log(r.message)
-        //             window.location.replace("/hr/approval-claims");
-        //             // location.reload()
-        //         }
-        //     }
-        // });   
-
+        var exp_list = []
+        for (let i = 0; i < dt.column().data().length; i++) {
+            const element = dt.rows(i).data()[0];
+            exp_list.push({
+                "expense_date":element[1],
+                "expense_type":element[2].toString(),
+                "merchant":element[3].toString(),
+                "description":element[4].toString(),
+                "amount":parseFloat(element[5].split(" ")[1]),
+                "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
+                "distance":parseFloat(element[8]),
+                "distance_rate":parseFloat(element[9]),
+            })
+        }
+        
+        frappe.call({
+            method: 'erpx_hrm.api.udpate_claim',
+            args: {
+                'name' : glb_expense_voucher,
+                'expenses':exp_list
+            },
+            callback: function(r) {
+                M.toast({
+                    html: 'Claim '+glb_expense_voucher+' Updated Successfully!'
+                })
+                setTimeout(function() {
+                    window.location.reload();
+                }, 3000);
+            }
+        });
     });
 
     $("#approve").click(function(){
