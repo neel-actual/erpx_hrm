@@ -353,27 +353,7 @@ $(document).ready(async function(){
             }
         });
     })
-    $("#print_page").click(function(){
-        
-
-        var divToPrint=document.getElementById('DivIdToPrint');
-
-        var newWin=window.open('','Print-Window');
     
-        newWin.document.open();
-    
-        newWin.document.write(`<html><body onload="window.print()">
-        <link rel="stylesheet" type="text/css" href="/app-assets/vendors/vendors.min.css">
-        <link rel="stylesheet" type="text/css" href="/css/materialize.css">
-        <link rel="stylesheet" type="text/css" href="/css/style.css" >
-        <link rel="stylesheet" type="text/css" href="/css/animate.css">
-        <link rel="stylesheet" type="text/css" href="/css/master.css">`+divToPrint.innerHTML+`</body></html>`)
-        // window.close();
-        newWin.document.close();
-        
-    
-        
-    })
     $("#clear_attach").click(function(){
         $("#attachment").val("")
         $('#new_attach').css("dispaly","block");
