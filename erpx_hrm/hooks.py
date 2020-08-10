@@ -30,7 +30,8 @@ update_website_context = "erpx_hrm.boot.update_website_context"
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 doctype_js = {
-    "Branch": "custom_scripts/branch_custom.js"
+    "Branch": "custom_scripts/branch_custom.js",
+	"Expense Claim": "custom_scripts/expense_claim_custom.js",
 }
 
 fixtures = ["Custom Field","Property Setter"]

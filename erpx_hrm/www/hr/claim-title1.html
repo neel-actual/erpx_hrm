@@ -17,6 +17,13 @@
       
       
     }
+.table-scroll {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap !important;
+}
+
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
@@ -49,9 +56,8 @@
 {% endblock %}
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
-{% set expense_voucher = frappe.request.url.split("?")[1].split("=")[1] %}
 {% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type','remark']) %}
-{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx"])%}
+{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx", "distance", "distance_rate"])%}
 {% endif %}
 <script>
   window.frappe = {};
@@ -128,7 +134,7 @@
                 {% endfor %}
               </div>
               {% for exp in expense_claim %}
-              {% if exp.approval_status != "Draft" %}
+              {% if exp.approval_status != "Pending" %}
               <div class=" border-request requester" style="margin-left: 35px; float: left;">
                 
                 <!-- <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg"> -->
@@ -154,7 +160,7 @@
               {% for ap in expense_claim %}
               {% if (ap.status == 'Draft') and (ap.approval_status != 'Verified') %}
               <p style="border-radius: 20px;text-align: center;width: 100%;background-color: grey;color: white;font-size: 20px;">
-                  Pending
+                  {{ap.approval_status}}
               </p>
               {% elif (ap.status == 'Draft') and (ap.approval_status == 'Verified') %}
               <p style="border-radius: 20px;text-align: center;width: 100%;background-color: #9C27B0;color: white;font-size: 20px;">
@@ -209,7 +215,7 @@
     </div>
   <div class="col xl20 l20 m18 s12">
     <div id="card-stats" class="card" style="border-radius: 10px!important;">
-      <div class="card-content">  
+      <div class="card-content table-scroll">  
         <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
         {% for claim in expense_claim %}
         {% if claim.reimbursement_type == "Submission via Payroll" %}
@@ -223,15 +229,17 @@
         <table class ="table" id="claim_table" style="margin-top: 15px; display: inline-table!important;">
           <thead>
           <tr style="background-color: #eff1f9;">
-            <th style=" border-right:none!important;"><b>No.</b></th>
-            <th style=" border-right:none!important;"><b>Expenses Date</b></th>
-            <th style=" border-right:none!important;"><b>Claim Type</b></th>
-            <th style=" border-right:none!important;"><b>Mechant</b></th>
-            <th style=" border-right:none!important;"><b>Description</b></th>
+            <th style=" border-right:none!important;" width="100"><b>No.</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Expenses Date</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Claim Type</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Mechant</b></th>
+            <th style=" border-right:none!important;" width="200"><b>Description</b></th>
             
-            <th style=" border-right:none!important;"><b>Amount</b></th>
-            <th style=" border-right:none!important;"><b>Attachment</b></th>
-            <th style=" border-right:none!important;"></th>
+            <th style=" border-right:none!important;" width="150"><b>Amount</b></th>
+            <th style=" border-right:none!important;" width="100"><b>Attachment</b></th>
+            <th style=" border-right:none!important;" width="100"></th>
+            <th style=" border-right:none!important;" width="100"><b>Distance</b></th>
+						<th style=" border-right:none!important;" width="100"><b>Distance Rate</b></th>
             
           </tr>
         </thead>
@@ -250,8 +258,11 @@
             <td style="text-align: center;">No Attachment</td>
             {% endif %}
             <!-- <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td> -->
-            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>
+            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>
+            <td class="distance">{{claim.distance}}</td>
+            <td class="distance_rate">{{claim.distance_rate}}</td>
             {% endfor %}
+            </tr>
         </tbody>
           </table>
         <!-- <table style="font-size: 14px;" id="claim_table">
@@ -306,16 +317,16 @@
     <input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;border: 1px solid #87c1f1 !important;" placeholder="Your claim amount" id="tabtotal_amount" readonly>
 
     </div> -->
+    {% if edit_mode %}
     <div class="input-field col s12 m2">
     <a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
     
     </div>
 
     <div class="input-field col s12 m2">
-      <a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
-      <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
-      
-      </div>
+      <a class="waves-effect btn right" id="btn_add_claim_modal">Add Claim</a>      
+    </div>
+    {% endif %}
     
   </div>
 
@@ -325,20 +336,27 @@
       <div class="row margin infodetails" style="display: block;">
       {% for ap in expense_claim %}
 
-      {% set user_id = frappe.get_all("Employee",filters={'name':ap.employee},fields=['user_id'])%}
+      {% if edit_mode %}
 
-      {% if (user_id[0].user_id == user) or ('Expense Verified' in roles) %}
         <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="update">Update</a> 
+        class="waves-effect waves-light right btn-approve" id="update">Update</a>        
 
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
 
-        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="print_page">Print</a> 
+        <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
+
+        {% if ap.approval_status == "Draft" %}
+        <a href="#"
+        class="waves-effect waves-light right" id="submit_claim_btn" 
+        style=" background-color: #00aeef;  border-radius: 25px; width: 150px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " >
+        Submit Claim</a>
+        {% endif %}
+
       {% endif %}
 
-      {% if ((ap.approval_status == "Draft") and ('Expense Verified' in roles)) %}
+      {% if ((ap.approval_status == "Pending") and ('Expense Verified' in roles)) %}
 
       <a href="#add-approver" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
       class="modal-trigger waves-effect waves-light right btn-approve" id="" >Verify</a>
@@ -404,11 +422,8 @@
          <p>Approver</p>
          <select name="category" id="assigned_approver">
            <option value="" selected>Select Approver</option>
-          {% for ap in expense_claim %}
-          {% set approver = frappe.get_all("Department Approver",filters={'parent':ap.department,'parentfield':'expense_approvers'},fields=['approver'])  %}
-          {% for app in approver %}
-           <option value="{{app.approver}}" >{{app.approver}}</option>
-           {% endfor %}
+           {% for item in user_approvers %}
+           <option value="{{item}}" >{{item}}</option>
            {% endfor %}
          </select>
        </div>
@@ -473,6 +488,7 @@
       <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
       <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
     <form id="claim_form">
+    <input type="text" name="index" id="index">
     <div class="row margin infodetails">
         <div class="input-field col s6">
           <p style="margin-bottom: 10px;">Claim type</p>
@@ -497,8 +513,17 @@
         <!--<label for="signup-name" class="center-align">Full Name</label>-->
         </div>
 
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance (KM)</p>
+          <input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
+        </div>
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
+          <input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
+        </div>
+
         <div class="input-field col s12 m6">
-          <input type="text" name="index" id="index" hidden>
+          
         <p style="margin-bottom: 10px;">Merchant</p>
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
           <input type="text" name="merchant" style="width: -webkit-fill-available;" placeholder="e.g. Miya Motors " id="sel_merchant">
@@ -587,6 +612,7 @@
 
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
+  glb_expense_voucher = "{{expense_voucher}}";
 </script>
 <!-- <script type="text/javascript">
   var all_claim = document.getElementById("all-claim");

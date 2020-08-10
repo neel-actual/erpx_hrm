@@ -1,0 +1,22 @@
+{
+ "align_labels_right": 0,
+ "creation": "2020-08-03 00:11:23.262666",
+ "custom_format": 0,
+ "disabled": 0,
+ "doc_type": "Expense Claim",
+ "docstatus": 0,
+ "doctype": "Print Format",
+ "font": "Default",
+ "idx": 0,
+ "line_breaks": 0,
+ "modified": "2020-08-03 00:11:42.150869",
+ "modified_by": "Administrator",
+ "module": "ERPX-HRM",
+ "name": "Expense Claim",
+ "owner": "Administrator",
+ "print_format_builder": 1,
+ "print_format_type": "Jinja",
+ "raw_printing": 0,
+ "show_section_headings": 0,
+ "standard": "Yes"
+}

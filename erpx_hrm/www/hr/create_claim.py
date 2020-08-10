@@ -1,5 +1,6 @@
 import frappe
 import json
+from frappe.utils import today, add_months
 
 def get_context(context):
     
@@ -19,6 +20,10 @@ def get_context(context):
     context.claim_type = frappe.get_all("Expense Claim Type",fields = ["name"])
     context.currency = frappe.db.get_value("HRM Setting",None,"currency")
     context.verifier = frappe.db.get_value("Department",context.department,"expense_verifier")
+
+    context.max_claim_date = today()
+    context.min_claim_date =  add_months(today(), -3)
+
     return context
 
 
