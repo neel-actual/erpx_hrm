@@ -324,10 +324,8 @@
     </div>
 
     <div class="input-field col s12 m2">
-      <a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
-      <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
-      
-      </div>
+      <a class="waves-effect btn right" id="btn_add_claim_modal">Add Claim</a>      
+    </div>
     {% endif %}
     
   </div>
@@ -490,6 +488,7 @@
       <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
       <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
     <form id="claim_form">
+    <input type="text" name="index" id="index">
     <div class="row margin infodetails">
         <div class="input-field col s6">
           <p style="margin-bottom: 10px;">Claim type</p>
@@ -514,8 +513,17 @@
         <!--<label for="signup-name" class="center-align">Full Name</label>-->
         </div>
 
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance (KM)</p>
+          <input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
+        </div>
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
+          <input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
+        </div>
+
         <div class="input-field col s12 m6">
-          <input type="text" name="index" id="index" hidden>
+          
         <p style="margin-bottom: 10px;">Merchant</p>
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
           <input type="text" name="merchant" style="width: -webkit-fill-available;" placeholder="e.g. Miya Motors " id="sel_merchant">
