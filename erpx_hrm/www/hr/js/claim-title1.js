@@ -1,6 +1,7 @@
 $(document).ready(async function(){
-    // console.log(frappe)
-    // console.log(frappe.roles)
+    var today = moment().format('YYYY-MM-DD');
+    document.getElementById("sel_date").value = today;
+    
     let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
     var dt = $('#claim_table').DataTable({
         bFilter: false,
@@ -18,7 +19,10 @@ $(document).ready(async function(){
           {targets: 4},
           {targets: 5},
           {targets: 6},
-          {targets: 7}]
+          {targets: 7},
+          {targets: 8,visible: false},
+          {targets: 9,visible: false}
+        ]
     })
     /* Role permission Setup*/
 
@@ -55,23 +59,28 @@ $(document).ready(async function(){
       } );
 
     $("#remove_claim").click(function(){
-    
-        // dt.rows().nodes().to$()
-        // array.forEach(element => {
-            
-        // });
         
-    $('#claim_table').DataTable().rows('.selected').remove().draw(false);
-      var table_data = $('#claim_table').DataTable().rows().data();
-      console.log(table_data)
+        $('#claim_table').DataTable().rows('.selected').remove().draw(false);
+        var table_data = $('#claim_table').DataTable().rows().data();
         var total = 0
         table_data.each(function (value, index) {
             total = total + parseFloat(value[5].split(" ")[1])
-            console.log(parseFloat(value[5].split(" ")[1]))
         });
-        console.log(total)
-        // $('#tabtotal_amount').val(parseFloat(total).toFixed(2))
         $('#p_total_claim_amount').text(currency +" "+ parseFloat(total).toFixed(2))
+    });
+
+    $("#btn_add_claim_modal").click(function(){
+        $("#claim_form :input[name=index]").val("");
+        $("#claim_form :input[name=claim_type]").val("");
+        $("#claim_form :input[name=claim_type]").formSelect();
+        $("#claim_form :input[name=merchant]").val("");    
+        $("#claim_form :input[name=claim_amount]").val("");
+        $("#claim_form :input[name=desc]").val("");
+        $("#claim_form :input[name=distance]").val("");
+        $("#claim_form :input[name=distance_rate]").val("");
+        toggle_div_distance();
+        $('#add_claim_modal').modal('open');
+    
     })
 
     $("#submit_claim_btn").click(function(){
@@ -113,24 +122,36 @@ $(document).ready(async function(){
 
     });
     $("#update").click(function(){
-        window.location.replace("/hr/create-claim");
-        // frappe.call({
-        //     method: 'erpx_hrm.api.set_value_custom',
-        //     args: {
-        //         'doctype': 'Expense Claim',
-        //         'name':location.search.split("=")[1],
-        //         'fieldname': 'approval_status',
-        //         'value':'Verified'
-        //     },
-        //     callback: function(r) {
-        //         if (!r.exc) { 
-        //             console.log(r.message)
-        //             window.location.replace("/hr/approval-claims");
-        //             // location.reload()
-        //         }
-        //     }
-        // });   
-
+        var exp_list = []
+        for (let i = 0; i < dt.column().data().length; i++) {
+            const element = dt.rows(i).data()[0];
+            exp_list.push({
+                "expense_date":element[1],
+                "expense_type":element[2].toString(),
+                "merchant":element[3].toString(),
+                "description":element[4].toString(),
+                "amount":parseFloat(element[5].split(" ")[1]),
+                "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
+                "distance":parseFloat(element[8]),
+                "distance_rate":parseFloat(element[9]),
+            })
+        }
+        
+        frappe.call({
+            method: 'erpx_hrm.api.udpate_claim',
+            args: {
+                'name' : glb_expense_voucher,
+                'expenses':exp_list
+            },
+            callback: function(r) {
+                M.toast({
+                    html: 'Claim '+glb_expense_voucher+' Updated Successfully!'
+                })
+                setTimeout(function() {
+                    window.location.reload();
+                }, 3000);
+            }
+        });
     });
 
     $("#approve").click(function(){
@@ -218,34 +239,28 @@ $(document).ready(async function(){
         
       });
 
-      $('#claim_table tbody').on( 'click', 'a.edit', function () {
+    $('#claim_table tbody').on( 'click', 'a.edit', function () {
         $('#add_claim').css("dispaly","none");
         $('#update').css("dispaly","block");
-        console.log("here")
-        fill_form_from_table($(this),"claim_form")
-        
+        fill_form_from_table($(this),"claim_form");
     })
     
     
-    function fill_form_from_table(thisobj,form_id){
-         
+    function fill_form_from_table(thisobj, form_id){
         
-        // $("form#claim_form :input[name=claim_type]").val(thisobj.closest('tr').find('td.index').text())
-        
-        $("form#claim_form :input[name=claim_type]").val(thisobj.closest('tr').find('td.claimtype').text())
-        $("form#claim_form :input[name=claim_type]").formSelect()
-        $("form#claim_form :input[name=merchant]").val(thisobj.closest('tr').find('td.merchant').text())
-        $("form#claim_form :input[name=index]").val(thisobj.closest('tr').find('td.index').text())
-        console.log(thisobj.closest('tr').find('td.claimamount').text())
-        $("form#claim_form :input[name=claim_amount]").val(thisobj.closest('tr').find('td.claimamount').text().split(" ")[1])
-        $("form#claim_form :input[name=desc]").val(thisobj.closest('tr').find('td.desc').text())
-        
-        // console.log(thisobj.closest('tr').find('a.atc').attr("file"))
-        parts = thisobj.closest('tr').find('td.date').text().split('-')
-        $("form#claim_form :input[name=attachment]").val(thisobj.closest('tr').find('a.atc').attr("file"))
-        $("form#claim_form :input[name=claim_date]").val(parts[2]+"-"+parts[1]+"-"+parts[0])
-        
-        // $("form#{0} :input[name=ea_form_field]".format(form_id)).formSelect()
+        let index =  thisobj.closest('tr').find('td.index').text();
+        var data = dt.row(parseInt(index)-1).data();
+
+        $("#claim_form :input[name=claim_type]").val(data[2]);
+        $("#claim_form :input[name=claim_type]").formSelect();
+        $("#claim_form :input[name=merchant]").val(data[3]);
+        $("#claim_form :input[name=index]").val(data[0]);
+        $("#claim_form :input[name=claim_amount]").val(data[5].split(" ")[1]);
+        $("#claim_form :input[name=desc]").val(data[4]);
+        $("#claim_form :input[name=distance]").val(data[8]);
+        $("#claim_form :input[name=distance_rate]").val(data[9]);
+
+        toggle_div_distance();
     
     }
 
@@ -353,27 +368,7 @@ $(document).ready(async function(){
             }
         });
     })
-    $("#print_page").click(function(){
-        
-
-        var divToPrint=document.getElementById('DivIdToPrint');
-
-        var newWin=window.open('','Print-Window');
     
-        newWin.document.open();
-    
-        newWin.document.write(`<html><body onload="window.print()">
-        <link rel="stylesheet" type="text/css" href="/app-assets/vendors/vendors.min.css">
-        <link rel="stylesheet" type="text/css" href="/css/materialize.css">
-        <link rel="stylesheet" type="text/css" href="/css/style.css" >
-        <link rel="stylesheet" type="text/css" href="/css/animate.css">
-        <link rel="stylesheet" type="text/css" href="/css/master.css">`+divToPrint.innerHTML+`</body></html>`)
-        // window.close();
-        newWin.document.close();
-        
-    
-        
-    })
     $("#clear_attach").click(function(){
         $("#attachment").val("")
         $('#new_attach').css("dispaly","block");
@@ -471,7 +466,7 @@ $(document).ready(async function(){
                 }else{
                     index = parseInt(dt.row(':last').data()[0]) + 1 
                 }
-                var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>')
+                var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td><td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td><td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td></tr>')
                 dt.row.add(row).draw();
                 var data = dt.rows().data();
                 var total = 0
@@ -599,4 +594,32 @@ var get_child = function (parent,idx) {
             });
         } catch (e) { reject(e); }
     });
+}
+
+$(document).ready(function () {
+    $('#sel_claim_type').change(function(){ 
+		toggle_div_distance();
+    });
+    $('#sel_distance').change(function(){ 
+        count_amount_by_distance();
+    });
+    $('#sel_distance_rate').change(function(){ 
+		count_amount_by_distance();
+	});
+});
+
+function toggle_div_distance(){
+	
+	if($("#sel_claim_type").val() == "Mileage Charges"){
+		$(".div_distance").show();
+	}else{
+        $(".div_distance").hide();
+    }	
+}
+
+function count_amount_by_distance(frm, cdt, cdn){
+    let distance = $('#sel_distance').val() || 0;
+    let distance_rate = $('#sel_distance_rate').val() || 0;
+    let amount = flt(distance) * flt(distance_rate);
+    $('#sel_amount').val(amount);
 }

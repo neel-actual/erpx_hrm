@@ -57,7 +57,7 @@
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type','remark']) %}
-{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx"])%}
+{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx", "distance", "distance_rate"])%}
 {% endif %}
 <script>
   window.frappe = {};
@@ -238,6 +238,8 @@
             <th style=" border-right:none!important;" width="150"><b>Amount</b></th>
             <th style=" border-right:none!important;" width="100"><b>Attachment</b></th>
             <th style=" border-right:none!important;" width="100"></th>
+            <th style=" border-right:none!important;" width="100"><b>Distance</b></th>
+						<th style=" border-right:none!important;" width="100"><b>Distance Rate</b></th>
             
           </tr>
         </thead>
@@ -256,8 +258,11 @@
             <td style="text-align: center;">No Attachment</td>
             {% endif %}
             <!-- <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td> -->
-            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td></tr>
+            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>
+            <td class="distance">{{claim.distance}}</td>
+            <td class="distance_rate">{{claim.distance_rate}}</td>
             {% endfor %}
+            </tr>
         </tbody>
           </table>
         <!-- <table style="font-size: 14px;" id="claim_table">
@@ -319,10 +324,8 @@
     </div>
 
     <div class="input-field col s12 m2">
-      <a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>
-      <!-- <a class="modal-trigger waves-effect btn right">Add Claim</a> -->
-      
-      </div>
+      <a class="waves-effect btn right" id="btn_add_claim_modal">Add Claim</a>      
+    </div>
     {% endif %}
     
   </div>
@@ -485,6 +488,7 @@
       <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
       <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
     <form id="claim_form">
+    <input type="text" name="index" id="index">
     <div class="row margin infodetails">
         <div class="input-field col s6">
           <p style="margin-bottom: 10px;">Claim type</p>
@@ -509,8 +513,17 @@
         <!--<label for="signup-name" class="center-align">Full Name</label>-->
         </div>
 
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance (KM)</p>
+          <input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
+        </div>
+        <div class="input-field col s6 div_distance" style="display:none">
+          <p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
+          <input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
+        </div>
+
         <div class="input-field col s12 m6">
-          <input type="text" name="index" id="index" hidden>
+          
         <p style="margin-bottom: 10px;">Merchant</p>
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
           <input type="text" name="merchant" style="width: -webkit-fill-available;" placeholder="e.g. Miya Motors " id="sel_merchant">

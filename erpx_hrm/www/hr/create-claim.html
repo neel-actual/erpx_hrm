@@ -242,11 +242,11 @@ td {
 						  
 						  <div class="input-field col s12 m12" >
 							  <div class="input-field col s12 m2">
-								<a class="modal-trigger waves-effect btn right" id="remove_claim">Remove Claim</a>
+								<a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
 							  </div>
 
 							  <div class="input-field col s12 m2">
-								<a class="modal-trigger waves-effect btn right" href="#add_claim_modal">Add Claim</a>								
+								<a class="waves-effect btn right" href="#add_claim_modal" id="btn_add_claim_modal">Add Claim</a>								
 							  </div>
 							</div>
 						</div>
@@ -339,7 +339,8 @@ td {
 			  <div class="modal-content" style="padding-bottom: 10px !important;">
 					  <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
 					  <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
-				  <form id="claim_form">
+				  <form id="claim_form" autocomplete="off">
+					<input type="hidden" class="index" name="index" id="index">
 					<div class="row margin infodetails">
 							<div class="input-field col s6">
 								<p style="margin-bottom: 10px;">Claim type</p>
@@ -386,7 +387,7 @@ td {
 						  <div class="input-field col s12 m6">
 							<p style="margin-bottom: 10px;">Amount</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-							<input type="text" class="index" name="index" id="index" readonly hidden>
+							
 							<input type="label" disabled value="{{currency}}" style="padding:0;border-top-left-radius: 5px; border-bottom-left-radius: 5px;border: 1px solid #c1c1c1 !important;width: 40px;height: 3rem;padding-left: 10px; float: left; -webkit-box-sizing: content-box;" >
 							<input type="text" name="claim_amount" style="width: -webkit-fill-available; display: flex;border-radius: unset !important;border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important;" placeholder="Your claim amount" id="sel_amount">
 							<label class='claim_amount_error'></label>
