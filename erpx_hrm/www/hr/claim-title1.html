@@ -57,7 +57,7 @@
 {% block main %}
 {% if frappe.request.url.split("?")[1] %}
 {% set expense_claim = frappe.get_all("Expense Claim",filters={'name':expense_voucher},fields=['employee','department','expense_verifier','approval_status','status','total_claimed_amount','employee_name','expense_approver','reimbursement_type','remark']) %}
-{% set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx", "distance", "distance_rate"])%}
+{# set claim_details = frappe.get_all("Expense Claim Detail",filters={'parent': expense_voucher},fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx", "distance", "distance_rate"])#}
 {% endif %}
 <script>
   window.frappe = {};
@@ -488,7 +488,7 @@
       <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
       <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
     <form id="claim_form">
-    <input type="text" name="index" id="index">
+    <input type="hidden" name="index" id="index">
     <div class="row margin infodetails">
         <div class="input-field col s6">
           <p style="margin-bottom: 10px;">Claim type</p>
