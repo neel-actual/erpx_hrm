@@ -1,3 +1,5 @@
+var glb_row_id = 0;
+
 $(document).ready(async function(){
     var today = moment().format('YYYY-MM-DD');
     document.getElementById("sel_date").value = today;
@@ -8,7 +10,7 @@ $(document).ready(async function(){
         "paging":   false,
         "ordering": false,
         "info":     false,
-        "order":[0,'asc'],
+        // "order":[0,'asc'],
         columnDefs: [{
             targets: 0,
             width: "5%"
@@ -242,16 +244,16 @@ $(document).ready(async function(){
     $('#claim_table tbody').on( 'click', 'a.edit', function () {
         $('#add_claim').css("dispaly","none");
         $('#update').css("dispaly","block");
-        fill_form_from_table($(this),"claim_form");
+        var data = dt.row( $(this).parents('tr') ).data();
+        glb_row_id = dt.row($(this).parents('tr')).index();
+        fill_form_from_table(data);      
     })
     
     
-    function fill_form_from_table(thisobj, form_id){
+    function fill_form_from_table(data){
         
-        let index =  thisobj.closest('tr').find('td.index').text();
-        var data = dt.row(parseInt(index)-1).data();
-
-        $("#claim_form :input[name=claim_type]").val(data[2]);
+        let claim_type = data[2].replace("&amp;", "&");
+        $("#claim_form :input[name=claim_type]").val(claim_type);
         $("#claim_form :input[name=claim_type]").formSelect();
         $("#claim_form :input[name=merchant]").val(data[3]);
         $("#claim_form :input[name=index]").val(data[0]);
@@ -488,20 +490,21 @@ $(document).ready(async function(){
     
         }else{
 
-            data = dt.row(parseInt($('#index').val())-1).data()
+            data = dt.row(glb_row_id).data();
             
-            console.log(data)
-            data[1]=$('#sel_date').val()
-            data[2]=$('#sel_claim_type').val()
-            data[3]=$('#sel_merchant').val()
+            data[1]=$('#sel_date').val();
+            data[2]=$('#sel_claim_type').val();
+            data[3]=$('#sel_merchant').val();
             data[4]=$('#sel_desc').val()
             data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2)
+            data[8]=parseFloat($('#sel_distance').val()).toFixed(2);
+            data[9]=parseFloat($('#sel_distance_rate').val()).toFixed(2);
             if ($("#attachment").val() == ""){
                 data[6]="No Attachment"
             }else{
                 data[6]="<a href="+frappe.site_url+$("#attachment").val()+" target='_blank' class = 'atc' file = "+$("#attachment").val()+"><i class='material-icons-outlined'>attach_file</i></a>"
             }
-            dt.row(parseInt($('#index').val())-1).data(data).draw();
+            dt.row(glb_row_id).data(data).draw();
             
             var table_data = dt.rows().data();
             // var total = 0
@@ -621,5 +624,5 @@ function count_amount_by_distance(frm, cdt, cdn){
     let distance = $('#sel_distance').val() || 0;
     let distance_rate = $('#sel_distance_rate').val() || 0;
     let amount = flt(distance) * flt(distance_rate);
-    $('#sel_amount').val(amount);
+    $('#sel_amount').val(parseFloat(amount).toFixed(2));
 }
