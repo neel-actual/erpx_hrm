@@ -1,3 +1,5 @@
+var glb_row_id = 0;
+
 $(document).ready(async function(){
 let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
 var param = sessionStorage.getItem("claim_name");
@@ -112,7 +114,6 @@ $("#add_claim").click(function(){
                 index = parseInt(dt.row(':last').data()[0]) + 1 
             }
             var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td><td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td><td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td></tr>')
-            console.log(row);
             dt.row.add(row).draw();
             var data = dt.rows().data();
             var total = 0
@@ -134,16 +135,16 @@ $("#add_claim").click(function(){
 
     }else{
         
-        data = dt.row(parseInt($('#index').val())-1).data();
+        data = dt.row(glb_row_id).data();
 
         data[1]=$('#sel_date').val();
         data[2]=$('#sel_claim_type').val();
         data[3]=$('#sel_merchant').val();
         data[4]=$('#sel_desc').val();
         data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2);
-        data[8]=currency+parseFloat($('#sel_distance').val()).toFixed(2);
-        data[9]=currency+parseFloat($('#sel_distance_rate').val()).toFixed(2);
-        dt.row(parseInt($('#index').val())-1).data(data).draw();
+        data[8]=parseFloat($('#sel_distance').val()).toFixed(2);
+        data[9]=parseFloat($('#sel_distance_rate').val()).toFixed(2);
+        dt.row(glb_row_id).data(data).draw();
         var table_data = dt.rows().data();
         var total = 0
         table_data.each(function (value, index) {
@@ -172,25 +173,23 @@ $('#claim_table tbody').on( 'click', 'td.index', function () {
 $('#claim_table tbody').on( 'click', 'a.edit', function () {
     $('#add_claim').css("dispaly","none");
     $('#update_claim').css("dispaly","block");
-    dt = $('#claim_table').DataTable()
-    fill_form_from_table($(this),"claim_form");
-    
+    var data = dt.row( $(this).parents('tr') ).data();
+    glb_row_id = dt.row($(this).parents('tr')).index();
+    fill_form_from_table(data);    
 })
 
 
-function fill_form_from_table(thisobj, form_id){
+function fill_form_from_table(data){
     
-    let index =  thisobj.closest('tr').find('td.index').text();
-    var data = dt.row(parseInt(index)-1).data();
-
-    $("form#{0} :input[name=claim_type]".format(form_id)).val(data[2]);
-    $("form#{0} :input[name=claim_type]".format(form_id)).formSelect();
-    $("form#{0} :input[name=merchant]".format(form_id)).val(data[3]);
-    $("form#{0} :input[name=index]".format(form_id)).val(data[0]);
-    $("form#{0} :input[name=claim_amount]".format(form_id)).val(data[5].split(" ")[1]);
-    $("form#{0} :input[name=desc]".format(form_id)).val(data[4]);
-    $("form#{0} :input[name=distance]".format(form_id)).val(data[8]);
-    $("form#{0} :input[name=distance_rate]".format(form_id)).val(data[9]);
+    let claim_type = data[2].replace("&amp;", "&");
+    $("#claim_form :input[name=claim_type]").val(claim_type);
+    $("#claim_form :input[name=claim_type]").formSelect();
+    $("#claim_form :input[name=merchant]").val(data[3]);
+    $("#claim_form :input[name=index]").val(data[0]);
+    $("#claim_form :input[name=claim_amount]").val(data[5].split(" ")[1]);
+    $("#claim_form :input[name=desc]").val(data[4]);
+    $("#claim_form :input[name=distance]").val(data[8]);
+    $("#claim_form :input[name=distance_rate]").val(data[9]);
 
     toggle_div_distance();
 
@@ -490,5 +489,5 @@ function count_amount_by_distance(frm, cdt, cdn){
     let distance = $('#sel_distance').val() || 0;
     let distance_rate = $('#sel_distance_rate').val() || 0;
     let amount = flt(distance) * flt(distance_rate);
-    $('#sel_amount').val(amount);
+    $('#sel_amount').val(parseFloat(amount).toFixed(2));
 }

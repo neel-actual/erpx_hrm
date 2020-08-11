@@ -25,6 +25,11 @@ def get_context(context):
     expense_voucher = request_url.query.split("=")[1]
 
     expense_claim_doc = frappe.get_doc("Expense Claim", expense_voucher)
+    context.claim_details = frappe.get_all("Expense Claim Detail",
+        filters={'parent': expense_voucher},
+        fields=["expense_type","expense_date","merchant","amount","description","attach_document","idx", "distance", "distance_rate"],
+        order_by = "idx asc"
+    )
 
     edit_mode = 0
 

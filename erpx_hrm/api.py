@@ -222,6 +222,12 @@ def get_approvers(employee,doctype):
 
 @frappe.whitelist()
 def create_claim(expense_approver,expense_verifier,requester,claim_type,cutoff_date,expenses, approval_status="Pending"):
+    expenses2 = json.loads(expenses)
+    expenses = []
+    for expense in expenses2:
+        expense["expense_type"] = expense["expense_type"].replace("&amp;", "&")
+        expenses.append(expense)
+
     object = frappe.get_doc({
     "doctype":"Expense Claim",
     "expense_approver":expense_approver,
@@ -229,7 +235,7 @@ def create_claim(expense_approver,expense_verifier,requester,claim_type,cutoff_d
     "employee":requester,
     "reimbursement_type":claim_type,
     "cutoff_date":cutoff_date,
-    "expenses":json.loads(expenses),
+    "expenses":expenses,
     "approval_status" : approval_status
     })
     object.flags.ignore_permissions = True
@@ -243,6 +249,7 @@ def udpate_claim(name, expenses):
 
     object.expenses = []
     for expense in json.loads(expenses):
+        expense["expense_type"] = expense["expense_type"].replace("&amp;", "&")
         object.append("expenses", expense)
     object.flags.ignore_permissions = True
     object.save()
