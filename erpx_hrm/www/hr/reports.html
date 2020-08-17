@@ -44,7 +44,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                             </div>
                         </div>
                         <div class="content">
-                            <div class="card" style="border-radius: 10px!important;">
+                            <div class="card" style="border-radius: 10px!important; overflow:visible"> 
                                 <div class="card-content">
                                     <div>
                                        <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/reports.png">
@@ -56,16 +56,16 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                 <div class="input-field col s12 m6">
                                     <p style="margin-bottom: 10px;">Employee</p>
                                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                    <select style="padding-left: 10px;width: -webkit-fill-available;">
-                                        <option value="" disabled selected>Select employees</option>
+                                    <select id="profile_employee" style="padding-left: 10px;width: -webkit-fill-available;" autocomplete="off">
+                                        <option value="">All employees</option>
                                         {% set emp_name = frappe.get_all("Employee", fields=['*']) %}
                                         {% for i_emp_name in emp_name %}
-                                            <option value="{{i_emp_name.employee_name}}">{{i_emp_name.employee_name}}</option>
+                                            <option value="{{i_emp_name.name}}">{{i_emp_name.employee_name}}</option>
                                         {% endfor %}
                                     </select>
                                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                                 </div>
-                                <div class="input-field col s12 m6">
+                                <div class="input-field col s12 m6" style="display:none">
                                     <p style="margin-bottom: 10px;">Information Type</p>
                                     <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
                                     <select style="padding-left: 10px;width: -webkit-fill-available;">
@@ -76,16 +76,20 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                     </select>
                                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
                                 </div>
-                                <div class="input-field col s12">
+                                <div class="input-field col s12" style="display:none">
                                     <p style="margin-bottom: 10px;display: inline-block;">Reports</p>
                                     <p style="margin-bottom: 10px;display: inline-block;float: right;color: #00aeef;">Clear All</p>
                                     <textarea id="reports" type="text"></textarea>
-                                    <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</a>
                                 </div>
+                                <div class="col s12">
+                                    <button id="btn_profile_download" class="modal-trigger waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</button>
+                                </div>
+
+                                <div class="clear"></div>
                             </div>
                         </div>
                         <div style="margin: 30px;"></div>
-                        <div class="card" style="border-radius: 10px!important;">
+                        <div class="card" style="border-radius: 10px!important; overflow:visible"> 
                             <div class="card-content">
                                 <div>
                                    <img width="22" height="22" style="display: inline;float: left;" class="sidenav-icon" src="/icons/reports.png">
@@ -95,25 +99,26 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                </div>
                                <div class="input-field col s12">
                                 <p style="margin-bottom: 10px;">Employee</p>
-                                <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-                                <select style="padding-left: 10px;width: -webkit-fill-available;">
+                                <select id="leave_employee" style="padding-left: 10px;width: -webkit-fill-available;" autocomplete="off">
                                     <option value="" disabled selected>All employees</option>
                                     {% set emp_name = frappe.get_all("Employee", fields=['*']) %}
                                     {% for i_emp_name in emp_name %}
-                                        <option value="{{i_emp_name.employee_name}}">{{i_emp_name.employee_name}}</option>
+                                        <option value="{{i_emp_name.name}}">{{i_emp_name.employee_name}}</option>
                                     {% endfor %}
                                 </select>
-                                <!--<label for="signup-name" class="center-align">Full Name</label>-->
                             </div>
                             <div class="option-date-appr input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">Start</p>
-                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" >
+                                <input autocomplete="off" id="leave_from_date" style="border: 1px solid #c1c1c1; border-radius: 5px;" class="textbox-n" type="date" onfocus="(this.type='date')">
                             </div>
                             <div class="option-date-appr input-field col s12 m6">
                                 <p style="margin-bottom: 10px;">End</p>
-                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" ><input style="border: 1px solid #c1c1c1; border-radius: 5px;" placeholder="Cutoff from" class="textbox-n" type="date" onfocus="(this.type='date')">
-                                <a href="#create-news.modal" class="modal-trigger waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</a>
+                                <img src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 14px; right: 35px;" >
+                                <input id="leave_to_date" style="border: 1px solid #c1c1c1; border-radius: 5px;" class="textbox-n" type="date" onfocus="(this.type='date')">
+                                <button autocomplete="off" id="btn_leave_download" class="waves-effect waves-light btn right" style="margin: 20px 0px;">Download Report</button>
                             </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </div>
@@ -141,4 +146,5 @@ type="text/javascript"></script>
 <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/tinymce/tinymce.min.js" type="text/javascript"></script>
 <script defer src="/hr/js/news.js" type="text/javascript"></script>
+<script defer src="/hr/js/reports.js" type="text/javascript"></script>
 {% endblock %}
