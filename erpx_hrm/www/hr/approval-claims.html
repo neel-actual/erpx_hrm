@@ -181,14 +181,14 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                                     {% set class_color = '' %}
                                                     {% if(ex.status == 'Unpaid') %}
                                                         {% set class_color = 'p-pending' %}
+                                                    {% elif(ex.approval_status == 'Rejected') %}
+                                                        {% set class_color = 'p-declined' %}
                                                     {% elif(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}
                                                         {% set class_color = 'p-grey' %}
                                                     {% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}
                                                         {% set class_color = 'p-purple' %}
                                                     {% elif(ex.status == 'Cancelled') %}
-                                                        {% set class_color = 'p-declined' %}
-                                                    {% elif(ex.status == 'Rejected') %}
-                                                        {% set class_color = 'p-declined' %}
+                                                        {% set class_color = 'p-declined' %}                                                    
                                                     {% elif(ex.status == 'Paid') %}
                                                         {% set class_color = 'p-approved' %}
                                                     {% elif(ex.status == 'Submitted') %}
@@ -232,7 +232,7 @@ type="text/javascript"></script>
     $(document).ready( function () {
         var user_table = $('#table_id').DataTable({
             bFilter: false,
-            "order": [[ 1, "desc" ]],
+            "order": [[ 0, "desc" ]],
             paging: true,
             searching: true,
             info: true,

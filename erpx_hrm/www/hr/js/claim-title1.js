@@ -188,18 +188,39 @@ $(document).ready(async function(){
         });   
 
     });
+    
+    $("#resubmit_claim_btn").click(function(){
+        let name = location.search.split("=")[1];
+        hrm.custom_update("Expense Claim",{
+            'name':name,
+            'remark':""}
+        ).then(function(res){
+            frappe.call({
+                method: 'erpx_hrm.api.set_value_custom',
+                args: {
+                    'doctype': 'Expense Claim',
+                    'name':name,
+                    'fieldname': 'approval_status',
+                    'value':'Draft'
+                },
+                callback: function(r) {
+                    if (!r.exc) {
+                        window.location.replace("/hr/claim-title1.html/?expense_claim="+name);                        
+                    }
+                }
+            });
+      })
+    });
+
     $("#decline").click(function(){
         if($("#decline_remark").val() == NaN || $("#decline_remark").val() == ""){
             alert("Please Add Remark first!")
             return 0 
         }
-        console.log(location.search.split("=")[1])
-        console.log($("#decline_remark").val())
-      hrm.custom_update("Expense Claim",{'name':location.search.split("=")[1],'remark':"Rejected at Approval.<br>Remark: "+$("#decline_remark").val()}).then(function(res){
-
-          
-
-
+        hrm.custom_update("Expense Claim",{
+            'name':location.search.split("=")[1],
+            'remark':"Rejected at Approval.<br>Remark: "+$("#decline_remark").val()}
+        ).then(function(res){
               frappe.call({
                 method: 'erpx_hrm.api.set_value_custom',
                 args: {
@@ -227,6 +248,7 @@ $(document).ready(async function(){
                         //     }
                         // }); 
                         console.log(r.message)
+                        window.location.replace("/hr/approval-claims");
                         
                     }
                 }
@@ -305,12 +327,10 @@ $(document).ready(async function(){
             alert("Please Add Remark first!")
             return 0 
         }
-        console.log(location.search.split("=")[1])
-        console.log($("#reject_remark").val())
-      hrm.custom_update("Expense Claim",{'name':location.search.split("=")[1],'remark':"Rejected at Verification.<br>Remark: "+$("#reject_remark").val()}).then(function(res){
-
-          
-
+        hrm.custom_update("Expense Claim",{
+            'name':location.search.split("=")[1],
+            'remark':"Rejected at Verification.<br>Remark: "+$("#reject_remark").val()}
+        ).then(function(res){
           frappe.call({
               method: 'erpx_hrm.api.set_value_custom',
               args: {
@@ -321,29 +341,31 @@ $(document).ready(async function(){
               },
               callback: function(r) {
                   if (!r.exc) { 
-                      console.log(r.message)
-                      // location.reload()
-                      frappe.call({
-                        method: 'erpx_hrm.api.custom_submit',
-                        args: {
-                            'doc':r.message
-                        },
-                        callback: function(r) {
-                            if (!r.exc) {
-                                console.log(r.message)
-                                // location.reload()
-                                M.toast({
-                                    html: 'Verification Rejected'
-                                })
-                                window.location.replace("/hr/approval-claims");
-                            }
-                        }
-                    }); 
-                    //   window.location.replace("/hr/approval-claims");
+                        // console.log(r.message)
+                        // // location.reload()
+                        // frappe.call({
+                        //     method: 'erpx_hrm.api.custom_submit',
+                        //     args: {
+                        //         'doc':r.message
+                        //     },
+                        //     callback: function(r) {
+                        //         if (!r.exc) {
+                        //             console.log(r.message)
+                        //             // location.reload()
+                        //             M.toast({
+                        //                 html: 'Verification Rejected'
+                        //             })
+                        //             window.location.replace("/hr/approval-claims");
+                        //         }
+                        //     }
+                        // });
+                    M.toast({
+                        html: 'Verification Rejected'
+                    })
+                    window.location.replace("/hr/approval-claims");
                   }
               }
-          });
-          
+          });          
       })
     });
 

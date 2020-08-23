@@ -33,6 +33,11 @@ def get_context(context):
 
     edit_mode = 0
 
+    resubmit_mode = 0
+
+    if employee == expense_claim_doc.employee and expense_claim_doc.approval_status=="Rejected":
+        resubmit_mode = 1
+
     if employee == expense_claim_doc.employee and expense_claim_doc.approval_status=="Draft":
         edit_mode = 1
     
@@ -46,5 +51,6 @@ def get_context(context):
     context.expense_voucher = expense_voucher
     context.expense_claim_doc = expense_claim_doc
     context.edit_mode = edit_mode
+    context.resubmit_mode = resubmit_mode
 
     return context

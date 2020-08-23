@@ -230,7 +230,7 @@
           <thead>
           <tr style="background-color: #eff1f9;">
             <th style=" border-right:none!important;" width="100"><b>No.</b></th>
-            <th style=" border-right:none!important;" width="200"><b>Expenses Date</b></th>
+            <th style=" border-right:none!important;" width="100"><b>Expenses Date</b></th>
             <th style=" border-right:none!important;" width="200"><b>Claim Type</b></th>
             <th style=" border-right:none!important;" width="200"><b>Mechant</b></th>
             <th style=" border-right:none!important;" width="200"><b>Description</b></th>
@@ -336,6 +336,14 @@
       <div class="row margin infodetails" style="display: block;">
       {% for ap in expense_claim %}
 
+      <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
+      
+      {% if resubmit_mode %}
+        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="resubmit_claim_btn">Re-Submit</a>
+      {% endif %}
+
       {% if edit_mode %}
 
         <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
@@ -343,9 +351,6 @@
 
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
-
-        <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
 
         {% if ap.approval_status == "Draft" %}
         <a href="#"
@@ -454,7 +459,7 @@
 </form>
 </div>
 <div class="modal-footer" style="background-color: #fff !important;">
- <a href="#!" class="right waves-effect waves-light btn" id = "reject_verification">Save</a>
+ <a href="#!" class="right waves-effect waves-light btn" id="reject_verification">Save</a>
  <a href="#!" class="right blue-text btn-flat"
  onclick="$('#reject_veri').modal('close')">Cancel</a>
 </div>
