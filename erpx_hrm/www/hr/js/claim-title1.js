@@ -369,18 +369,58 @@ $(document).ready(async function(){
       })
     });
 
-      $("#d_reimburse").click(function(){
+    var toggle_div_mode_of_payment = function(){	
+        $('#div_cash').hide();
+        $('#div_bank').hide();
+		if($("#reimburse_mode_of_payment").val() == 'Cash')
+            $('#div_cash').show();
+		else
+			$('#div_bank').show();
+    }
+
+    toggle_div_mode_of_payment();
+
+    $("#reimburse_mode_of_payment").change(function(){
+        toggle_div_mode_of_payment();
+	});
+
+    $("#d_reimburse").click(function(){
+        let mode_of_payment = $("#reimburse_mode_of_payment").val();
+        if (mode_of_payment=="Cash"){
+            if($("#reimburse_file").val()==""){
+                M.toast({
+                    html: "Attachment file is required"
+                })
+                return false;
+            }
+        }
+        if (mode_of_payment=="Bank Draft"){
+            if($("#reimburse_reference_no").val()==""){
+                M.toast({
+                    html: "Transaction Number is required"
+                })
+                return false;
+            }
+        }
         frappe.call({
             method: 'erpx_hrm.api.create_payment',
-            args: {"expense_voucher":location.search.split("=")[1]},
+            args: {
+                "expense_voucher": glb_expense_voucher,
+                "mode_of_payment": mode_of_payment,
+                "reference_no": $("#reimburse_reference_no").val(),
+            },
             callback: function(r) {
                 if (!r.exc) {
-                    console.log(r.message)
-                    location.reload()
+                    if (mode_of_payment=="Cash"){
+                        // upload file
+                        upload_file_reimburse(r);
+                    }else{
+                        location.reload();
+                    }
+                    
                 }
             }
         }); 
-    
     })
     $("#get_attach").click(function(){
         var data = dt.rows().data();
@@ -583,8 +623,14 @@ $(document).ready(async function(){
             else
                 error.insertAfter(element);
         }
-      });
+    });
 
+    $("#reimburse_file").change(function(){
+		if($("#reimburse_file").val() != '')
+			$('#btn_view_file_reimburse').show();
+		else
+			$('#btn_view_file_reimburse').hide();
+	});
 
   });
 
@@ -647,4 +693,45 @@ function count_amount_by_distance(frm, cdt, cdn){
     let distance_rate = $('#sel_distance_rate').val() || 0;
     let amount = flt(distance) * flt(distance_rate);
     $('#sel_amount').val(parseFloat(amount).toFixed(2));
+}
+
+function openUploadFileReimburse(){	
+	if($("#reimburse_file").val() != ''){						
+		window.open((window.URL || window.webkitURL).createObjectURL($("#reimburse_file").get(0).files[0]), '_blank');
+	}		
+}
+
+function upload_file_reimburse(r){
+    var doc = r.message;
+    var file = $("#reimburse_file").get(0).files[0];
+    
+    if (file){
+        var reader = new FileReader();
+        reader.onload = function(){
+            var srcBase64 = reader.result;
+            frappe.ajax({
+                type: "POST",
+                url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                no_stringify: 1,
+                args: {
+                    name : "file",
+                    filename : file.name,
+                    filedata : srcBase64,
+                    doctype: "Payment Entry",
+                    docname: doc.name,
+                    folder: "Home/Attachments",
+                    is_private: 1,
+                    from_form : 1
+                },
+                callback: function (r) {
+                    if (!r.exc_type) {
+                        location.reload();
+                    }
+                }
+            });
+        };
+        reader.readAsDataURL(file);
+    }else{
+        location.reload();
+    }
 }

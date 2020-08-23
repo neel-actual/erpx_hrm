@@ -102,28 +102,32 @@ def download_expense_claim_report():
 
 
 @frappe.whitelist()
-def create_payment(expense_voucher):
+def create_payment(expense_voucher, mode_of_payment="Cash", reference_no=""):
     object = frappe.get_doc({
-    "doctype":"Payment Entry",
-    "payment_type":"Pay",
-    "mode_of_payment":"Cash",
-    "party_type":"Employee",
-    "party":frappe.db.get_value("Expense Claim",str(expense_voucher),"employee"),
-    "paid_amount":float(frappe.db.get_value("Expense Claim",str(expense_voucher),"grand_total")),
-    "received_amount":0.001,
-    "paid_from": frappe.db.get_value("Company",str(frappe.db.get_value("Expense Claim",str(expense_voucher),"company")),"default_cash_account"),
-    "paid_to":frappe.db.get_value("Company",str(frappe.db.get_value("Expense Claim",str(expense_voucher),"company")),"default_expense_claim_payable_account"),
-    "references":[{
-        "reference_doctype":"Expense Claim",
-        "reference_name":str(expense_voucher),
-        "allocated_amount":float(frappe.db.get_value("Expense Claim",str(expense_voucher),"grand_total"))
-    }]
+        "doctype":"Payment Entry",
+        "payment_type":"Pay",
+        "mode_of_payment": mode_of_payment,
+        "party_type":"Employee",
+        "party":frappe.db.get_value("Expense Claim",str(expense_voucher),"employee"),
+        "paid_amount":float(frappe.db.get_value("Expense Claim",str(expense_voucher),"grand_total")),
+        "received_amount":0.001,
+        "paid_from": frappe.db.get_value("Company",str(frappe.db.get_value("Expense Claim",str(expense_voucher),"company")),"default_cash_account"),
+        "paid_to":frappe.db.get_value("Company",str(frappe.db.get_value("Expense Claim",str(expense_voucher),"company")),"default_expense_claim_payable_account"),
+        "references":[{
+            "reference_doctype":"Expense Claim",
+            "reference_name":str(expense_voucher),
+            "allocated_amount":float(frappe.db.get_value("Expense Claim",str(expense_voucher),"grand_total"))
+        }]
     })
+
+    if mode_of_payment=="Bank Draft":
+        object.reference_no = reference_no
+    
     object.flags.ignore_permissions = True
     object.insert()
     object.submit()
     frappe.db.set_value("Expense Claim",str(expense_voucher),"status","Paid")
-    return "Payment Added!"
+    return object
 
 
 @frappe.whitelist()
