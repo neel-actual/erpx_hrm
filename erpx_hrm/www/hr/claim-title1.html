@@ -155,7 +155,7 @@
                 
               </div>
               {% endif %}
-              {% endfor %}
+              {% endfor %}               
              <div class="pend-apprv right">
               {% for ap in expense_claim %}
               {% if (ap.status == 'Draft') and (ap.approval_status != 'Verified') %}
@@ -230,7 +230,7 @@
           <thead>
           <tr style="background-color: #eff1f9;">
             <th style=" border-right:none!important;" width="100"><b>No.</b></th>
-            <th style=" border-right:none!important;" width="200"><b>Expenses Date</b></th>
+            <th style=" border-right:none!important;" width="100"><b>Expenses Date</b></th>
             <th style=" border-right:none!important;" width="200"><b>Claim Type</b></th>
             <th style=" border-right:none!important;" width="200"><b>Mechant</b></th>
             <th style=" border-right:none!important;" width="200"><b>Description</b></th>
@@ -336,6 +336,14 @@
       <div class="row margin infodetails" style="display: block;">
       {% for ap in expense_claim %}
 
+      <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
+      
+      {% if resubmit_mode %}
+        <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+        class="waves-effect waves-light right btn-approve" id="resubmit_claim_btn">Re-Submit</a>
+      {% endif %}
+
       {% if edit_mode %}
 
         <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
@@ -343,9 +351,6 @@
 
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>
-
-        <a href="/printview?doctype=Expense Claim&name={{expense_voucher}}&format=Expense Claim" target="_blank" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="print_page">Print</a>
 
         {% if ap.approval_status == "Draft" %}
         <a href="#"
@@ -388,8 +393,8 @@
       class="waves-effect waves-light right btn-approve" id="get_attach">Get Attachment</a>  -->
 
       {% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('HR Manager' in roles)) %}
-      <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-      class="modal-trigger waves-effect waves-light right btn-approve" id="d_reimburse">Reimburse Via Direct Payment</a>
+      <a href="#modal-reimburse" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
+      class="modal-trigger waves-effect waves-light right btn-approve">Reimburse Via Direct Payment</a>
       {% endif %}
       
       {% endfor %}
@@ -410,6 +415,47 @@
 </div>
 <p style="page-break-after: always;">&nbsp;</p>
 </div>
+</div>
+
+<div id="modal-reimburse" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
+    <div class="modal-content" style="padding: 0px !important; margin-top: 24px;">
+        <p class="edit-title">Reimburse Via Direct Payment</p>
+        <form class="col s12" style="padding: 24px; padding-top: 0px;" id="approver_pop">
+            <div class="row">
+                <div class="input-field col s12" style="margin-top: 0px;">
+                    <p>Mode of Payment</p>
+                    <select name="reimburse_mode_of_payment" id="reimburse_mode_of_payment">
+                        <option value="Cash" selected>Cash</option>
+                        <option value="Bank Draft">Bank</option>
+                    </select>
+                </div>
+                <div id="div_cash">
+                  <div class="input-field col s12">
+                      <div class="file-field input-field">
+                          <div class="btn">
+                              <span>Upload File</span>
+                              <input id="reimburse_file" type="file" autocomplete="off">
+                          </div>
+                          <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text" autocomplete="off">
+                          </div>
+                      </div>
+                      <button onclick="openUploadFileReimburse()" type="button" id="btn_view_file_reimburse" class="btn waves-effect" style="display: none;">View File</button>
+                  </div>
+                </div>
+                <div id="div_bank">
+                  <div class="input-field col s6" style="margin-top: 0px;">
+                    <p>Transaction Number</p>
+                    <input type="text" value="" id="reimburse_reference_no" autocomplete="off" />
+                  </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="background-color: #fff !important;">
+        <a href="#!" class="right waves-effect waves-light btn" id="d_reimburse">Save</a>
+        <a href="#!" class="right blue-text btn-flat" onclick="$('#modal-reimburse').modal('close')">Cancel</a>
+    </div>
 </div>
 
 <div id="add-approver" class="modal modal-fixed-footer" style="padding-right: 50px;background-color: #fff !important">
@@ -454,7 +500,7 @@
 </form>
 </div>
 <div class="modal-footer" style="background-color: #fff !important;">
- <a href="#!" class="right waves-effect waves-light btn" id = "reject_verification">Save</a>
+ <a href="#!" class="right waves-effect waves-light btn" id="reject_verification">Save</a>
  <a href="#!" class="right blue-text btn-flat"
  onclick="$('#reject_veri').modal('close')">Cancel</a>
 </div>
@@ -604,11 +650,13 @@
     type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
     <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-<script defer src="/hr/js/claim-title1.js" type="text/javascript"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+<script defer src="/hr/js/claim-title1.js" type="text/javascript"></script>
 
 <script>
   frappe.csrf_token = "{{ csrf_token }}";

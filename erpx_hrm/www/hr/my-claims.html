@@ -162,13 +162,13 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                                     {% set class_color = '' %}
                                     {% if(i_exp_list.status == 'Unpaid') %}
                                         {% set class_color = 'p-pending' %}
+                                    {% elif(i_exp_list.approval_status == 'Rejected') %}
+                                        {% set class_color = 'p-declined' %}
                                     {% elif(i_exp_list.status == 'Draft') and (i_exp_list.approval_status != 'Verified') %}
                                         {% set class_color = 'p-grey' %}
                                     {% elif(i_exp_list.status == 'Draft') and (i_exp_list.approval_status == 'Verified') %}
                                         {% set class_color = 'p-purple' %}
                                     {% elif(i_exp_list.status == 'Cancelled') %}
-                                        {% set class_color = 'p-declined' %}
-                                    {% elif(i_exp_list.status == 'Rejected') %}
                                         {% set class_color = 'p-declined' %}
                                     {% elif(i_exp_list.status == 'Paid') %}
                                         {% set class_color = 'p-approved' %}
