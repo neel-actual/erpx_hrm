@@ -207,7 +207,9 @@
                                         <h4 class="card-title">My Company</h4>
                                         <br>
                                         <p style="color: black;">{{ employee.company or ''}}</p>
+                                        {% if employee.date_of_joining %}
                                         <p style="color: #969696;">Joined since {{ employee.date_of_joining.strftime(" %d %b %Y ") or ''}}</p>
+                                        {% endif %}
                                         <br>
                                         <p style="color: black;">OFFICE</p>
                                         <p style="color: black;display: inline-block;">{{ employee.branch or ''}}</p>
