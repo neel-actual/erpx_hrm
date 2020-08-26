@@ -16,9 +16,12 @@ def get_context(context):
                                       )
     
     #Get employee info
-    employee = frappe.get_doc("Employee", {"user_id": context.user}, 
-                        ("image", "employee_name", "date_of_joining", "company", "date_of_birth", "branch")) or ""            
-    context.employee = employee or None                    
+    context.employee = None        
+    if frappe.db.exists("Employee", {'user_id': frappe.session.user}):
+        employee = frappe.get_doc("Employee", {"user_id": context.user}) or None 
+        context.employee = employee or None                    
+    else:
+        employee = frappe.new_doc("Employee")
 
     #Get branch info    
     branch = ""
