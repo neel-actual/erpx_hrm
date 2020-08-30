@@ -468,17 +468,20 @@ $(document).ready(async function(){
             var reader = new FileReader();
             reader.onload = function(){
                 var srcBase64 = reader.result;
-                frappe.call({
-                    method:"frappe.client.attach_file",
-                    args:{
-                        filename:file.name,
-                        filedata:srcBase64,
-                        doctype:"Expense Claim",
+                frappe.ajax({
+                    type: "POST",
+                    url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                    no_stringify: 1,
+                    args: {
+                        name : "file",
+                        filename : file.name,
+                        filedata : srcBase64,
+                        doctype: "Expense Claim",
                         docname: location.search.split("=")[1],
                         folder: "Home/Attachments",
-                        is_private:0
+                        is_private: 0,
+                        from_form : 1
                     },
-                    
                     callback: function (r) {
                         if (!r.exc_type) {
                             console.log(r.message)
@@ -513,11 +516,9 @@ $(document).ready(async function(){
             reader.readAsDataURL(file);
         }else{
             M.toast({
-                html: "Please Attach File FIrst!"
+                html: "Please Attach File First!"
             })
-
         }
-
     });
 
     $("#add_claim").click(function(){

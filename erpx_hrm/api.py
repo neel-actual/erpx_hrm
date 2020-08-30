@@ -482,9 +482,18 @@ def custom_submit(doc):
 
 
 @frappe.whitelist()
-def remove_claim(parent,index):
-    # frappe.throw(str(opts))
-    
+def remove_claim(parent,index):    
     child = frappe.db.get_value("Expense Claim Detail",{"parent":parent,"idx":index},"name")
+    attach_document = frappe.db.get_value("Expense Claim Detail",{"parent":parent,"idx":index},"attach_document")
+
+    if attach_document:
+        file = frappe.get_doc("File", {
+            "attached_to_doctype": "Expense Claim",
+            "attached_to_name": parent,
+            "file_url": attach_document
+        })
+        if file:
+            file.delete()
+
     return frappe.db.set_value("Expense Claim Detail",child,"attach_document","")
 
