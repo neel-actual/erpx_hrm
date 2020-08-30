@@ -115,6 +115,52 @@ $("#claim_requester").change(function(){
 });
 })
 
+$("#upload_attach").click(async function(){
+    console.log()
+    var file = $("#new_attach")[0].files[0]
+    // File Upload and link with Child table Item If File is Exist
+    if(file){
+        var reader = new FileReader();
+        reader.onload = function(){
+            var srcBase64 = reader.result;
+            frappe.ajax({
+                type: "POST",
+                url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                no_stringify: 1,
+                args: {
+                    name : "file",
+                    filename : file.name,
+                    filedata : srcBase64,
+                    doctype: "",
+                    docname: "",
+                    folder: "Home/Attachments",
+                    is_private: 0,
+                    from_form : 1
+                },
+                callback: function (r) {
+                    if (!r.exc_type) {
+                        $("#attachment").val(r.message.file_url)
+                        M.toast({
+                            html: "File Attached Successfully!"
+                        })
+                        
+                    }else{
+                        M.toast({
+                            html: "File Not Attached!"
+                        })
+
+                    }
+                }
+            });
+        }
+        reader.readAsDataURL(file);
+    }else{
+        M.toast({
+            html: "Please Attach File First!"
+        })
+    }
+});
+
 $("#add_claim").click(function(){
     if(!$('#index').val()){
         if($("#claim_form").valid()){   // test for validity
@@ -167,6 +213,14 @@ $("#add_claim").click(function(){
         data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2);
         data[8]=parseFloat($('#sel_distance').val()).toFixed(2);
         data[9]=parseFloat($('#sel_distance_rate').val()).toFixed(2);
+
+        // if ($("#attachment").val() == ""){
+        //     data[6]="No Attachment"
+        // }else{
+        //     data[6]="<a href="+frappe.site_url+$("#attachment").val()+" target='_blank' class = 'atc' file = "+$("#attachment").val()+">\
+        //     <i class='material-icons-outlined'>attach_file</i></a>"
+        // }
+
         dt.row(glb_row_id).data(data).draw();
         var table_data = dt.rows().data();
         var total = 0

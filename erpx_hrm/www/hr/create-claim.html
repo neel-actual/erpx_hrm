@@ -400,19 +400,25 @@ td {
 								<textarea type="text" name="desc" id="sel_desc"></textarea>
 								
 							</div>
-							<!-- <div class="input-field col s12">
-                                <div class="file-field input-field">
-                                    <div class="btn">
-                                        <span>Upload File</span>
-                                        <input id="file-request" type="file" autocomplete="off">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div> -->
-
 							
+							<div class="input-field col s12">
+									<p style="margin-bottom: 10px;">Attachment</p>
+									<input type="text" name="attachment" id="attachment" readonly>
+							</div>
+
+							<div class="input-field col s3">
+								<a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="clear_attach">Remove Attachment</a> 
+							</div>
+							<div class="input-field col s3">
+								<a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="upload_attach">Upload Attachment</a>
+							</div>
+							<div class="input-field col s3">
+									<input type="file" name="new_attach" class="custom-file-input" id="new_attach">
+							</div>
+
+							<div class="input-field col s3">
+									<span id="file_attach_name"><i></i></span>
+							</div>						
 							
 					</div>
 				  </form>
