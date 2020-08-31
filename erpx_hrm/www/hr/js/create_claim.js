@@ -62,7 +62,14 @@ var dt = $('#claim_table').DataTable({
       {targets: 3},
       {targets: 4},
       {targets: 5},
-      {targets: 6},
+      {targets: 6,"render": function ( data, type, row, meta ) {
+        if (data != ""){
+            return "<a href="+data+" target='_blank' class = 'atc' file = "+data+"><i class='material-icons-outlined'>attach_file</i></a>";
+        }
+        else{
+            return 'No Attachment';
+        }
+      }},
       {targets: 7},
       {targets: 8,visible: false},
       {targets: 9,visible: false}
@@ -115,6 +122,52 @@ $("#claim_requester").change(function(){
 });
 })
 
+$("#upload_attach").click(async function(){
+    console.log()
+    var file = $("#new_attach")[0].files[0]
+    // File Upload and link with Child table Item If File is Exist
+    if(file){
+        var reader = new FileReader();
+        reader.onload = function(){
+            var srcBase64 = reader.result;
+            frappe.ajax({
+                type: "POST",
+                url: `/api/method/erpx_hrm.utils.frappe.upload_file`,
+                no_stringify: 1,
+                args: {
+                    name : "file",
+                    filename : file.name,
+                    filedata : srcBase64,
+                    doctype: "",
+                    docname: "",
+                    folder: "Home/Attachments",
+                    is_private: 0,
+                    from_form : 1
+                },
+                callback: function (r) {
+                    if (!r.exc_type) {
+                        $("#attachment").val(r.message.file_url)
+                        M.toast({
+                            html: "File Attached Successfully!"
+                        })
+                        
+                    }else{
+                        M.toast({
+                            html: "File Not Attached!"
+                        })
+
+                    }
+                }
+            });
+        }
+        reader.readAsDataURL(file);
+    }else{
+        M.toast({
+            html: "Please Attach File First!"
+        })
+    }
+});
+
 $("#add_claim").click(function(){
     if(!$('#index').val()){
         if($("#claim_form").valid()){   // test for validity
@@ -131,7 +184,7 @@ $("#add_claim").click(function(){
                 <td class="merchant">'+$('#sel_merchant').val()+'</td>\
                 <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td>\
                 <td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td>\
-                <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td>\
+                <td>'+$("#attachment").val()+'</td>\
                 <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>\
                 <td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td>\
                 <td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td>\
@@ -165,8 +218,10 @@ $("#add_claim").click(function(){
         data[3]=$('#sel_merchant').val();
         data[4]=$('#sel_desc').val();
         data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2);
+        data[6]=$('#attachment').val();
         data[8]=parseFloat($('#sel_distance').val()).toFixed(2);
         data[9]=parseFloat($('#sel_distance_rate').val()).toFixed(2);
+
         dt.row(glb_row_id).data(data).draw();
         var table_data = dt.rows().data();
         var total = 0
@@ -203,8 +258,8 @@ $('#claim_table tbody').on( 'click', 'a.edit', function () {
 
 
 function fill_form_from_table(data){
-    
     let claim_type = data[2].replace("&amp;", "&");
+
     $("#claim_form :input[name=claim_type]").val(claim_type);
     $("#claim_form :input[name=claim_type]").formSelect();
     $("#claim_form :input[name=merchant]").val(data[3]);
@@ -213,6 +268,7 @@ function fill_form_from_table(data){
     $("#claim_form :input[name=desc]").val(data[4]);
     $("#claim_form :input[name=distance]").val(data[8]);
     $("#claim_form :input[name=distance_rate]").val(data[9]);
+    $("#claim_form :input[name=attachment]").val(data[6]);
 
     toggle_div_distance();
 
@@ -288,6 +344,7 @@ var saveClaim = async function(){
             "merchant":element[3].toString(),
             "description":element[4].toString(),
             "amount":parseFloat(element[5].split(" ")[1]),
+            "attach_document":element[6].toString(),
             "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
             "distance":parseFloat(element[8]),
             "distance_rate":parseFloat(element[9]),
@@ -310,75 +367,16 @@ var saveClaim = async function(){
         callback: function(r) {
             if (!r.exc) {
                 var doc = r.message
-                // Loop On every table row to find attachment and childtable name to attach it
-                $('#claim_table').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-                    var data = this.nodes().to$();
-                    var file = $(data.find('.fileinput'))[0].files[0]
-                    var docname = ''
-                    doc.expenses.forEach(element => {
-                        if(element['expense_type']== $(data.find('.claimtype')).text() && element['merchant'] == $(data.find('.merchant')).text() || element['amount'] ==  parseInt($(data.find('.claimamount')).text())){
-                            docname =  element['name']
-                        }
-                    });  
-                    console.log(file)
-                    // File Upload and link with Child table Item If File is Exist
-                    if(file){
-
-                        var reader = new FileReader();
-                        reader.onload = function(){
-                            var srcBase64 = reader.result;
-                            frappe.call({
-                                method:"frappe.client.attach_file",
-                                args:{
-                                    filename:file.name,
-                                    filedata:srcBase64,
-                                    doctype:"Expense Claim",
-                                    docname:doc.name,
-                                    folder: "Home/Attachments",
-                                    is_private:1
-                                },
-                                
-                                callback: function (r) {
-                                    if (!r.exc_type) {
-                                        console.log(r)
-                                        console.log(doc.file_url)
-                                        frappe.call({
-                                            method: 'frappe.client.set_value',
-                                            args: {
-                                                doctype: "Expense Claim Detail",
-                                                name: docname,
-                                                fieldname: "attach_document",
-                                                value:r.message.file_url
-                                            },
-                                            callback: function(res){
-                                                console.log(res)
-                                            }
-                                        });
-                                        M.toast({
-                                            html: "File Attached Successfully!"
-                                        })
-                                        
-                                    }
-                                }
-                            });
-                        }
-                        reader.readAsDataURL(file);
-                    }
-
-                });
-                M.toast({
+                 M.toast({
                     html: 'Claim '+doc.name+' Created Successfully!'
                 })
                 setTimeout(function() {
                     window.location.replace("/hr/my-claims");
                 }, 3000);
-                
             }
-            
         }
     });
     // window.location.replace("/hr/my-claims")
-
 };
 
 $("#claim_form").validate({

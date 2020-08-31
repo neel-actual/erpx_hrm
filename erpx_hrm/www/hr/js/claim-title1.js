@@ -531,7 +531,19 @@ $(document).ready(async function(){
                 }else{
                     index = parseInt(dt.row(':last').data()[0]) + 1 
                 }
-                var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td><td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td><td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td></tr>')
+                var row = $('<tr>\
+                    <td class="index">'+index+'</td>\
+                    <td class = "date">'+$('#sel_date').val()+'</td>\
+                    <td class="claimtype">'+$('#sel_claim_type').val()+'</td>\
+                    <td class="merchant">'+$('#sel_merchant').val()+'</td>\
+                    <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td>\
+                    <td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td>\
+                    <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td>\
+                    <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>\
+                    <td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td>\
+                    <td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td>\
+                </tr>');
+
                 dt.row.add(row).draw();
                 var data = dt.rows().data();
                 var total = 0
@@ -565,7 +577,8 @@ $(document).ready(async function(){
             if ($("#attachment").val() == ""){
                 data[6]="No Attachment"
             }else{
-                data[6]="<a href="+frappe.site_url+$("#attachment").val()+" target='_blank' class = 'atc' file = "+$("#attachment").val()+"><i class='material-icons-outlined'>attach_file</i></a>"
+                data[6]="<a href="+frappe.site_url+$("#attachment").val()+" target='_blank' class = 'atc' file = "+$("#attachment").val()+">\
+                <i class='material-icons-outlined'>attach_file</i></a>"
             }
             dt.row(glb_row_id).data(data).draw();
             
