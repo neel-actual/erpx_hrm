@@ -252,12 +252,7 @@
             <td class="merchant">{{claim.merchant}}</td>
             <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{claim.description}}</td>
             <td class="claimamount">{{currency}} {{'%0.2f'| format(claim.amount|float)}}</td>
-            {% if claim.attach_document %}
-            <td style="text-align: center;"><a href="{{site_url}}{{claim.attach_document}}" target="_blank" class = "atc" file = "{{claim.attach_document}}"><i class="material-icons-outlined">attach_file</i></a></td>
-            {%else%}
-            <td style="text-align: center;">No Attachment</td>
-            {% endif %}
-            <!-- <td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td> -->
+            <td>{{claim.attach_document}}</td>
             <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>
             <td class="distance">{{claim.distance}}</td>
             <td class="distance_rate">{{claim.distance_rate}}</td>

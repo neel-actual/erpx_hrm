@@ -62,7 +62,7 @@ var dt = $('#claim_table').DataTable({
       {targets: 3},
       {targets: 4},
       {targets: 5},
-      {targets: 6,"render": function ( data, type, row, meta ) {
+      {targets: 6, "render": function ( data, type, row, meta ) {
         if (data != ""){
             return "<a href="+data+" target='_blank' class = 'atc' file = "+data+"><i class='material-icons-outlined'>attach_file</i></a>";
         }
