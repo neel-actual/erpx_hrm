@@ -24,6 +24,8 @@ def get_context(context):
     context.max_claim_date = today()
     context.min_claim_date =  add_months(today(), -3)
 
+    context.site_url = frappe.utils.get_url()
+
     return context
 
 

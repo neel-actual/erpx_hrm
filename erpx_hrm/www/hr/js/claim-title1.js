@@ -20,7 +20,14 @@ $(document).ready(async function(){
           {targets: 3},
           {targets: 4},
           {targets: 5},
-          {targets: 6},
+          {targets: 6,"render": function ( data, type, row, meta ) {
+            if (data != ""){
+                return "<a href="+data+" target='_blank' class = 'atc' file = "+data+"><i class='material-icons-outlined'>attach_file</i></a>";
+            }
+            else{
+                return 'No Attachment';
+            }
+          }},
           {targets: 7},
           {targets: 8,visible: false},
           {targets: 9,visible: false}
@@ -80,6 +87,7 @@ $(document).ready(async function(){
         $("#claim_form :input[name=desc]").val("");
         $("#claim_form :input[name=distance]").val("");
         $("#claim_form :input[name=distance_rate]").val("");
+        $("#claim_form :input[name=attachment]").val("");
         toggle_div_distance();
         $('#add_claim_modal').modal('open');
     
@@ -134,6 +142,7 @@ $(document).ready(async function(){
                 "description":element[4].toString(),
                 "amount":parseFloat(element[5].split(" ")[1]),
                 "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
+                "attach_document":element[6].toString(),
                 "distance":parseFloat(element[8]),
                 "distance_rate":parseFloat(element[9]),
             })
@@ -283,8 +292,8 @@ $(document).ready(async function(){
         $("#claim_form :input[name=desc]").val(data[4]);
         $("#claim_form :input[name=distance]").val(data[8]);
         $("#claim_form :input[name=distance_rate]").val(data[9]);
-
-        toggle_div_distance();
+        $("#claim_form :input[name=attachment]").val(data[6]);
+         toggle_div_distance();
     
     }
 
@@ -436,35 +445,31 @@ $(document).ready(async function(){
     $("#clear_attach").click(function(){
         $("#attachment").val("")
         $('#new_attach').css("dispaly","block");
-        frappe.call({
-            method: 'erpx_hrm.api.remove_claim',
-            args:{
-                parent: location.search.split("=")[1],
-                index:$("#index").val()
-                
-            },
-            callback: function(res){
-        
-                if(Object.keys(res).length === 0){
-                    M.toast({
-                        html: "File Removed Successfully!"
-                    })
-                }
-            }
+        M.toast({
+            html: "File Removed Successfully!"
         })
+        // frappe.call({
+        //     method: 'erpx_hrm.api.remove_claim',
+        //     args:{
+        //         parent: location.search.split("=")[1],
+        //         index:$("#index").val()
+                
+        //     },
+        //     callback: function(res){
         
+        //         if(Object.keys(res).length === 0){
+        //             M.toast({
+        //                 html: "File Removed Successfully!"
+        //             })
+        //         }
+        //     }
+        // })        
     })
     $("#upload_attach").click(async function(){
         console.log()
         var file = $("#new_attach")[0].files[0]
-        var doc = await get_child(location.search.split("=")[1],$("#index").val())
-        
-        var docname = doc.message[0]["name"]
-        
-        console.log(file)
         // File Upload and link with Child table Item If File is Exist
         if(file){
-
             var reader = new FileReader();
             reader.onload = function(){
                 var srcBase64 = reader.result;
@@ -476,30 +481,15 @@ $(document).ready(async function(){
                         name : "file",
                         filename : file.name,
                         filedata : srcBase64,
-                        doctype: "Expense Claim",
-                        docname: location.search.split("=")[1],
+                        doctype: "",
+                        docname: "",
                         folder: "Home/Attachments",
                         is_private: 0,
                         from_form : 1
                     },
                     callback: function (r) {
                         if (!r.exc_type) {
-                            console.log(r.message)
                             $("#attachment").val(r.message.file_url)
-
-                            console.log(doc.file_url)
-                            frappe.call({
-                                method: 'frappe.client.set_value',
-                                args: {
-                                    doctype: "Expense Claim Detail",
-                                    name: docname,
-                                    fieldname: "attach_document",
-                                    value:r.message.file_url
-                                },
-                                callback: function(res){
-                                    console.log(res)
-                                }
-                            });
                             M.toast({
                                 html: "File Attached Successfully!"
                             })
@@ -508,7 +498,7 @@ $(document).ready(async function(){
                             M.toast({
                                 html: "File Not Attached!"
                             })
-
+    
                         }
                     }
                 });
@@ -531,7 +521,19 @@ $(document).ready(async function(){
                 }else{
                     index = parseInt(dt.row(':last').data()[0]) + 1 
                 }
-                var row = $('<tr><td class="index">'+index+'</td><td class = "date">'+$('#sel_date').val()+'</td><td class="claimtype">'+$('#sel_claim_type').val()+'</td><td class="merchant">'+$('#sel_merchant').val()+'</td><td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td><td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td><td><input class="fileinput custom-file-input" id="file_upload" type="file"/></td><td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td><td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td><td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td></tr>')
+                var row = $('<tr>\
+                    <td class="index">'+index+'</td>\
+                    <td class = "date">'+$('#sel_date').val()+'</td>\
+                    <td class="claimtype">'+$('#sel_claim_type').val()+'</td>\
+                    <td class="merchant">'+$('#sel_merchant').val()+'</td>\
+                    <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td>\
+                    <td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td>\
+                    <td>'+$("#attachment").val()+'</td>\
+                     <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>\
+                    <td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td>\
+                    <td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td>\
+                </tr>');
+
                 dt.row.add(row).draw();
                 var data = dt.rows().data();
                 var total = 0
@@ -560,13 +562,10 @@ $(document).ready(async function(){
             data[3]=$('#sel_merchant').val();
             data[4]=$('#sel_desc').val()
             data[5]=currency+parseFloat($('#sel_amount').val()).toFixed(2)
+            data[6]=$('#attachment').val();
             data[8]=parseFloat($('#sel_distance').val()).toFixed(2);
             data[9]=parseFloat($('#sel_distance_rate').val()).toFixed(2);
-            if ($("#attachment").val() == ""){
-                data[6]="No Attachment"
-            }else{
-                data[6]="<a href="+frappe.site_url+$("#attachment").val()+" target='_blank' class = 'atc' file = "+$("#attachment").val()+"><i class='material-icons-outlined'>attach_file</i></a>"
-            }
+ 
             dt.row(glb_row_id).data(data).draw();
             
             var table_data = dt.rows().data();
