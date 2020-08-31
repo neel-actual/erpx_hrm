@@ -121,7 +121,13 @@ $("#claim_requester").change(function(){
     }
 });
 })
-
+$("#clear_attach").click(function(){
+    $("#attachment").val("")
+    $('#new_attach').css("dispaly","block");
+    M.toast({
+        html: "File Removed Successfully!"
+    })  
+})
 $("#upload_attach").click(async function(){
     console.log()
     var file = $("#new_attach")[0].files[0]
