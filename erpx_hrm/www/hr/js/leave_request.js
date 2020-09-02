@@ -13,6 +13,7 @@ var request_leave_fields = [
 $(document).ready(function () {
 
 	var request_history = $('#request_history').DataTable({
+		"order":[1,'asc'],
 		"columnDefs": [
             {
                 "targets": [ 1 ],

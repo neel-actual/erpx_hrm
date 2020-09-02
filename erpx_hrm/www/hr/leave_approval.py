@@ -20,6 +20,14 @@ def get_context(context):
         frappe.throw(_('Only users with {0} role can access').format(', '.join(valid_roles)),
 			frappe.PermissionError)
     
+    allow_delete_leave_history = 0
+
+    if 'HR Manager' in frappe.get_roles():
+        allow_delete_leave_history = 1
+        
+    context.allow_delete_leave_history = allow_delete_leave_history
+
+    
     context.leave_requests = frappe.db.sql("""
 		select la.*, f.file_name, f.file_url
         from `tabLeave Application` la

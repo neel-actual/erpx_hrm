@@ -262,9 +262,11 @@ table{
                   <td>{{i_leave_detail.status}}</td>
                   <td>{{ frappe.utils.format_datetime(i_leave_detail.modified) }}</td>
                   <td>
+                    {% if allow_delete_leave_history%}
                     <a href="#" class="delete_leave" data-name="{{i_leave_detail.name}}" data-docstatus="{{i_leave_detail.docstatus}}">
                         <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
                     </a>
+                    {%endif%}
                   </td>
                   <td>{{frappe.utils.formatdate(i_leave_detail.from_date, format_string="yyyy-mm-dd")}}</td>
                   <td>{{frappe.utils.formatdate(i_leave_detail.to_date, format_string="yyyy-mm-dd")}}</td>
