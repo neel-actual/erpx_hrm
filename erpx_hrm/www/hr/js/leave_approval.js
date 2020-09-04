@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	var request_history = $('#request_history').DataTable({
+		"order":[6,'asc'],
 		"columnDefs": [
             {
                 "targets": [ 6 ],
