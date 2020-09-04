@@ -21,12 +21,14 @@ def get_context(context):
 			frappe.PermissionError)
     
     allow_delete_leave_history = 0
+    is_hr_manager = 0
 
     if 'HR Manager' in frappe.get_roles():
         allow_delete_leave_history = 1
+        is_hr_manager = 1
         
     context.allow_delete_leave_history = allow_delete_leave_history
-
+    context.is_hr_manager = is_hr_manager
     
     context.leave_requests = frappe.db.sql("""
 		select la.*, f.file_name, f.file_url
@@ -37,14 +39,17 @@ def get_context(context):
         "user": frappe.session.user
     }, as_dict=True, debug=1)
 
+    condition_history = "la.docstatus = 1"
+
+    if not is_hr_manager:
+        condition_history += " and la.leave_approver = '{0}'".format(frappe.session.user)
+
     context.leave_historys = frappe.db.sql("""
 		select la.*, f.file_name, f.file_url
         from `tabLeave Application` la
         left join `tabFile` f on f.attached_to_doctype = "Leave Application" and f.attached_to_name = la.name
-		where la.docstatus = 1 and la.leave_approver = %(user)s
-	""",{
-        "user": frappe.session.user
-    }, as_dict=True)
+		where {0}
+	""".format(condition_history), as_dict=True, debug=1)
 
     context.list_employee = frappe.db.get_all("Employee",fields=["name", "employee_name"])
     context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
