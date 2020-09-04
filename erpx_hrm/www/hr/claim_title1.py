@@ -19,7 +19,7 @@ def get_context(context):
     context.currency = frappe.db.get_value("Global Defaults",None,"default_currency")   
     context.site_url = frappe.utils.get_url()
 
-    context.user_approvers = get_users_by_role("Expense Verified")  
+    context.user_approvers = get_users_by_role("Expense Approver")  
 
     request_url = urlparse(frappe.request.url)
     expense_voucher = request_url.query.split("=")[1]
