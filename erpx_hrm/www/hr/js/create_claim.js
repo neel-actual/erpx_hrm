@@ -23,7 +23,10 @@ if(param){
                     <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+element['description']+'</td>\
                     <td class="claimamount">'+currency+parseFloat(element['amount']).toFixed(2)+'</td>\
                     <td><input class="fileinput custom-file-input" value='+element['attach_document']+' id="file_upload" type="file"/></td>\
-                    <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>\
+                    <td>\
+                        <a class="modal-trigger edit" href="#add_claim_modal">Edit</a>\
+                        <img class="btn-delete-row-claim img-del-dep" src="/icons/icon-58.png" width="21" height="21"> \
+                    </td>\
                 </tr>');
                 
                 dt.row.add(row).draw();
@@ -191,7 +194,10 @@ $("#add_claim").click(function(){
                 <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+$('#sel_desc').val()+'</td>\
                 <td class="claimamount">'+currency+parseFloat($('#sel_amount').val()).toFixed(2)+'</td>\
                 <td>'+$("#attachment").val()+'</td>\
-                <td><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>\
+                <td>\
+                    <a class="modal-trigger edit" href="#add_claim_modal">Edit</a>\
+                    <img class="btn-delete-row-claim img-del-dep" src="/icons/icon-58.png" width="21" height="21"> \
+                </td>\
                 <td class="distance">'+parseFloat($('#sel_distance').val() || 0).toFixed(2)+'</td>\
                 <td class="distance_rate">'+parseFloat($('#sel_distance_rate').val() || 0).toFixed(2)+'</td>\
             </tr>');
@@ -248,8 +254,8 @@ $("#add_claim").click(function(){
 });
 
 $('#claim_table tbody').on( 'click', 'td.index', function () {
-    console.log($(this).parent())
-    $(this).parent().toggleClass('selected');
+    // console.log($(this).parent())
+    // $(this).parent().toggleClass('selected');
     // $(this).toggleClass('ideal')
   } );
 
@@ -260,6 +266,16 @@ $('#claim_table tbody').on( 'click', 'a.edit', function () {
     var data = dt.row( $(this).parents('tr') ).data();
     glb_row_id = dt.row($(this).parents('tr')).index();
     fill_form_from_table(data);    
+})
+
+$('#claim_table tbody').on( 'click', '.btn-delete-row-claim', function () {
+    $('#claim_table').DataTable().row($(this).parents('tr')).remove().draw(false);
+    var table_data = $('#claim_table').DataTable().rows().data();
+    var total = 0
+    table_data.each(function (value, index) {
+        total = total + parseFloat(value[5].split(" ")[1])
+    });
+    $('#p_total_claim_amount').text(currency +" "+ parseFloat(total).toFixed(2))
 })
 
 
