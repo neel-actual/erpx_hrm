@@ -253,7 +253,12 @@
             <td class = "desc" style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{claim.description}}</td>
             <td class="claimamount">{{currency}} {{'%0.2f'| format(claim.amount|float)}}</td>
             <td>{{claim.attach_document}}</td>
-            <td class="hide"><a class="modal-trigger edit" href="#add_claim_modal">Edit</a></td>
+            <td class="hide">
+              <a class="modal-trigger edit" href="#add_claim_modal">Edit</a>
+              <a href="#" class="btn-delete-row-claim">
+                <img class="img-del-dep" src="/icons/icon-58.png" width="21" height="21">
+              </a>
+            </td>
             <td class="distance">{{claim.distance}}</td>
             <td class="distance_rate">{{claim.distance_rate}}</td>
             {% endfor %}
@@ -313,7 +318,7 @@
 
     </div> -->
     {% if edit_mode %}
-    <div class="input-field col s12 m2">
+    <div class="input-field col s12 m2" style="display:none">
     <a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
     
     </div>
