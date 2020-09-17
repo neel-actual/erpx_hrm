@@ -4,6 +4,14 @@ $(document).ready(function () {
 			format: "yyyy-mm-dd"
 	   });
 	}
+	var isFirefox = typeof InstallTrigger !== 'undefined';
+	//Hide 
+	if (isFirefox) {
+		$(".firefox").show();
+	} else {
+		$(".firefox").hide();
+	}
+
 	var FRAPPE_CLIENT = 'frappe.client',
 		CURRENT_URL = location.href
 			.replace('http://', '')
