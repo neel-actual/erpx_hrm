@@ -90,28 +90,29 @@
         <div id="card-stats" class="card" style="border-radius: 10px!important;">
           <div class="card-content">        
             <div class="row">
-              <div style="height: 30px;"></div>
               <div class="row margin infodetails">
-               <div class=" border-request requester">
-                {% for exp in expense_claim %}
-               
-                <table style="table-layout: auto; display: contents !important;">
-                  <tr>
-                    <td><a href="#">Requester : {{exp.employee_name}}</a></td>
-                    <!-- <td>{% set employee_pic = frappe.get_all("Employee",filters={'name':exp.employee},fields=['image'])%}
-                      {% for file in employee_pic %}    
-                      {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
-                      {% else %}
-                      <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
-                      {% endif %}
-                      {% endfor %}</td> -->
-                  </tr>
-                </table>
-                {% endfor %}
-              </div>
+               <div class="col m8">
+                <div class=" border-request requester2">
+                  {% for exp in expense_claim %}
+                
+                  <table style="table-layout: auto; display: contents !important;">
+                    <tr>
+                      <td><a href="#">Requester : {{exp.employee_name}}</a></td>
+                      <td>{% set employee_pic = frappe.get_all("Employee",filters={'name':exp.employee},fields=['image'])%}
+                        {% for file in employee_pic %}    
+                        {% if(file.image != '' and file.image != 'None' and file.image != None ) %}
+                        <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{file.image}}">
+                        {% else %}
+                        <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
+                        {% endif %}
+                        {% endfor %}</td>
+                    </tr>
+                  </table>
+                  {% endfor %}
+                </div>
+                
 
-              <div class=" border-request requester" style="margin-left: 35px; float: left;">
+              <div class=" border-request requester2">
                 {% for exp in expense_claim %}
                 
                 
@@ -120,7 +121,7 @@
                 <table style="table-layout: auto ;    display: contents !important;">
                   <tr>
                     <td>{% set employee_name = frappe.get_all("Employee",filters={'user_id':exp.expense_verifier},fields=['employee_name'])%}<a href="#">Verifier : {{employee_name[0].employee_name}}</a></td>
-                    <!-- <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
+                    <td>{% set employee_pic = frappe.get_all("User",filters={'name':exp.expense_verifier},fields=['user_image'])%}
                       
                       {% for file in employee_pic %}    
                       {% if(file.user_image != '' and file.user_image != 'None' and file.user_image != None ) %}
@@ -128,14 +129,14 @@
                       {% else %}
                       <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/images/profile_icon.png">
                       {% endif %}
-                      {% endfor %}</td> -->
+                      {% endfor %}</td>
                   </tr>
                 </table>
                 {% endfor %}
               </div>
               {% for exp in expense_claim %}
               {% if exp.approval_status != "Pending" %}
-              <div class=" border-request requester" style="margin-left: 35px; float: left;">
+              <div class=" border-request requester2">
                 
                 <!-- <img style="float: right; margin-left: 10px;" width="25" height="25" src="/images/avatar.svg"> -->
                 
@@ -155,7 +156,9 @@
                 
               </div>
               {% endif %}
-              {% endfor %}               
+              {% endfor %}
+              </div>
+              <div class="col m4">               
              <div class="pend-apprv right">
               {% for ap in expense_claim %}
               {% if (ap.status == 'Draft') and (ap.approval_status != 'Verified') %}
@@ -196,6 +199,7 @@
                 {{currency}} {{'%0.2f'| format(ap.total_claimed_amount|float)}}
                 {% endfor %}</p>
               <span style="font-size: 12px;text-align: right;">Total claim amount</span>
+            </div>
             </div>
             
 
