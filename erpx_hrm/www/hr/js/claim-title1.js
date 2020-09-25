@@ -681,15 +681,45 @@ var get_child = function (parent,idx) {
 
 $(document).ready(function () {
     $('#sel_claim_type').change(function(){ 
-		toggle_div_distance();
+        toggle_div_distance();
+        validate_limit_amount();
     });
     $('#sel_distance').change(function(){ 
         count_amount_by_distance();
     });
     $('#sel_distance_rate').change(function(){ 
 		count_amount_by_distance();
-	});
+    });
+    $('#sel_amount').change(function(){ 
+		validate_limit_amount();
+    });
+    
 });
+
+function validate_limit_amount(){
+    let expense_type = $("#sel_claim_type").val();
+    let amount = $("#sel_amount").val();
+    if(expense_type && amount){
+        frappe.call({
+            method: 'erpx_hrm.utils.expense_claim.validate_limit_amount',
+            args: {
+                expense_type: expense_type,
+                amount: amount,
+            },
+            callback: function (r) {
+                if (!r.exc) {
+                    if (r.message.result=="0"){
+                        M.toast({
+                            html: r.message.message
+                        })
+                        $("#sel_amount").val(parseFloat(r.message.claim_limit).toFixed(2));
+                    }                    
+                }
+            }
+        });
+    }
+    
+}
 
 function toggle_div_distance(){
 	
@@ -705,6 +735,7 @@ function count_amount_by_distance(frm, cdt, cdn){
     let distance_rate = $('#sel_distance_rate').val() || 0;
     let amount = flt(distance) * flt(distance_rate);
     $('#sel_amount').val(parseFloat(amount).toFixed(2));
+    $('#sel_amount').trigger("change");
 }
 
 function openUploadFileReimburse(){	
