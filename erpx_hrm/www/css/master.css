@@ -3621,4 +3621,19 @@ th {
 .p-pending {
   width: 60%; }
 
-.firefox{ display: none}
+.firefox2{ display: none}
+table.datepicker-table,
+#main .section-data-tables table.datepicker-table{max-width:400px!important}
+.modal-content.datepicker-container{padding-bottom:0!important}
+
+.modal-content.datepicker-container input[type="text"]{
+  border:none
+}
+.modal-content.datepicker-container input[type=text]:not(.browser-default) {
+  border: none !important;
+  border-radius: 0px !important;
+  padding-left: 0px !important; 
+}
+.modal-content.datepicker-container .select-wrapper > input{
+  width:80px!important; 
+}

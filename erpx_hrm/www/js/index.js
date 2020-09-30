@@ -1,16 +1,14 @@
 $(document).ready(function () {
-	if ( $('[type="date"]').prop('type') != 'date' ) {
-		$('[type="date"]').datepicker({
-			format: "yyyy-mm-dd"
-	   });
-	}
-	var isFirefox = typeof InstallTrigger !== 'undefined';
-	//Hide 
-	if (isFirefox) {
-		$(".firefox").show();
-	} else {
-		$(".firefox").hide();
-	}
+	$('.datepicker').datepicker({
+		format: "yyyy-mm-dd"
+   });
+	// var isFirefox = typeof InstallTrigger !== 'undefined';
+	// //Hide 
+	// if (isFirefox) {
+	// 	$(".firefox").show();
+	// } else {
+	// 	$(".firefox").hide();
+	// }
 
 	var FRAPPE_CLIENT = 'frappe.client',
 		CURRENT_URL = location.href
