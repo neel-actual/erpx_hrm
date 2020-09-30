@@ -86,6 +86,10 @@
                 <div class="collapsible-body">
                     <ul class="collapsible collapsible-sub" data-collapsible="accordion">
                         {% if show_menu["leave-request"] %}
+                        <li class="menu-leave-dashboard"><a class="collapsible-body" href="/hr/leave-dashboard" data-i18n=""><span>Dashboard</span></a>
+                        </li>
+                        {% endif %}
+                        {% if show_menu["leave-request"] %}
                         <li class="menu-leave-request"><a class="collapsible-body" href="/hr/leave-request" data-i18n=""><span>Request</span></a>
                         </li>
                         {% endif %}
