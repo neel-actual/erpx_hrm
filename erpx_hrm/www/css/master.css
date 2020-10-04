@@ -2586,7 +2586,7 @@ textarea {
     width: 50%; }
   .main-banner .banner-title2 {
     position: absolute;
-    top: 130px;
+    top: 200px;
     margin-left: 20px;
     font-size: 16px;
     width: 90%;
@@ -2672,7 +2672,7 @@ textarea {
   .main-banner .banner-title {
     position: absolute !important;
     top: 160px !important;
-    margin-left: 12px !important;
+    margin-left: 20px !important;
     font-size: 14px !important;
     width: 100% !important; }
   .main-banner .banner-title4 {
@@ -3636,4 +3636,25 @@ table.datepicker-table,
 }
 .modal-content.datepicker-container .select-wrapper > input{
   width:80px!important; 
+}
+
+@media only screen and (max-width: 480px) {
+  .dropdown-content li > a, .dropdown-content li > span{
+    font-size: 14px;
+    line-height:14px;
+    padding:10px;
+
+  }
+  .leavetabs .tabs .tab > a{
+    font-size: 12px;
+  }
+  .m-t-s20{
+    margin-top: 20px !important;
+  }
+}
+.main-banner .banner-title2,
+.main-banner .banner-title3,
+.main-banner .banner-title4,
+.main-banner .banner-title{
+  width:90%
 }

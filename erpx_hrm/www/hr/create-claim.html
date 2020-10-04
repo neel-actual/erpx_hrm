@@ -240,15 +240,9 @@ td {
 						</table>
 						</div>
 						  
-						  <div class="input-field col s12 m12" >
-							  <div class="input-field col s12 m2" style="display:none">
-								<a class="waves-effect btn right" id="remove_claim">Remove Claim</a>
+						  <div class="input-field col s12">
+								<a class="waves-effect btn" href="#add_claim_modal" id="btn_add_claim_modal">Add Claim</a>								
 							  </div>
-
-							  <div class="input-field col s12 m2">
-								<a class="waves-effect btn right" href="#add_claim_modal" id="btn_add_claim_modal">Add Claim</a>								
-							  </div>
-							</div>
 						</div>
 					  </div>
 					</div>
@@ -261,17 +255,22 @@ td {
 
 
  
-          <div class="input-field col s12 m12">
+          <div class="input-field col s12 m6">
 						<p style="margin-bottom: 10px;">Total Claim Amount</p>
 											<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 						<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #ef32a1">{{currency}} </p>
 						<p style="font-size:40px; margin-bottom: 10px;display: inline-block;float: left;color: #ef32a1" id="total_amount"></p>
                     <!--<label for="signup-name" class="center-align">Full Name</label>-->
 						
-						<a class="waves-effect btn right" id="save_claim">Submit Claim</a>
-						<a class="waves-effect btn grey right" id="draft_claim" style="margin-right:10px;">Save as Draft</a>
+						
 						<br><br><br><br>
 				  </div>
+					<div class="row">
+						<div class="input-field col s12 m6">
+							<a class="waves-effect btn right m-t-s20" id="save_claim" style="margin-left:10px;">Submit Claim</a>
+							<a class="waves-effect btn grey right m-t-s20" id="draft_claim">Save as Draft</a>
+						</div>	
+					</div>
 
 				<br><br><br>
             </div>
@@ -335,14 +334,14 @@ td {
 <!-- Claim Detail-->
 
 			<!-- <div class="card" style="border-radius: 10px!important;"> -->
-			<div id="add_claim_modal" class="modal" style="max-height:110% !important; top: 2% !important; ">
+			<div id="add_claim_modal" class="modal">
 			  <div class="modal-content" style="padding-bottom: 10px !important;">
 					  <img style="display: inline;float: left;margin-left: 30px" width="22" height="22" class="sidenav-icon" src="/icons/claims.png">
 					  <div class="card-title" style="text-align: left;margin-left: 63px;">Claim Details</div>
 				  <form id="claim_form" autocomplete="off">
 					<input type="hidden" class="index" name="index" id="index">
 					<div class="row margin infodetails">
-							<div class="input-field col s6">
+							<div class="input-field col m6 s12">
 								<p style="margin-bottom: 10px;">Claim type</p>
 								<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 								
@@ -359,7 +358,7 @@ td {
 							</div>
 							
 
-						  <div class="input-field col s6">
+						  <div class="input-field col m6 s12">
 							<p style="margin-bottom: 10px;">Claim Date</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 							<img class="firefox" src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 20px;" >
@@ -368,11 +367,11 @@ td {
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
 
-							<div class="input-field col s6 div_distance" style="display:none">
+							<div class="input-field col m6 s12 div_distance" style="display:none">
 									<p style="margin-bottom: 10px;">Distance (KM)</p>
 									<input type="text" name="distance" style="width: -webkit-fill-available;" id="sel_distance" autocomplete="off">
 							</div>
-							<div class="input-field col s6 div_distance" style="display:none">
+							<div class="input-field col m6 s12 div_distance" style="display:none">
 									<p style="margin-bottom: 10px;">Distance Rate (RM/KM)</p>
 									<input type="text" name="distance_rate" style="width: -webkit-fill-available;" id="sel_distance_rate" autocomplete="off">
 							</div>
@@ -406,17 +405,17 @@ td {
 									<input type="text" name="attachment" id="attachment" readonly>
 							</div>
 
-							<div class="input-field col s3">
+							<div class="input-field col l3 s12">
 								<a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="clear_attach">Remove Attachment</a> 
 							</div>
-							<div class="input-field col s3">
+							<div class="input-field col l3 s12">
 								<a href="#" class="waves-effect waves-light right btn-approve site-blue-btn" id="upload_attach">Upload Attachment</a>
 							</div>
-							<div class="input-field col s3">
+							<div class="input-field col l3 s12">
 									<input type="file" name="new_attach" class="custom-file-input" id="new_attach">
 							</div>
 
-							<div class="input-field col s3">
+							<div class="input-field col l3 s12">
 									<span id="file_attach_name"><i></i></span>
 							</div>						
 							

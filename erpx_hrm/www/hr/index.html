@@ -92,6 +92,7 @@
                     </div>
                 </div>
                 <!--<h5>HR Hub<span style="color: #00aeef;"> > Home</span></h5>-->
+                <div class="row2">
                 {% if employee.employee_name %}
                 <h5 class="pink-text banner-title">Hey {{ employee.employee_name }}</h5>
                 {% elif user_doc.full_name == 'None' %}
@@ -99,11 +100,14 @@
                 {% else %}
                 <h5 class="pink-text banner-title">Hey {{ user }}</h5>
                 {% endif %}
+                </div>
+                <div class="row2">
                 {% if employee.company %}
                 <h5 class="pink-text banner-title2">Here’s your update on<br/>{{ employee.company }} today.</h5>
                 {% else %}
                 <h5 class="black-text banner-title4">Here’s your update on<br/>Bayo Pay (M) Sdn Bhd today.</h5>
                 {% endif %}
+                </div>
                 <div class="content">
                     <div class="col-12 hr-content">
                         <div class="container">
