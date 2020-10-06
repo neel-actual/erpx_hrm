@@ -3658,3 +3658,9 @@ table.datepicker-table,
 .main-banner .banner-title{
   width:90%
 }
+#claim_table_wrapper .merchant{
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

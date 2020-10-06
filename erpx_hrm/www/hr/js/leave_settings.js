@@ -272,11 +272,11 @@ $.extend(list_holiday, {
 		}
 		let th_html = `
 			<tr style="background-color: #eff1f9;">
-				<th style=" border-right:none!important;width: 50px;"><b>Date</b>
+				<th style=" border-right:none!important;width: 100px;"><b>Date</b>
 				</th>
-				<th style=" border-right:none!important;width: 150px;">
+				<th style=" border-right:none!important;width: 200px;">
 					<b>Description</b></th>
-				<th style=" border-right:none!important;width: 100px;"><b>Action</b>
+				<th style=" border-right:none!important;width: 150px;"><b>Action</b>
 				</th>
 			</tr>`
 		me.parent.html(th_html + html);

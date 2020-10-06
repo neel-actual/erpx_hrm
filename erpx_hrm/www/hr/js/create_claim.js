@@ -58,7 +58,6 @@ var dt = $('#claim_table').DataTable({
     "order": [[ 0, "asc" ]],
     columnDefs: [ {
         targets: 0,
-        width: "5%"
       },
       {targets: 1,render: $.fn.dataTable.render.moment('DD-MM-YYYY')},
       {targets: 2},

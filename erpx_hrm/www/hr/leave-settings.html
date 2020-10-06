@@ -99,7 +99,7 @@
 											style="position: absolute; margin-top: 12px; right: 20px;">
 										<input data-fieldname="from_date"  autocomplete="off"
 											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" value="{{leave_period.from_date}}" onfocus2="(this.type='date')">
+											placeholder="" class="textbox-n datepicker" type="text" value="{{leave_period.from_date}}" onfocus2="(this.type='date')">
 									</div>
 									<div class="input-field col s12 m6">
 										<p style="margin-bottom: 10px;">End</p>
@@ -107,7 +107,7 @@
 											style="position: absolute; margin-top: 12px; right: 20px;">
 										<input data-fieldname="to_date"   autocomplete="off"
 											style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available"
-											placeholder="" class="textbox-n" type="date" value="{{leave_period.to_date}}" onfocus2="(this.type='date')">
+											placeholder="" class="textbox-n datepicker" type="text" value="{{leave_period.to_date}}" onfocus2="(this.type='date')">
 									</div>
 									<div class="input-field col s12 m9">
 										<p style="margin-bottom: 10px;">Company</p>
@@ -299,9 +299,9 @@
 								</div>
 							</div>
 						</div>
-
+						<div class="row">
 						<!-- Infor -->
-						<div class="col xl3 l4 m6 s3 profile-card-main">
+						<div class="col xl3 l4 s12 profile-card-main">
 							<div class="card" style="border-radius: 10px!important; overflow:visible">
 
 								<span class="card-title">
@@ -326,8 +326,8 @@
 						</div>
 
 						<!-- Leave Policy Details  -->
-						<div class="col xl9 l9 m9 s6">
-							<div class="card" style="border-radius: 10px!important;">
+						<div class="col xl9 l8 s12">
+							<div class="card" style="border-radius: 10px;overflow-x: auto !important;">
 								<div class="card-content"> 
 									<img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
 									<h4 class="card-title directorytitle" style="text-align: left;">Leave Policy Details</h4>
@@ -367,6 +367,7 @@
 									</div>
 								</div>
 							</div>
+						</div>
 						</div>
 
 						<!-- add leave policy pop-up -->

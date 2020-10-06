@@ -12,8 +12,7 @@ $(document).ready(async function(){
         "info":     false,
         // "order":[0,'asc'],
         columnDefs: [{
-            targets: 0,
-            width: "5%"
+            targets: 0
           },
           {targets: 1,render: $.fn.dataTable.render.moment('DD-MM-YYYY')},
           {targets: 2},
