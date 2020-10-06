@@ -2040,14 +2040,14 @@ table.dataTable tbody tr[role] {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
-
-.profile-card .card-image .card-title {
-  color: #fff;
-  text-shadow: 0.075em 0.08em 0.1em rgba(0, 0, 0, 0.7);
+.profile-card.card .card-content{
+  padding: 10px 20px 20px 20px;
+}
+.profile-card .card-image2 .card-title {
   padding: 0 1rem; }
-  .profile-card .card-image .card-title h6 {
+  .profile-card .card-image2 .card-title h6 {
     font-size: 1rem; }
-  .profile-card .card-image .card-title p {
+  .profile-card .card-image2 .card-title p {
     font-size: 0.9rem; }
 
 #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_length, #main .section-data-tables.table-filter .dataTables_wrapper .dataTables_filter {
@@ -2216,9 +2216,9 @@ textarea {
     max-height: 140px;
     position: relative;
     overflow: hidden; }
-  .profile-card .card-image .card-title h6 {
+  .profile-card .card-image2 .card-title h6 {
     font-size: 0.8rem; }
-  .profile-card .card-image .card-title p {
+  .profile-card .card-image2 .card-title p {
     font-size: 0.8rem; }
   .card-action > a {
     font-size: 12px; } }
@@ -2366,9 +2366,9 @@ textarea {
     font-size: 20px !important; }
   .mob-font2 {
     font-size: 16px !important; }
-  .profile-card .card-image .card-title h6 {
+  .profile-card .card-image2 .card-title h6 {
     font-size: 0.9rem; }
-  .profile-card .card-image .card-title p {
+  .profile-card .card-image2 .card-title p {
     font-size: 0.9rem; }
   .popup-contactus-content {
     height: 70% !important; }
@@ -2549,8 +2549,8 @@ textarea {
     position: initial !important;
     background-color: white !important;
     margin-left: 0px; }
-  .profile-card .card-image .card-title {
-    padding: 1rem; }
+  .profile-card .card-image2 .card-title {
+    padding: 0rem; }
   .card-title > h6 {
     margin: 10px 0px !important; }
   .card {
@@ -3218,8 +3218,8 @@ tr {
   padding-top: 10px !important;
   width: 100%; }
 
-.profile-card .card-image .card-title {
-  text-shadow: 0.075em 0.08em 0.1em rgba(0, 0, 0, 0.5); }
+.profile-card .card-image2 .card-title {}
+  
 
 .card-image > img {
   background-color: #e0e0e0; }
