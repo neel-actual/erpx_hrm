@@ -2231,9 +2231,10 @@ textarea {
   .footer-copyright {
     padding-left: 10px !important; }
   #user-table {
-    max-height: 290px; }
+    max-height: 500px; }
   #user-table {
-    min-height: 400px; } }
+    min-height: 400px; } 
+}
 
 @media only screen and (max-width: 1200px) {
   /* .balancesummary {
@@ -2373,8 +2374,9 @@ textarea {
   .popup-contactus-content {
     height: 70% !important; }
   .pend-apprv {
-    margin-right: 78px !important;
     margin-top: 20px; }
+  .pend-apprv.right {
+      float:left !important }
   .requester {
     float: left;
     margin-left: 10% !important; }
@@ -2549,8 +2551,6 @@ textarea {
     position: initial !important;
     background-color: white !important;
     margin-left: 0px; }
-  .profile-card .card-image2 .card-title {
-    padding: 0rem; }
   .card-title > h6 {
     margin: 10px 0px !important; }
   .card {

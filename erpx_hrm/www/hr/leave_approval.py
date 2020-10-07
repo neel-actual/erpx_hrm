@@ -24,7 +24,7 @@ def get_context(context):
     is_hr_manager = 0
 
     if 'HR Manager' in frappe.get_roles():
-        allow_delete_leave_history = 1
+        # allow_delete_leave_history = 1
         is_hr_manager = 1
         
     context.allow_delete_leave_history = allow_delete_leave_history
