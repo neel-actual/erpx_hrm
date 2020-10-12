@@ -145,6 +145,12 @@ $(document).ready(function () {
 		else
 			$('#btn-view-file').hide();
 	});
+
+	//Clone leave
+	console.log(glb_leave_name);
+	if(glb_leave_name!=""){
+		cloneLeaveRequest(glb_leave_name);
+	}	
 });
 
 var toggle_div_emergency = function(){
@@ -281,6 +287,10 @@ function openUploadFile(){
 }
 
 function copyLeaveRequest(name){
+	window.location.href = "/hr/leave-request?name="+name;
+}
+
+function cloneLeaveRequest(name){
 	let doctype = "Leave Application";
 	frappe.ajax({
 		type: "GET",
@@ -305,9 +315,6 @@ function copyLeaveRequest(name){
 						$(`#form-request-leave [data-fieldname="${element}"]`).trigger("change");
 					}    
 				});
-				$('html, body').animate({
-					scrollTop: $("#div-requestleave").offset().top
-				}, 1000);
 			}
 		}
 	});

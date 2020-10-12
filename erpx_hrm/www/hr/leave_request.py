@@ -20,5 +20,6 @@ def get_context(context):
 			frappe.PermissionError)
         
     context.department = frappe.db.get_value("Employee", {"user_id": context.user}, "department") or ""
+    context.leave_name = frappe.form_dict.name or ""
 
     return context

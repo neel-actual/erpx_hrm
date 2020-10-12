@@ -141,6 +141,7 @@ table {
                                         <th style="border-right:none!important;">Date</th>
                                         <th style="border-right:none!important;">Total</th>
                                         <th style="border-right:none!important;">Status</th>
+                                        <th style="border-right:none!important;">Action</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -154,13 +155,14 @@ table {
                                         <td>{{ i_lev_app_dt.total_leave_days }} Days</td>
                                         <td>
                                           {% if i_lev_app_dt.status == "Approved"%}
-                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          <p style="border-radius: 20px;text-align: center; width:100%; max-width:150px; background-color:green; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% elif i_lev_app_dt.status == "Open"%}
-                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:grey; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          <p style="border-radius: 20px;text-align: center; width:100%; max-width:150px; background-color:grey; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% else %}
-                                          <p style="border-radius: 20px;text-align: center;width: 100%; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
+                                          <p style="border-radius: 20px;text-align: center; width:100%; max-width:150px; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% endif %}
                                         </td>
+                                        <td><a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a></td> 
                                       </tr>
                                     {% endfor %}
                                 </tbody>
