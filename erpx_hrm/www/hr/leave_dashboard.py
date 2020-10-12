@@ -10,7 +10,8 @@ def get_context(context):
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
 
-    context.employee = frappe.db.get_value("Employee", {"user_id": context.user}, "name") or ""
+    employee = frappe.db.get_value("Employee", {"user_id": context.user}, "name") or ""
+    context.employee = employee
     context.holiday_list = frappe.db.get_value("Employee", {"user_id": context.user}, "holiday_list") or ""
 
     valid_roles = ['Employee']
@@ -19,6 +20,38 @@ def get_context(context):
         frappe.throw(_('Only users with {0} role can access').format(', '.join(valid_roles)),
 			frappe.PermissionError)
         
-    context.department = frappe.db.get_value("Employee", {"user_id": context.user}, "department") or ""
+    department = frappe.db.get_value("Employee", {"user_id": context.user}, "department") or ""
+
+    context.department = department
+
+    context.leave_all = frappe.db.sql("""
+		select la.*, e.preferred_name
+        from `tabLeave Application` la
+        left join `tabEmployee` e on e.name = la.employee
+		where la.status = %(status)s and la.docstatus = 1
+	""",{
+        "status": "Approved"
+    }, as_dict=True, debug=1)
+
+    context.leave_department = frappe.db.sql("""
+		select la.*, e.preferred_name
+        from `tabLeave Application` la
+        left join `tabEmployee` e on e.name = la.employee
+		where la.status = %(status)s and la.docstatus = 1 and la.department = %(department)s
+	""",{
+        "status": "Approved",
+        "department": department
+    }, as_dict=True, debug=1)
+
+    context.leave_employee = frappe.db.sql("""
+		select la.*, e.preferred_name
+        from `tabLeave Application` la
+        left join `tabEmployee` e on e.name = la.employee
+		where la.status = %(status)s and la.docstatus = 1 and la.employee = %(employee)s
+	""",{
+        "status": "Approved",
+        "employee": employee
+    }, as_dict=True, debug=1)
+
 
     return context

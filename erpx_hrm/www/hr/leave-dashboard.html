@@ -361,11 +361,10 @@ request is approved.</p>
                     $('.tooltiptopicevent').remove();
                 },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"status": "Approved", "docstatus": 1}) %}
-                    {% for i_all_leave in all_leave %}
+                    {% for i_all_leave in leave_all %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
-                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.preferred_name}} - {{i_all_leave.leave_type}}',
+                            desc: '{{i_all_leave.preferred_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -398,11 +397,10 @@ request is approved.</p>
                     $('.tooltiptopicevent').remove();
                 },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"department": department,"status": "Approved", "docstatus": 1}) %}
-                    {% for i_all_leave in all_leave %}
+                    {% for i_all_leave in leave_department %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
-                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.preferred_name}} - {{i_all_leave.leave_type}}',
+                            desc: '{{i_all_leave.preferred_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },
@@ -435,11 +433,10 @@ request is approved.</p>
                     $('.tooltiptopicevent').remove();
                 },
                 events: [
-                    {% set all_leave = frappe.get_all("Leave Application", fields=['employee_name','from_date','to_date','leave_type'], filters={"employee": employee, "status": "Approved", "docstatus": 1}) %}
-                    {% for i_all_leave in all_leave %}
+                    {% for i_all_leave in leave_employee %}
                         {
-                            title: '{{i_all_leave.employee_name}}',
-                            desc: '{{i_all_leave.employee_name}}\n{{i_all_leave.leave_type}}',
+                            title: '{{i_all_leave.preferred_name}} - {{i_all_leave.leave_type}}',
+                            desc: '{{i_all_leave.preferred_name}}\n{{i_all_leave.leave_type}}',
                             start: '{{i_all_leave.from_date}}',
                             end: '{{i_all_leave.to_date}}'
                         },

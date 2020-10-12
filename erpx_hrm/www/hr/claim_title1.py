@@ -46,6 +46,9 @@ def get_context(context):
     
     if ('Expense Approver' in roles) and expense_claim_doc.approval_status=="Verified":
         edit_mode = 1
+    
+    if ('HR Manager' in roles):
+        edit_mode = 1
 
 
     context.expense_voucher = expense_voucher
