@@ -95,33 +95,7 @@ table {
                     </div>
                 </div>
 
-                <div class=" calendar">
-                    <div id="card-stats-2" class="card" style="border-radius: 10px!important; overflow:visible">
-                            <div class="card-content">
-                                  <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
-                                <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
-                                <div class="row">
-                                    <div class="col s12 leavetabs" style="margin-bottom: 20px;">
-                                      <ul class="tabs">
-                                        {% if show_menu["leave-balance"] %}
-                                        <li class="tab col s6 m3"><a class="active" href="#calendar-leave-all">All leaves</a></li>
-                                        {% endif %}
-                                        {% if show_menu["leave-approval"] %}
-                                        <li class="tab col s6 m6"><a href="#calendar-leave-department">Department's leaves</a></li>
-                                        {% endif %}    
-                                        {% if show_menu["leave-request"] %}
-                                        <li class="tab col s6 m3"><a href="#calendar-leave-employee">My leaves</a></li>
-                                        {% endif %}
-                                      </ul>
-                                    </div>
-                                
-                                <div id="calendar-leave-all" class="fc fc-unthemed fc-ltr"></div>
-                                <div id="calendar-leave-department" class="fc fc-unthemed fc-ltr"></div>
-                                <div id="calendar-leave-employee" class="fc fc-unthemed fc-ltr"></div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
+                
 
                 <div class="requesthistory">
                     <div id="card-stats-3" class="card" style="border-radius: 10px!important; overflow:visible">
@@ -194,6 +168,34 @@ table {
                             </div>
                             <div class="clear"></div>
                         </div>
+                    </div>
+                </div>
+
+                <div class=" calendar">
+                    <div id="card-stats-2" class="card" style="border-radius: 10px!important; overflow:visible">
+                            <div class="card-content">
+                                  <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
+                                <div class="card-title" style="text-align: left;margin-left: 35px;">Calendar</div>
+                                <div class="row">
+                                    <div class="col s12 leavetabs" style="margin-bottom: 20px;">
+                                      <ul class="tabs">
+                                        {% if show_menu["leave-balance"] %}
+                                        <li class="tab col s6 m3"><a class="active" href="#calendar-leave-all">All leaves</a></li>
+                                        {% endif %}
+                                        {% if show_menu["leave-approval"] %}
+                                        <li class="tab col s6 m6"><a href="#calendar-leave-department">Department's leaves</a></li>
+                                        {% endif %}    
+                                        {% if show_menu["leave-request"] %}
+                                        <li class="tab col s6 m3"><a href="#calendar-leave-employee">My leaves</a></li>
+                                        {% endif %}
+                                      </ul>
+                                    </div>
+                                
+                                <div id="calendar-leave-all" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-department" class="fc fc-unthemed fc-ltr"></div>
+                                <div id="calendar-leave-employee" class="fc fc-unthemed fc-ltr"></div>
+                                </div>
+                            </div>
                     </div>
                 </div>
         </div>
