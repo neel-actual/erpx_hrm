@@ -145,7 +145,7 @@ table {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee, 'docstatus':['!=', 2]}, fields=['*']) %}
+                                    {% set lev_app_li = frappe.get_all("Leave Application",filters={"employee":employee}, fields=['*']) %}
                                     {% for i_lev_app_dt in lev_app_li %}
                                       <tr style="font-size: 13px;" class="collapsible" data-collapsible="accordion">
                                         <td>{{i_lev_app_dt.leave_type}}</td>

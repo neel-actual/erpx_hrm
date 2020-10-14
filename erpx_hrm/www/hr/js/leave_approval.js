@@ -111,6 +111,28 @@ $(document).ready(function () {
 		modal.modal('open');
 		editLeaveRequest(name);
 	});
+	
+	$('#request_history').on( 'click', '.approve_cancel', function () {
+		let doctype = "Leave Application";
+		let name = $(this).attr("data-name");
+		frappe.ajax({
+			type: "PUT",
+			url: `/api/resource/${doctype}/${name}`,
+			args: {
+				"status": "Cancelled",
+				"docstatus" : 2
+			},
+			callback: function (r) {
+				if (!r.exc) {
+					M.toast({
+						html: "Cancelled Successfully!"
+					})
+					location.reload(true);
+				}
+			}
+		});
+		return false;   
+    })
 });
 
 var delete_leave = function(name){

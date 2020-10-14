@@ -21,13 +21,16 @@ def get_context(context):
 			frappe.PermissionError)
     
     allow_delete_leave_history = 0
+    allow_cancel_leave_history = 0
     is_hr_manager = 0
 
     if 'HR Manager' in frappe.get_roles():
         # allow_delete_leave_history = 1
+        allow_cancel_leave_history = 1
         is_hr_manager = 1
         
     context.allow_delete_leave_history = allow_delete_leave_history
+    context.allow_cancel_leave_history = allow_cancel_leave_history
     context.is_hr_manager = is_hr_manager
     
     context.leave_requests = frappe.db.sql("""
