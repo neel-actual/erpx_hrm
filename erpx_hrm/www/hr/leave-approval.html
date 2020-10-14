@@ -239,13 +239,13 @@ table{
                 <thead>  
                 <tr style="border-bottom: 1px solid lightgray !important;font-size: 14px;background-color: #f9f9f9; width: 100%!important;" >
                   <th style="border-right:none!important;width: 250px;">Name</th>
-                  <th style=" border-right:none!important;">Type</th>
-                  <th style=" border-right:none!important;">Date</th>
-                  <th style=" border-right:none!important;">Status</th>
-                  <th style="border-right:none!important;">Process DateTime</th>
-                  <th style=" border-right:none!important;"></th>
-                  <th style="border-right:none!important;">From Date</th>
-                  <th style="border-right:none!important;">To Date</th>
+                  <th style=" border-right:none!important;width: 150px;">Type</th>
+                  <th style=" border-right:none!important;width: 100px;">Date</th>
+                  <th style=" border-right:none!important;width: 100px;">Status</th>
+                  <th style="border-right:none!important;width: 150px;">Process DateTime</th>
+                  <th style=" border-right:none!important;width: 100px;"></th>
+                  <th style="border-right:none!important;width: 0px;">From Date</th>
+                  <th style="border-right:none!important;width: 0px;">To Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -269,7 +269,7 @@ table{
                     </a>
                     {%endif%}
                     {% if allow_cancel_leave_history%}
-                    <a href="#" class="waves-effect waves-dark btn red btn-small mr-5 approve_cancel" data-name="{{i_leave_detail.name}}">Cancel</a>
+                    <a href="#" class="red-text mr-5 approve_cancel" data-name="{{i_leave_detail.name}}">Cancel</a>
                     {%endif%}
                   </td>
                   <td>{{frappe.utils.formatdate(i_leave_detail.from_date, format_string="yyyy-mm-dd")}}</td>
