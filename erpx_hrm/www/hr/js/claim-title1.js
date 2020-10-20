@@ -58,6 +58,7 @@ $(document).ready(async function(){
         var fileName = e.target.files[0].name;
         $('#file_attach_name i').text('');
         $('#file_attach_name i').text(fileName);
+        $("#upload_attach").trigger("click");
     });
 
     $('#claim_table tbody').on( 'click', 'td.index', function () {
@@ -451,7 +452,8 @@ $(document).ready(async function(){
     })
     
     $("#clear_attach").click(function(){
-        $("#attachment").val("")
+        $("#attachment").val("");
+        $('#file_attach_name i').text('');
         $('#new_attach').css("dispaly","block");
         M.toast({
             html: "File Removed Successfully!"

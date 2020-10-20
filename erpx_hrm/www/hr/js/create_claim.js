@@ -124,12 +124,19 @@ $("#claim_requester").change(function(){
 });
 })
 $("#clear_attach").click(function(){
-    $("#attachment").val("")
+    $("#attachment").val("");
+    $('#file_attach_name i').text('');
     $('#new_attach').css("dispaly","block");
     M.toast({
         html: "File Removed Successfully!"
     })  
 })
+$('#new_attach').change(function(e){
+    var fileName = e.target.files[0].name;
+    $('#file_attach_name i').text('');
+    $('#file_attach_name i').text(fileName);
+    $("#upload_attach").trigger("click");
+});
 $("#upload_attach").click(async function(){
     console.log()
     var file = $("#new_attach")[0].files[0]
