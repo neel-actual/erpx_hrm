@@ -2,6 +2,7 @@ import frappe
 import json
 from erpx_hrm.utils.user import get_users_by_role
 from six.moves.urllib.parse import quote, urlencode, urlparse
+from frappe.utils import today, add_months
 
 def get_context(context):
     if frappe.session.user == 'Guest':
@@ -55,5 +56,8 @@ def get_context(context):
     context.expense_claim_doc = expense_claim_doc
     context.edit_mode = edit_mode
     context.resubmit_mode = resubmit_mode
+
+    context.max_claim_date = today()
+    context.min_claim_date =  add_months(today(), -3)
 
     return context

@@ -362,7 +362,7 @@ td {
 							<p style="margin-bottom: 10px;">Claim Date</p>
 							<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
 							<img class="firefox" src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 20px;" >
-								<input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n datepicker" type="text" onfocus2="(this.type='date')" id="sel_date" name="claim_date" min="{{min_claim_date}}" max="{{max_claim_date}}">
+								<input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n datepicker2" type="text" onfocus2="(this.type='date')" id="sel_date" name="claim_date" min="{{min_claim_date}}" max="{{max_claim_date}}">
 							<!-- <label class='error'>Error</label> -->
 							<!--<label for="signup-name" class="center-align">Full Name</label>-->
 						  </div>
@@ -445,24 +445,25 @@ td {
 {% endblock %}
 
 {% block scripts %}
-<script>
-    frappe.csrf_token = "{{ csrf_token }}";
-		frappe.site_url = "{{site_url}}";
-</script>
+
     <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
     type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/js/dataTables.select.min.js" type="text/javascript"></script>
     <script src="/app-assets/js/scripts/data-tables.js" type="text/javascript"></script>
-    <script src="../../../app-assets/vendors/fullcalendar/lib/moment.min.js"></script>
-    <script src="../../../app-assets/vendors/fullcalendar/js/fullcalendar.min.js"></script>
-    <script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
-	<script src="../../../app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
-	<script src="/hr/js/create_claim.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-	<script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/dataRender/datetime.js"></script>
+<script src="/app-assets/js/custom/custom-script.js" type="text/javascript"></script>
+
+	<script src="/hr/js/create_claim.js" type="text/javascript"></script>
+<script>
+    frappe.csrf_token = "{{ csrf_token }}";
+		frappe.site_url = "{{site_url}}";
+		var glb_max_claim_date = new Date("{{max_claim_date}}");
+		var glb_min_claim_date = new Date("{{min_claim_date}}");
+</script>
 
 {% endblock %}

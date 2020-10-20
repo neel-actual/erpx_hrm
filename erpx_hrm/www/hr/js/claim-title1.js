@@ -692,7 +692,11 @@ $(document).ready(function () {
     $('#sel_amount').change(function(){ 
 		validate_limit_amount();
     });
-    
+    $('.datepicker2').datepicker({
+        format: "yyyy-mm-dd",
+        maxDate: glb_max_claim_date,
+        minDate: glb_min_claim_date
+    });
 });
 
 function validate_limit_amount(){

@@ -558,7 +558,7 @@
         <div class="input-field col m6 s12">
         <p style="margin-bottom: 10px;">Claim Date</p>
         <!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-        <input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n datepicker" type="text" onfocus2="(this.type='date')" id="sel_date" name="claim_date">
+        <input style="border: 1px solid #c1c1c1; border-radius: 5px;padding-left: 10px; width: -webkit-fill-available" placeholder="" class="textbox-n datepicker2" type="text" onfocus2="(this.type='date')" id="sel_date" name="claim_date">
         <!-- <label class='error'>Error</label> -->
         <!--<label for="signup-name" class="center-align">Full Name</label>-->
         </div>
@@ -643,7 +643,9 @@
 
 <script>
   frappe.csrf_token = "{{ csrf_token }}";
-  glb_expense_voucher = "{{expense_voucher}}";
+  var glb_expense_voucher = "{{expense_voucher}}";
+  var glb_max_claim_date = new Date("{{max_claim_date}}");
+	var glb_min_claim_date = new Date("{{min_claim_date}}");
 </script>
 <!-- <script type="text/javascript">
   var all_claim = document.getElementById("all-claim");
