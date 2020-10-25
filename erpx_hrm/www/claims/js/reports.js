@@ -67,6 +67,10 @@ jQuery(document).ready(function() {
       width: "10%"
     },
     {
+      targets: 6,
+      "visible": false,
+    } ,
+    {
       targets: 4,
       width: "10%"
     } ,
@@ -91,21 +95,20 @@ jQuery(document).ready(function() {
 
 
 
-  $.fn.dataTable.ext.search.push(
-  function(settings, data, dataIndex) {
-    var min = new Date(adjust_date_time(moment($('#from_date').val()).format('DD-MM-YYYY')));
-    var max = new Date(adjust_date_time(moment($('#to_date').val()).format('DD-MM-YYYY')));
-    
-    var createdAt = new Date(adjust_date_time(data[1])); // Our date column in the table
-    console.log("created "+createdAt)
-    console.log("min "+min)
-    console.log("max "+max)
-
-    if ((min == "Invalid Date" || max == "Invalid Date") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) {
+$.fn.dataTable.ext.search.push(
+    function (settings, data, dataIndex) {
+      let min = $('#from_date').val();
+      let max = $('#to_date').val();
+      let posting_date = data[6];
+      
+      if( min!="" && moment(posting_date).isBefore(min)	){
+        return false;
+      }
+      if( max!="" && moment(posting_date).isAfter(max)	){
+        return false;
+      }
       return true;
     }
-    return false;
-  }
 );
 
 // Re-draw the table when the a date range filter changes
