@@ -1,4 +1,7 @@
 $(document).ready(function () {
+	$('#i_filter_employeee').autocomplete({
+        data: glb_data_employeee,
+	});
 	var request_history = $('#request_history').DataTable({
 		"order":[6,'desc'],
 		"columnDefs": [
@@ -14,7 +17,7 @@ $(document).ready(function () {
 	});
 	
 	$('#i_filter_employeee').change(function(){ 
-		var i_filter_employeee = $("#i_filter_employeee").val(); 
+		var i_filter_employeee = $("#i_filter_employeee").val();
 		request_history.column(0).search(i_filter_employeee, true, false, false).draw();
 	});
 	$('#i_filter_eave_type').change(function(){ 
@@ -32,9 +35,9 @@ $(document).ready(function () {
 
 	$('.clr_filter_requesthistory').click(function(){		
 		$('.i_filter_requesthistory').val("");
+		$("#i_filter_employeee").val("");
 		$("#i_filter_leave_type").formSelect();
-		$("#i_filter_leave_type").formSelect();
-		$("#i_filter_leave_type").formSelect();
+		$("#i_filter_leave_status").formSelect();
 		request_history.search('').columns().search('').draw();
 	});
 

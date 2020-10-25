@@ -186,22 +186,17 @@ table{
             <img style="display: inline;float: left;" width="22" height="22" class="sidenav-icon" src="/icons/leave.png">
             <h4 class="card-title directorytitle" style="text-align: left;">History</h4>
 
-            <a href="#!" class="clr_filter_requesthistory modal-trigger waves-effect waves-light right">Clear Filter</a>
+            <a href="#!" class="clr_filter_requesthistory waves-effect waves-light right">Clear Filter</a>
 
             <div style="height: 40px;"></div>
             <div class="row margin infodetails">
               <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Name</p>
-                <select autocomplete="off" id="i_filter_employeee" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
-                  <option value="" selected>All name</option>
-                  {% for item in list_employee: %}
-                  <option value="{{item.employee_name}}">{{item.employee_name}}</option>
-                  {% endfor %}
-                </select>
+                <input autocomplete="off" type="text" class="autocomplete" id="i_filter_employeee" class="i_filter_requesthistory">
               </div>
               <div class="input-field col s12 m4 l4 xl3">
                 <p style="margin-bottom: 10px;">Type</p>
-                <select autocomplete="off" id="i_filter_eave_type" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
+                <select autocomplete="off" id="i_filter_leave_type" class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;">
                   <option value="" selected>All Type</option>
                   {% for item in list_leave_type: %}
                   <option value="{{item.name}}">{{item.name}}</option>
@@ -294,6 +289,10 @@ table{
     frappe.csrf_token = "{{ csrf_token }}";
     var glb_employee = "{{ employee }}";
     var glb_holiday_list = "{{ holiday_list }}";
+    var glb_data_employeee = {};
+    {% for item in list_employee: %}
+      glb_data_employeee["{{item.employee_name}}"] = null;
+    {% endfor %}
   </script>
   <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
   <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
@@ -306,4 +305,5 @@ table{
   <script src="/app-assets/js/scripts/app-calendar.js" type="text/javascript"></script>
   <script defer src="/hr/js/leave_approval.js" type="text/javascript"></script>
   <script defer src="/hr/js/leave_request_form.js" type="text/javascript"></script>
+  
 {% endblock %}
