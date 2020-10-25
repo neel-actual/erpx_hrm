@@ -74,13 +74,13 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                 <div class="input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (Start)</p>
                  <img class="firefox" src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 20px;" >
-                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter datepicker" type="text" onfocus2="(this.type='date')"  id="from_date">
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter datepicker" type="text" onfocus2="(this.type='date')"  id="from_date" autocomplete="off">
                </div>
 
                <div class="appr-date-end input-field col s12 m4 l4 xl3">
                  <p style="text-align: left;margin-bottom: 10px;">Approved Date (End)</p>
                  <img class="firefox" src="/icons/calendar-blue.png" width="20" height="20" style="position: absolute; margin-top: 12px; right: 20px;" >
-                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter datepicker" type="text" onfocus2="(this.type='date')"  id="to_date">
+                 <input style="border: 1px solid #c1c1c1; border-radius: 5px;width: -webkit-fill-available" class="textbox-n date-range-filter datepicker" type="text" onfocus2="(this.type='date')"  id="to_date" autocomplete="off">
                </div>
                <div class="input-field col s12 m4 l4 xl3">
                 <p style="text-align: left;margin-bottom: 10px;">Select Status</p>
@@ -117,6 +117,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <th style="border-right:none!important;">Requester</th>
                     <th style="border-right:none!important;">Cutoff Date</th>
                     <th style="border-right:none!important;">Status</th>
+                    <th style="border-right:none!important;">Date</th>
                   </tr>
                 </thead>
                   {% set expense1 = frappe.get_all("Expense Claim", fields=['name','cutoff_date','approval_status','status','employee','employee_name','total_claimed_amount','posting_date']) %}
@@ -129,6 +130,7 @@ href="/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataT
                     <td>{{ex.employee_name}}</td>
                     <td>{% if(ex.cutoff_date) %}{{ ex.cutoff_date.strftime(" %d-%m-%Y ")  }}{%else%}-{% endif %}</td>
                     <td>{% if(ex.status == 'Draft') and (ex.approval_status != 'Verified') %}Pending{% elif(ex.status == 'Draft') and (ex.approval_status == 'Verified') %}Verified{% else %}{{ex.status}}{% endif %}</td>  
+                    <td>{{ex.posting_date}}</td>
                   </tr>
   
                   {% endfor %}
