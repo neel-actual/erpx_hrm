@@ -157,6 +157,18 @@
               </div>
               {% endif %}
               {% endfor %}
+              {% for exp in expense_claim %}
+              {% if exp.remark %}
+              <div class=" border-request requester2">                
+                <table style="table-layout:auto;    display: contents !important;">
+                  <tr>
+                    <td>{{exp.remark}}</td>
+                  </tr>
+                </table>
+              </div>
+              {% endif %}
+              {% endfor %}
+              
               </div>
               <div class="col m4 s12">               
              <div class="pend-apprv right">
