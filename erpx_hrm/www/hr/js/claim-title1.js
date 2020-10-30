@@ -1,10 +1,11 @@
 var glb_row_id = 0;
-
+var currency = "MYR ";
+ 
 $(document).ready(async function(){
     var today = moment().format('YYYY-MM-DD');
     document.getElementById("sel_date").value = today;
     
-    let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+    currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
     var dt = $('#claim_table').DataTable({
         bFilter: false,
         "paging":   false,
@@ -89,7 +90,8 @@ $(document).ready(async function(){
         $("#claim_form :input[name=distance_rate]").val("");
         $("#claim_form :input[name=attachment]").val("");
         toggle_div_distance();
-        $('#add_claim_modal').modal('open');
+        show_limit_amount();
+         $('#add_claim_modal').modal('open');
     
     })
 
@@ -303,7 +305,7 @@ $(document).ready(async function(){
         $("#claim_form :input[name=distance_rate]").val(data[9]);
         $("#claim_form :input[name=attachment]").val(data[6]);
          toggle_div_distance();
-    
+         show_limit_amount();
     }
 
 
@@ -684,7 +686,8 @@ $(document).ready(function () {
     $('#sel_claim_type').change(function(){ 
         toggle_div_distance();
         validate_limit_amount();
-    });
+        show_limit_amount();
+     });
     $('#sel_distance').change(function(){ 
         count_amount_by_distance();
     });
@@ -700,6 +703,31 @@ $(document).ready(function () {
         minDate: glb_min_claim_date
     });
 });
+
+function show_limit_amount(){
+    let expense_type = $("#sel_claim_type").val();
+    if(expense_type){
+        frappe.call({
+            method: 'erpx_hrm.utils.expense_claim.show_limit_amount',
+            args: {
+                expense_type: expense_type
+            },
+            callback: function (r) {
+                if (!r.exc) {
+                    if (r.message.result=="1"){
+                        let html = "(Limit: " + currency + parseFloat(r.message.claim_limit).toFixed(2) + ")";
+                        $("#html_limit_claim_type").html(html);
+                    }else{
+                        $("#html_limit_claim_type").html("");
+                    }                    
+                }
+            }
+        });
+    }else{
+        $("#html_limit_claim_type").html("");
+    }
+    
+}
 
 function validate_limit_amount(){
     let expense_type = $("#sel_claim_type").val();

@@ -21,3 +21,16 @@ def validate_limit_amount(expense_type, amount):
 			data["message"] = _("Please enter a value less than or equal to {0}.").format(claim_limit)
 			data["result"] = 0
 	return data
+
+@frappe.whitelist()
+def show_limit_amount(expense_type):
+	data = {
+		"result": 0,
+		"claim_limit" : 0
+	}
+	expense_type = expense_type.replace("&amp;", "&")
+	claim_limit = frappe.get_value("Expense Claim Type", expense_type, "claim_limit")
+	if claim_limit:
+		data["claim_limit"] = claim_limit
+		data["result"] = 1
+	return data

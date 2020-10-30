@@ -1,8 +1,9 @@
 var glb_row_id = 0;
+var currency = "MYR ";
 
 $(document).ready(async function(){
 
-let currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
+currency = await get_value({doctype: "HRM Setting"}).then(function(res){return res.message.currency+" "})
 var param = sessionStorage.getItem("claim_name");
 if(param){
     frappe.call({
@@ -299,6 +300,7 @@ function fill_form_from_table(data){
     $("#claim_form :input[name=attachment]").val(data[6]);
 
     toggle_div_distance();
+    show_limit_amount();
 
 }
 
@@ -331,6 +333,7 @@ $("#btn_add_claim_modal").click(function(){
     $("form#{0} :input[name=distance]".format(form_id)).val("");
     $("form#{0} :input[name=distance_rate]".format(form_id)).val("");
     toggle_div_distance();
+    show_limit_amount();
     $('#add_claim_modal').modal('open');
 
 })
@@ -516,6 +519,7 @@ function appendLeadingZeroes(n){
 $(document).ready(function () {
     $('#sel_claim_type').change(function(){ 
         toggle_div_distance();
+        show_limit_amount();
         validate_limit_amount();
     });
     $('#sel_distance').change(function(){ 
@@ -533,6 +537,30 @@ $(document).ready(function () {
         minDate: glb_min_claim_date
     });
 });
+function show_limit_amount(){
+    let expense_type = $("#sel_claim_type").val();
+    if(expense_type){
+        frappe.call({
+            method: 'erpx_hrm.utils.expense_claim.show_limit_amount',
+            args: {
+                expense_type: expense_type
+            },
+            callback: function (r) {
+                if (!r.exc) {
+                    if (r.message.result=="1"){
+                        let html = "(Limit: " + currency + parseFloat(r.message.claim_limit).toFixed(2) + ")";
+                        $("#html_limit_claim_type").html(html);
+                    }else{
+                        $("#html_limit_claim_type").html("");
+                    }                    
+                }
+            }
+        });
+    }else{
+        $("#html_limit_claim_type").html("");
+    }
+    
+}
 
 function validate_limit_amount(){
     let expense_type = $("#sel_claim_type").val();
