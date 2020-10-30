@@ -340,18 +340,7 @@ td {
 					<div class="row margin infodetails">
 							<div class="input-field col m6 s12">
 								<p style="margin-bottom: 10px;">Claim type</p>
-								<!--<i class="material-icons-outlined prefix pt-2">person_outline</i>-->
-								
-								<select style="padding-left: 10px;width: -webkit-fill-available;" id="sel_claim_type" name="claim_type" autocomplete="off">
-								<option value="" disabled selected>Select Type</option>
-									{% set leave_type = frappe.get_all("Expense Claim Type", fields=['name']) %}
-									{% for i_leave_type in leave_type %}
-										<option value="{{i_leave_type.name}}">{{i_leave_type.name}}</option>
-									{% endfor %}
-								</select>
-								<label class='claim_type_error'></label>
-
-								<!--<label for="signup-name" class="center-align">Full Name</label>-->
+								<input autocomplete="off" type="text" class="autocomplete" id="sel_claim_type" name="claim_type">
 							</div>
 							
 
@@ -464,6 +453,16 @@ td {
 		frappe.site_url = "{{site_url}}";
 		var glb_max_claim_date = new Date("{{max_claim_date}}");
 		var glb_min_claim_date = new Date("{{min_claim_date}}");
+
+		var glb_data_leave_type = {};
+    {% set leave_type = frappe.get_all("Expense Claim Type", fields=['name']) %}
+		{% for i_leave_type in leave_type %}
+      glb_data_leave_type["{{i_leave_type.name}}"] = null; 
+    {% endfor %}
+
+		$('#sel_claim_type').autocomplete({ 
+			data: glb_data_leave_type, 
+		});
 </script>
 
 {% endblock %}

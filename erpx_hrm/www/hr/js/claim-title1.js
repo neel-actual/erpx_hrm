@@ -81,7 +81,7 @@ $(document).ready(async function(){
     $("#btn_add_claim_modal").click(function(){
         $("#claim_form :input[name=index]").val("");
         $("#claim_form :input[name=claim_type]").val("");
-        $("#claim_form :input[name=claim_type]").formSelect();
+        // $("#claim_form :input[name=claim_type]").formSelect();
         $("#claim_form :input[name=merchant]").val("");    
         $("#claim_form :input[name=claim_amount]").val("");
         $("#claim_form :input[name=desc]").val("");
@@ -294,7 +294,7 @@ $(document).ready(async function(){
         
         let claim_type = data[2].replace("&amp;", "&");
         $("#claim_form :input[name=claim_type]").val(claim_type);
-        $("#claim_form :input[name=claim_type]").formSelect();
+        // $("#claim_form :input[name=claim_type]").formSelect();
         $("#claim_form :input[name=merchant]").val(data[3]);
         $("#claim_form :input[name=index]").val(data[0]);
         $("#claim_form :input[name=claim_amount]").val(data[5].split(" ")[1]);
