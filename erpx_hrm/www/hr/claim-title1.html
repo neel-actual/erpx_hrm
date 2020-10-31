@@ -352,8 +352,10 @@
 
       {% if edit_mode %}
 
+        {% if not resubmit_mode %}
         <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 100px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
-        class="waves-effect waves-light right btn-approve" id="update">Update</a>        
+        class="waves-effect waves-light right btn-approve" id="update">Update</a>      
+        {% endif %}
 
         <a href="" style="background-color: white; border: 1px #00aeef solid; border-radius: 25px;  width: 100px;  text-align: center;  color:#00aeef;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px ;" 
         class="modal-trigger waves-effect waves-light right btn-approve" id="edit_claim_btn" >Edit</a>

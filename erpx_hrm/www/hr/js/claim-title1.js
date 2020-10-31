@@ -201,26 +201,49 @@ $(document).ready(async function(){
     });
     
     $("#resubmit_claim_btn").click(function(){
-        let name = location.search.split("=")[1];
-        hrm.custom_update("Expense Claim",{
-            'name':name,
-            'remark':""}
-        ).then(function(res){
-            frappe.call({
-                method: 'erpx_hrm.api.set_value_custom',
-                args: {
-                    'doctype': 'Expense Claim',
-                    'name':name,
-                    'fieldname': 'approval_status',
-                    'value':'Draft'
-                },
-                callback: function(r) {
-                    if (!r.exc) {
-                        window.location.replace("/hr/claim-title1.html/?expense_claim="+name);                        
-                    }
-                }
-            });
-      })
+        var exp_list = []
+        for (let i = 0; i < dt.column().data().length; i++) {
+            const element = dt.rows(i).data()[0];
+            exp_list.push({
+                "expense_date":element[1],
+                "expense_type":element[2].toString(),
+                "merchant":element[3].toString(),
+                "description":element[4].toString(),
+                "amount":parseFloat(element[5].split(" ")[1]),
+                "sanctioned_amount":parseFloat(element[5].split(" ")[1]),
+                "attach_document":element[6].toString(),
+                "distance":parseFloat(element[8]),
+                "distance_rate":parseFloat(element[9]),
+            })
+        }        
+        frappe.call({
+            method: 'erpx_hrm.api.udpate_claim',
+            args: {
+                'name' : glb_expense_voucher,
+                'expenses':exp_list
+            },
+            callback: function(r) {
+                hrm.custom_update("Expense Claim",{
+                    'name':glb_expense_voucher,
+                    'remark':""}
+                ).then(function(res){
+                    frappe.call({
+                        method: 'erpx_hrm.api.set_value_custom',
+                        args: {
+                            'doctype': 'Expense Claim',
+                            'name': glb_expense_voucher,
+                            'fieldname': 'approval_status',
+                            'value':'Pending'
+                        },
+                        callback: function(r) {
+                            if (!r.exc) { 
+                                window.location.replace("/hr/claim-title1.html/?expense_claim="+glb_expense_voucher);
+                            }
+                        }
+                    });   
+                })
+            }
+        });        
     });
 
     $("#decline").click(function(){
