@@ -398,7 +398,7 @@
       <!-- <a href="#" style=" background-color: #00aeef;  border-radius: 25px;  width: 135px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
       class="waves-effect waves-light right btn-approve" id="get_attach">Get Attachment</a>  -->
 
-      {% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('HR Manager' in roles)) %}
+      {% if ((ap.status == "Unpaid") and (ap.reimbursement_type == "Direct Payment") and ('Finance Manager' in roles)) %}
       <a href="#modal-reimburse" style=" background-color: #00aeef;  border-radius: 25px;  width: 300px;  text-align: center;  color: white;  line-height: 50px;line-height: 40px;margin-right: 28px;margin-bottom: 13px; " 
       class="modal-trigger waves-effect waves-light right btn-approve">Reimburse Via Direct Payment</a>
       {% endif %}
