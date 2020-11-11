@@ -1,6 +1,26 @@
+var _val = $.fn.val;
+$.fn.val = function (value) {
+    var self = $(this);
+	var select = self.hasClass("datepicker");
+    if (value === undefined) {
+		if(select){
+			let o =  _val.apply(this, arguments);
+			if(o){
+				let o2 = o.split('-');
+				return o2[2] + "-" + o2[1] + "-" + o2[0];
+			}
+			return o;			
+		}else{
+			return  _val.apply(this, arguments);
+		}        
+    } else {
+        return _val.apply(this, arguments);
+    }
+} 
+
 $(document).ready(function () {
 	$('.datepicker').datepicker({
-		format: "yyyy-mm-dd"
+		format: "dd-mm-yyyy"
    });
 	// var isFirefox = typeof InstallTrigger !== 'undefined';
 	// //Hide 
