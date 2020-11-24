@@ -171,16 +171,16 @@ var toggle_div_half_day = function(){
 	}else{
 		$('#div_half_day_shift').hide();
 		$("#div_half_day_date").hide();
-		$("#leave_request_half_day_date")[0].value="";
+		$("#leave_request_half_day_date").val("");
 		return;
 	}
 	if(!($('#leave_request_from_date').val() && $('#leave_request_to_date').val())){
-		$("#leave_request_half_day_date")[0].value="";
+		$("#leave_request_half_day_date").val("");
 		$("#div_half_day_date").hide();
 		return;
 	}
 	if($('#leave_request_from_date').val() == $('#leave_request_to_date').val()){
-		$("#leave_request_half_day_date")[0].value="";
+		$("#leave_request_half_day_date").val("");
 		$("#div_half_day_date").hide();
 		return;
 	}

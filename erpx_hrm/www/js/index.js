@@ -3,16 +3,16 @@ $.fn.val = function (value) {
     var self = $(this);
 	var select = self.hasClass("datepicker");
     if (value === undefined) {
-		if(select){
-			let o =  _val.apply(this, arguments);
-			if(o){
-				let o2 = o.split('-');
-				return o2[2] + "-" + o2[1] + "-" + o2[0];
-			}
-			return o;			
-		}else{
-			return  _val.apply(this, arguments);
-		}        
+			if(select){
+				let o =  _val.apply(this, arguments);
+				if(typeof o =="string" && o){
+					let o2 = o.split('-');
+					return o2[2] + "-" + o2[1] + "-" + o2[0];
+				}
+				return o;			
+			}else{
+				return  _val.apply(this, arguments);
+			}        
     } else {
         return _val.apply(this, arguments);
     }
