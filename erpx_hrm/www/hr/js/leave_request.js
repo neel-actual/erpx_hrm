@@ -147,7 +147,6 @@ $(document).ready(function () {
 	});
 
 	//Clone leave
-	console.log(glb_leave_name);
 	if(glb_leave_name!=""){
 		cloneLeaveRequest(glb_leave_name);
 	}	
@@ -288,6 +287,26 @@ function openUploadFile(){
 
 function copyLeaveRequest(name){
 	window.location.href = "/hr/leave-request?name="+name;
+}
+function deleteLeaveRequest(name){
+	let doctype = "Leave Application";
+	swal({
+		title: "Are you sure you want to delete?",
+		icon: 'warning'
+	}).then(function (result) {
+		if (result) {
+			frappe.ajax({
+				type: "DELETE",
+				url: `/api/resource/${doctype}/${name}`,
+				callback: function (r) {
+					M.toast({
+						html: __("Deleted Successfully!")
+					});
+					location.reload();
+				}
+			});
+		}
+	})
 }
 
 function cloneLeaveRequest(name){

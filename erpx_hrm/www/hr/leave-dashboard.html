@@ -141,7 +141,7 @@ table {
                                         <th style="border-right:none!important;">Date</th>
                                         <th style="border-right:none!important;">Total</th>
                                         <th style="border-right:none!important;">Status</th>
-                                        <th style="border-right:none!important;">Action</th> 
+                                        <th style="border-right:none!important;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -162,7 +162,12 @@ table {
                                           <p style="border-radius: 20px;text-align: center; width:100%; max-width:150px; background-color:red; color: white;padding: 5px;">{{i_lev_app_dt.status}}</p>
                                           {% endif %}
                                         </td>
-                                        <td><a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a></td> 
+                                        <td>
+                                            <a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a>
+                                            {% if i_lev_app_dt.status=="Open"%}
+                                            <a href="#" onclick="deleteLeaveRequest('{{i_lev_app_dt.name}}')" class="red-text ml-5">Delete</a>
+                                            {% endif %}
+                                        </td> 
                                       </tr>
                                     {% endfor %}
                                 </tbody>
@@ -322,6 +327,7 @@ request is approved.</p>
     frappe.csrf_token = "{{ csrf_token }}";
     var glb_employee = "{{ employee }}";
     var glb_holiday_list = "{{ holiday_list }}";
+    var glb_leave_name = "";
 </script>
     <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"
