@@ -288,6 +288,31 @@ function openUploadFile(){
 function copyLeaveRequest(name){
 	window.location.href = "/hr/leave-request?name="+name;
 }
+function cancelLeaveRequest(name){
+	swal({
+		title: "Are you sure you want to cancel?",
+		icon: 'warning'
+	}).then(function (result) {
+		if (result) {
+			let doctype = "Leave Application";
+			frappe.ajax({
+				type: "PUT",
+				url: `/api/resource/${doctype}/${name}`,
+				args: {
+					"status": "Cancelled"
+				},
+				callback: function (r) {
+					if (!r.exc) {
+						M.toast({
+							html: "Cancelled Successfully!"
+						})
+						location.reload(true);
+					}
+				}
+			});
+		}
+	})
+}
 function deleteLeaveRequest(name){
 	let doctype = "Leave Application";
 	swal({

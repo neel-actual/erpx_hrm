@@ -165,6 +165,9 @@ table {
                                         <td>
                                             <a href="#" onclick="copyLeaveRequest('{{i_lev_app_dt.name}}')" id="save_disciplinary">Copy</a>
                                             {% if i_lev_app_dt.status=="Open"%}
+                                            <a href="#" onclick="cancelLeaveRequest('{{i_lev_app_dt.name}}')" class="red-text ml-5">Cancel</a>
+                                            {% endif %}
+                                            {% if i_lev_app_dt.status=="Open2"%}
                                             <a href="#" onclick="deleteLeaveRequest('{{i_lev_app_dt.name}}')" class="red-text ml-5">Delete</a>
                                             {% endif %}
                                         </td> 
