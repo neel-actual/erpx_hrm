@@ -3,7 +3,15 @@ import frappe, json
 from frappe import _
 from frappe.permissions import add_user_permission, remove_user_permission, \
 	set_user_permission_if_allowed, has_permission
-	
+
+def after_rename(doc, method=None, *args, **kwargs):
+	if doc.alternate_staff_id != doc.name:
+		frappe.db.set_value('Employee', doc.name, 'alternate_staff_id', doc.name)
+
+def autoname(doc, method):
+	if doc.naming_series:
+		doc.name = doc.alternate_staff_id
+
 @frappe.whitelist()
 def upload_employee_image():
 

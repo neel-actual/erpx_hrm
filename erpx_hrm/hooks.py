@@ -31,6 +31,7 @@ update_website_context = "erpx_hrm.boot.update_website_context"
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 doctype_js = {
     "Branch": "custom_scripts/branch_custom.js",
+	"Employee": "custom_scripts/employee_custom.js",
 	"Expense Claim": "custom_scripts/expense_claim_custom.js",
 }
 
@@ -99,6 +100,8 @@ doc_events = {
 		"on_update": "erpx_hrm.utils.leave_application.on_update"
 	},
 	"Employee": {
+		"after_rename": "erpx_hrm.utils.employee.after_rename",
+		"autoname": "erpx_hrm.utils.employee.autoname",
 		"on_update": "erpx_hrm.utils.employee.on_update"
 	},
 	"Expense Claim": {
