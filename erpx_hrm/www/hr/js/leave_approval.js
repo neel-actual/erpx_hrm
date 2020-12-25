@@ -20,9 +20,9 @@ $(document).ready(function () {
 		var i_filter_employeee = $("#i_filter_employeee").val();
 		request_history.column(0).search(i_filter_employeee, true, false, false).draw();
 	});
-	$('#i_filter_eave_type').change(function(){ 
-		var i_filter_eave_type = $("#i_filter_eave_type").val(); 
-		request_history.column(1).search(i_filter_eave_type, true, false, false).draw();
+	$('#i_filter_leave_type').change(function(){ 
+		var i_filter_leave_type = $("#i_filter_leave_type").val(); 
+		request_history.column(1).search(i_filter_leave_type, true, false, false).draw();
 	});
 	$('#i_filter_leave_status').change(function(){ 
 		var i_filter_leave_status = $("#i_filter_leave_status").val(); 
