@@ -64,6 +64,7 @@ $(function () {
                     $profile_cards.append($card);
                 });
                 user_table.draw();
+                $("#i_filter_status").val("Active").formSelect().trigger("change");
             }
         }
     });

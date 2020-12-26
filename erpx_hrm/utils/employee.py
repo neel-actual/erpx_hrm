@@ -69,6 +69,7 @@ def employee_add_user_permission(doc, user_id):
 def get_employee_list():
 	employees = frappe.db.sql("""
         select e.* from `tabEmployee` e
-        left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest')                
+        left join `tabUser` u ON  e.user_id = u.name and u.name not in ('Administrator', 'Guest') and u.enabled=1                
+		where e.status="Active"
         """, as_dict=True) 
 	return employees or None
