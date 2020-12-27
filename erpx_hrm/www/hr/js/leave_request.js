@@ -22,7 +22,11 @@ $(document).ready(function () {
             {
                 "targets": [ 2 ],
                 "visible": false
-            }
+			},
+			{
+				"targets": [ 3 ],
+                "orderData": [ 1 ]
+			}
         ]
 	});
 
