@@ -16,7 +16,8 @@ def get_context(context):
         user_list = frappe.db.sql_list("""
 							select u.name from `tabUser` u
                             left join `tabHas Role` r ON  r.parent = u.name and u.name not in ('Administrator', 'Guest') and u.enabled=1
-                            where r.role = %(role_name)s""", {"role_name": i_role})                  
+                            LEFT JOIN `tabEmployee` e ON e.user_id = u.name
+                            where e.status !="Left" and r.role = %(role_name)s""", {"role_name": i_role})                  
         role_list.append({
             "name": i_role,
             "total_user": len(user_list) or 0,
@@ -26,7 +27,9 @@ def get_context(context):
 
     #User list
     context.all_user = frappe.db.sql_list("""
-							select name from `tabUser` where name not in ('Administrator', 'Guest') and enabled=1                         
+							select u.name from `tabUser` u 
+                            LEFT JOIN `tabEmployee` e ON e.user_id = u.name
+                            where u.name not in ('Administrator', 'Guest') and u.enabled=1 and e.status !="Left"
                             """)  
 
     #Permission list
