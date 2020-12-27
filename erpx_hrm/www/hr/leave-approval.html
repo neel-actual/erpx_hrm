@@ -246,7 +246,7 @@ table{
                 <tbody>
                 {% for i_leave_detail in leave_historys %}
                 <tr style="font-size: 13px;">
-                  <td style="width: 250px;">
+                  <td style="width: 250px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" >
                     {{i_leave_detail.employee_name}}
                   </td>
                   <td>{{i_leave_detail.leave_type}}</td>
