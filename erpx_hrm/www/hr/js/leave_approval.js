@@ -12,7 +12,11 @@ $(document).ready(function () {
             {
                 "targets": [ 7 ],
                 "visible": false
-            }
+			},
+			{ 
+				"targets": [ 2 ], 
+				"orderData": [ 6 ]
+			}
         ]
 	});
 	
