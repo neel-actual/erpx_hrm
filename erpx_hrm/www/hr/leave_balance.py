@@ -20,7 +20,7 @@ def get_context(context):
 			frappe.PermissionError)
     
     context.list_employee = frappe.db.get_all("Employee", filters={"status":"Active"}, fields=['name','employee_name','employment_type','image','reports_to'])
-    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])    
+    context.list_leave_type = frappe.db.get_all("Leave Type", filters={"disabled":0}, fields=["name"])    
 
     return context
 

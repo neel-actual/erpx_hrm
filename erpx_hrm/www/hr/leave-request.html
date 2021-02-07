@@ -140,7 +140,7 @@ table {
                                     <p style="margin-bottom: 5px;text-align: left;margin-left: 7px;">Type</p>
                                     <select class="i_filter_requesthistory" style="padding-left: 10px;width: -webkit-fill-available;"  id="i_filter_leave_type" autocomplete="off">
                                         <option value="" selected>All Type</option>
-                                        {% set leav_type = frappe.get_all("Leave Type", fields=['*']) %}
+                                        {% set leav_type = frappe.get_all("Leave Type", filters={"disabled":0}, fields=['*']) %}
                                         {% for i_leav_type in leav_type %}
                                             <option value="{{i_leav_type.leave_type_name}}">{{i_leav_type.leave_type_name}}</option>
                                         {% endfor %}
@@ -211,7 +211,7 @@ table {
                                 <p style="margin-bottom: 10px;">Leave type</p>
                                 <select id="leave_request_leave_type" data-fieldname="leave_type" style="padding-left: 10px;width: -webkit-fill-available;">
                                 <option value="" disabled selected>Select Type</option>
-                                    {% set leave_type = frappe.get_all("Leave Type", fields=['leave_type_name']) %}
+                                    {% set leave_type = frappe.get_all("Leave Type", filters={"disabled":0}, fields=['leave_type_name']) %}
                                     {% for i_leave_type in leave_type %}
                                         <option value="{{i_leave_type.leave_type_name}}">{{i_leave_type.leave_type_name}}</option>
                                     {% endfor %}

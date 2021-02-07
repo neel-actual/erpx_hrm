@@ -55,7 +55,7 @@ def get_context(context):
 	""".format(condition_history), as_dict=True, debug=1)
 
     context.list_employee = frappe.db.get_all("Employee",fields=["name", "employee_name"])
-    context.list_leave_type = frappe.db.get_all("Leave Type",fields=["name"])
+    context.list_leave_type = frappe.db.get_all("Leave Type", filters={"disabled":0},fields=["name"])
     context.list_leave_status = ["Open","Approved","Rejected","Cancelled"]
 
     return context
