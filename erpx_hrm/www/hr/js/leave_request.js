@@ -74,25 +74,32 @@ $(document).ready(function () {
         },
         callback: function (r) {
 			let arrColor = ["blue", "purple", "pink", "red"];
-			let i = 0;
-			$.each( r.message.leave_allocation, function( key, val ) {
-				let j = i%4;
-				$(`
-					<div class="col s6 m6 l6 xl4 pt-2" style="min-height:180px">
-						<div class="circle ${arrColor[j]}">
-							<div class="card-content center">
-								<h4 class="card-stats-number white-text">${val.remaining_leaves}</h4>
-								<p class="card-stats-title white-text">
-									<span>available</span>
-								</p>
-							</div>
-						</div>
-						<p style="margin-top: 10px;text-align: center;">${key}</p>
-					</div>
-				`).appendTo($("#html_balancesummary"));
-				i++;
 
-			});			
+			let leave_details = {};
+			$.each( r.message.leave_allocation, function( key, val ) {
+				leave_details[key] = val.remaining_leaves;
+			})
+
+			let i = 0;
+			glb_leave_types.forEach(key => {
+				if (leave_details[key]){
+					let j = i%4;
+					$(`
+						<div class="col s6 m6 l6 xl4 pt-2" style="min-height:180px">
+							<div class="circle ${arrColor[j]}">
+								<div class="card-content center">
+									<h4 class="card-stats-number white-text">${leave_details[key]}</h4>
+									<p class="card-stats-title white-text">
+										<span>available</span>
+									</p>
+								</div>
+							</div>
+							<p style="margin-top: 10px;text-align: center;">${key}</p>
+						</div>
+					`).appendTo($("#html_balancesummary"));
+					i++;
+				}
+			})				
         }
     });
 

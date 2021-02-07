@@ -53,5 +53,11 @@ def get_context(context):
         "employee": employee
     }, as_dict=True, debug=1)
 
+    context.list_leave_type = frappe.db.sql("""
+		select lt.name
+        from `tabLeave Type` lt
+		where lt.disabled = 0 order by lt.weightage asc
+	""", as_dict=True, debug=1)
+
 
     return context
