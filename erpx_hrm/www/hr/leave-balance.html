@@ -134,12 +134,7 @@ table{
            <div class="row margin infodetails">
             <div class="input-field col s12 m18 ">
               <p style="margin-bottom: 10px;">Employee</p>
-              <select style="padding-left: 10px; width: 10px;" id="filter_employee" autocomplete="off">
-                <option value="" disabled selected>Select employee</option>
-                {% for employee in list_employee%}
-                    <option value="{{employee.name}}">{{employee.employee_name}}</option>
-                {% endfor %}
-              </select>
+              <input autocomplete="off" type="text" class="autocomplete" id="filter_employee"> 
             </div>
           </div>
           <br>
@@ -238,6 +233,14 @@ table{
 <script>
     frappe.csrf_token = "{{ csrf_token }}";
     var glb_employee = "{{ employee }}";
+    var glb_data_employee = {};
+    var glb_data_employee_key = {};
+    var glb_data_employee_name = {};    
+    {% for item in list_employee: %}
+      glb_data_employee["{{item.employee_name}}"] = null;
+      glb_data_employee_key["{{item.name}}"] = "{{item.employee_name}}";
+      glb_data_employee_name["{{item.employee_name}}"] = "{{item.name}}";
+    {% endfor %}
 </script>
 <script src="/app-assets/vendors/data-tables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"

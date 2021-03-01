@@ -1,14 +1,25 @@
-$(document).ready(function () {	
+$(document).ready(function () {
+	$('#filter_employee').autocomplete({
+			data: glb_data_employee,
+			onAutocomplete: function(employee_name) {
+				let name = glb_data_employee_name[employee_name];
+				get_balance_summary(name);	
+				get_balance_history_change(name);
+			},
+	});
 	if(glb_employee!=""){
+		let employee_name	= glb_data_employee_key[glb_employee];
 		$('#frmUpdateLeaveBalance #hCurrentEmployeeName').val(glb_employee);
-		$("#filter_employee").val(glb_employee).formSelect();
+		$("#filter_employee").val(employee_name);
 		get_balance_summary(glb_employee);
 		get_balance_history_change(glb_employee);
 	}
-	$("#filter_employee").change(function(){
-		get_balance_summary($(this).val());	
-		get_balance_history_change($(this).val());
-	});
+	// $("#filter_employee").change(function(){
+	// 	let value = $(this).value;
+	// 	console.log(value);
+	// 	get_balance_summary(value);	
+	// 	get_balance_history_change(value);
+	// });
 
 	$('#file-request').change(function(){
 		if($(this).val() != ''){
